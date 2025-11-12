@@ -126,6 +126,23 @@ response = requests.post(
 token = response.json()['access']
 ```
 
+**Accès aux credentials d'un client spécifique :**
+
+Si vous gérez plusieurs clients et souhaitez accéder aux credentials (Chorus Pro, AFNOR PDP) d'un client particulier, ajoutez le champ `client_uid` :
+
+```python
+response = requests.post(
+    'https://factpulse.fr/api/token/',
+    json={
+        'username': 'votre_email@example.com',
+        'password': 'votre_mot_de_passe',
+        'client_uid': 'identifiant_client'  # UID du client cible
+    }
+)
+
+token = response.json()['access']
+```
+
 ### Via le Dashboard
 
 1. Connectez-vous sur https://factpulse.fr/dashboard/
