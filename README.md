@@ -33,9 +33,10 @@ client = ApiClient(configuration=config)
 ### 2. Générer une facture Factur-X
 
 ```python
-from factpulse.api.processing_endpoints_unifis_api import ProcessingEndpointsUnifisApi
+from factpulse.api.traitement_facture_api import TraitementFactureApi
+import json
 
-api = ProcessingEndpointsUnifisApi(client)
+api = TraitementFactureApi(client)
 
 # Données de la facture
 facture_data = {
@@ -72,9 +73,9 @@ facture_data = {
     }]
 }
 
-# Générer le PDF Factur-X
-pdf_bytes = api.api_v1_traitement_generer_facturx_post(
-    donnees_facture=facture_data,
+# Générer le PDF Factur-X (multipart/form-data)
+pdf_bytes = api.generer_facture_api_v1_traitement_generer_facture_post(
+    donnees_facture=json.dumps(facture_data),
     profil='EN16931',
     format_sortie='pdf'
 )
@@ -84,22 +85,22 @@ with open('facture.pdf', 'wb') as f:
     f.write(pdf_bytes)
 ```
 
-### 3. Soumettre une facture à Chorus Pro
+### 3. Soumettre une facture complète (Chorus Pro / AFNOR PDP)
 
 ```python
-from factpulse.api.chorus_pro_api import ChorusProApi
+from factpulse.api.traitement_facture_api import TraitementFactureApi
 
-chorus_api = ChorusProApi(client)
+api = TraitementFactureApi(client)
 
-# Soumettre une facture
-response = chorus_api.api_v1_chorus_pro_factures_soumettre_post(
+# Soumettre une facture avec destination Chorus Pro
+response = api.soumettre_facture_complete_api_v1_traitement_factures_soumettre_complete_post(
     body={
         "facture": facture_data,
         "destination": {
             "type": "chorus_pro",
             "credentials": {
-                "login": "votre_login",
-                "password": "votre_password"
+                "login": "votre_login_chorus",
+                "password": "votre_password_chorus"
             }
         }
     }
