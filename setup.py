@@ -21,7 +21,7 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "factpulse-sdk"
-VERSION = "1.0.5"
+VERSION = "1.0.6"
 PYTHON_REQUIRES = ">= 3.9"
 REQUIRES = [
     "urllib3 >= 2.1.0, < 3.0.0",
@@ -42,6 +42,6 @@ setup(
     packages=find_packages(exclude=["test", "tests"]),
     include_package_data=True,
     long_description_content_type='text/markdown',
-    long_description=open("README.md", "r", encoding="utf-8").read(),
+    long_description=open("README.md", "r", encoding="utf-8").read(),  # noqa: E501
     package_data={"factpulse": ["py.typed"]},
 )
