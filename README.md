@@ -146,7 +146,7 @@ token = response.json()['access']
 
 ### Via le Dashboard
 
-1. Connectez-vous sur https://factpulse.fr/dashboard/
+1. Connectez-vous sur https://factpulse.fr/api/dashboard/
 2. Générez un token API
 3. Copiez et utilisez le token dans votre configuration
 
