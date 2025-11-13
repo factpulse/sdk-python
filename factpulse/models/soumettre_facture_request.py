@@ -20,6 +20,9 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.chorus_pro_credentials import ChorusProCredentials
+from factpulse.models.montant_ht_total1 import MontantHtTotal1
+from factpulse.models.montant_ttc_total1 import MontantTtcTotal1
+from factpulse.models.montant_tva1 import MontantTva1
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -34,9 +37,9 @@ class SoumettreFactureRequest(BaseModel):
     id_structure_cpp: StrictInt = Field(description="ID Chorus Pro de la structure destinataire")
     code_service: Optional[StrictStr] = None
     numero_engagement: Optional[StrictStr] = None
-    montant_ht_total: StrictStr = Field(description="Montant HT total")
-    montant_tva: StrictStr = Field(description="Montant TVA")
-    montant_ttc_total: StrictStr = Field(description="Montant TTC total")
+    montant_ht_total: MontantHtTotal1
+    montant_tva: MontantTva1
+    montant_ttc_total: MontantTtcTotal1
     piece_jointe_principale_id: Optional[StrictInt] = None
     piece_jointe_principale_designation: Optional[StrictStr] = None
     commentaire: Optional[StrictStr] = None
@@ -86,6 +89,15 @@ class SoumettreFactureRequest(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of credentials
         if self.credentials:
             _dict['credentials'] = self.credentials.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of montant_ht_total
+        if self.montant_ht_total:
+            _dict['montant_ht_total'] = self.montant_ht_total.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of montant_tva
+        if self.montant_tva:
+            _dict['montant_tva'] = self.montant_tva.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of montant_ttc_total
+        if self.montant_ttc_total:
+            _dict['montant_ttc_total'] = self.montant_ttc_total.to_dict()
         # set to None if credentials (nullable) is None
         # and model_fields_set contains the field
         if self.credentials is None and "credentials" in self.model_fields_set:
@@ -150,9 +162,9 @@ class SoumettreFactureRequest(BaseModel):
             "id_structure_cpp": obj.get("id_structure_cpp"),
             "code_service": obj.get("code_service"),
             "numero_engagement": obj.get("numero_engagement"),
-            "montant_ht_total": obj.get("montant_ht_total"),
-            "montant_tva": obj.get("montant_tva"),
-            "montant_ttc_total": obj.get("montant_ttc_total"),
+            "montant_ht_total": MontantHtTotal1.from_dict(obj["montant_ht_total"]) if obj.get("montant_ht_total") is not None else None,
+            "montant_tva": MontantTva1.from_dict(obj["montant_tva"]) if obj.get("montant_tva") is not None else None,
+            "montant_ttc_total": MontantTtcTotal1.from_dict(obj["montant_ttc_total"]) if obj.get("montant_ttc_total") is not None else None,
             "piece_jointe_principale_id": obj.get("piece_jointe_principale_id"),
             "piece_jointe_principale_designation": obj.get("piece_jointe_principale_designation"),
             "commentaire": obj.get("commentaire"),

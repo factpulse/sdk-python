@@ -14,46 +14,37 @@
 
 import unittest
 
-from factpulse.api.signature_lectronique_api import SignatureLectroniqueApi
+from factpulse.models.montant_tva1 import MontantTva1
 
+class TestMontantTva1(unittest.TestCase):
+    """MontantTva1 unit test stubs"""
 
-class TestSignatureLectroniqueApi(unittest.TestCase):
-    """SignatureLectroniqueApi unit test stubs"""
-
-    def setUp(self) -> None:
-        self.api = SignatureLectroniqueApi()
-
-    def tearDown(self) -> None:
+    def setUp(self):
         pass
 
-    def test_generer_certificat_test_api_v1_traitement_generer_certificat_test_post(self) -> None:
-        """Test case for generer_certificat_test_api_v1_traitement_generer_certificat_test_post
+    def tearDown(self):
+        pass
 
-        Générer un certificat X.509 auto-signé de test
+    def make_instance(self, include_optional) -> MontantTva1:
+        """Test MontantTva1
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `MontantTva1`
         """
-        pass
-
-    def test_signer_pdf_api_v1_traitement_signer_pdf_post(self) -> None:
-        """Test case for signer_pdf_api_v1_traitement_signer_pdf_post
-
-        Signer un PDF avec le certificat du client (PAdES-B-LT)
+        model = MontantTva1()
+        if include_optional:
+            return MontantTva1(
+            )
+        else:
+            return MontantTva1(
+        )
         """
-        pass
 
-    def test_signer_pdf_async_api_v1_traitement_signer_pdf_async_post(self) -> None:
-        """Test case for signer_pdf_async_api_v1_traitement_signer_pdf_async_post
-
-        Signer un PDF de manière asynchrone (Celery)
-        """
-        pass
-
-    def test_valider_signature_pdf_endpoint_api_v1_traitement_valider_signature_pdf_post(self) -> None:
-        """Test case for valider_signature_pdf_endpoint_api_v1_traitement_valider_signature_pdf_post
-
-        Valider les signatures électroniques d'un PDF
-        """
-        pass
-
+    def testMontantTva1(self):
+        """Test MontantTva1"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
 
 if __name__ == '__main__':
     unittest.main()

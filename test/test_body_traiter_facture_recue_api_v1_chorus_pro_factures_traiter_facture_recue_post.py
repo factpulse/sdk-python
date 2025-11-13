@@ -35,9 +35,7 @@ class TestBodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost(u
         model = BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost()
         if include_optional:
             return BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 
@@ -60,9 +58,7 @@ class TestBodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost(u
             )
         else:
             return BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 

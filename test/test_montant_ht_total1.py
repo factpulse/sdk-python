@@ -14,32 +14,37 @@
 
 import unittest
 
-from factpulse.api.processing_endpoints_unifis_api import ProcessingEndpointsUnifisApi
+from factpulse.models.montant_ht_total1 import MontantHtTotal1
 
+class TestMontantHtTotal1(unittest.TestCase):
+    """MontantHtTotal1 unit test stubs"""
 
-class TestProcessingEndpointsUnifisApi(unittest.TestCase):
-    """ProcessingEndpointsUnifisApi unit test stubs"""
-
-    def setUp(self) -> None:
-        self.api = ProcessingEndpointsUnifisApi()
-
-    def tearDown(self) -> None:
+    def setUp(self):
         pass
 
-    def test_soumettre_facture_complete_api_v1_traitement_factures_soumettre_complete_post(self) -> None:
-        """Test case for soumettre_facture_complete_api_v1_traitement_factures_soumettre_complete_post
+    def tearDown(self):
+        pass
 
-        Soumettre une facture complète (génération + signature + soumission)
+    def make_instance(self, include_optional) -> MontantHtTotal1:
+        """Test MontantHtTotal1
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `MontantHtTotal1`
         """
-        pass
-
-    def test_soumettre_facture_complete_async_api_v1_traitement_factures_soumettre_complete_async_post(self) -> None:
-        """Test case for soumettre_facture_complete_async_api_v1_traitement_factures_soumettre_complete_async_post
-
-        Soumettre une facture complète (asynchrone avec Celery)
+        model = MontantHtTotal1()
+        if include_optional:
+            return MontantHtTotal1(
+            )
+        else:
+            return MontantHtTotal1(
+        )
         """
-        pass
 
+    def testMontantHtTotal1(self):
+        """Test MontantHtTotal1"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
 
 if __name__ == '__main__':
     unittest.main()

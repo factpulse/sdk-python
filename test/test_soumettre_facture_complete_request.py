@@ -37,16 +37,10 @@ class TestSoumettreFactureCompleteRequest(unittest.TestCase):
             return SoumettreFactureCompleteRequest(
                 donnees_facture = factpulse.models.donnees_facture_simplifiees.DonneesFactureSimplifiees(
                     numero = '', 
-                    emetteur = {
-                        'key' : null
-                        }, 
-                    destinataire = {
-                        'key' : null
-                        }, 
+                    emetteur = { }, 
+                    destinataire = { }, 
                     lignes = [
-                        {
-                            'key' : null
-                            }
+                        { }
                         ], 
                     date = '', 
                     echeance_jours = 0.0, 
@@ -71,16 +65,10 @@ class TestSoumettreFactureCompleteRequest(unittest.TestCase):
             return SoumettreFactureCompleteRequest(
                 donnees_facture = factpulse.models.donnees_facture_simplifiees.DonneesFactureSimplifiees(
                     numero = '', 
-                    emetteur = {
-                        'key' : null
-                        }, 
-                    destinataire = {
-                        'key' : null
-                        }, 
+                    emetteur = { }, 
+                    destinataire = { }, 
                     lignes = [
-                        {
-                            'key' : null
-                            }
+                        { }
                         ], 
                     date = '', 
                     echeance_jours = 0.0, 

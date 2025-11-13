@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.0.9"
+__version__ = "1.0.12"
 
 # Define package exports
 __all__ = [
@@ -83,11 +83,14 @@ __all__ = [
     "ModeDepot",
     "ModePaiement",
     "MontantHtTotal",
+    "MontantHtTotal1",
     "MontantTotal",
     "MontantTotalAcompte",
     "MontantTotalMontantRemiseGlobaleTtc",
     "MontantTtcTotal",
+    "MontantTtcTotal1",
     "MontantTva",
+    "MontantTva1",
     "Montantapayer",
     "Montantbaseht",
     "Montanthttotal",
@@ -214,11 +217,14 @@ from factpulse.models.ligne_de_tva import LigneDeTVA as LigneDeTVA
 from factpulse.models.mode_depot import ModeDepot as ModeDepot
 from factpulse.models.mode_paiement import ModePaiement as ModePaiement
 from factpulse.models.montant_ht_total import MontantHtTotal as MontantHtTotal
+from factpulse.models.montant_ht_total1 import MontantHtTotal1 as MontantHtTotal1
 from factpulse.models.montant_total import MontantTotal as MontantTotal
 from factpulse.models.montant_total_acompte import MontantTotalAcompte as MontantTotalAcompte
 from factpulse.models.montant_total_montant_remise_globale_ttc import MontantTotalMontantRemiseGlobaleTtc as MontantTotalMontantRemiseGlobaleTtc
 from factpulse.models.montant_ttc_total import MontantTtcTotal as MontantTtcTotal
+from factpulse.models.montant_ttc_total1 import MontantTtcTotal1 as MontantTtcTotal1
 from factpulse.models.montant_tva import MontantTva as MontantTva
+from factpulse.models.montant_tva1 import MontantTva1 as MontantTva1
 from factpulse.models.montantapayer import Montantapayer as Montantapayer
 from factpulse.models.montantbaseht import Montantbaseht as Montantbaseht
 from factpulse.models.montanthttotal import Montanthttotal as Montanthttotal

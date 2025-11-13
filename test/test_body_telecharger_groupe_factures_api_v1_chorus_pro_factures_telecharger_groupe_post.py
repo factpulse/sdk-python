@@ -35,9 +35,7 @@ class TestBodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePo
         model = BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost()
         if include_optional:
             return BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 
@@ -60,9 +58,7 @@ class TestBodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePo
             )
         else:
             return BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 

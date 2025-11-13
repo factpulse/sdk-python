@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id_tache** | **str** |  | 
 **statut** | **str** |  | 
-**resultat** | [**AnyOf**](AnyOf.md) |  | [optional] 
+**resultat** | **Dict[str, object]** |  | [optional] 
 
 ## Example
 

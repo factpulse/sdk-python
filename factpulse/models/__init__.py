@@ -62,11 +62,14 @@ from factpulse.models.ligne_de_tva import LigneDeTVA
 from factpulse.models.mode_depot import ModeDepot
 from factpulse.models.mode_paiement import ModePaiement
 from factpulse.models.montant_ht_total import MontantHtTotal
+from factpulse.models.montant_ht_total1 import MontantHtTotal1
 from factpulse.models.montant_total import MontantTotal
 from factpulse.models.montant_total_acompte import MontantTotalAcompte
 from factpulse.models.montant_total_montant_remise_globale_ttc import MontantTotalMontantRemiseGlobaleTtc
 from factpulse.models.montant_ttc_total import MontantTtcTotal
+from factpulse.models.montant_ttc_total1 import MontantTtcTotal1
 from factpulse.models.montant_tva import MontantTva
+from factpulse.models.montant_tva1 import MontantTva1
 from factpulse.models.montantapayer import Montantapayer
 from factpulse.models.montantbaseht import Montantbaseht
 from factpulse.models.montanthttotal import Montanthttotal

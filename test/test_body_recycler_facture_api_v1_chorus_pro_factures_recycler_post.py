@@ -35,9 +35,7 @@ class TestBodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost(unittest.TestCas
         model = BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost()
         if include_optional:
             return BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 
@@ -60,9 +58,7 @@ class TestBodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost(unittest.TestCas
             )
         else:
             return BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 

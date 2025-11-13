@@ -14,10 +14,10 @@
 
 import unittest
 
-from factpulse.models.resultat_validation_pdfapi import ResultatValidationPDFAPI
+from factpulse.models.montant_ttc_total1 import MontantTtcTotal1
 
-class TestResultatValidationPDFAPI(unittest.TestCase):
-    """ResultatValidationPDFAPI unit test stubs"""
+class TestMontantTtcTotal1(unittest.TestCase):
+    """MontantTtcTotal1 unit test stubs"""
 
     def setUp(self):
         pass
@@ -25,73 +25,24 @@ class TestResultatValidationPDFAPI(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> ResultatValidationPDFAPI:
-        """Test ResultatValidationPDFAPI
+    def make_instance(self, include_optional) -> MontantTtcTotal1:
+        """Test MontantTtcTotal1
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `ResultatValidationPDFAPI`
+        # uncomment below to create an instance of `MontantTtcTotal1`
         """
-        model = ResultatValidationPDFAPI()
+        model = MontantTtcTotal1()
         if include_optional:
-            return ResultatValidationPDFAPI(
-                est_conforme = True,
-                xml_present = True,
-                xml_conforme = True,
-                profil_detecte = '',
-                erreurs_xml = [
-                    ''
-                    ],
-                pdfa_conforme = True,
-                version_pdfa = '',
-                methode_validation_pdfa = 'metadata',
-                regles_validees = 56,
-                regles_echouees = 56,
-                erreurs_pdfa = [
-                    ''
-                    ],
-                avertissements_pdfa = [
-                    ''
-                    ],
-                xmp_present = True,
-                xmp_conforme_facturx = True,
-                profil_xmp = '',
-                version_xmp = '',
-                erreurs_xmp = [
-                    ''
-                    ],
-                metadonnees_xmp = { },
-                est_signe = True,
-                nombre_signatures = 56,
-                signatures = [
-                    factpulse.models.information_signature_api.InformationSignatureAPI(
-                        nom_champ = '', 
-                        signataire = '', 
-                        date_signature = '', 
-                        raison = '', 
-                        localisation = '', 
-                        est_valide = True, )
-                    ],
-                erreurs_signatures = [
-                    ''
-                    ],
-                message_resume = ''
+            return MontantTtcTotal1(
             )
         else:
-            return ResultatValidationPDFAPI(
-                est_conforme = True,
-                xml_present = True,
-                xml_conforme = True,
-                pdfa_conforme = True,
-                xmp_present = True,
-                xmp_conforme_facturx = True,
-                est_signe = True,
-                message_resume = '',
+            return MontantTtcTotal1(
         )
         """
 
-    def testResultatValidationPDFAPI(self):
-        """Test ResultatValidationPDFAPI"""
+    def testMontantTtcTotal1(self):
+        """Test MontantTtcTotal1"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

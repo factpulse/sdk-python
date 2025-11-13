@@ -35,7 +35,7 @@ class TestOptionsProcessing(unittest.TestCase):
         model = OptionsProcessing()
         if include_optional:
             return OptionsProcessing(
-                profil_facturx = 'EN16931',
+                profil_facturx = 'MINIMUM',
                 auto_enrichir = True,
                 valider = True,
                 verifier_parametres_destination = True

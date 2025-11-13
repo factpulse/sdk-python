@@ -35,9 +35,7 @@ class TestBodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFourn
         model = BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost()
         if include_optional:
             return BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 
@@ -60,9 +58,7 @@ class TestBodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFourn
             )
         else:
             return BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 

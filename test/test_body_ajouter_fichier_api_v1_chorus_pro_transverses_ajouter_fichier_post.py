@@ -35,9 +35,7 @@ class TestBodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost(unittest
         model = BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost()
         if include_optional:
             return BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 
@@ -60,9 +58,7 @@ class TestBodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost(unittest
             )
         else:
             return BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 

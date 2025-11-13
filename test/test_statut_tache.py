@@ -37,7 +37,7 @@ class TestStatutTache(unittest.TestCase):
             return StatutTache(
                 id_tache = '',
                 statut = '',
-                resultat = None
+                resultat = { }
             )
         else:
             return StatutTache(

@@ -35,9 +35,7 @@ class TestBodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost(un
         model = BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost()
         if include_optional:
             return BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 
@@ -60,9 +58,7 @@ class TestBodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost(un
             )
         else:
             return BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 

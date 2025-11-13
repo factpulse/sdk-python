@@ -36,16 +36,10 @@ class TestDonneesFactureSimplifiees(unittest.TestCase):
         if include_optional:
             return DonneesFactureSimplifiees(
                 numero = '',
-                emetteur = {
-                    'key' : null
-                    },
-                destinataire = {
-                    'key' : null
-                    },
+                emetteur = { },
+                destinataire = { },
                 lignes = [
-                    {
-                        'key' : null
-                        }
+                    { }
                     ],
                 var_date = '',
                 echeance_jours = 0.0,
@@ -56,16 +50,10 @@ class TestDonneesFactureSimplifiees(unittest.TestCase):
         else:
             return DonneesFactureSimplifiees(
                 numero = '',
-                emetteur = {
-                    'key' : null
-                    },
-                destinataire = {
-                    'key' : null
-                    },
+                emetteur = { },
+                destinataire = { },
                 lignes = [
-                    {
-                        'key' : null
-                        }
+                    { }
                     ],
         )
         """

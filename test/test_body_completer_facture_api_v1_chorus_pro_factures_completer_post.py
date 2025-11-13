@@ -35,9 +35,7 @@ class TestBodyCompleterFactureApiV1ChorusProFacturesCompleterPost(unittest.TestC
         model = BodyCompleterFactureApiV1ChorusProFacturesCompleterPost()
         if include_optional:
             return BodyCompleterFactureApiV1ChorusProFacturesCompleterPost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 
@@ -60,9 +58,7 @@ class TestBodyCompleterFactureApiV1ChorusProFacturesCompleterPost(unittest.TestC
             )
         else:
             return BodyCompleterFactureApiV1ChorusProFacturesCompleterPost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 

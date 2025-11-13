@@ -35,9 +35,7 @@ class TestBodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercher
         model = BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost()
         if include_optional:
             return BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 
@@ -60,9 +58,7 @@ class TestBodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercher
             )
         else:
             return BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost(
-                payload = {
-                    'key' : null
-                    },
+                payload = { },
                 user_info = factpulse.models.utilisateur.Utilisateur(
                     id = 56, 
                     username = '', 

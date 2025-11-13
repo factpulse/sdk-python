@@ -42,9 +42,9 @@ class TestSoumettreFactureRequest(unittest.TestCase):
                 id_structure_cpp = 56,
                 code_service = '',
                 numero_engagement = '',
-                montant_ht_total = '',
-                montant_tva = '',
-                montant_ttc_total = '',
+                montant_ht_total = None,
+                montant_tva = None,
+                montant_ttc_total = None,
                 piece_jointe_principale_id = 56,
                 piece_jointe_principale_designation = '',
                 commentaire = '',
@@ -56,9 +56,9 @@ class TestSoumettreFactureRequest(unittest.TestCase):
                 numero_facture = '',
                 date_facture = '',
                 id_structure_cpp = 56,
-                montant_ht_total = '',
-                montant_tva = '',
-                montant_ttc_total = '',
+                montant_ht_total = None,
+                montant_tva = None,
+                montant_ttc_total = None,
         )
         """
 
