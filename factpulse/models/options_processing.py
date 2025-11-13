@@ -17,8 +17,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
+from factpulse.models.profil_api import ProfilAPI
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -26,21 +27,11 @@ class OptionsProcessing(BaseModel):
     """
     Options de traitement pour la génération et la soumission.
     """ # noqa: E501
-    profil_facturx: Optional[StrictStr] = Field(default='EN16931', description="Profil Factur-X à utiliser")
+    profil_facturx: Optional[ProfilAPI] = Field(default=None, description="Profil Factur-X à utiliser")
     auto_enrichir: Optional[StrictBool] = Field(default=True, description="Auto-enrichir les données (APIs Entreprises, Chorus Pro, etc.)")
     valider: Optional[StrictBool] = Field(default=True, description="Valider le XML Factur-X avec Schematron")
     verifier_parametres_destination: Optional[StrictBool] = Field(default=True, description="Vérifier les paramètres requis par la destination (ex: code_service pour Chorus)")
     __properties: ClassVar[List[str]] = ["profil_facturx", "auto_enrichir", "valider", "verifier_parametres_destination"]
-
-    @field_validator('profil_facturx')
-    def profil_facturx_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['MINIMUM', 'BASIC', 'EN16931', 'EXTENDED']):
-            raise ValueError("must be one of enum values ('MINIMUM', 'BASIC', 'EN16931', 'EXTENDED')")
-        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,7 +84,7 @@ class OptionsProcessing(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "profil_facturx": obj.get("profil_facturx") if obj.get("profil_facturx") is not None else 'EN16931',
+            "profil_facturx": obj.get("profil_facturx"),
             "auto_enrichir": obj.get("auto_enrichir") if obj.get("auto_enrichir") is not None else True,
             "valider": obj.get("valider") if obj.get("valider") is not None else True,
             "verifier_parametres_destination": obj.get("verifier_parametres_destination") if obj.get("verifier_parametres_destination") is not None else True

@@ -6,7 +6,7 @@ Options de traitement pour la génération et la soumission.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**profil_facturx** | **str** | Profil Factur-X à utiliser | [optional] [default to 'EN16931']
+**profil_facturx** | [**ProfilAPI**](ProfilAPI.md) | Profil Factur-X à utiliser | [optional] 
 **auto_enrichir** | **bool** | Auto-enrichir les données (APIs Entreprises, Chorus Pro, etc.) | [optional] [default to True]
 **valider** | **bool** | Valider le XML Factur-X avec Schematron | [optional] [default to True]
 **verifier_parametres_destination** | **bool** | Vérifier les paramètres requis par la destination (ex: code_service pour Chorus) | [optional] [default to True]

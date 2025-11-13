@@ -1,6 +1,6 @@
 [project]
 name = "factpulse"
-version = "1.0.8"
+version = "1.0.9"
 description = "API REST FactPulse"
 authors = [
   {name = "OpenAPI Generator Community",email = "team@openapitools.org"},
@@ -17,7 +17,7 @@ dependencies = [
 ]
 
 [project.urls]
-Repository = "https://github.com/GIT_USER_ID/GIT_REPO_ID"
+Repository = "https://github.com/factpulse/sdk-python"
 
 [tool.poetry]
 requires-poetry = ">=2.0"

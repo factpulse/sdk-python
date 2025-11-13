@@ -1,371 +1,162 @@
-# factpulse-sdk
+# FactPulse SDK Python
 
-API REST pour la facturation électronique en France : Factur-X, AFNOR PDP/PA, signatures électroniques.
+Client Python officiel pour l'API FactPulse - Facturation électronique française.
 
-## 🎯 Fonctionnalités principales
+## 🎯 Fonctionnalités
 
-### 📄 Génération de factures Factur-X
-- **Formats** : XML seul ou PDF/A-3 avec XML embarqué
-- **Profils** : MINIMUM, BASIC, EN16931, EXTENDED
-- **Normes** : EN 16931 (directive UE 2014/55), ISO 19005-3 (PDF/A-3), CII (UN/CEFACT)
-- **🆕 Format simplifié** : Génération à partir de SIRET + auto-enrichissement (API Chorus Pro + Recherche Entreprises)
+- **Factur-X** : Génération et validation de factures électroniques (profils MINIMUM, BASIC, EN16931, EXTENDED)
+- **Chorus Pro** : Intégration avec la plateforme de facturation publique française
+- **AFNOR PDP/PA** : Soumission de flux conformes à la norme XP Z12-013
+- **Signature électronique** : Signature PDF (PAdES-B-B, PAdES-B-T, PAdES-B-LT)
+- **Traitement asynchrone** : Support Celery pour opérations longues
 
-### ✅ Validation et conformité
-- **Validation XML** : Schematron (45 à 210+ règles selon profil)
-- **Validation PDF** : PDF/A-3, métadonnées XMP Factur-X, signatures électroniques
-- **VeraPDF** : Validation stricte PDF/A (146+ règles ISO 19005-3)
-- **Traitement asynchrone** : Support Celery pour validations lourdes (VeraPDF)
+## 🚀 Installation
 
-### 📡 Intégration AFNOR PDP/PA (XP Z12-013)
-- **Soumission de flux** : Envoi de factures vers Plateformes de Dématérialisation Partenaires
-- **Recherche de flux** : Consultation des factures soumises
-- **Téléchargement** : Récupération des PDF/A-3 avec XML
-- **Directory Service** : Recherche d'entreprises (SIREN/SIRET)
-- **Multi-client** : Support de plusieurs configs PDP par utilisateur (stored credentials ou zero-storage)
-
-### ✍️ Signature électronique PDF
-- **Standards** : PAdES-B-B, PAdES-B-T (horodatage RFC 3161), PAdES-B-LT (archivage long terme)
-- **Niveaux eIDAS** : SES (auto-signé), AdES (CA commerciale), QES (PSCO)
-- **Validation** : Vérification intégrité cryptographique et certificats
-- **Génération de certificats** : Certificats X.509 auto-signés pour tests
-
-### 🔄 Traitement asynchrone
-- **Celery** : Génération, validation et signature asynchrones
-- **Polling** : Suivi d'état via `/taches/{id_tache}/statut`
-- **Pas de timeout** : Idéal pour gros fichiers ou validations lourdes
-
-## 🔒 Authentification
-
-Toutes les requêtes nécessitent un **token JWT** dans le header Authorization :
-```
-Authorization: Bearer YOUR_JWT_TOKEN
-```
-
-### Comment obtenir un token JWT ?
-
-#### 🔑 Méthode 1 : API `/api/token/` (Recommandée)
-
-**URL :** `https://www.factpulse.fr/api/token/`
-
-Cette méthode est **recommandée** pour l'intégration dans vos applications et workflows CI/CD.
-
-**Prérequis :** Avoir défini un mot de passe sur votre compte
-
-**Pour les utilisateurs inscrits via email/password :**
-- Vous avez déjà un mot de passe, utilisez-le directement
-
-**Pour les utilisateurs inscrits via OAuth (Google/GitHub) :**
-- Vous devez d'abord définir un mot de passe sur : https://www.factpulse.fr/accounts/password/set/
-- Une fois le mot de passe créé, vous pourrez utiliser l'API
-
-**Exemple de requête :**
 ```bash
-curl -X POST https://www.factpulse.fr/api/token/ \\
-  -H \"Content-Type: application/json\" \\
-  -d '{
-    \"username\": \"votre_email@example.com\",
-    \"password\": \"votre_mot_de_passe\"
-  }'
+pip install factpulse
 ```
 
-**Réponse :**
-```json
-{
-  \"access\": \"eyJ0eXAiOiJKV1QiLCJhbGc...\",  // Token d'accès (validité: 30 min)
-  \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGc...\"  // Token de rafraîchissement (validité: 7 jours)
+## 📖 Démarrage rapide
+
+### 1. Authentification
+
+```python
+from factpulse import ApiClient, Configuration
+
+# Configuration du client
+config = Configuration(host='https://factpulse.fr/api/facturation/')
+config.access_token = 'votre_token_jwt'
+
+client = ApiClient(configuration=config)
+```
+
+### 2. Générer une facture Factur-X
+
+```python
+from factpulse.api.traitement_facture_api import TraitementFactureApi
+import json
+
+api = TraitementFactureApi(client)
+
+# Données de la facture
+facture_data = {
+    "numero_facture": "FAC-2025-001",
+    "date_facture": "2025-01-15",
+    "montant_total_ht": "1000.00",
+    "montant_total_ttc": "1200.00",
+    "fournisseur": {
+        "nom": "Mon Entreprise SAS",
+        "siret": "12345678901234",
+        "adresse_postale": {
+            "ligne_un": "123 Rue Example",
+            "code_postal": "75001",
+            "nom_ville": "Paris",
+            "pays_code_iso": "FR"
+        }
+    },
+    "destinataire": {
+        "nom": "Client SARL",
+        "siret": "98765432109876",
+        "adresse_postale": {
+            "ligne_un": "456 Avenue Test",
+            "code_postal": "69001",
+            "nom_ville": "Lyon",
+            "pays_code_iso": "FR"
+        }
+    },
+    "lignes_de_poste": [{
+        "numero": 1,
+        "denomination": "Prestation de conseil",
+        "quantite": "10.00",
+        "montant_unitaire_ht": "100.00",
+        "montant_ligne_ht": "1000.00"
+    }]
 }
-```
 
-**Avantages :**
-- ✅ Automatisation complète (CI/CD, scripts)
-- ✅ Gestion programmatique des tokens
-- ✅ Support du refresh token pour renouveler automatiquement l'accès
-- ✅ Intégration facile dans n'importe quel langage/outil
-
-#### 🖥️ Méthode 2 : Génération via Dashboard (Alternative)
-
-**URL :** https://www.factpulse.fr/dashboard/
-
-Cette méthode convient pour des tests rapides ou une utilisation occasionnelle via l'interface graphique.
-
-**Fonctionnement :**
-- Connectez-vous au dashboard
-- Utilisez les boutons \"Generate Test Token\" ou \"Generate Production Token\"
-- Fonctionne pour **tous** les utilisateurs (OAuth et email/password), sans nécessiter de mot de passe
-
-**Types de tokens :**
-- **Token Test** : Validité 24h, quota 1000 appels/jour (gratuit)
-- **Token Production** : Validité 7 jours, quota selon votre forfait
-
-**Avantages :**
-- ✅ Rapide pour tester l'API
-- ✅ Aucun mot de passe requis
-- ✅ Interface visuelle simple
-
-**Inconvénients :**
-- ❌ Nécessite une action manuelle
-- ❌ Pas de refresh token
-- ❌ Moins adapté pour l'automatisation
-
-### 📚 Documentation complète
-
-Pour plus d'informations sur l'authentification et l'utilisation de l'API :
-https://www.factpulse.fr/documentation-api/
-    
-
-This Python package is automatically generated by the [OpenAPI Generator](https://openapi-generator.tech) project:
-
-- API version: 1.0.0
-- Package version: 1.0.8
-- Generator version: 7.18.0-SNAPSHOT
-- Build package: org.openapitools.codegen.languages.PythonClientCodegen
-
-## Requirements.
-
-Python 3.9+
-
-## Installation & Usage
-### pip install
-
-If the python package is hosted on a repository, you can install directly using:
-
-```sh
-pip install git+https://github.com/GIT_USER_ID/GIT_REPO_ID.git
-```
-(you may need to run `pip` with root permission: `sudo pip install git+https://github.com/GIT_USER_ID/GIT_REPO_ID.git`)
-
-Then import the package:
-```python
-import factpulse
-```
-
-### Setuptools
-
-Install via [Setuptools](http://pypi.python.org/pypi/setuptools).
-
-```sh
-python setup.py install --user
-```
-(or `sudo python setup.py install` to install the package for all users)
-
-Then import the package:
-```python
-import factpulse
-```
-
-### Tests
-
-Execute `pytest` to run the tests.
-
-## Getting Started
-
-Please follow the [installation procedure](#installation--usage) and then run the following:
-
-```python
-
-import factpulse
-from factpulse.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to http://localhost
-# See configuration.py for a list of all supported configuration parameters.
-configuration = factpulse.Configuration(
-    host = "http://localhost"
+# Générer le PDF Factur-X (multipart/form-data)
+pdf_bytes = api.generer_facture_api_v1_traitement_generer_facture_post(
+    donnees_facture=json.dumps(facture_data),
+    profil='EN16931',
+    format_sortie='pdf'
 )
 
-
-
-# Enter a context with an instance of the API client
-with factpulse.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = factpulse.AFNORPDPPAApi(api_client)
-
-    try:
-        # Endpoint OAuth2 pour authentification AFNOR
-        api_response = api_instance.oauth_token_proxy_api_v1_afnor_oauth_token_post()
-        print("The response of AFNORPDPPAApi->oauth_token_proxy_api_v1_afnor_oauth_token_post:\n")
-        pprint(api_response)
-    except ApiException as e:
-        print("Exception when calling AFNORPDPPAApi->oauth_token_proxy_api_v1_afnor_oauth_token_post: %s\n" % e)
-
+# Sauvegarder
+with open('facture.pdf', 'wb') as f:
+    f.write(pdf_bytes)
 ```
 
-## Documentation for API Endpoints
+### 3. Soumettre une facture complète (Chorus Pro / AFNOR PDP)
 
-All URIs are relative to *http://localhost*
+```python
+from factpulse.api.traitement_facture_api import TraitementFactureApi
 
-Class | Method | HTTP request | Description
------------- | ------------- | ------------- | -------------
-*AFNORPDPPAApi* | [**oauth_token_proxy_api_v1_afnor_oauth_token_post**](docs/AFNORPDPPAApi.md#oauth_token_proxy_api_v1_afnor_oauth_token_post) | **POST** /api/v1/afnor/oauth/token | Endpoint OAuth2 pour authentification AFNOR
-*AFNORPDPPADirectoryServiceApi* | [**directory_healthcheck_proxy_api_v1_afnor_directory_v1_healthcheck_get**](docs/AFNORPDPPADirectoryServiceApi.md#directory_healthcheck_proxy_api_v1_afnor_directory_v1_healthcheck_get) | **GET** /api/v1/afnor/directory/v1/healthcheck | Healthcheck Directory Service
-*AFNORPDPPADirectoryServiceApi* | [**get_company_proxy_api_v1_afnor_directory_v1_companies_siren_get**](docs/AFNORPDPPADirectoryServiceApi.md#get_company_proxy_api_v1_afnor_directory_v1_companies_siren_get) | **GET** /api/v1/afnor/directory/v1/companies/{siren} | Récupérer une entreprise
-*AFNORPDPPADirectoryServiceApi* | [**search_companies_proxy_api_v1_afnor_directory_v1_companies_search_post**](docs/AFNORPDPPADirectoryServiceApi.md#search_companies_proxy_api_v1_afnor_directory_v1_companies_search_post) | **POST** /api/v1/afnor/directory/v1/companies/search | Rechercher des entreprises
-*AFNORPDPPAFlowServiceApi* | [**download_flow_proxy_api_v1_afnor_flow_v1_flows_flow_id_get**](docs/AFNORPDPPAFlowServiceApi.md#download_flow_proxy_api_v1_afnor_flow_v1_flows_flow_id_get) | **GET** /api/v1/afnor/flow/v1/flows/{flowId} | Télécharger un flux
-*AFNORPDPPAFlowServiceApi* | [**flow_healthcheck_proxy_api_v1_afnor_flow_v1_healthcheck_get**](docs/AFNORPDPPAFlowServiceApi.md#flow_healthcheck_proxy_api_v1_afnor_flow_v1_healthcheck_get) | **GET** /api/v1/afnor/flow/v1/healthcheck | Healthcheck Flow Service
-*AFNORPDPPAFlowServiceApi* | [**search_flows_proxy_api_v1_afnor_flow_v1_flows_search_post**](docs/AFNORPDPPAFlowServiceApi.md#search_flows_proxy_api_v1_afnor_flow_v1_flows_search_post) | **POST** /api/v1/afnor/flow/v1/flows/search | Rechercher des flux
-*AFNORPDPPAFlowServiceApi* | [**submit_flow_proxy_api_v1_afnor_flow_v1_flows_post**](docs/AFNORPDPPAFlowServiceApi.md#submit_flow_proxy_api_v1_afnor_flow_v1_flows_post) | **POST** /api/v1/afnor/flow/v1/flows | Soumettre un flux de facturation
-*ChorusProApi* | [**ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post**](docs/ChorusProApi.md#ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post) | **POST** /api/v1/chorus-pro/transverses/ajouter-fichier | Ajouter une pièce jointe
-*ChorusProApi* | [**completer_facture_api_v1_chorus_pro_factures_completer_post**](docs/ChorusProApi.md#completer_facture_api_v1_chorus_pro_factures_completer_post) | **POST** /api/v1/chorus-pro/factures/completer | Compléter une facture suspendue (Fournisseur)
-*ChorusProApi* | [**consulter_facture_api_v1_chorus_pro_factures_consulter_post**](docs/ChorusProApi.md#consulter_facture_api_v1_chorus_pro_factures_consulter_post) | **POST** /api/v1/chorus-pro/factures/consulter | Consulter le statut d&#39;une facture
-*ChorusProApi* | [**consulter_structure_api_v1_chorus_pro_structures_consulter_post**](docs/ChorusProApi.md#consulter_structure_api_v1_chorus_pro_structures_consulter_post) | **POST** /api/v1/chorus-pro/structures/consulter | Consulter les détails d&#39;une structure
-*ChorusProApi* | [**lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get**](docs/ChorusProApi.md#lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get) | **GET** /api/v1/chorus-pro/structures/{id_structure_cpp}/services | Lister les services d&#39;une structure
-*ChorusProApi* | [**obtenir_id_chorus_pro_depuis_siret_api_v1_chorus_pro_structures_obtenir_id_depuis_siret_post**](docs/ChorusProApi.md#obtenir_id_chorus_pro_depuis_siret_api_v1_chorus_pro_structures_obtenir_id_depuis_siret_post) | **POST** /api/v1/chorus-pro/structures/obtenir-id-depuis-siret | Utilitaire : Obtenir l&#39;ID Chorus Pro depuis un SIRET
-*ChorusProApi* | [**rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post**](docs/ChorusProApi.md#rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post) | **POST** /api/v1/chorus-pro/factures/rechercher-destinataire | Rechercher factures reçues (Destinataire)
-*ChorusProApi* | [**rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post**](docs/ChorusProApi.md#rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post) | **POST** /api/v1/chorus-pro/factures/rechercher-fournisseur | Rechercher factures émises (Fournisseur)
-*ChorusProApi* | [**rechercher_structures_api_v1_chorus_pro_structures_rechercher_post**](docs/ChorusProApi.md#rechercher_structures_api_v1_chorus_pro_structures_rechercher_post) | **POST** /api/v1/chorus-pro/structures/rechercher | Rechercher des structures Chorus Pro
-*ChorusProApi* | [**recycler_facture_api_v1_chorus_pro_factures_recycler_post**](docs/ChorusProApi.md#recycler_facture_api_v1_chorus_pro_factures_recycler_post) | **POST** /api/v1/chorus-pro/factures/recycler | Recycler une facture (Fournisseur)
-*ChorusProApi* | [**soumettre_facture_api_v1_chorus_pro_factures_soumettre_post**](docs/ChorusProApi.md#soumettre_facture_api_v1_chorus_pro_factures_soumettre_post) | **POST** /api/v1/chorus-pro/factures/soumettre | Soumettre une facture à Chorus Pro
-*ChorusProApi* | [**telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post**](docs/ChorusProApi.md#telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post) | **POST** /api/v1/chorus-pro/factures/telecharger-groupe | Télécharger un groupe de factures
-*ChorusProApi* | [**traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post**](docs/ChorusProApi.md#traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post) | **POST** /api/v1/chorus-pro/factures/traiter-facture-recue | Traiter une facture reçue (Destinataire)
-*ChorusProApi* | [**valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post**](docs/ChorusProApi.md#valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post) | **POST** /api/v1/chorus-pro/factures/valideur/consulter | Consulter une facture (Valideur)
-*ChorusProApi* | [**valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post**](docs/ChorusProApi.md#valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post) | **POST** /api/v1/chorus-pro/factures/valideur/rechercher | Rechercher factures à valider (Valideur)
-*ChorusProApi* | [**valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post**](docs/ChorusProApi.md#valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post) | **POST** /api/v1/chorus-pro/factures/valideur/traiter | Valider ou refuser une facture (Valideur)
-*ProcessingEndpointsUnifisApi* | [**soumettre_facture_complete_api_v1_traitement_factures_soumettre_complete_post**](docs/ProcessingEndpointsUnifisApi.md#soumettre_facture_complete_api_v1_traitement_factures_soumettre_complete_post) | **POST** /api/v1/traitement/factures/soumettre-complete | Soumettre une facture complète (génération + signature + soumission)
-*ProcessingEndpointsUnifisApi* | [**soumettre_facture_complete_async_api_v1_traitement_factures_soumettre_complete_async_post**](docs/ProcessingEndpointsUnifisApi.md#soumettre_facture_complete_async_api_v1_traitement_factures_soumettre_complete_async_post) | **POST** /api/v1/traitement/factures/soumettre-complete-async | Soumettre une facture complète (asynchrone avec Celery)
-*SantApi* | [**racine_get**](docs/SantApi.md#racine_get) | **GET** / | Vérifier l&#39;état de l&#39;API
-*SignatureLectroniqueApi* | [**generer_certificat_test_api_v1_traitement_generer_certificat_test_post**](docs/SignatureLectroniqueApi.md#generer_certificat_test_api_v1_traitement_generer_certificat_test_post) | **POST** /api/v1/traitement/generer-certificat-test | Générer un certificat X.509 auto-signé de test
-*SignatureLectroniqueApi* | [**signer_pdf_api_v1_traitement_signer_pdf_post**](docs/SignatureLectroniqueApi.md#signer_pdf_api_v1_traitement_signer_pdf_post) | **POST** /api/v1/traitement/signer-pdf | Signer un PDF avec le certificat du client (PAdES-B-LT)
-*SignatureLectroniqueApi* | [**signer_pdf_async_api_v1_traitement_signer_pdf_async_post**](docs/SignatureLectroniqueApi.md#signer_pdf_async_api_v1_traitement_signer_pdf_async_post) | **POST** /api/v1/traitement/signer-pdf-async | Signer un PDF de manière asynchrone (Celery)
-*SignatureLectroniqueApi* | [**valider_signature_pdf_endpoint_api_v1_traitement_valider_signature_pdf_post**](docs/SignatureLectroniqueApi.md#valider_signature_pdf_endpoint_api_v1_traitement_valider_signature_pdf_post) | **POST** /api/v1/traitement/valider-signature-pdf | Valider les signatures électroniques d&#39;un PDF
-*TraitementFactureApi* | [**generer_certificat_test_api_v1_traitement_generer_certificat_test_post**](docs/TraitementFactureApi.md#generer_certificat_test_api_v1_traitement_generer_certificat_test_post) | **POST** /api/v1/traitement/generer-certificat-test | Générer un certificat X.509 auto-signé de test
-*TraitementFactureApi* | [**generer_facture_api_v1_traitement_generer_facture_post**](docs/TraitementFactureApi.md#generer_facture_api_v1_traitement_generer_facture_post) | **POST** /api/v1/traitement/generer-facture | Générer une facture Factur-X
-*TraitementFactureApi* | [**obtenir_statut_tache_api_v1_traitement_taches_id_tache_statut_get**](docs/TraitementFactureApi.md#obtenir_statut_tache_api_v1_traitement_taches_id_tache_statut_get) | **GET** /api/v1/traitement/taches/{id_tache}/statut | Obtenir le statut d&#39;une tâche de génération
-*TraitementFactureApi* | [**signer_pdf_api_v1_traitement_signer_pdf_post**](docs/TraitementFactureApi.md#signer_pdf_api_v1_traitement_signer_pdf_post) | **POST** /api/v1/traitement/signer-pdf | Signer un PDF avec le certificat du client (PAdES-B-LT)
-*TraitementFactureApi* | [**signer_pdf_async_api_v1_traitement_signer_pdf_async_post**](docs/TraitementFactureApi.md#signer_pdf_async_api_v1_traitement_signer_pdf_async_post) | **POST** /api/v1/traitement/signer-pdf-async | Signer un PDF de manière asynchrone (Celery)
-*TraitementFactureApi* | [**soumettre_facture_complete_api_v1_traitement_factures_soumettre_complete_post**](docs/TraitementFactureApi.md#soumettre_facture_complete_api_v1_traitement_factures_soumettre_complete_post) | **POST** /api/v1/traitement/factures/soumettre-complete | Soumettre une facture complète (génération + signature + soumission)
-*TraitementFactureApi* | [**soumettre_facture_complete_async_api_v1_traitement_factures_soumettre_complete_async_post**](docs/TraitementFactureApi.md#soumettre_facture_complete_async_api_v1_traitement_factures_soumettre_complete_async_post) | **POST** /api/v1/traitement/factures/soumettre-complete-async | Soumettre une facture complète (asynchrone avec Celery)
-*TraitementFactureApi* | [**valider_pdf_facturx_api_v1_traitement_valider_pdf_facturx_post**](docs/TraitementFactureApi.md#valider_pdf_facturx_api_v1_traitement_valider_pdf_facturx_post) | **POST** /api/v1/traitement/valider-pdf-facturx | Valider un PDF Factur-X complet
-*TraitementFactureApi* | [**valider_pdf_facturx_async_api_v1_traitement_valider_facturx_async_post**](docs/TraitementFactureApi.md#valider_pdf_facturx_async_api_v1_traitement_valider_facturx_async_post) | **POST** /api/v1/traitement/valider-facturx-async | Valider un PDF Factur-X (asynchrone avec polling)
-*TraitementFactureApi* | [**valider_signature_pdf_endpoint_api_v1_traitement_valider_signature_pdf_post**](docs/TraitementFactureApi.md#valider_signature_pdf_endpoint_api_v1_traitement_valider_signature_pdf_post) | **POST** /api/v1/traitement/valider-signature-pdf | Valider les signatures électroniques d&#39;un PDF
-*TraitementFactureApi* | [**valider_xml_api_v1_traitement_valider_xml_post**](docs/TraitementFactureApi.md#valider_xml_api_v1_traitement_valider_xml_post) | **POST** /api/v1/traitement/valider-xml | Valider un XML Factur-X existant
-*UtilisateurApi* | [**obtenir_infos_utilisateur_api_v1_moi_get**](docs/UtilisateurApi.md#obtenir_infos_utilisateur_api_v1_moi_get) | **GET** /api/v1/moi | Obtenir les informations de l&#39;utilisateur connecté
+api = TraitementFactureApi(client)
 
+# Soumettre une facture avec destination Chorus Pro
+response = api.soumettre_facture_complete_api_v1_traitement_factures_soumettre_complete_post(
+    body={
+        "facture": facture_data,
+        "destination": {
+            "type": "chorus_pro",
+            "credentials": {
+                "login": "votre_login_chorus",
+                "password": "votre_password_chorus"
+            }
+        }
+    }
+)
 
-## Documentation For Models
+print(f"Facture soumise : {response.id_facture_chorus}")
+```
 
- - [AdresseElectronique](docs/AdresseElectronique.md)
- - [AdressePostale](docs/AdressePostale.md)
- - [BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost](docs/BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost.md)
- - [BodyCompleterFactureApiV1ChorusProFacturesCompleterPost](docs/BodyCompleterFactureApiV1ChorusProFacturesCompleterPost.md)
- - [BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet](docs/BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet.md)
- - [BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost](docs/BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost.md)
- - [BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost](docs/BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost.md)
- - [BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost](docs/BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost.md)
- - [BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost](docs/BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost.md)
- - [BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost](docs/BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost.md)
- - [BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost](docs/BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost.md)
- - [BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost](docs/BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost.md)
- - [BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost](docs/BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost.md)
- - [CadreDeFacturation](docs/CadreDeFacturation.md)
- - [CategorieTVA](docs/CategorieTVA.md)
- - [CertificateInfoResponse](docs/CertificateInfoResponse.md)
- - [ChorusProCredentials](docs/ChorusProCredentials.md)
- - [CodeCadreFacturation](docs/CodeCadreFacturation.md)
- - [CodeRaisonReduction](docs/CodeRaisonReduction.md)
- - [ConsulterFactureRequest](docs/ConsulterFactureRequest.md)
- - [ConsulterFactureResponse](docs/ConsulterFactureResponse.md)
- - [ConsulterStructureRequest](docs/ConsulterStructureRequest.md)
- - [ConsulterStructureResponse](docs/ConsulterStructureResponse.md)
- - [CredentialsAFNOR](docs/CredentialsAFNOR.md)
- - [CredentialsChorusPro](docs/CredentialsChorusPro.md)
- - [Destinataire](docs/Destinataire.md)
- - [Destination](docs/Destination.md)
- - [DestinationAFNOR](docs/DestinationAFNOR.md)
- - [DestinationChorusPro](docs/DestinationChorusPro.md)
- - [DirectionFlux](docs/DirectionFlux.md)
- - [DonneesFactureSimplifiees](docs/DonneesFactureSimplifiees.md)
- - [FactureEnrichieInfoInput](docs/FactureEnrichieInfoInput.md)
- - [FactureEnrichieInfoOutput](docs/FactureEnrichieInfoOutput.md)
- - [FactureFacturX](docs/FactureFacturX.md)
- - [FluxResume](docs/FluxResume.md)
- - [FormatSortie](docs/FormatSortie.md)
- - [Fournisseur](docs/Fournisseur.md)
- - [GenerateCertificateRequest](docs/GenerateCertificateRequest.md)
- - [GenerateCertificateResponse](docs/GenerateCertificateResponse.md)
- - [HTTPValidationError](docs/HTTPValidationError.md)
- - [InformationSignatureAPI](docs/InformationSignatureAPI.md)
- - [LigneDePoste](docs/LigneDePoste.md)
- - [LigneDePosteMontantRemiseHt](docs/LigneDePosteMontantRemiseHt.md)
- - [LigneDePosteMontantTotalLigneHt](docs/LigneDePosteMontantTotalLigneHt.md)
- - [LigneDePosteTauxTvaManuel](docs/LigneDePosteTauxTvaManuel.md)
- - [LigneDeTVA](docs/LigneDeTVA.md)
- - [ModeDepot](docs/ModeDepot.md)
- - [ModePaiement](docs/ModePaiement.md)
- - [MontantHtTotal](docs/MontantHtTotal.md)
- - [MontantTotal](docs/MontantTotal.md)
- - [MontantTotalAcompte](docs/MontantTotalAcompte.md)
- - [MontantTotalMontantRemiseGlobaleTtc](docs/MontantTotalMontantRemiseGlobaleTtc.md)
- - [MontantTtcTotal](docs/MontantTtcTotal.md)
- - [MontantTva](docs/MontantTva.md)
- - [Montantapayer](docs/Montantapayer.md)
- - [Montantbaseht](docs/Montantbaseht.md)
- - [Montanthttotal](docs/Montanthttotal.md)
- - [Montantttctotal](docs/Montantttctotal.md)
- - [Montanttva](docs/Montanttva.md)
- - [Montanttva1](docs/Montanttva1.md)
- - [Montantunitaireht](docs/Montantunitaireht.md)
- - [ObtenirIdChorusProRequest](docs/ObtenirIdChorusProRequest.md)
- - [ObtenirIdChorusProResponse](docs/ObtenirIdChorusProResponse.md)
- - [OptionsProcessing](docs/OptionsProcessing.md)
- - [PDFFacturXInfo](docs/PDFFacturXInfo.md)
- - [PDPCredentials](docs/PDPCredentials.md)
- - [ParametresSignature](docs/ParametresSignature.md)
- - [ParametresStructure](docs/ParametresStructure.md)
- - [PieceJointeComplementaire](docs/PieceJointeComplementaire.md)
- - [ProfilAPI](docs/ProfilAPI.md)
- - [ProfilFlux](docs/ProfilFlux.md)
- - [Quantite](docs/Quantite.md)
- - [QuotaInfo](docs/QuotaInfo.md)
- - [RechercherServicesResponse](docs/RechercherServicesResponse.md)
- - [RechercherStructureRequest](docs/RechercherStructureRequest.md)
- - [RechercherStructureResponse](docs/RechercherStructureResponse.md)
- - [References](docs/References.md)
- - [ReponseHealthcheckAFNOR](docs/ReponseHealthcheckAFNOR.md)
- - [ReponseRechercheFlux](docs/ReponseRechercheFlux.md)
- - [ReponseSoumissionFlux](docs/ReponseSoumissionFlux.md)
- - [ReponseTache](docs/ReponseTache.md)
- - [ReponseValidationErreur](docs/ReponseValidationErreur.md)
- - [ReponseValidationSucces](docs/ReponseValidationSucces.md)
- - [RequeteRechercheFlux](docs/RequeteRechercheFlux.md)
- - [RequeteSoumissionFlux](docs/RequeteSoumissionFlux.md)
- - [ResultatAFNOR](docs/ResultatAFNOR.md)
- - [ResultatChorusPro](docs/ResultatChorusPro.md)
- - [ResultatValidationPDFAPI](docs/ResultatValidationPDFAPI.md)
- - [SchemeID](docs/SchemeID.md)
- - [ServiceStructure](docs/ServiceStructure.md)
- - [SignatureInfo](docs/SignatureInfo.md)
- - [SoumettreFactureCompleteRequest](docs/SoumettreFactureCompleteRequest.md)
- - [SoumettreFactureCompleteResponse](docs/SoumettreFactureCompleteResponse.md)
- - [SoumettreFactureRequest](docs/SoumettreFactureRequest.md)
- - [SoumettreFactureResponse](docs/SoumettreFactureResponse.md)
- - [StatutAcquittement](docs/StatutAcquittement.md)
- - [StatutFacture](docs/StatutFacture.md)
- - [StatutTache](docs/StatutTache.md)
- - [StructureInfo](docs/StructureInfo.md)
- - [SyntaxeFlux](docs/SyntaxeFlux.md)
- - [Tauxmanuel](docs/Tauxmanuel.md)
- - [TypeFacture](docs/TypeFacture.md)
- - [TypeFlux](docs/TypeFlux.md)
- - [TypeTVA](docs/TypeTVA.md)
- - [Unite](docs/Unite.md)
- - [Utilisateur](docs/Utilisateur.md)
- - [ValidationError](docs/ValidationError.md)
- - [ValidationErrorLocInner](docs/ValidationErrorLocInner.md)
+## 🔑 Obtention du token JWT
 
+### Via l'API
 
-<a id="documentation-for-authorization"></a>
-## Documentation For Authorization
+```python
+import requests
 
+response = requests.post(
+    'https://factpulse.fr/api/token/',
+    json={
+        'username': 'votre_email@example.com',
+        'password': 'votre_mot_de_passe'
+    }
+)
 
-Authentication schemes defined for the API:
-<a id="HTTPBearer"></a>
-### HTTPBearer
+token = response.json()['access']
+```
 
-- **Type**: Bearer authentication
+**Accès aux credentials d'un client spécifique :**
 
+Si vous gérez plusieurs clients et souhaitez accéder aux credentials (Chorus Pro, AFNOR PDP) d'un client particulier, ajoutez le champ `client_uid` :
 
-## Author
+```python
+response = requests.post(
+    'https://factpulse.fr/api/token/',
+    json={
+        'username': 'votre_email@example.com',
+        'password': 'votre_mot_de_passe',
+        'client_uid': 'identifiant_client'  # UID du client cible
+    }
+)
 
+token = response.json()['access']
+```
 
+### Via le Dashboard
 
+1. Connectez-vous sur https://factpulse.fr/api/dashboard/
+2. Générez un token API
+3. Copiez et utilisez le token dans votre configuration
 
+## 📚 Ressources
+
+- **Documentation API** : https://factpulse.fr/api/facturation/documentation
+- **Code source** : https://github.com/factpulse/sdk-python
+- **Issues** : https://github.com/factpulse/sdk-python/issues
+- **Support** : contact@factpulse.fr
+
+## 📄 Licence
+
+MIT License - Copyright (c) 2025 FactPulse

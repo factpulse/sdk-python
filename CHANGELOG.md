@@ -7,10 +7,10 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-## [1.0.8] - 2025-11-13
+## [1.0.9] - 2025-11-13
 
 ### Added
-- Version initiale du SDK python
+- Version initiale du SDK Python
 - Support complet de l'API FactPulse v1.0.0
 - Endpoints Factur-X (génération, validation)
 - Endpoints AFNOR PDP/PA (Flow Service, Directory Service)
@@ -24,5 +24,5 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Guide d'authentification JWT
 - Configuration avancée (timeout, proxy, debug)
 
-[Unreleased]: https://github.com/factpulse/sdk-python/compare/v1.0.8...HEAD
-[1.0.8]: https://github.com/factpulse/sdk-python/releases/tag/v1.0.8
+[Unreleased]: https://github.com/factpulse/sdk-python/compare/v1.0.9...HEAD
+[1.0.9]: https://github.com/factpulse/sdk-python/releases/tag/v1.0.9

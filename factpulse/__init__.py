@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.0.8"
+__version__ = "1.0.9"
 
 # Define package exports
 __all__ = [
@@ -22,9 +22,7 @@ __all__ = [
     "AFNORPDPPADirectoryServiceApi",
     "AFNORPDPPAFlowServiceApi",
     "ChorusProApi",
-    "ProcessingEndpointsUnifisApi",
     "SantApi",
-    "SignatureLectroniqueApi",
     "TraitementFactureApi",
     "UtilisateurApi",
     "ApiResponse",
@@ -151,9 +149,7 @@ from factpulse.api.afnorpdppa_api import AFNORPDPPAApi as AFNORPDPPAApi
 from factpulse.api.afnorpdppa_directory_service_api import AFNORPDPPADirectoryServiceApi as AFNORPDPPADirectoryServiceApi
 from factpulse.api.afnorpdppa_flow_service_api import AFNORPDPPAFlowServiceApi as AFNORPDPPAFlowServiceApi
 from factpulse.api.chorus_pro_api import ChorusProApi as ChorusProApi
-from factpulse.api.processing_endpoints_unifis_api import ProcessingEndpointsUnifisApi as ProcessingEndpointsUnifisApi
 from factpulse.api.sant_api import SantApi as SantApi
-from factpulse.api.signature_lectronique_api import SignatureLectroniqueApi as SignatureLectroniqueApi
 from factpulse.api.traitement_facture_api import TraitementFactureApi as TraitementFactureApi
 from factpulse.api.utilisateur_api import UtilisateurApi as UtilisateurApi
 
