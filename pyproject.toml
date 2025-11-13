@@ -1,6 +1,6 @@
 [project]
 name = "factpulse"
-version = "1.0.12"
+version = "1.0.13"
 description = "API REST FactPulse"
 authors = [
   {name = "OpenAPI Generator Community",email = "team@openapitools.org"},
