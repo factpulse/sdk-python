@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,10 +27,11 @@ class PDPCredentials(BaseModel):
     Credentials PDP pour la stratégie zero-storage (Strategy B).  Permet de fournir directement les credentials PDP dans la requête au lieu de les stocker dans Django.  Utile pour : - Tests ponctuels sans persister les credentials - Intégrations temporaires - Environnements de développement
     """ # noqa: E501
     flow_service_url: StrictStr = Field(description="URL de base du Flow Service AFNOR")
+    directory_service_url: Optional[StrictStr] = None
     token_url: StrictStr = Field(description="URL du serveur OAuth2")
     client_id: StrictStr = Field(description="Client ID OAuth2")
     client_secret: StrictStr = Field(description="Client Secret OAuth2 (sensible)")
-    __properties: ClassVar[List[str]] = ["flow_service_url", "token_url", "client_id", "client_secret"]
+    __properties: ClassVar[List[str]] = ["flow_service_url", "directory_service_url", "token_url", "client_id", "client_secret"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -71,6 +72,11 @@ class PDPCredentials(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if directory_service_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.directory_service_url is None and "directory_service_url" in self.model_fields_set:
+            _dict['directory_service_url'] = None
+
         return _dict
 
     @classmethod
@@ -84,6 +90,7 @@ class PDPCredentials(BaseModel):
 
         _obj = cls.model_validate({
             "flow_service_url": obj.get("flow_service_url"),
+            "directory_service_url": obj.get("directory_service_url"),
             "token_url": obj.get("token_url"),
             "client_id": obj.get("client_id"),
             "client_secret": obj.get("client_secret")

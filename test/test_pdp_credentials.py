@@ -36,6 +36,7 @@ class TestPDPCredentials(unittest.TestCase):
         if include_optional:
             return PDPCredentials(
                 flow_service_url = 'https://api.pdp-example.fr/flow/v1',
+                directory_service_url = '',
                 token_url = 'https://auth.pdp-example.fr/oauth/token',
                 client_id = 'factpulse_prod_abc123',
                 client_secret = 'secret_xyz789'
