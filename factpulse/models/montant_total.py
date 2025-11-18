@@ -19,12 +19,12 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from factpulse.models.montant_a_payer import MontantAPayer
+from factpulse.models.montant_ht_total import MontantHtTotal
+from factpulse.models.montant_remise_globale_ttc import MontantRemiseGlobaleTtc
 from factpulse.models.montant_total_acompte import MontantTotalAcompte
-from factpulse.models.montant_total_montant_remise_globale_ttc import MontantTotalMontantRemiseGlobaleTtc
-from factpulse.models.montantapayer import Montantapayer
-from factpulse.models.montanthttotal import Montanthttotal
-from factpulse.models.montantttctotal import Montantttctotal
-from factpulse.models.montanttva1 import Montanttva1
+from factpulse.models.montant_ttc_total import MontantTtcTotal
+from factpulse.models.montant_tva1 import MontantTva1
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -32,12 +32,12 @@ class MontantTotal(BaseModel):
     """
     Contient tous les montants totaux de la facture.
     """ # noqa: E501
-    montant_ht_total: Montanthttotal = Field(alias="montantHtTotal")
-    montant_tva: Montanttva1 = Field(alias="montantTva")
-    montant_ttc_total: Montantttctotal = Field(alias="montantTtcTotal")
-    montant_a_payer: Montantapayer = Field(alias="montantAPayer")
+    montant_ht_total: MontantHtTotal = Field(alias="montantHtTotal")
+    montant_tva: MontantTva1 = Field(alias="montantTva")
+    montant_ttc_total: MontantTtcTotal = Field(alias="montantTtcTotal")
+    montant_a_payer: MontantAPayer = Field(alias="montantAPayer")
     acompte: Optional[MontantTotalAcompte] = None
-    montant_remise_globale_ttc: Optional[MontantTotalMontantRemiseGlobaleTtc] = Field(default=None, alias="montantRemiseGlobaleTtc")
+    montant_remise_globale_ttc: Optional[MontantRemiseGlobaleTtc] = Field(default=None, alias="montantRemiseGlobaleTtc")
     motif_remise_globale_ttc: Optional[StrictStr] = Field(default=None, alias="motifRemiseGlobaleTtc")
     __properties: ClassVar[List[str]] = ["montantHtTotal", "montantTva", "montantTtcTotal", "montantAPayer", "acompte", "montantRemiseGlobaleTtc", "motifRemiseGlobaleTtc"]
 
@@ -125,12 +125,12 @@ class MontantTotal(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "montantHtTotal": Montanthttotal.from_dict(obj["montantHtTotal"]) if obj.get("montantHtTotal") is not None else None,
-            "montantTva": Montanttva1.from_dict(obj["montantTva"]) if obj.get("montantTva") is not None else None,
-            "montantTtcTotal": Montantttctotal.from_dict(obj["montantTtcTotal"]) if obj.get("montantTtcTotal") is not None else None,
-            "montantAPayer": Montantapayer.from_dict(obj["montantAPayer"]) if obj.get("montantAPayer") is not None else None,
+            "montantHtTotal": MontantHtTotal.from_dict(obj["montantHtTotal"]) if obj.get("montantHtTotal") is not None else None,
+            "montantTva": MontantTva1.from_dict(obj["montantTva"]) if obj.get("montantTva") is not None else None,
+            "montantTtcTotal": MontantTtcTotal.from_dict(obj["montantTtcTotal"]) if obj.get("montantTtcTotal") is not None else None,
+            "montantAPayer": MontantAPayer.from_dict(obj["montantAPayer"]) if obj.get("montantAPayer") is not None else None,
             "acompte": MontantTotalAcompte.from_dict(obj["acompte"]) if obj.get("acompte") is not None else None,
-            "montantRemiseGlobaleTtc": MontantTotalMontantRemiseGlobaleTtc.from_dict(obj["montantRemiseGlobaleTtc"]) if obj.get("montantRemiseGlobaleTtc") is not None else None,
+            "montantRemiseGlobaleTtc": MontantRemiseGlobaleTtc.from_dict(obj["montantRemiseGlobaleTtc"]) if obj.get("montantRemiseGlobaleTtc") is not None else None,
             "motifRemiseGlobaleTtc": obj.get("motifRemiseGlobaleTtc")
         })
         return _obj

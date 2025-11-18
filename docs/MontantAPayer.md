@@ -1,6 +1,6 @@
-# Montantttctotal
+# MontantAPayer
 
-Montant total TTC.
+Montant à payer.
 
 ## Properties
 
@@ -10,19 +10,19 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from factpulse.models.montantttctotal import Montantttctotal
+from factpulse.models.montant_a_payer import MontantAPayer
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of Montantttctotal from a JSON string
-montantttctotal_instance = Montantttctotal.from_json(json)
+# create an instance of MontantAPayer from a JSON string
+montant_a_payer_instance = MontantAPayer.from_json(json)
 # print the JSON string representation of the object
-print(Montantttctotal.to_json())
+print(MontantAPayer.to_json())
 
 # convert the object into a dict
-montantttctotal_dict = montantttctotal_instance.to_dict()
-# create an instance of Montantttctotal from a dict
-montantttctotal_from_dict = Montantttctotal.from_dict(montantttctotal_dict)
+montant_a_payer_dict = montant_a_payer_instance.to_dict()
+# create an instance of MontantAPayer from a dict
+montant_a_payer_from_dict = MontantAPayer.from_dict(montant_a_payer_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

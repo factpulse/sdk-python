@@ -24,11 +24,11 @@ from typing import Union, Any, List, Set, TYPE_CHECKING, Optional, Dict
 from typing_extensions import Literal, Self
 from pydantic import Field
 
-MONTANTTVA1_ANY_OF_SCHEMAS = ["float", "str"]
+MONTANTAPAYER_ANY_OF_SCHEMAS = ["float", "str"]
 
-class Montanttva1(BaseModel):
+class MontantAPayer(BaseModel):
     """
-    Montant total de la TVA.
+    Montant à payer.
     """
 
     # data type: float
@@ -58,7 +58,7 @@ class Montanttva1(BaseModel):
 
     @field_validator('actual_instance')
     def actual_instance_must_validate_anyof(cls, v):
-        instance = Montanttva1.model_construct()
+        instance = MontantAPayer.model_construct()
         error_messages = []
         # validate data type: float
         try:
@@ -74,7 +74,7 @@ class Montanttva1(BaseModel):
             error_messages.append(str(e))
         if error_messages:
             # no match
-            raise ValueError("No match found when setting the actual_instance in Montanttva1 with anyOf schemas: float, str. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting the actual_instance in MontantAPayer with anyOf schemas: float, str. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -108,7 +108,7 @@ class Montanttva1(BaseModel):
 
         if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into Montanttva1 with anyOf schemas: float, str. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into MontantAPayer with anyOf schemas: float, str. Details: " + ", ".join(error_messages))
         else:
             return instance
 

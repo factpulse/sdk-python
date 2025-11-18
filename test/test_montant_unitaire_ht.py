@@ -14,10 +14,10 @@
 
 import unittest
 
-from factpulse.models.montantttctotal import Montantttctotal
+from factpulse.models.montant_unitaire_ht import MontantUnitaireHt
 
-class TestMontantttctotal(unittest.TestCase):
-    """Montantttctotal unit test stubs"""
+class TestMontantUnitaireHt(unittest.TestCase):
+    """MontantUnitaireHt unit test stubs"""
 
     def setUp(self):
         pass
@@ -25,24 +25,24 @@ class TestMontantttctotal(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> Montantttctotal:
-        """Test Montantttctotal
+    def make_instance(self, include_optional) -> MontantUnitaireHt:
+        """Test MontantUnitaireHt
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `Montantttctotal`
+        # uncomment below to create an instance of `MontantUnitaireHt`
         """
-        model = Montantttctotal()
+        model = MontantUnitaireHt()
         if include_optional:
-            return Montantttctotal(
+            return MontantUnitaireHt(
             )
         else:
-            return Montantttctotal(
+            return MontantUnitaireHt(
         )
         """
 
-    def testMontantttctotal(self):
-        """Test Montantttctotal"""
+    def testMontantUnitaireHt(self):
+        """Test MontantUnitaireHt"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

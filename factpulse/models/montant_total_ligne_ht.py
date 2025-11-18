@@ -24,11 +24,11 @@ from typing import Union, Any, List, Set, TYPE_CHECKING, Optional, Dict
 from typing_extensions import Literal, Self
 from pydantic import Field
 
-MONTANTBASEHT_ANY_OF_SCHEMAS = ["float", "str"]
+MONTANTTOTALLIGNEHT_ANY_OF_SCHEMAS = ["float", "str"]
 
-class Montantbaseht(BaseModel):
+class MontantTotalLigneHt(BaseModel):
     """
-    Montant de la base HT pour cette ligne de TVA.
+    Montant total HT de la ligne (quantité × prix unitaire - remise).
     """
 
     # data type: float
@@ -58,7 +58,10 @@ class Montantbaseht(BaseModel):
 
     @field_validator('actual_instance')
     def actual_instance_must_validate_anyof(cls, v):
-        instance = Montantbaseht.model_construct()
+        if v is None:
+            return v
+
+        instance = MontantTotalLigneHt.model_construct()
         error_messages = []
         # validate data type: float
         try:
@@ -74,7 +77,7 @@ class Montantbaseht(BaseModel):
             error_messages.append(str(e))
         if error_messages:
             # no match
-            raise ValueError("No match found when setting the actual_instance in Montantbaseht with anyOf schemas: float, str. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting the actual_instance in MontantTotalLigneHt with anyOf schemas: float, str. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -86,6 +89,9 @@ class Montantbaseht(BaseModel):
     def from_json(cls, json_str: str) -> Self:
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
+        if json_str is None:
+            return instance
+
         error_messages = []
         # deserialize data into float
         try:
@@ -108,7 +114,7 @@ class Montantbaseht(BaseModel):
 
         if error_messages:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into Montantbaseht with anyOf schemas: float, str. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into MontantTotalLigneHt with anyOf schemas: float, str. Details: " + ", ".join(error_messages))
         else:
             return instance
 

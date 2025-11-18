@@ -22,9 +22,9 @@ from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.categorie_tva import CategorieTVA
 from factpulse.models.code_raison_reduction import CodeRaisonReduction
 from factpulse.models.ligne_de_poste_montant_remise_ht import LigneDePosteMontantRemiseHt
-from factpulse.models.ligne_de_poste_montant_total_ligne_ht import LigneDePosteMontantTotalLigneHt
 from factpulse.models.ligne_de_poste_taux_tva_manuel import LigneDePosteTauxTvaManuel
-from factpulse.models.montantunitaireht import Montantunitaireht
+from factpulse.models.montant_total_ligne_ht import MontantTotalLigneHt
+from factpulse.models.montant_unitaire_ht import MontantUnitaireHt
 from factpulse.models.quantite import Quantite
 from factpulse.models.unite import Unite
 from typing import Optional, Set
@@ -39,9 +39,9 @@ class LigneDePoste(BaseModel):
     denomination: StrictStr
     quantite: Quantite
     unite: Unite
-    montant_unitaire_ht: Montantunitaireht = Field(alias="montantUnitaireHt")
+    montant_unitaire_ht: MontantUnitaireHt = Field(alias="montantUnitaireHt")
     montant_remise_ht: Optional[LigneDePosteMontantRemiseHt] = Field(default=None, alias="montantRemiseHt")
-    montant_total_ligne_ht: Optional[LigneDePosteMontantTotalLigneHt] = Field(default=None, alias="montantTotalLigneHt")
+    montant_total_ligne_ht: Optional[MontantTotalLigneHt] = Field(default=None, alias="montantTotalLigneHt")
     taux_tva: Optional[StrictStr] = Field(default=None, alias="tauxTva")
     taux_tva_manuel: Optional[LigneDePosteTauxTvaManuel] = Field(default=None, alias="tauxTvaManuel")
     categorie_tva: Optional[CategorieTVA] = Field(default=None, alias="categorieTva")
@@ -172,9 +172,9 @@ class LigneDePoste(BaseModel):
             "denomination": obj.get("denomination"),
             "quantite": Quantite.from_dict(obj["quantite"]) if obj.get("quantite") is not None else None,
             "unite": obj.get("unite"),
-            "montantUnitaireHt": Montantunitaireht.from_dict(obj["montantUnitaireHt"]) if obj.get("montantUnitaireHt") is not None else None,
+            "montantUnitaireHt": MontantUnitaireHt.from_dict(obj["montantUnitaireHt"]) if obj.get("montantUnitaireHt") is not None else None,
             "montantRemiseHt": LigneDePosteMontantRemiseHt.from_dict(obj["montantRemiseHt"]) if obj.get("montantRemiseHt") is not None else None,
-            "montantTotalLigneHt": LigneDePosteMontantTotalLigneHt.from_dict(obj["montantTotalLigneHt"]) if obj.get("montantTotalLigneHt") is not None else None,
+            "montantTotalLigneHt": MontantTotalLigneHt.from_dict(obj["montantTotalLigneHt"]) if obj.get("montantTotalLigneHt") is not None else None,
             "tauxTva": obj.get("tauxTva"),
             "tauxTvaManuel": LigneDePosteTauxTvaManuel.from_dict(obj["tauxTvaManuel"]) if obj.get("tauxTvaManuel") is not None else None,
             "categorieTva": obj.get("categorieTva"),

@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "1.0.15"
+__version__ = "2.0.0"
 
 # Define package exports
 __all__ = [
@@ -77,27 +77,23 @@ __all__ = [
     "InformationSignatureAPI",
     "LigneDePoste",
     "LigneDePosteMontantRemiseHt",
-    "LigneDePosteMontantTotalLigneHt",
     "LigneDePosteTauxTvaManuel",
     "LigneDeTVA",
     "ModeDepot",
     "ModePaiement",
+    "MontantAPayer",
+    "MontantBaseHt",
     "MontantHtTotal",
     "MontantHtTotal1",
+    "MontantRemiseGlobaleTtc",
     "MontantTotal",
     "MontantTotalAcompte",
-    "MontantTotalMontantRemiseGlobaleTtc",
+    "MontantTotalLigneHt",
     "MontantTtcTotal",
     "MontantTtcTotal1",
     "MontantTva",
     "MontantTva1",
-    "Montantapayer",
-    "Montantbaseht",
-    "Montanthttotal",
-    "Montantttctotal",
-    "Montanttva",
-    "Montanttva1",
-    "Montantunitaireht",
+    "MontantUnitaireHt",
     "ObtenirIdChorusProRequest",
     "ObtenirIdChorusProResponse",
     "OptionsProcessing",
@@ -211,27 +207,23 @@ from factpulse.models.http_validation_error import HTTPValidationError as HTTPVa
 from factpulse.models.information_signature_api import InformationSignatureAPI as InformationSignatureAPI
 from factpulse.models.ligne_de_poste import LigneDePoste as LigneDePoste
 from factpulse.models.ligne_de_poste_montant_remise_ht import LigneDePosteMontantRemiseHt as LigneDePosteMontantRemiseHt
-from factpulse.models.ligne_de_poste_montant_total_ligne_ht import LigneDePosteMontantTotalLigneHt as LigneDePosteMontantTotalLigneHt
 from factpulse.models.ligne_de_poste_taux_tva_manuel import LigneDePosteTauxTvaManuel as LigneDePosteTauxTvaManuel
 from factpulse.models.ligne_de_tva import LigneDeTVA as LigneDeTVA
 from factpulse.models.mode_depot import ModeDepot as ModeDepot
 from factpulse.models.mode_paiement import ModePaiement as ModePaiement
+from factpulse.models.montant_a_payer import MontantAPayer as MontantAPayer
+from factpulse.models.montant_base_ht import MontantBaseHt as MontantBaseHt
 from factpulse.models.montant_ht_total import MontantHtTotal as MontantHtTotal
 from factpulse.models.montant_ht_total1 import MontantHtTotal1 as MontantHtTotal1
+from factpulse.models.montant_remise_globale_ttc import MontantRemiseGlobaleTtc as MontantRemiseGlobaleTtc
 from factpulse.models.montant_total import MontantTotal as MontantTotal
 from factpulse.models.montant_total_acompte import MontantTotalAcompte as MontantTotalAcompte
-from factpulse.models.montant_total_montant_remise_globale_ttc import MontantTotalMontantRemiseGlobaleTtc as MontantTotalMontantRemiseGlobaleTtc
+from factpulse.models.montant_total_ligne_ht import MontantTotalLigneHt as MontantTotalLigneHt
 from factpulse.models.montant_ttc_total import MontantTtcTotal as MontantTtcTotal
 from factpulse.models.montant_ttc_total1 import MontantTtcTotal1 as MontantTtcTotal1
 from factpulse.models.montant_tva import MontantTva as MontantTva
 from factpulse.models.montant_tva1 import MontantTva1 as MontantTva1
-from factpulse.models.montantapayer import Montantapayer as Montantapayer
-from factpulse.models.montantbaseht import Montantbaseht as Montantbaseht
-from factpulse.models.montanthttotal import Montanthttotal as Montanthttotal
-from factpulse.models.montantttctotal import Montantttctotal as Montantttctotal
-from factpulse.models.montanttva import Montanttva as Montanttva
-from factpulse.models.montanttva1 import Montanttva1 as Montanttva1
-from factpulse.models.montantunitaireht import Montantunitaireht as Montantunitaireht
+from factpulse.models.montant_unitaire_ht import MontantUnitaireHt as MontantUnitaireHt
 from factpulse.models.obtenir_id_chorus_pro_request import ObtenirIdChorusProRequest as ObtenirIdChorusProRequest
 from factpulse.models.obtenir_id_chorus_pro_response import ObtenirIdChorusProResponse as ObtenirIdChorusProResponse
 from factpulse.models.options_processing import OptionsProcessing as OptionsProcessing

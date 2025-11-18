@@ -1,4 +1,4 @@
-# Montantunitaireht
+# MontantUnitaireHt
 
 Montant unitaire Hors Taxes de l'article.
 
@@ -10,19 +10,19 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from factpulse.models.montantunitaireht import Montantunitaireht
+from factpulse.models.montant_unitaire_ht import MontantUnitaireHt
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of Montantunitaireht from a JSON string
-montantunitaireht_instance = Montantunitaireht.from_json(json)
+# create an instance of MontantUnitaireHt from a JSON string
+montant_unitaire_ht_instance = MontantUnitaireHt.from_json(json)
 # print the JSON string representation of the object
-print(Montantunitaireht.to_json())
+print(MontantUnitaireHt.to_json())
 
 # convert the object into a dict
-montantunitaireht_dict = montantunitaireht_instance.to_dict()
-# create an instance of Montantunitaireht from a dict
-montantunitaireht_from_dict = Montantunitaireht.from_dict(montantunitaireht_dict)
+montant_unitaire_ht_dict = montant_unitaire_ht_instance.to_dict()
+# create an instance of MontantUnitaireHt from a dict
+montant_unitaire_ht_from_dict = MontantUnitaireHt.from_dict(montant_unitaire_ht_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

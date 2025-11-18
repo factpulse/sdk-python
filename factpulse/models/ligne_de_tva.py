@@ -20,8 +20,8 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.categorie_tva import CategorieTVA
-from factpulse.models.montantbaseht import Montantbaseht
-from factpulse.models.montanttva import Montanttva
+from factpulse.models.montant_base_ht import MontantBaseHt
+from factpulse.models.montant_tva import MontantTva
 from factpulse.models.tauxmanuel import Tauxmanuel
 from typing import Optional, Set
 from typing_extensions import Self
@@ -30,8 +30,8 @@ class LigneDeTVA(BaseModel):
     """
     Représente une ligne de totalisation par taux de TVA.
     """ # noqa: E501
-    montant_base_ht: Montantbaseht = Field(alias="montantBaseHt")
-    montant_tva: Montanttva = Field(alias="montantTva")
+    montant_base_ht: MontantBaseHt = Field(alias="montantBaseHt")
+    montant_tva: MontantTva = Field(alias="montantTva")
     taux: Optional[StrictStr] = None
     taux_manuel: Optional[Tauxmanuel] = Field(default=None, alias="tauxManuel")
     categorie: Optional[CategorieTVA] = None
@@ -107,8 +107,8 @@ class LigneDeTVA(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "montantBaseHt": Montantbaseht.from_dict(obj["montantBaseHt"]) if obj.get("montantBaseHt") is not None else None,
-            "montantTva": Montanttva.from_dict(obj["montantTva"]) if obj.get("montantTva") is not None else None,
+            "montantBaseHt": MontantBaseHt.from_dict(obj["montantBaseHt"]) if obj.get("montantBaseHt") is not None else None,
+            "montantTva": MontantTva.from_dict(obj["montantTva"]) if obj.get("montantTva") is not None else None,
             "taux": obj.get("taux"),
             "tauxManuel": Tauxmanuel.from_dict(obj["tauxManuel"]) if obj.get("tauxManuel") is not None else None,
             "categorie": obj.get("categorie")
