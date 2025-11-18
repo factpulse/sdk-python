@@ -40,7 +40,7 @@ class TestRequeteSoumissionFlux(unittest.TestCase):
                 profil_flux = 'Basic',
                 tracking_id = '',
                 request_id = '',
-                pdp_credentials = {"client_id":"factpulse_prod_abc123","client_secret":"secret_xyz789","directory_service_url":"https://api.pdp-example.fr/directory/v1","flow_service_url":"https://api.pdp-example.fr/flow/v1","token_url":"https://auth.pdp-example.fr/oauth/token"}
+                pdp_credentials = {client_id=factpulse_prod_abc123, client_secret=secret_xyz789, directory_service_url=https://api.pdp-example.fr/directory/v1, flow_service_url=https://api.pdp-example.fr/flow/v1, token_url=https://auth.pdp-example.fr/oauth/token}
             )
         else:
             return RequeteSoumissionFlux(

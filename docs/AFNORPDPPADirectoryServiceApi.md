@@ -34,6 +34,7 @@ Créer une ligne dans l'annuaire
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -46,6 +47,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -73,7 +83,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -100,6 +110,7 @@ Créer un code de routage dans l'annuaire
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -112,6 +123,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -139,7 +159,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -166,6 +186,7 @@ Supprimer une ligne d'annuaire
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -178,6 +199,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -209,7 +239,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -300,6 +330,7 @@ Obtenir une ligne d'annuaire identifiée par un identifiant d'adressage
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -312,6 +343,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -343,7 +383,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -370,6 +410,7 @@ Obtenir une ligne d'annuaire identifiée par son idInstance
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -382,6 +423,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -413,7 +463,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -440,6 +490,7 @@ Obtenir un code de routage identifié par son idInstance
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -452,6 +503,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -483,7 +543,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -510,6 +570,7 @@ Consulter un code de routage identifié par SIRET et identifiant de routage
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -522,6 +583,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -555,7 +625,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -582,6 +652,7 @@ Retourne les détails d'une entreprise (unité légale) identifiée par son num�
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -594,6 +665,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -625,7 +705,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -652,6 +732,7 @@ Obtenir une entreprise (unité légale) identifiée par son idInstance
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -664,6 +745,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -695,7 +785,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -722,6 +812,7 @@ Obtenir un établissement identifié par son numéro SIRET
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -734,6 +825,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -765,7 +865,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -792,6 +892,7 @@ Obtenir un établissement identifié par son idInstance
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -804,6 +905,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -835,7 +945,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -862,6 +972,7 @@ Mettre à jour partiellement une ligne d'annuaire
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -874,6 +985,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -905,7 +1025,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -932,6 +1052,7 @@ Mettre à jour partiellement un code de routage privé
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -944,6 +1065,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -975,7 +1105,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -1002,6 +1132,7 @@ Mettre à jour complètement un code de routage privé
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -1014,6 +1145,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -1045,7 +1185,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -1072,6 +1212,7 @@ Rechercher des lignes d'annuaire selon des critères
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -1084,6 +1225,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -1111,7 +1261,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -1136,6 +1286,7 @@ Rechercher des codes de routage selon des critères
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -1148,6 +1299,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -1175,7 +1335,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -1200,6 +1360,7 @@ Recherche multi-critères d'entreprises (unités légales)
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -1212,6 +1373,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -1239,7 +1409,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 
@@ -1264,6 +1434,7 @@ Recherche multi-critères d'établissements
 
 ### Example
 
+* Bearer Authentication (HTTPBearer):
 
 ```python
 import factpulse
@@ -1276,6 +1447,15 @@ configuration = factpulse.Configuration(
     host = "http://localhost"
 )
 
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
 
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
@@ -1303,7 +1483,7 @@ This endpoint does not need any parameter.
 
 ### Authorization
 
-No authorization required
+[HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 

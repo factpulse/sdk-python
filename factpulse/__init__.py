@@ -14,14 +14,13 @@
 """  # noqa: E501
 
 
-__version__ = "2.0.3"
+__version__ = "2.0.4"
 
 # Define package exports
 __all__ = [
     "AFNORPDPPAApi",
     "AFNORPDPPADirectoryServiceApi",
     "AFNORPDPPAFlowServiceApi",
-    "AFNORDirectoryServiceMtierApi",
     "ChorusProApi",
     "SantApi",
     "TraitementFactureApi",
@@ -43,8 +42,6 @@ __all__ = [
     "BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost",
     "BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost",
     "BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost",
-    "BodySearchSirenMetierApiV1AfnorDirectorySirenSearchPost",
-    "BodySearchSiretMetierApiV1AfnorDirectorySiretSearchPost",
     "BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost",
     "BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost",
     "BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost",
@@ -150,7 +147,6 @@ __all__ = [
 from factpulse.api.afnorpdppa_api import AFNORPDPPAApi as AFNORPDPPAApi
 from factpulse.api.afnorpdppa_directory_service_api import AFNORPDPPADirectoryServiceApi as AFNORPDPPADirectoryServiceApi
 from factpulse.api.afnorpdppa_flow_service_api import AFNORPDPPAFlowServiceApi as AFNORPDPPAFlowServiceApi
-from factpulse.api.afnor_directory_service_mtier_api import AFNORDirectoryServiceMtierApi as AFNORDirectoryServiceMtierApi
 from factpulse.api.chorus_pro_api import ChorusProApi as ChorusProApi
 from factpulse.api.sant_api import SantApi as SantApi
 from factpulse.api.traitement_facture_api import TraitementFactureApi as TraitementFactureApi
@@ -176,8 +172,6 @@ from factpulse.models.body_lister_services_structure_api_v1_chorus_pro_structure
 from factpulse.models.body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post import BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost as BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost
 from factpulse.models.body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post import BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost as BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost
 from factpulse.models.body_recycler_facture_api_v1_chorus_pro_factures_recycler_post import BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost as BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost
-from factpulse.models.body_search_siren_metier_api_v1_afnor_directory_siren_search_post import BodySearchSirenMetierApiV1AfnorDirectorySirenSearchPost as BodySearchSirenMetierApiV1AfnorDirectorySirenSearchPost
-from factpulse.models.body_search_siret_metier_api_v1_afnor_directory_siret_search_post import BodySearchSiretMetierApiV1AfnorDirectorySiretSearchPost as BodySearchSiretMetierApiV1AfnorDirectorySiretSearchPost
 from factpulse.models.body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post import BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost as BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost
 from factpulse.models.body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post import BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost as BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost
 from factpulse.models.body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post import BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost as BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost
