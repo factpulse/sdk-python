@@ -14,44 +14,46 @@
 
 import unittest
 
-from factpulse.models.requete_soumission_flux import RequeteSoumissionFlux
+from factpulse.api.afnor_directory_service_mtier_api import AFNORDirectoryServiceMtierApi
 
-class TestRequeteSoumissionFlux(unittest.TestCase):
-    """RequeteSoumissionFlux unit test stubs"""
 
-    def setUp(self):
+class TestAFNORDirectoryServiceMtierApi(unittest.TestCase):
+    """AFNORDirectoryServiceMtierApi unit test stubs"""
+
+    def setUp(self) -> None:
+        self.api = AFNORDirectoryServiceMtierApi()
+
+    def tearDown(self) -> None:
         pass
 
-    def tearDown(self):
+    def test_get_siren_metier_api_v1_afnor_directory_siren_siren_get(self) -> None:
+        """Test case for get_siren_metier_api_v1_afnor_directory_siren_siren_get
+
+        Récupérer une entreprise par SIREN (multi-tenant)
+        """
         pass
 
-    def make_instance(self, include_optional) -> RequeteSoumissionFlux:
-        """Test RequeteSoumissionFlux
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        # uncomment below to create an instance of `RequeteSoumissionFlux`
-        """
-        model = RequeteSoumissionFlux()
-        if include_optional:
-            return RequeteSoumissionFlux(
-                nom_flux = 'Facture 2025-001',
-                syntaxe_flux = 'CII',
-                profil_flux = 'Basic',
-                tracking_id = '',
-                request_id = '',
-                pdp_credentials = {"client_id":"factpulse_prod_abc123","client_secret":"secret_xyz789","directory_service_url":"https://api.pdp-example.fr/directory/v1","flow_service_url":"https://api.pdp-example.fr/flow/v1","token_url":"https://auth.pdp-example.fr/oauth/token"}
-            )
-        else:
-            return RequeteSoumissionFlux(
-                nom_flux = 'Facture 2025-001',
-        )
-        """
+    def test_get_siret_metier_api_v1_afnor_directory_siret_siret_get(self) -> None:
+        """Test case for get_siret_metier_api_v1_afnor_directory_siret_siret_get
 
-    def testRequeteSoumissionFlux(self):
-        """Test RequeteSoumissionFlux"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        Récupérer un établissement par SIRET (multi-tenant)
+        """
+        pass
+
+    def test_search_siren_metier_api_v1_afnor_directory_siren_search_post(self) -> None:
+        """Test case for search_siren_metier_api_v1_afnor_directory_siren_search_post
+
+        Rechercher des entreprises (multi-tenant)
+        """
+        pass
+
+    def test_search_siret_metier_api_v1_afnor_directory_siret_search_post(self) -> None:
+        """Test case for search_siret_metier_api_v1_afnor_directory_siret_search_post
+
+        Rechercher des établissements (multi-tenant)
+        """
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -14,10 +14,10 @@
 
 import unittest
 
-from factpulse.models.requete_soumission_flux import RequeteSoumissionFlux
+from factpulse.models.body_search_siret_metier_api_v1_afnor_directory_siret_search_post import BodySearchSiretMetierApiV1AfnorDirectorySiretSearchPost
 
-class TestRequeteSoumissionFlux(unittest.TestCase):
-    """RequeteSoumissionFlux unit test stubs"""
+class TestBodySearchSiretMetierApiV1AfnorDirectorySiretSearchPost(unittest.TestCase):
+    """BodySearchSiretMetierApiV1AfnorDirectorySiretSearchPost unit test stubs"""
 
     def setUp(self):
         pass
@@ -25,31 +25,27 @@ class TestRequeteSoumissionFlux(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> RequeteSoumissionFlux:
-        """Test RequeteSoumissionFlux
+    def make_instance(self, include_optional) -> BodySearchSiretMetierApiV1AfnorDirectorySiretSearchPost:
+        """Test BodySearchSiretMetierApiV1AfnorDirectorySiretSearchPost
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `RequeteSoumissionFlux`
+        # uncomment below to create an instance of `BodySearchSiretMetierApiV1AfnorDirectorySiretSearchPost`
         """
-        model = RequeteSoumissionFlux()
+        model = BodySearchSiretMetierApiV1AfnorDirectorySiretSearchPost()
         if include_optional:
-            return RequeteSoumissionFlux(
-                nom_flux = 'Facture 2025-001',
-                syntaxe_flux = 'CII',
-                profil_flux = 'Basic',
-                tracking_id = '',
-                request_id = '',
+            return BodySearchSiretMetierApiV1AfnorDirectorySiretSearchPost(
+                criteria = { },
                 pdp_credentials = {"client_id":"factpulse_prod_abc123","client_secret":"secret_xyz789","directory_service_url":"https://api.pdp-example.fr/directory/v1","flow_service_url":"https://api.pdp-example.fr/flow/v1","token_url":"https://auth.pdp-example.fr/oauth/token"}
             )
         else:
-            return RequeteSoumissionFlux(
-                nom_flux = 'Facture 2025-001',
+            return BodySearchSiretMetierApiV1AfnorDirectorySiretSearchPost(
+                criteria = { },
         )
         """
 
-    def testRequeteSoumissionFlux(self):
-        """Test RequeteSoumissionFlux"""
+    def testBodySearchSiretMetierApiV1AfnorDirectorySiretSearchPost(self):
+        """Test BodySearchSiretMetierApiV1AfnorDirectorySiretSearchPost"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

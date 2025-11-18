@@ -12,46 +12,87 @@
 """  # noqa: E501
 
 
-import unittest
+from __future__ import annotations
+import pprint
+import re  # noqa: F401
+import json
 
-from factpulse.models.requete_soumission_flux import RequeteSoumissionFlux
+from pydantic import BaseModel, ConfigDict
+from typing import Any, ClassVar, Dict, List, Optional
+from factpulse.models.pdp_credentials import PDPCredentials
+from typing import Optional, Set
+from typing_extensions import Self
 
-class TestRequeteSoumissionFlux(unittest.TestCase):
-    """RequeteSoumissionFlux unit test stubs"""
+class BodySearchSirenMetierApiV1AfnorDirectorySirenSearchPost(BaseModel):
+    """
+    BodySearchSirenMetierApiV1AfnorDirectorySirenSearchPost
+    """ # noqa: E501
+    criteria: Dict[str, Any]
+    pdp_credentials: Optional[PDPCredentials] = None
+    __properties: ClassVar[List[str]] = ["criteria", "pdp_credentials"]
 
-    def setUp(self):
-        pass
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
-    def tearDown(self):
-        pass
 
-    def make_instance(self, include_optional) -> RequeteSoumissionFlux:
-        """Test RequeteSoumissionFlux
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        # uncomment below to create an instance of `RequeteSoumissionFlux`
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.model_dump(by_alias=True))
+
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
+        return json.dumps(self.to_dict())
+
+    @classmethod
+    def from_json(cls, json_str: str) -> Optional[Self]:
+        """Create an instance of BodySearchSirenMetierApiV1AfnorDirectorySirenSearchPost from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
         """
-        model = RequeteSoumissionFlux()
-        if include_optional:
-            return RequeteSoumissionFlux(
-                nom_flux = 'Facture 2025-001',
-                syntaxe_flux = 'CII',
-                profil_flux = 'Basic',
-                tracking_id = '',
-                request_id = '',
-                pdp_credentials = {"client_id":"factpulse_prod_abc123","client_secret":"secret_xyz789","directory_service_url":"https://api.pdp-example.fr/directory/v1","flow_service_url":"https://api.pdp-example.fr/flow/v1","token_url":"https://auth.pdp-example.fr/oauth/token"}
-            )
-        else:
-            return RequeteSoumissionFlux(
-                nom_flux = 'Facture 2025-001',
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
         )
-        """
+        # override the default output from pydantic by calling `to_dict()` of pdp_credentials
+        if self.pdp_credentials:
+            _dict['pdp_credentials'] = self.pdp_credentials.to_dict()
+        # set to None if pdp_credentials (nullable) is None
+        # and model_fields_set contains the field
+        if self.pdp_credentials is None and "pdp_credentials" in self.model_fields_set:
+            _dict['pdp_credentials'] = None
 
-    def testRequeteSoumissionFlux(self):
-        """Test RequeteSoumissionFlux"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        return _dict
 
-if __name__ == '__main__':
-    unittest.main()
+    @classmethod
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+        """Create an instance of BodySearchSirenMetierApiV1AfnorDirectorySirenSearchPost from a dict"""
+        if obj is None:
+            return None
+
+        if not isinstance(obj, dict):
+            return cls.model_validate(obj)
+
+        _obj = cls.model_validate({
+            "criteria": obj.get("criteria"),
+            "pdp_credentials": PDPCredentials.from_dict(obj["pdp_credentials"]) if obj.get("pdp_credentials") is not None else None
+        })
+        return _obj
+
+
