@@ -20,21 +20,21 @@ from typing_extensions import Self
 
 class CategorieTVA(str, Enum):
     """
-    Catégories de TVA standardisées pour Factur-X.
+    Catégories de TVA standardisées pour Factur-X (norme EN 16931).  **Valeurs possibles :** - `S` : STANDARD - TVA au taux standard - `Z` : ZERO - TVA à taux zéro - `E` : EXONEREE - Exonération de TVA - `AE` : AUTO_LIQUIDATION - Auto-liquidation (reverse charge) - `K` : INTRA_COMMUNAUTAIRE - Livraison intracommunautaire - `G` : EXPORT - Export hors UE - `O` : HORS_CHAMP - Hors champ de la TVA - `L` : CANARIES - TVA Canaries - `M` : CEUTA_MELILLA - TVA Ceuta/Melilla
     """
 
     """
     allowed enum values
     """
-    S = 'S'
-    Z = 'Z'
-    E = 'E'
-    AE = 'AE'
-    K = 'K'
-    G = 'G'
-    O = 'O'
-    L = 'L'
-    M = 'M'
+    STANDARD = 'S'
+    ZERO = 'Z'
+    EXONEREE = 'E'
+    AUTO_LIQUIDATION = 'AE'
+    INTRA_COMMUNAUTAIRE = 'K'
+    EXPORT = 'G'
+    HORS_CHAMP = 'O'
+    CANARIES = 'L'
+    CEUTA_MELILLA = 'M'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

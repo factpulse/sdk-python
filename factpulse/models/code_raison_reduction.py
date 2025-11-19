@@ -20,19 +20,19 @@ from typing_extensions import Self
 
 class CodeRaisonReduction(str, Enum):
     """
-    Codes standardisés pour justifier une réduction ou une charge.
+    Codes standardisés pour justifier une réduction ou une charge supplémentaire (norme EN 16931).  **Valeurs possibles :** - `AA` : REMISE_PUBLICITAIRE - Remise ou rabais publicitaire - `ABL` : SUPPLEMENT_EMBALLAGE - Supplément d'emballage - `ADR` : AUTRES_SERVICES - Autres services - `ADT` : ENLEVEMENT - Coût d'enlèvement - `FC` : COUTS_TRANSPORT - Coûts de transport - `FI` : FRAIS_FINANCIERS - Frais de financement - `LA` : ETIQUETAGE - Étiquetage
     """
 
     """
     allowed enum values
     """
-    AA = 'AA'
-    ABL = 'ABL'
-    ADR = 'ADR'
-    ADT = 'ADT'
-    FC = 'FC'
-    FI = 'FI'
-    LA = 'LA'
+    REMISE_PUBLICITAIRE = 'AA'
+    SUPPLEMENT_EMBALLAGE = 'ABL'
+    AUTRES_SERVICES = 'ADR'
+    ENLEVEMENT = 'ADT'
+    COUTS_TRANSPORT = 'FC'
+    FRAIS_FINANCIERS = 'FI'
+    ETIQUETAGE = 'LA'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

@@ -1,22 +1,22 @@
 # CodeRaisonReduction
 
-Codes standardisés pour justifier une réduction ou une charge.
+Codes standardisés pour justifier une réduction ou une charge supplémentaire (norme EN 16931).  **Valeurs possibles :** - `AA` : REMISE_PUBLICITAIRE - Remise ou rabais publicitaire - `ABL` : SUPPLEMENT_EMBALLAGE - Supplément d'emballage - `ADR` : AUTRES_SERVICES - Autres services - `ADT` : ENLEVEMENT - Coût d'enlèvement - `FC` : COUTS_TRANSPORT - Coûts de transport - `FI` : FRAIS_FINANCIERS - Frais de financement - `LA` : ETIQUETAGE - Étiquetage
 
 ## Enum
 
-* `AA` (value: `'AA'`)
+* `REMISE_PUBLICITAIRE` (value: `'AA'`)
 
-* `ABL` (value: `'ABL'`)
+* `SUPPLEMENT_EMBALLAGE` (value: `'ABL'`)
 
-* `ADR` (value: `'ADR'`)
+* `AUTRES_SERVICES` (value: `'ADR'`)
 
-* `ADT` (value: `'ADT'`)
+* `ENLEVEMENT` (value: `'ADT'`)
 
-* `FC` (value: `'FC'`)
+* `COUTS_TRANSPORT` (value: `'FC'`)
 
-* `FI` (value: `'FI'`)
+* `FRAIS_FINANCIERS` (value: `'FI'`)
 
-* `LA` (value: `'LA'`)
+* `ETIQUETAGE` (value: `'LA'`)
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

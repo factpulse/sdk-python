@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "2.0.4"
+__version__ = "2.0.5"
 
 # Define package exports
 __all__ = [
@@ -63,12 +63,10 @@ __all__ = [
     "Destination",
     "DestinationAFNOR",
     "DestinationChorusPro",
-    "DirectionFlux",
     "DonneesFactureSimplifiees",
     "FactureEnrichieInfoInput",
     "FactureEnrichieInfoOutput",
     "FactureFacturX",
-    "FluxResume",
     "FormatSortie",
     "Fournisseur",
     "GenerateCertificateRequest",
@@ -98,26 +96,19 @@ __all__ = [
     "ObtenirIdChorusProResponse",
     "OptionsProcessing",
     "PDFFacturXInfo",
-    "PDPCredentials",
     "ParametresSignature",
     "ParametresStructure",
     "PieceJointeComplementaire",
     "ProfilAPI",
-    "ProfilFlux",
     "Quantite",
     "QuotaInfo",
     "RechercherServicesResponse",
     "RechercherStructureRequest",
     "RechercherStructureResponse",
     "References",
-    "ReponseHealthcheckAFNOR",
-    "ReponseRechercheFlux",
-    "ReponseSoumissionFlux",
     "ReponseTache",
     "ReponseValidationErreur",
     "ReponseValidationSucces",
-    "RequeteRechercheFlux",
-    "RequeteSoumissionFlux",
     "ResultatAFNOR",
     "ResultatChorusPro",
     "ResultatValidationPDFAPI",
@@ -128,14 +119,11 @@ __all__ = [
     "SoumettreFactureCompleteResponse",
     "SoumettreFactureRequest",
     "SoumettreFactureResponse",
-    "StatutAcquittement",
     "StatutFacture",
     "StatutTache",
     "StructureInfo",
-    "SyntaxeFlux",
     "Tauxmanuel",
     "TypeFacture",
-    "TypeFlux",
     "TypeTVA",
     "Unite",
     "Utilisateur",
@@ -193,12 +181,10 @@ from factpulse.models.destinataire import Destinataire as Destinataire
 from factpulse.models.destination import Destination as Destination
 from factpulse.models.destination_afnor import DestinationAFNOR as DestinationAFNOR
 from factpulse.models.destination_chorus_pro import DestinationChorusPro as DestinationChorusPro
-from factpulse.models.direction_flux import DirectionFlux as DirectionFlux
 from factpulse.models.donnees_facture_simplifiees import DonneesFactureSimplifiees as DonneesFactureSimplifiees
 from factpulse.models.facture_enrichie_info_input import FactureEnrichieInfoInput as FactureEnrichieInfoInput
 from factpulse.models.facture_enrichie_info_output import FactureEnrichieInfoOutput as FactureEnrichieInfoOutput
 from factpulse.models.facture_factur_x import FactureFacturX as FactureFacturX
-from factpulse.models.flux_resume import FluxResume as FluxResume
 from factpulse.models.format_sortie import FormatSortie as FormatSortie
 from factpulse.models.fournisseur import Fournisseur as Fournisseur
 from factpulse.models.generate_certificate_request import GenerateCertificateRequest as GenerateCertificateRequest
@@ -228,26 +214,19 @@ from factpulse.models.obtenir_id_chorus_pro_request import ObtenirIdChorusProReq
 from factpulse.models.obtenir_id_chorus_pro_response import ObtenirIdChorusProResponse as ObtenirIdChorusProResponse
 from factpulse.models.options_processing import OptionsProcessing as OptionsProcessing
 from factpulse.models.pdf_factur_x_info import PDFFacturXInfo as PDFFacturXInfo
-from factpulse.models.pdp_credentials import PDPCredentials as PDPCredentials
 from factpulse.models.parametres_signature import ParametresSignature as ParametresSignature
 from factpulse.models.parametres_structure import ParametresStructure as ParametresStructure
 from factpulse.models.piece_jointe_complementaire import PieceJointeComplementaire as PieceJointeComplementaire
 from factpulse.models.profil_api import ProfilAPI as ProfilAPI
-from factpulse.models.profil_flux import ProfilFlux as ProfilFlux
 from factpulse.models.quantite import Quantite as Quantite
 from factpulse.models.quota_info import QuotaInfo as QuotaInfo
 from factpulse.models.rechercher_services_response import RechercherServicesResponse as RechercherServicesResponse
 from factpulse.models.rechercher_structure_request import RechercherStructureRequest as RechercherStructureRequest
 from factpulse.models.rechercher_structure_response import RechercherStructureResponse as RechercherStructureResponse
 from factpulse.models.references import References as References
-from factpulse.models.reponse_healthcheck_afnor import ReponseHealthcheckAFNOR as ReponseHealthcheckAFNOR
-from factpulse.models.reponse_recherche_flux import ReponseRechercheFlux as ReponseRechercheFlux
-from factpulse.models.reponse_soumission_flux import ReponseSoumissionFlux as ReponseSoumissionFlux
 from factpulse.models.reponse_tache import ReponseTache as ReponseTache
 from factpulse.models.reponse_validation_erreur import ReponseValidationErreur as ReponseValidationErreur
 from factpulse.models.reponse_validation_succes import ReponseValidationSucces as ReponseValidationSucces
-from factpulse.models.requete_recherche_flux import RequeteRechercheFlux as RequeteRechercheFlux
-from factpulse.models.requete_soumission_flux import RequeteSoumissionFlux as RequeteSoumissionFlux
 from factpulse.models.resultat_afnor import ResultatAFNOR as ResultatAFNOR
 from factpulse.models.resultat_chorus_pro import ResultatChorusPro as ResultatChorusPro
 from factpulse.models.resultat_validation_pdfapi import ResultatValidationPDFAPI as ResultatValidationPDFAPI
@@ -258,14 +237,11 @@ from factpulse.models.soumettre_facture_complete_request import SoumettreFacture
 from factpulse.models.soumettre_facture_complete_response import SoumettreFactureCompleteResponse as SoumettreFactureCompleteResponse
 from factpulse.models.soumettre_facture_request import SoumettreFactureRequest as SoumettreFactureRequest
 from factpulse.models.soumettre_facture_response import SoumettreFactureResponse as SoumettreFactureResponse
-from factpulse.models.statut_acquittement import StatutAcquittement as StatutAcquittement
 from factpulse.models.statut_facture import StatutFacture as StatutFacture
 from factpulse.models.statut_tache import StatutTache as StatutTache
 from factpulse.models.structure_info import StructureInfo as StructureInfo
-from factpulse.models.syntaxe_flux import SyntaxeFlux as SyntaxeFlux
 from factpulse.models.tauxmanuel import Tauxmanuel as Tauxmanuel
 from factpulse.models.type_facture import TypeFacture as TypeFacture
-from factpulse.models.type_flux import TypeFlux as TypeFlux
 from factpulse.models.type_tva import TypeTVA as TypeTVA
 from factpulse.models.unite import Unite as Unite
 from factpulse.models.utilisateur import Utilisateur as Utilisateur
