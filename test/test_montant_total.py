@@ -35,20 +35,20 @@ class TestMontantTotal(unittest.TestCase):
         model = MontantTotal()
         if include_optional:
             return MontantTotal(
-                montant_ht_total = None,
-                montant_tva = None,
-                montant_ttc_total = None,
-                montant_a_payer = None,
-                acompte = None,
-                montant_remise_globale_ttc = None,
+                montant_ht_total = '1000.50',
+                montant_tva = '1000.50',
+                montant_ttc_total = '1000.50',
+                montant_a_payer = '1000.50',
+                acompte = '1000.50',
+                montant_remise_globale_ttc = '1000.50',
                 motif_remise_globale_ttc = ''
             )
         else:
             return MontantTotal(
-                montant_ht_total = None,
-                montant_tva = None,
-                montant_ttc_total = None,
-                montant_a_payer = None,
+                montant_ht_total = '1000.50',
+                montant_tva = '1000.50',
+                montant_ttc_total = '1000.50',
+                montant_a_payer = '1000.50',
         )
         """
 

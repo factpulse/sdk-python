@@ -72,12 +72,12 @@ class TestFactureFacturX(unittest.TestCase):
                     numero_bon_commande = '', 
                     numero_facture_origine = '', ),
                 montant_total = factpulse.models.montant_total.MontantTotal(
-                    montant_ht_total = null, 
-                    montant_tva = null, 
-                    montant_ttc_total = null, 
-                    montant_a_payer = null, 
-                    acompte = null, 
-                    montant_remise_globale_ttc = null, 
+                    montant_ht_total = '1000.50', 
+                    montant_tva = '1000.50', 
+                    montant_ttc_total = '1000.50', 
+                    montant_a_payer = '1000.50', 
+                    acompte = '1000.50', 
+                    montant_remise_globale_ttc = '1000.50', 
                     motif_remise_globale_ttc = '', ),
                 lignes_de_poste = [
                     factpulse.models.ligne_de_poste.LigneDePoste(
@@ -87,10 +87,10 @@ class TestFactureFacturX(unittest.TestCase):
                         quantite = null, 
                         unite = 'PIECE', 
                         montant_unitaire_ht = null, 
-                        montant_remise_ht = null, 
-                        montant_total_ligne_ht = null, 
+                        montant_remise_ht = '1000.50', 
+                        montant_total_ligne_ht = '1000.50', 
                         taux_tva = '', 
-                        taux_tva_manuel = null, 
+                        taux_tva_manuel = '1000.50', 
                         categorie_tva = null, 
                         date_debut_periode = '', 
                         date_fin_periode = '', 
@@ -99,10 +99,10 @@ class TestFactureFacturX(unittest.TestCase):
                     ],
                 lignes_de_tva = [
                     factpulse.models.ligne_de_tva.LigneDeTVA(
-                        montant_base_ht = null, 
-                        montant_tva = null, 
+                        montant_base_ht = '1000.50', 
+                        montant_tva = '1000.50', 
                         taux = '', 
-                        taux_manuel = null, 
+                        taux_manuel = '1000.50', 
                         categorie = null, )
                     ],
                 commentaire = '',
@@ -154,12 +154,12 @@ class TestFactureFacturX(unittest.TestCase):
                     numero_bon_commande = '', 
                     numero_facture_origine = '', ),
                 montant_total = factpulse.models.montant_total.MontantTotal(
-                    montant_ht_total = null, 
-                    montant_tva = null, 
-                    montant_ttc_total = null, 
-                    montant_a_payer = null, 
-                    acompte = null, 
-                    montant_remise_globale_ttc = null, 
+                    montant_ht_total = '1000.50', 
+                    montant_tva = '1000.50', 
+                    montant_ttc_total = '1000.50', 
+                    montant_a_payer = '1000.50', 
+                    acompte = '1000.50', 
+                    montant_remise_globale_ttc = '1000.50', 
                     motif_remise_globale_ttc = '', ),
         )
         """

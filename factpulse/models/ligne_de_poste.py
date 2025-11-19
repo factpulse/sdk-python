@@ -17,13 +17,11 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from factpulse.models.categorie_tva import CategorieTVA
 from factpulse.models.code_raison_reduction import CodeRaisonReduction
-from factpulse.models.ligne_de_poste_montant_remise_ht import LigneDePosteMontantRemiseHt
-from factpulse.models.ligne_de_poste_taux_tva_manuel import LigneDePosteTauxTvaManuel
-from factpulse.models.montant_total_ligne_ht import MontantTotalLigneHt
 from factpulse.models.montant_unitaire_ht import MontantUnitaireHt
 from factpulse.models.quantite import Quantite
 from factpulse.models.unite import Unite
@@ -40,16 +38,46 @@ class LigneDePoste(BaseModel):
     quantite: Quantite
     unite: Unite
     montant_unitaire_ht: MontantUnitaireHt = Field(alias="montantUnitaireHt")
-    montant_remise_ht: Optional[LigneDePosteMontantRemiseHt] = Field(default=None, alias="montantRemiseHt")
-    montant_total_ligne_ht: Optional[MontantTotalLigneHt] = Field(default=None, alias="montantTotalLigneHt")
+    montant_remise_ht: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Montant de la remise HT.", alias="montantRemiseHt")
+    montant_total_ligne_ht: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Montant total HT de la ligne (quantité × prix unitaire - remise).", alias="montantTotalLigneHt")
     taux_tva: Optional[StrictStr] = Field(default=None, alias="tauxTva")
-    taux_tva_manuel: Optional[LigneDePosteTauxTvaManuel] = Field(default=None, alias="tauxTvaManuel")
+    taux_tva_manuel: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Taux de TVA avec valeur manuelle.", alias="tauxTvaManuel")
     categorie_tva: Optional[CategorieTVA] = Field(default=None, alias="categorieTva")
     date_debut_periode: Optional[StrictStr] = Field(default=None, alias="dateDebutPeriode")
     date_fin_periode: Optional[StrictStr] = Field(default=None, alias="dateFinPeriode")
     code_raison_reduction: Optional[CodeRaisonReduction] = Field(default=None, alias="codeRaisonReduction")
     raison_reduction: Optional[StrictStr] = Field(default=None, alias="raisonReduction")
     __properties: ClassVar[List[str]] = ["numero", "reference", "denomination", "quantite", "unite", "montantUnitaireHt", "montantRemiseHt", "montantTotalLigneHt", "tauxTva", "tauxTvaManuel", "categorieTva", "dateDebutPeriode", "dateFinPeriode", "codeRaisonReduction", "raisonReduction"]
+
+    @field_validator('montant_remise_ht')
+    def montant_remise_ht_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)", value):
+            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)/")
+        return value
+
+    @field_validator('montant_total_ligne_ht')
+    def montant_total_ligne_ht_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"^(?!^[-+.]*$)[+-]?0*(?:\d{0,10}|(?=[\d.]{1,13}0*$)\d{0,10}\.\d{0,2}0*$)", value):
+            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*(?:\d{0,10}|(?=[\d.]{1,13}0*$)\d{0,10}\.\d{0,2}0*$)/")
+        return value
+
+    @field_validator('taux_tva_manuel')
+    def taux_tva_manuel_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)", value):
+            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)/")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,15 +124,6 @@ class LigneDePoste(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of montant_unitaire_ht
         if self.montant_unitaire_ht:
             _dict['montantUnitaireHt'] = self.montant_unitaire_ht.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of montant_remise_ht
-        if self.montant_remise_ht:
-            _dict['montantRemiseHt'] = self.montant_remise_ht.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of montant_total_ligne_ht
-        if self.montant_total_ligne_ht:
-            _dict['montantTotalLigneHt'] = self.montant_total_ligne_ht.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of taux_tva_manuel
-        if self.taux_tva_manuel:
-            _dict['tauxTvaManuel'] = self.taux_tva_manuel.to_dict()
         # set to None if reference (nullable) is None
         # and model_fields_set contains the field
         if self.reference is None and "reference" in self.model_fields_set:
@@ -114,11 +133,6 @@ class LigneDePoste(BaseModel):
         # and model_fields_set contains the field
         if self.montant_remise_ht is None and "montant_remise_ht" in self.model_fields_set:
             _dict['montantRemiseHt'] = None
-
-        # set to None if montant_total_ligne_ht (nullable) is None
-        # and model_fields_set contains the field
-        if self.montant_total_ligne_ht is None and "montant_total_ligne_ht" in self.model_fields_set:
-            _dict['montantTotalLigneHt'] = None
 
         # set to None if taux_tva (nullable) is None
         # and model_fields_set contains the field
@@ -173,10 +187,10 @@ class LigneDePoste(BaseModel):
             "quantite": Quantite.from_dict(obj["quantite"]) if obj.get("quantite") is not None else None,
             "unite": obj.get("unite"),
             "montantUnitaireHt": MontantUnitaireHt.from_dict(obj["montantUnitaireHt"]) if obj.get("montantUnitaireHt") is not None else None,
-            "montantRemiseHt": LigneDePosteMontantRemiseHt.from_dict(obj["montantRemiseHt"]) if obj.get("montantRemiseHt") is not None else None,
-            "montantTotalLigneHt": MontantTotalLigneHt.from_dict(obj["montantTotalLigneHt"]) if obj.get("montantTotalLigneHt") is not None else None,
+            "montantRemiseHt": obj.get("montantRemiseHt"),
+            "montantTotalLigneHt": obj.get("montantTotalLigneHt"),
             "tauxTva": obj.get("tauxTva"),
-            "tauxTvaManuel": LigneDePosteTauxTvaManuel.from_dict(obj["tauxTvaManuel"]) if obj.get("tauxTvaManuel") is not None else None,
+            "tauxTvaManuel": obj.get("tauxTvaManuel"),
             "categorieTva": obj.get("categorieTva"),
             "dateDebutPeriode": obj.get("dateDebutPeriode"),
             "dateFinPeriode": obj.get("dateFinPeriode"),

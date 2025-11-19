@@ -17,7 +17,7 @@ from inspect import getfullargspec
 import json
 import pprint
 import re  # noqa: F401
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, ValidationError, field_validator
 from typing import Optional, Union
 from typing_extensions import Annotated
 from typing import Union, Any, List, Set, TYPE_CHECKING, Optional, Dict
@@ -28,11 +28,11 @@ MONTANTHTTOTAL_ANY_OF_SCHEMAS = ["float", "str"]
 
 class MontantHtTotal(BaseModel):
     """
-    Montant total HT.
+    MontantHtTotal
     """
 
     # data type: float
-    anyof_schema_1_validator: Optional[Union[Annotated[float, Field(strict=True, ge=0.0)], Annotated[int, Field(strict=True, ge=0)]]] = None
+    anyof_schema_1_validator: Optional[Union[StrictFloat, StrictInt]] = None
     # data type: str
     anyof_schema_2_validator: Optional[Annotated[str, Field(strict=True)]] = None
     if TYPE_CHECKING:

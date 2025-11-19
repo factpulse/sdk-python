@@ -6,12 +6,12 @@ Contient tous les montants totaux de la facture.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**montant_ht_total** | [**MontantHtTotal**](MontantHtTotal.md) |  | 
-**montant_tva** | [**MontantTvaTotal**](MontantTvaTotal.md) |  | 
-**montant_ttc_total** | [**MontantTtcTotal**](MontantTtcTotal.md) |  | 
-**montant_a_payer** | [**MontantAPayer**](MontantAPayer.md) |  | 
-**acompte** | [**MontantTotalAcompte**](MontantTotalAcompte.md) |  | [optional] 
-**montant_remise_globale_ttc** | [**MontantRemiseGlobaleTtc**](MontantRemiseGlobaleTtc.md) |  | [optional] 
+**montant_ht_total** | **decimal.Decimal** | Montant total HT. | 
+**montant_tva** | **decimal.Decimal** | Montant total de la TVA. | 
+**montant_ttc_total** | **decimal.Decimal** | Montant total TTC. | 
+**montant_a_payer** | **decimal.Decimal** | Montant à payer. | 
+**acompte** | **decimal.Decimal** | Acompte versé. | [optional] 
+**montant_remise_globale_ttc** | **decimal.Decimal** | Montant de la remise globale TTC. | [optional] 
 **motif_remise_globale_ttc** | **str** |  | [optional] 
 
 ## Example

@@ -17,12 +17,10 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from factpulse.models.categorie_tva import CategorieTVA
-from factpulse.models.montant_base_ht import MontantBaseHt
-from factpulse.models.montant_tva_ligne import MontantTvaLigne
-from factpulse.models.tauxmanuel import Tauxmanuel
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,12 +28,36 @@ class LigneDeTVA(BaseModel):
     """
     Représente une ligne de totalisation par taux de TVA.
     """ # noqa: E501
-    montant_base_ht: MontantBaseHt = Field(alias="montantBaseHt")
-    montant_tva: MontantTvaLigne = Field(alias="montantTva")
+    montant_base_ht: Annotated[str, Field(strict=True)] = Field(description="Montant de la base HT pour cette ligne de TVA.", alias="montantBaseHt")
+    montant_tva: Annotated[str, Field(strict=True)] = Field(description="Montant de la TVA pour cette ligne.", alias="montantTva")
     taux: Optional[StrictStr] = None
-    taux_manuel: Optional[Tauxmanuel] = Field(default=None, alias="tauxManuel")
+    taux_manuel: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Taux de TVA avec valeur manuelle.", alias="tauxManuel")
     categorie: Optional[CategorieTVA] = None
     __properties: ClassVar[List[str]] = ["montantBaseHt", "montantTva", "taux", "tauxManuel", "categorie"]
+
+    @field_validator('montant_base_ht')
+    def montant_base_ht_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if not re.match(r"^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)", value):
+            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)/")
+        return value
+
+    @field_validator('montant_tva')
+    def montant_tva_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if not re.match(r"^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)", value):
+            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)/")
+        return value
+
+    @field_validator('taux_manuel')
+    def taux_manuel_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)", value):
+            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)/")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -76,15 +98,6 @@ class LigneDeTVA(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of montant_base_ht
-        if self.montant_base_ht:
-            _dict['montantBaseHt'] = self.montant_base_ht.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of montant_tva
-        if self.montant_tva:
-            _dict['montantTva'] = self.montant_tva.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of taux_manuel
-        if self.taux_manuel:
-            _dict['tauxManuel'] = self.taux_manuel.to_dict()
         # set to None if taux (nullable) is None
         # and model_fields_set contains the field
         if self.taux is None and "taux" in self.model_fields_set:
@@ -107,10 +120,10 @@ class LigneDeTVA(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "montantBaseHt": MontantBaseHt.from_dict(obj["montantBaseHt"]) if obj.get("montantBaseHt") is not None else None,
-            "montantTva": MontantTvaLigne.from_dict(obj["montantTva"]) if obj.get("montantTva") is not None else None,
+            "montantBaseHt": obj.get("montantBaseHt"),
+            "montantTva": obj.get("montantTva"),
             "taux": obj.get("taux"),
-            "tauxManuel": Tauxmanuel.from_dict(obj["tauxManuel"]) if obj.get("tauxManuel") is not None else None,
+            "tauxManuel": obj.get("tauxManuel"),
             "categorie": obj.get("categorie")
         })
         return _obj

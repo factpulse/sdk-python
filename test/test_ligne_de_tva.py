@@ -35,16 +35,16 @@ class TestLigneDeTVA(unittest.TestCase):
         model = LigneDeTVA()
         if include_optional:
             return LigneDeTVA(
-                montant_base_ht = None,
-                montant_tva = None,
+                montant_base_ht = '1000.50',
+                montant_tva = '1000.50',
                 taux = '',
-                taux_manuel = None,
+                taux_manuel = '1000.50',
                 categorie = 'S'
             )
         else:
             return LigneDeTVA(
-                montant_base_ht = None,
-                montant_tva = None,
+                montant_base_ht = '1000.50',
+                montant_tva = '1000.50',
         )
         """
 
