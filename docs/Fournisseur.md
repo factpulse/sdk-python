@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **code_coordonnees_bancaires_fournisseur** | **int** |  | [optional] 
 **id_service_fournisseur** | **int** |  | [optional] 
 **nom** | **str** |  | [optional] 
+**siren** | **str** |  | [optional] 
 **siret** | **str** |  | [optional] 
 **numero_tva_intra** | **str** |  | [optional] 
 **iban** | **str** |  | [optional] 

@@ -31,8 +31,10 @@ class Destinataire(BaseModel):
     adresse_electronique: AdresseElectronique = Field(alias="adresseElectronique")
     code_service_executant: Optional[StrictStr] = Field(default=None, alias="codeServiceExecutant")
     nom: Optional[StrictStr] = None
+    siren: Optional[StrictStr] = None
+    siret: Optional[StrictStr] = None
     adresse_postale: Optional[AdressePostale] = Field(default=None, alias="adressePostale")
-    __properties: ClassVar[List[str]] = ["adresseElectronique", "codeServiceExecutant", "nom", "adressePostale"]
+    __properties: ClassVar[List[str]] = ["adresseElectronique", "codeServiceExecutant", "nom", "siren", "siret", "adressePostale"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -89,6 +91,16 @@ class Destinataire(BaseModel):
         if self.nom is None and "nom" in self.model_fields_set:
             _dict['nom'] = None
 
+        # set to None if siren (nullable) is None
+        # and model_fields_set contains the field
+        if self.siren is None and "siren" in self.model_fields_set:
+            _dict['siren'] = None
+
+        # set to None if siret (nullable) is None
+        # and model_fields_set contains the field
+        if self.siret is None and "siret" in self.model_fields_set:
+            _dict['siret'] = None
+
         # set to None if adresse_postale (nullable) is None
         # and model_fields_set contains the field
         if self.adresse_postale is None and "adresse_postale" in self.model_fields_set:
@@ -109,6 +121,8 @@ class Destinataire(BaseModel):
             "adresseElectronique": AdresseElectronique.from_dict(obj["adresseElectronique"]) if obj.get("adresseElectronique") is not None else None,
             "codeServiceExecutant": obj.get("codeServiceExecutant"),
             "nom": obj.get("nom"),
+            "siren": obj.get("siren"),
+            "siret": obj.get("siret"),
             "adressePostale": AdressePostale.from_dict(obj["adressePostale"]) if obj.get("adressePostale") is not None else None
         })
         return _obj

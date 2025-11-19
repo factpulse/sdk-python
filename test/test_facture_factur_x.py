@@ -45,6 +45,8 @@ class TestFactureFacturX(unittest.TestCase):
                         scheme_id = null, ), 
                     code_service_executant = '', 
                     nom = '', 
+                    siren = '', 
+                    siret = '', 
                     adresse_postale = null, ),
                 fournisseur = factpulse.models.fournisseur.Fournisseur(
                     adresse_electronique = factpulse.models.adresse_electronique.AdresseElectronique(
@@ -54,6 +56,7 @@ class TestFactureFacturX(unittest.TestCase):
                     code_coordonnees_bancaires_fournisseur = 56, 
                     id_service_fournisseur = 56, 
                     nom = '', 
+                    siren = '', 
                     siret = '', 
                     numero_tva_intra = '', 
                     iban = '', 
@@ -105,6 +108,11 @@ class TestFactureFacturX(unittest.TestCase):
                         taux_manuel = '1000.50', 
                         categorie = null, )
                     ],
+                notes = [
+                    factpulse.models.note.Note(
+                        subject_code = '', 
+                        content = '', )
+                    ],
                 commentaire = '',
                 id_utilisateur_courant = 56,
                 pieces_jointes_complementaires = [
@@ -127,6 +135,8 @@ class TestFactureFacturX(unittest.TestCase):
                         scheme_id = null, ), 
                     code_service_executant = '', 
                     nom = '', 
+                    siren = '', 
+                    siret = '', 
                     adresse_postale = null, ),
                 fournisseur = factpulse.models.fournisseur.Fournisseur(
                     adresse_electronique = factpulse.models.adresse_electronique.AdresseElectronique(
@@ -136,6 +146,7 @@ class TestFactureFacturX(unittest.TestCase):
                     code_coordonnees_bancaires_fournisseur = 56, 
                     id_service_fournisseur = 56, 
                     nom = '', 
+                    siren = '', 
                     siret = '', 
                     numero_tva_intra = '', 
                     iban = '', 

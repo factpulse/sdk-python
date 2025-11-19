@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "2.0.8"
+__version__ = "2.0.7"
 
 # Define package exports
 __all__ = [
@@ -85,6 +85,7 @@ __all__ = [
     "MontantTva",
     "MontantTva1",
     "MontantUnitaireHt",
+    "Note",
     "ObtenirIdChorusProRequest",
     "ObtenirIdChorusProResponse",
     "OptionsProcessing",
@@ -196,6 +197,7 @@ from factpulse.models.montant_ttc_total1 import MontantTtcTotal1 as MontantTtcTo
 from factpulse.models.montant_tva import MontantTva as MontantTva
 from factpulse.models.montant_tva1 import MontantTva1 as MontantTva1
 from factpulse.models.montant_unitaire_ht import MontantUnitaireHt as MontantUnitaireHt
+from factpulse.models.note import Note as Note
 from factpulse.models.obtenir_id_chorus_pro_request import ObtenirIdChorusProRequest as ObtenirIdChorusProRequest
 from factpulse.models.obtenir_id_chorus_pro_response import ObtenirIdChorusProResponse as ObtenirIdChorusProResponse
 from factpulse.models.options_processing import OptionsProcessing as OptionsProcessing

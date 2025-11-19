@@ -17,28 +17,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.adresse_electronique import AdresseElectronique
-from factpulse.models.adresse_postale import AdressePostale
 from typing import Optional, Set
 from typing_extensions import Self
 
-class Fournisseur(BaseModel):
+class Note(BaseModel):
     """
-    Informations sur le fournisseur qui émet la facture.
+    Note de facture (IncludedNote en Factur-X).  Les notes obligatoires pour BR-FR-05 sont : - PMT : Indemnité forfaitaire pour frais de recouvrement - PMD : Pénalités de retard - AAB : Escompte pour paiement anticipé
     """ # noqa: E501
-    adresse_electronique: AdresseElectronique = Field(alias="adresseElectronique")
-    id_fournisseur: StrictInt = Field(alias="idFournisseur")
-    code_coordonnees_bancaires_fournisseur: Optional[StrictInt] = Field(default=None, alias="codeCoordonneesBancairesFournisseur")
-    id_service_fournisseur: Optional[StrictInt] = Field(default=None, alias="idServiceFournisseur")
-    nom: Optional[StrictStr] = None
-    siren: Optional[StrictStr] = None
-    siret: Optional[StrictStr] = None
-    numero_tva_intra: Optional[StrictStr] = Field(default=None, alias="numeroTvaIntra")
-    iban: Optional[StrictStr] = None
-    adresse_postale: Optional[AdressePostale] = Field(default=None, alias="adressePostale")
-    __properties: ClassVar[List[str]] = ["adresseElectronique", "idFournisseur", "codeCoordonneesBancairesFournisseur", "idServiceFournisseur", "nom", "siren", "siret", "numeroTvaIntra", "iban", "adressePostale"]
+    subject_code: Optional[StrictStr] = Field(default=None, alias="subjectCode")
+    content: StrictStr
+    __properties: ClassVar[List[str]] = ["subjectCode", "content"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -58,7 +48,7 @@ class Fournisseur(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Fournisseur from a JSON string"""
+        """Create an instance of Note from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -79,57 +69,16 @@ class Fournisseur(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of adresse_electronique
-        if self.adresse_electronique:
-            _dict['adresseElectronique'] = self.adresse_electronique.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of adresse_postale
-        if self.adresse_postale:
-            _dict['adressePostale'] = self.adresse_postale.to_dict()
-        # set to None if code_coordonnees_bancaires_fournisseur (nullable) is None
+        # set to None if subject_code (nullable) is None
         # and model_fields_set contains the field
-        if self.code_coordonnees_bancaires_fournisseur is None and "code_coordonnees_bancaires_fournisseur" in self.model_fields_set:
-            _dict['codeCoordonneesBancairesFournisseur'] = None
-
-        # set to None if id_service_fournisseur (nullable) is None
-        # and model_fields_set contains the field
-        if self.id_service_fournisseur is None and "id_service_fournisseur" in self.model_fields_set:
-            _dict['idServiceFournisseur'] = None
-
-        # set to None if nom (nullable) is None
-        # and model_fields_set contains the field
-        if self.nom is None and "nom" in self.model_fields_set:
-            _dict['nom'] = None
-
-        # set to None if siren (nullable) is None
-        # and model_fields_set contains the field
-        if self.siren is None and "siren" in self.model_fields_set:
-            _dict['siren'] = None
-
-        # set to None if siret (nullable) is None
-        # and model_fields_set contains the field
-        if self.siret is None and "siret" in self.model_fields_set:
-            _dict['siret'] = None
-
-        # set to None if numero_tva_intra (nullable) is None
-        # and model_fields_set contains the field
-        if self.numero_tva_intra is None and "numero_tva_intra" in self.model_fields_set:
-            _dict['numeroTvaIntra'] = None
-
-        # set to None if iban (nullable) is None
-        # and model_fields_set contains the field
-        if self.iban is None and "iban" in self.model_fields_set:
-            _dict['iban'] = None
-
-        # set to None if adresse_postale (nullable) is None
-        # and model_fields_set contains the field
-        if self.adresse_postale is None and "adresse_postale" in self.model_fields_set:
-            _dict['adressePostale'] = None
+        if self.subject_code is None and "subject_code" in self.model_fields_set:
+            _dict['subjectCode'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Fournisseur from a dict"""
+        """Create an instance of Note from a dict"""
         if obj is None:
             return None
 
@@ -137,16 +86,8 @@ class Fournisseur(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "adresseElectronique": AdresseElectronique.from_dict(obj["adresseElectronique"]) if obj.get("adresseElectronique") is not None else None,
-            "idFournisseur": obj.get("idFournisseur"),
-            "codeCoordonneesBancairesFournisseur": obj.get("codeCoordonneesBancairesFournisseur"),
-            "idServiceFournisseur": obj.get("idServiceFournisseur"),
-            "nom": obj.get("nom"),
-            "siren": obj.get("siren"),
-            "siret": obj.get("siret"),
-            "numeroTvaIntra": obj.get("numeroTvaIntra"),
-            "iban": obj.get("iban"),
-            "adressePostale": AdressePostale.from_dict(obj["adressePostale"]) if obj.get("adressePostale") is not None else None
+            "subjectCode": obj.get("subjectCode"),
+            "content": obj.get("content")
         })
         return _obj
 

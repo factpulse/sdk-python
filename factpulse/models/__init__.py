@@ -64,6 +64,7 @@ from factpulse.models.montant_ttc_total1 import MontantTtcTotal1
 from factpulse.models.montant_tva import MontantTva
 from factpulse.models.montant_tva1 import MontantTva1
 from factpulse.models.montant_unitaire_ht import MontantUnitaireHt
+from factpulse.models.note import Note
 from factpulse.models.obtenir_id_chorus_pro_request import ObtenirIdChorusProRequest
 from factpulse.models.obtenir_id_chorus_pro_response import ObtenirIdChorusProResponse
 from factpulse.models.options_processing import OptionsProcessing

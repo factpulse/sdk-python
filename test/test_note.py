@@ -14,10 +14,10 @@
 
 import unittest
 
-from factpulse.models.fournisseur import Fournisseur
+from factpulse.models.note import Note
 
-class TestFournisseur(unittest.TestCase):
-    """Fournisseur unit test stubs"""
+class TestNote(unittest.TestCase):
+    """Note unit test stubs"""
 
     def setUp(self):
         pass
@@ -25,45 +25,27 @@ class TestFournisseur(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> Fournisseur:
-        """Test Fournisseur
+    def make_instance(self, include_optional) -> Note:
+        """Test Note
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `Fournisseur`
+        # uncomment below to create an instance of `Note`
         """
-        model = Fournisseur()
+        model = Note()
         if include_optional:
-            return Fournisseur(
-                adresse_electronique = factpulse.models.adresse_electronique.AdresseElectronique(
-                    identifiant = '', 
-                    scheme_id = null, ),
-                id_fournisseur = 56,
-                code_coordonnees_bancaires_fournisseur = 56,
-                id_service_fournisseur = 56,
-                nom = '',
-                siren = '',
-                siret = '',
-                numero_tva_intra = '',
-                iban = '',
-                adresse_postale = factpulse.models.adresse_postale.AdressePostale(
-                    code_postal = '', 
-                    ligne_un = '', 
-                    ligne_deux = '', 
-                    nom_ville = '', 
-                    pays_code_iso = '', )
+            return Note(
+                subject_code = '',
+                content = ''
             )
         else:
-            return Fournisseur(
-                adresse_electronique = factpulse.models.adresse_electronique.AdresseElectronique(
-                    identifiant = '', 
-                    scheme_id = null, ),
-                id_fournisseur = 56,
+            return Note(
+                content = '',
         )
         """
 
-    def testFournisseur(self):
-        """Test Fournisseur"""
+    def testNote(self):
+        """Test Note"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

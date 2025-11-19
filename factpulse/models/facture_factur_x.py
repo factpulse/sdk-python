@@ -26,6 +26,7 @@ from factpulse.models.ligne_de_poste import LigneDePoste
 from factpulse.models.ligne_de_tva import LigneDeTVA
 from factpulse.models.mode_depot import ModeDepot
 from factpulse.models.montant_total import MontantTotal
+from factpulse.models.note import Note
 from factpulse.models.piece_jointe_complementaire import PieceJointeComplementaire
 from factpulse.models.references import References
 from typing import Optional, Set
@@ -46,10 +47,11 @@ class FactureFacturX(BaseModel):
     montant_total: MontantTotal = Field(alias="montantTotal")
     lignes_de_poste: Optional[List[LigneDePoste]] = Field(default=None, alias="lignesDePoste")
     lignes_de_tva: Optional[List[LigneDeTVA]] = Field(default=None, alias="lignesDeTva")
+    notes: Optional[List[Note]] = None
     commentaire: Optional[StrictStr] = None
     id_utilisateur_courant: Optional[StrictInt] = Field(default=None, alias="idUtilisateurCourant")
     pieces_jointes_complementaires: Optional[List[PieceJointeComplementaire]] = Field(default=None, alias="piecesJointesComplementaires")
-    __properties: ClassVar[List[str]] = ["numeroFacture", "dateEcheancePaiement", "dateFacture", "modeDepot", "destinataire", "fournisseur", "cadreDeFacturation", "references", "montantTotal", "lignesDePoste", "lignesDeTva", "commentaire", "idUtilisateurCourant", "piecesJointesComplementaires"]
+    __properties: ClassVar[List[str]] = ["numeroFacture", "dateEcheancePaiement", "dateFacture", "modeDepot", "destinataire", "fournisseur", "cadreDeFacturation", "references", "montantTotal", "lignesDePoste", "lignesDeTva", "notes", "commentaire", "idUtilisateurCourant", "piecesJointesComplementaires"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -119,6 +121,13 @@ class FactureFacturX(BaseModel):
                 if _item_lignes_de_tva:
                     _items.append(_item_lignes_de_tva.to_dict())
             _dict['lignesDeTva'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in notes (list)
+        _items = []
+        if self.notes:
+            for _item_notes in self.notes:
+                if _item_notes:
+                    _items.append(_item_notes.to_dict())
+            _dict['notes'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in pieces_jointes_complementaires (list)
         _items = []
         if self.pieces_jointes_complementaires:
@@ -164,6 +173,7 @@ class FactureFacturX(BaseModel):
             "montantTotal": MontantTotal.from_dict(obj["montantTotal"]) if obj.get("montantTotal") is not None else None,
             "lignesDePoste": [LigneDePoste.from_dict(_item) for _item in obj["lignesDePoste"]] if obj.get("lignesDePoste") is not None else None,
             "lignesDeTva": [LigneDeTVA.from_dict(_item) for _item in obj["lignesDeTva"]] if obj.get("lignesDeTva") is not None else None,
+            "notes": [Note.from_dict(_item) for _item in obj["notes"]] if obj.get("notes") is not None else None,
             "commentaire": obj.get("commentaire"),
             "idUtilisateurCourant": obj.get("idUtilisateurCourant"),
             "piecesJointesComplementaires": [PieceJointeComplementaire.from_dict(_item) for _item in obj["piecesJointesComplementaires"]] if obj.get("piecesJointesComplementaires") is not None else None

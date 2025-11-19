@@ -9,6 +9,8 @@ Name | Type | Description | Notes
 **adresse_electronique** | [**AdresseElectronique**](AdresseElectronique.md) |  | 
 **code_service_executant** | **str** |  | [optional] 
 **nom** | **str** |  | [optional] 
+**siren** | **str** |  | [optional] 
+**siret** | **str** |  | [optional] 
 **adresse_postale** | [**AdressePostale**](AdressePostale.md) |  | [optional] 
 
 ## Example

@@ -40,6 +40,8 @@ class TestDestinataire(unittest.TestCase):
                     scheme_id = null, ),
                 code_service_executant = '',
                 nom = '',
+                siren = '',
+                siret = '',
                 adresse_postale = factpulse.models.adresse_postale.AdressePostale(
                     code_postal = '', 
                     ligne_un = '', 

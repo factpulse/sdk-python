@@ -17,6 +17,7 @@ Name | Type | Description | Notes
 **montant_total** | [**MontantTotal**](MontantTotal.md) |  | 
 **lignes_de_poste** | [**List[LigneDePoste]**](LigneDePoste.md) |  | [optional] 
 **lignes_de_tva** | [**List[LigneDeTVA]**](LigneDeTVA.md) |  | [optional] 
+**notes** | [**List[Note]**](Note.md) |  | [optional] 
 **commentaire** | **str** |  | [optional] 
 **id_utilisateur_courant** | **int** |  | [optional] 
 **pieces_jointes_complementaires** | [**List[PieceJointeComplementaire]**](PieceJointeComplementaire.md) |  | [optional] 
