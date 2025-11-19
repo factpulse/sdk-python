@@ -24,7 +24,7 @@ from factpulse.models.montant_ht_total import MontantHtTotal
 from factpulse.models.montant_remise_globale_ttc import MontantRemiseGlobaleTtc
 from factpulse.models.montant_total_acompte import MontantTotalAcompte
 from factpulse.models.montant_ttc_total import MontantTtcTotal
-from factpulse.models.montant_tva1 import MontantTva1
+from factpulse.models.montant_tva_total import MontantTvaTotal
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,7 +33,7 @@ class MontantTotal(BaseModel):
     Contient tous les montants totaux de la facture.
     """ # noqa: E501
     montant_ht_total: MontantHtTotal = Field(alias="montantHtTotal")
-    montant_tva: MontantTva1 = Field(alias="montantTva")
+    montant_tva: MontantTvaTotal = Field(alias="montantTva")
     montant_ttc_total: MontantTtcTotal = Field(alias="montantTtcTotal")
     montant_a_payer: MontantAPayer = Field(alias="montantAPayer")
     acompte: Optional[MontantTotalAcompte] = None
@@ -126,7 +126,7 @@ class MontantTotal(BaseModel):
 
         _obj = cls.model_validate({
             "montantHtTotal": MontantHtTotal.from_dict(obj["montantHtTotal"]) if obj.get("montantHtTotal") is not None else None,
-            "montantTva": MontantTva1.from_dict(obj["montantTva"]) if obj.get("montantTva") is not None else None,
+            "montantTva": MontantTvaTotal.from_dict(obj["montantTva"]) if obj.get("montantTva") is not None else None,
             "montantTtcTotal": MontantTtcTotal.from_dict(obj["montantTtcTotal"]) if obj.get("montantTtcTotal") is not None else None,
             "montantAPayer": MontantAPayer.from_dict(obj["montantAPayer"]) if obj.get("montantAPayer") is not None else None,
             "acompte": MontantTotalAcompte.from_dict(obj["acompte"]) if obj.get("acompte") is not None else None,

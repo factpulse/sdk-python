@@ -37,7 +37,7 @@ class TestDestinataire(unittest.TestCase):
             return Destinataire(
                 adresse_electronique = factpulse.models.adresse_electronique.AdresseElectronique(
                     identifiant = '', 
-                    scheme_id = '0225', ),
+                    scheme_id = null, ),
                 code_service_executant = '',
                 nom = '',
                 adresse_postale = factpulse.models.adresse_postale.AdressePostale(
@@ -51,7 +51,7 @@ class TestDestinataire(unittest.TestCase):
             return Destinataire(
                 adresse_electronique = factpulse.models.adresse_electronique.AdresseElectronique(
                     identifiant = '', 
-                    scheme_id = '0225', ),
+                    scheme_id = null, ),
         )
         """
 

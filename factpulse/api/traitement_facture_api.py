@@ -19,10 +19,8 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictBool, StrictBytes, StrictStr
 from typing import Any, Optional, Tuple, Union
 from typing_extensions import Annotated
-from factpulse.models.format_sortie import FormatSortie
 from factpulse.models.generate_certificate_request import GenerateCertificateRequest
 from factpulse.models.generate_certificate_response import GenerateCertificateResponse
-from factpulse.models.profil_api import ProfilAPI
 from factpulse.models.reponse_tache import ReponseTache
 from factpulse.models.reponse_validation_succes import ReponseValidationSucces
 from factpulse.models.resultat_validation_pdfapi import ResultatValidationPDFAPI
@@ -335,8 +333,8 @@ class TraitementFactureApi:
     def generer_facture_api_v1_traitement_generer_facture_post(
         self,
         donnees_facture: Annotated[StrictStr, Field(description="Données de la facture au format JSON.              Deux formats acceptés :             1. **Format classique** : Structure complète FactureFacturX (tous les champs)             2. **Format simplifié** (🆕 P0.1) : Structure minimale avec auto-enrichissement              Le format est détecté automatiquement !             ")],
-        profil: Annotated[Optional[ProfilAPI], Field(description="Profil Factur-X : MINIMUM, BASIC, EN16931 ou EXTENDED.")] = None,
-        format_sortie: Annotated[Optional[FormatSortie], Field(description="Format de sortie : 'xml' (XML seul) ou 'pdf' (PDF Factur-X avec XML embarqué).")] = None,
+        profil: Annotated[Optional[Any], Field(description="Profil Factur-X : MINIMUM, BASIC, EN16931 ou EXTENDED.")] = None,
+        format_sortie: Annotated[Optional[Any], Field(description="Format de sortie : 'xml' (XML seul) ou 'pdf' (PDF Factur-X avec XML embarqué).")] = None,
         auto_enrichir: Annotated[Optional[StrictBool], Field(description="🆕 Activer l'auto-enrichissement depuis SIRET/SIREN (format simplifié uniquement)")] = None,
         source_pdf: Optional[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]] = None,
         _request_timeout: Union[
@@ -420,8 +418,8 @@ class TraitementFactureApi:
     def generer_facture_api_v1_traitement_generer_facture_post_with_http_info(
         self,
         donnees_facture: Annotated[StrictStr, Field(description="Données de la facture au format JSON.              Deux formats acceptés :             1. **Format classique** : Structure complète FactureFacturX (tous les champs)             2. **Format simplifié** (🆕 P0.1) : Structure minimale avec auto-enrichissement              Le format est détecté automatiquement !             ")],
-        profil: Annotated[Optional[ProfilAPI], Field(description="Profil Factur-X : MINIMUM, BASIC, EN16931 ou EXTENDED.")] = None,
-        format_sortie: Annotated[Optional[FormatSortie], Field(description="Format de sortie : 'xml' (XML seul) ou 'pdf' (PDF Factur-X avec XML embarqué).")] = None,
+        profil: Annotated[Optional[Any], Field(description="Profil Factur-X : MINIMUM, BASIC, EN16931 ou EXTENDED.")] = None,
+        format_sortie: Annotated[Optional[Any], Field(description="Format de sortie : 'xml' (XML seul) ou 'pdf' (PDF Factur-X avec XML embarqué).")] = None,
         auto_enrichir: Annotated[Optional[StrictBool], Field(description="🆕 Activer l'auto-enrichissement depuis SIRET/SIREN (format simplifié uniquement)")] = None,
         source_pdf: Optional[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]] = None,
         _request_timeout: Union[
@@ -505,8 +503,8 @@ class TraitementFactureApi:
     def generer_facture_api_v1_traitement_generer_facture_post_without_preload_content(
         self,
         donnees_facture: Annotated[StrictStr, Field(description="Données de la facture au format JSON.              Deux formats acceptés :             1. **Format classique** : Structure complète FactureFacturX (tous les champs)             2. **Format simplifié** (🆕 P0.1) : Structure minimale avec auto-enrichissement              Le format est détecté automatiquement !             ")],
-        profil: Annotated[Optional[ProfilAPI], Field(description="Profil Factur-X : MINIMUM, BASIC, EN16931 ou EXTENDED.")] = None,
-        format_sortie: Annotated[Optional[FormatSortie], Field(description="Format de sortie : 'xml' (XML seul) ou 'pdf' (PDF Factur-X avec XML embarqué).")] = None,
+        profil: Annotated[Optional[Any], Field(description="Profil Factur-X : MINIMUM, BASIC, EN16931 ou EXTENDED.")] = None,
+        format_sortie: Annotated[Optional[Any], Field(description="Format de sortie : 'xml' (XML seul) ou 'pdf' (PDF Factur-X avec XML embarqué).")] = None,
         auto_enrichir: Annotated[Optional[StrictBool], Field(description="🆕 Activer l'auto-enrichissement depuis SIRET/SIREN (format simplifié uniquement)")] = None,
         source_pdf: Optional[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]] = None,
         _request_timeout: Union[
@@ -690,7 +688,7 @@ class TraitementFactureApi:
     ) -> StatutTache:
         """Obtenir le statut d'une tâche de génération
 
-        Récupère l'état d'avancement d'une tâche de génération de facture.  ## États possibles  - **PENDING** : Tâche en attente de traitement - **STARTED** : Tâche en cours d'exécution - **SUCCESS** : Tâche terminée (vérifier `resultat.statut` pour le résultat réel) - **FAILURE** : Erreur système lors de l'exécution - **RETRY** : Tentative de ré-exécution en cours  ## Champ resultat  Quand la tâche est terminée (SUCCESS), le champ `resultat` contient : - `statut` : \"SUCCES\" ou \"ERREUR\" - `chemin_fichier` : Chemin du fichier généré (si succès) - `message_erreur` : Détails de l'erreur (si échec)  ## Usage  Appelez cet endpoint en boucle (polling) toutes les 2-3 secondes jusqu'à ce que le statut soit SUCCESS ou FAILURE.
+        Récupère l'état d'avancement d'une tâche de génération de facture.  ## États possibles  Le champ `statut` utilise l'enum `StatutCelery` avec les valeurs : - **PENDING, STARTED, SUCCESS, FAILURE, RETRY**  Voir la documentation du schéma `StatutCelery` pour les détails.  ## Résultat métier  Quand `statut=\"SUCCESS\"`, le champ `resultat` contient : - `statut` : \"SUCCES\" ou \"ERREUR\" (résultat métier) - `chemin_fichier` : Chemin du fichier généré (si succès) - `message_erreur` : Détails de l'erreur (si échec métier)  ## Usage  Appelez cet endpoint en boucle (polling) toutes les 2-3 secondes jusqu'à ce que `statut` soit `SUCCESS` ou `FAILURE`.
 
         :param id_tache: (required)
         :type id_tache: str
@@ -758,7 +756,7 @@ class TraitementFactureApi:
     ) -> ApiResponse[StatutTache]:
         """Obtenir le statut d'une tâche de génération
 
-        Récupère l'état d'avancement d'une tâche de génération de facture.  ## États possibles  - **PENDING** : Tâche en attente de traitement - **STARTED** : Tâche en cours d'exécution - **SUCCESS** : Tâche terminée (vérifier `resultat.statut` pour le résultat réel) - **FAILURE** : Erreur système lors de l'exécution - **RETRY** : Tentative de ré-exécution en cours  ## Champ resultat  Quand la tâche est terminée (SUCCESS), le champ `resultat` contient : - `statut` : \"SUCCES\" ou \"ERREUR\" - `chemin_fichier` : Chemin du fichier généré (si succès) - `message_erreur` : Détails de l'erreur (si échec)  ## Usage  Appelez cet endpoint en boucle (polling) toutes les 2-3 secondes jusqu'à ce que le statut soit SUCCESS ou FAILURE.
+        Récupère l'état d'avancement d'une tâche de génération de facture.  ## États possibles  Le champ `statut` utilise l'enum `StatutCelery` avec les valeurs : - **PENDING, STARTED, SUCCESS, FAILURE, RETRY**  Voir la documentation du schéma `StatutCelery` pour les détails.  ## Résultat métier  Quand `statut=\"SUCCESS\"`, le champ `resultat` contient : - `statut` : \"SUCCES\" ou \"ERREUR\" (résultat métier) - `chemin_fichier` : Chemin du fichier généré (si succès) - `message_erreur` : Détails de l'erreur (si échec métier)  ## Usage  Appelez cet endpoint en boucle (polling) toutes les 2-3 secondes jusqu'à ce que `statut` soit `SUCCESS` ou `FAILURE`.
 
         :param id_tache: (required)
         :type id_tache: str
@@ -826,7 +824,7 @@ class TraitementFactureApi:
     ) -> RESTResponseType:
         """Obtenir le statut d'une tâche de génération
 
-        Récupère l'état d'avancement d'une tâche de génération de facture.  ## États possibles  - **PENDING** : Tâche en attente de traitement - **STARTED** : Tâche en cours d'exécution - **SUCCESS** : Tâche terminée (vérifier `resultat.statut` pour le résultat réel) - **FAILURE** : Erreur système lors de l'exécution - **RETRY** : Tentative de ré-exécution en cours  ## Champ resultat  Quand la tâche est terminée (SUCCESS), le champ `resultat` contient : - `statut` : \"SUCCES\" ou \"ERREUR\" - `chemin_fichier` : Chemin du fichier généré (si succès) - `message_erreur` : Détails de l'erreur (si échec)  ## Usage  Appelez cet endpoint en boucle (polling) toutes les 2-3 secondes jusqu'à ce que le statut soit SUCCESS ou FAILURE.
+        Récupère l'état d'avancement d'une tâche de génération de facture.  ## États possibles  Le champ `statut` utilise l'enum `StatutCelery` avec les valeurs : - **PENDING, STARTED, SUCCESS, FAILURE, RETRY**  Voir la documentation du schéma `StatutCelery` pour les détails.  ## Résultat métier  Quand `statut=\"SUCCESS\"`, le champ `resultat` contient : - `statut` : \"SUCCES\" ou \"ERREUR\" (résultat métier) - `chemin_fichier` : Chemin du fichier généré (si succès) - `message_erreur` : Détails de l'erreur (si échec métier)  ## Usage  Appelez cet endpoint en boucle (polling) toutes les 2-3 secondes jusqu'à ce que `statut` soit `SUCCESS` ou `FAILURE`.
 
         :param id_tache: (required)
         :type id_tache: str
@@ -2248,7 +2246,7 @@ class TraitementFactureApi:
     def valider_pdf_facturx_api_v1_traitement_valider_pdf_facturx_post(
         self,
         fichier_pdf: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Fichier PDF Factur-X à valider (format .pdf).")],
-        profil: Optional[ProfilAPI] = None,
+        profil: Optional[Any] = None,
         use_verapdf: Annotated[Optional[StrictBool], Field(description="Active la validation stricte PDF/A avec VeraPDF (recommandé pour la production). Si False, utilise une validation basique par métadonnées.")] = None,
         _request_timeout: Union[
             None,
@@ -2325,7 +2323,7 @@ class TraitementFactureApi:
     def valider_pdf_facturx_api_v1_traitement_valider_pdf_facturx_post_with_http_info(
         self,
         fichier_pdf: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Fichier PDF Factur-X à valider (format .pdf).")],
-        profil: Optional[ProfilAPI] = None,
+        profil: Optional[Any] = None,
         use_verapdf: Annotated[Optional[StrictBool], Field(description="Active la validation stricte PDF/A avec VeraPDF (recommandé pour la production). Si False, utilise une validation basique par métadonnées.")] = None,
         _request_timeout: Union[
             None,
@@ -2402,7 +2400,7 @@ class TraitementFactureApi:
     def valider_pdf_facturx_api_v1_traitement_valider_pdf_facturx_post_without_preload_content(
         self,
         fichier_pdf: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Fichier PDF Factur-X à valider (format .pdf).")],
-        profil: Optional[ProfilAPI] = None,
+        profil: Optional[Any] = None,
         use_verapdf: Annotated[Optional[StrictBool], Field(description="Active la validation stricte PDF/A avec VeraPDF (recommandé pour la production). Si False, utilise une validation basique par métadonnées.")] = None,
         _request_timeout: Union[
             None,
@@ -2558,7 +2556,7 @@ class TraitementFactureApi:
     def valider_pdf_facturx_async_api_v1_traitement_valider_facturx_async_post(
         self,
         fichier_pdf: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Fichier PDF Factur-X à valider (format .pdf).")],
-        profil: Optional[ProfilAPI] = None,
+        profil: Optional[Any] = None,
         use_verapdf: Annotated[Optional[StrictBool], Field(description="Active la validation stricte PDF/A avec VeraPDF (recommandé pour la production). Peut prendre plusieurs secondes.")] = None,
         _request_timeout: Union[
             None,
@@ -2635,7 +2633,7 @@ class TraitementFactureApi:
     def valider_pdf_facturx_async_api_v1_traitement_valider_facturx_async_post_with_http_info(
         self,
         fichier_pdf: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Fichier PDF Factur-X à valider (format .pdf).")],
-        profil: Optional[ProfilAPI] = None,
+        profil: Optional[Any] = None,
         use_verapdf: Annotated[Optional[StrictBool], Field(description="Active la validation stricte PDF/A avec VeraPDF (recommandé pour la production). Peut prendre plusieurs secondes.")] = None,
         _request_timeout: Union[
             None,
@@ -2712,7 +2710,7 @@ class TraitementFactureApi:
     def valider_pdf_facturx_async_api_v1_traitement_valider_facturx_async_post_without_preload_content(
         self,
         fichier_pdf: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Fichier PDF Factur-X à valider (format .pdf).")],
-        profil: Optional[ProfilAPI] = None,
+        profil: Optional[Any] = None,
         use_verapdf: Annotated[Optional[StrictBool], Field(description="Active la validation stricte PDF/A avec VeraPDF (recommandé pour la production). Peut prendre plusieurs secondes.")] = None,
         _request_timeout: Union[
             None,
@@ -3148,7 +3146,7 @@ class TraitementFactureApi:
     def valider_xml_api_v1_traitement_valider_xml_post(
         self,
         fichier_xml: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Fichier XML Factur-X à valider (format .xml).")],
-        profil: Annotated[Optional[ProfilAPI], Field(description="Profil de validation (MINIMUM, BASIC, EN16931, EXTENDED).")] = None,
+        profil: Annotated[Optional[Any], Field(description="Profil de validation (MINIMUM, BASIC, EN16931, EXTENDED).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3221,7 +3219,7 @@ class TraitementFactureApi:
     def valider_xml_api_v1_traitement_valider_xml_post_with_http_info(
         self,
         fichier_xml: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Fichier XML Factur-X à valider (format .xml).")],
-        profil: Annotated[Optional[ProfilAPI], Field(description="Profil de validation (MINIMUM, BASIC, EN16931, EXTENDED).")] = None,
+        profil: Annotated[Optional[Any], Field(description="Profil de validation (MINIMUM, BASIC, EN16931, EXTENDED).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3294,7 +3292,7 @@ class TraitementFactureApi:
     def valider_xml_api_v1_traitement_valider_xml_post_without_preload_content(
         self,
         fichier_xml: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Fichier XML Factur-X à valider (format .xml).")],
-        profil: Annotated[Optional[ProfilAPI], Field(description="Profil de validation (MINIMUM, BASIC, EN16931, EXTENDED).")] = None,
+        profil: Annotated[Optional[Any], Field(description="Profil de validation (MINIMUM, BASIC, EN16931, EXTENDED).")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],

@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "2.0.5"
+__version__ = "2.0.6"
 
 # Define package exports
 __all__ = [
@@ -91,6 +91,8 @@ __all__ = [
     "MontantTtcTotal1",
     "MontantTva",
     "MontantTva1",
+    "MontantTvaLigne",
+    "MontantTvaTotal",
     "MontantUnitaireHt",
     "ObtenirIdChorusProRequest",
     "ObtenirIdChorusProResponse",
@@ -119,6 +121,7 @@ __all__ = [
     "SoumettreFactureCompleteResponse",
     "SoumettreFactureRequest",
     "SoumettreFactureResponse",
+    "StatutCelery",
     "StatutFacture",
     "StatutTache",
     "StructureInfo",
@@ -209,6 +212,8 @@ from factpulse.models.montant_ttc_total import MontantTtcTotal as MontantTtcTota
 from factpulse.models.montant_ttc_total1 import MontantTtcTotal1 as MontantTtcTotal1
 from factpulse.models.montant_tva import MontantTva as MontantTva
 from factpulse.models.montant_tva1 import MontantTva1 as MontantTva1
+from factpulse.models.montant_tva_ligne import MontantTvaLigne as MontantTvaLigne
+from factpulse.models.montant_tva_total import MontantTvaTotal as MontantTvaTotal
 from factpulse.models.montant_unitaire_ht import MontantUnitaireHt as MontantUnitaireHt
 from factpulse.models.obtenir_id_chorus_pro_request import ObtenirIdChorusProRequest as ObtenirIdChorusProRequest
 from factpulse.models.obtenir_id_chorus_pro_response import ObtenirIdChorusProResponse as ObtenirIdChorusProResponse
@@ -237,6 +242,7 @@ from factpulse.models.soumettre_facture_complete_request import SoumettreFacture
 from factpulse.models.soumettre_facture_complete_response import SoumettreFactureCompleteResponse as SoumettreFactureCompleteResponse
 from factpulse.models.soumettre_facture_request import SoumettreFactureRequest as SoumettreFactureRequest
 from factpulse.models.soumettre_facture_response import SoumettreFactureResponse as SoumettreFactureResponse
+from factpulse.models.statut_celery import StatutCelery as StatutCelery
 from factpulse.models.statut_facture import StatutFacture as StatutFacture
 from factpulse.models.statut_tache import StatutTache as StatutTache
 from factpulse.models.structure_info import StructureInfo as StructureInfo

@@ -36,13 +36,13 @@ class TestStatutTache(unittest.TestCase):
         if include_optional:
             return StatutTache(
                 id_tache = '',
-                statut = '',
+                statut = 'PENDING',
                 resultat = { }
             )
         else:
             return StatutTache(
                 id_tache = '',
-                statut = '',
+                statut = 'PENDING',
         )
         """
 

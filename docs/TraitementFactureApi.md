@@ -282,8 +282,6 @@ En cas d'erreur, un statut 422 est retourné avec les détails des champs invali
 
 ```python
 import factpulse
-from factpulse.models.format_sortie import FormatSortie
-from factpulse.models.profil_api import ProfilAPI
 from factpulse.models.reponse_tache import ReponseTache
 from factpulse.rest import ApiException
 from pprint import pprint
@@ -368,23 +366,22 @@ Récupère l'état d'avancement d'une tâche de génération de facture.
 
 ## États possibles
 
-- **PENDING** : Tâche en attente de traitement
-- **STARTED** : Tâche en cours d'exécution
-- **SUCCESS** : Tâche terminée (vérifier `resultat.statut` pour le résultat réel)
-- **FAILURE** : Erreur système lors de l'exécution
-- **RETRY** : Tentative de ré-exécution en cours
+Le champ `statut` utilise l'enum `StatutCelery` avec les valeurs :
+- **PENDING, STARTED, SUCCESS, FAILURE, RETRY**
 
-## Champ resultat
+Voir la documentation du schéma `StatutCelery` pour les détails.
 
-Quand la tâche est terminée (SUCCESS), le champ `resultat` contient :
-- `statut` : "SUCCES" ou "ERREUR"
+## Résultat métier
+
+Quand `statut="SUCCESS"`, le champ `resultat` contient :
+- `statut` : "SUCCES" ou "ERREUR" (résultat métier)
 - `chemin_fichier` : Chemin du fichier généré (si succès)
-- `message_erreur` : Détails de l'erreur (si échec)
+- `message_erreur` : Détails de l'erreur (si échec métier)
 
 ## Usage
 
 Appelez cet endpoint en boucle (polling) toutes les 2-3 secondes jusqu'à ce que
-le statut soit SUCCESS ou FAILURE.
+`statut` soit `SUCCESS` ou `FAILURE`.
 
 ### Example
 
@@ -1039,7 +1036,6 @@ Valide un PDF Factur-X complet selon les normes européennes et françaises.
 
 ```python
 import factpulse
-from factpulse.models.profil_api import ProfilAPI
 from factpulse.models.resultat_validation_pdfapi import ResultatValidationPDFAPI
 from factpulse.rest import ApiException
 from pprint import pprint
@@ -1212,7 +1208,6 @@ while True:
 
 ```python
 import factpulse
-from factpulse.models.profil_api import ProfilAPI
 from factpulse.models.reponse_tache import ReponseTache
 from factpulse.rest import ApiException
 from pprint import pprint
@@ -1497,7 +1492,6 @@ Exemples :
 
 ```python
 import factpulse
-from factpulse.models.profil_api import ProfilAPI
 from factpulse.models.reponse_validation_succes import ReponseValidationSucces
 from factpulse.rest import ApiException
 from pprint import pprint

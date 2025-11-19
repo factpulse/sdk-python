@@ -46,12 +46,7 @@ class TestBodyCompleterFactureApiV1ChorusProFacturesCompleterPost(unittest.TestC
                     bypass_quota = True, 
                     team_id = 56, 
                     has_quota = True, 
-                    quota_info = factpulse.models.quota_info.QuotaInfo(
-                        limit = 56, 
-                        usage = 56, 
-                        remaining = 56, 
-                        reset_date = '', 
-                        plan = '', ), 
+                    quota_info = null, 
                     is_trial = True, 
                     client_uid = '', ),
                 credentials = {chorus_pro_login=mon_login@entreprise.fr, chorus_pro_password=MonMotDePasse123!, piste_client_id=mon_client_id, piste_client_secret=mon_secret, sandbox=true}
@@ -69,12 +64,7 @@ class TestBodyCompleterFactureApiV1ChorusProFacturesCompleterPost(unittest.TestC
                     bypass_quota = True, 
                     team_id = 56, 
                     has_quota = True, 
-                    quota_info = factpulse.models.quota_info.QuotaInfo(
-                        limit = 56, 
-                        usage = 56, 
-                        remaining = 56, 
-                        reset_date = '', 
-                        plan = '', ), 
+                    quota_info = null, 
                     is_trial = True, 
                     client_uid = '', ),
         )

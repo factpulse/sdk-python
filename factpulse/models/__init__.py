@@ -70,6 +70,8 @@ from factpulse.models.montant_ttc_total import MontantTtcTotal
 from factpulse.models.montant_ttc_total1 import MontantTtcTotal1
 from factpulse.models.montant_tva import MontantTva
 from factpulse.models.montant_tva1 import MontantTva1
+from factpulse.models.montant_tva_ligne import MontantTvaLigne
+from factpulse.models.montant_tva_total import MontantTvaTotal
 from factpulse.models.montant_unitaire_ht import MontantUnitaireHt
 from factpulse.models.obtenir_id_chorus_pro_request import ObtenirIdChorusProRequest
 from factpulse.models.obtenir_id_chorus_pro_response import ObtenirIdChorusProResponse
@@ -98,6 +100,7 @@ from factpulse.models.soumettre_facture_complete_request import SoumettreFacture
 from factpulse.models.soumettre_facture_complete_response import SoumettreFactureCompleteResponse
 from factpulse.models.soumettre_facture_request import SoumettreFactureRequest
 from factpulse.models.soumettre_facture_response import SoumettreFactureResponse
+from factpulse.models.statut_celery import StatutCelery
 from factpulse.models.statut_facture import StatutFacture
 from factpulse.models.statut_tache import StatutTache
 from factpulse.models.structure_info import StructureInfo

@@ -1,13 +1,13 @@
 # StatutTache
 
-Description complète du statut d'une tâche asynchrone.
+Description complète du statut d'une tâche asynchrone.  Le champ `statut` indique l'état Celery de la tâche. Quand `statut=\"SUCCESS\"`, consultez `resultat.statut` pour le résultat métier (\"SUCCES\" ou \"ERREUR\").
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id_tache** | **str** |  | 
-**statut** | **str** |  | 
+**statut** | [**StatutCelery**](StatutCelery.md) | Statut Celery de la tâche (PENDING, STARTED, SUCCESS, FAILURE, RETRY) | 
 **resultat** | **Dict[str, object]** |  | [optional] 
 
 ## Example

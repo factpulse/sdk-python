@@ -17,17 +17,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from factpulse.models.statut_celery import StatutCelery
 from typing import Optional, Set
 from typing_extensions import Self
 
 class StatutTache(BaseModel):
     """
-    Description complète du statut d'une tâche asynchrone.
+    Description complète du statut d'une tâche asynchrone.  Le champ `statut` indique l'état Celery de la tâche. Quand `statut=\"SUCCESS\"`, consultez `resultat.statut` pour le résultat métier (\"SUCCES\" ou \"ERREUR\").
     """ # noqa: E501
     id_tache: StrictStr
-    statut: StrictStr
+    statut: StatutCelery = Field(description="Statut Celery de la tâche (PENDING, STARTED, SUCCESS, FAILURE, RETRY)")
     resultat: Optional[Dict[str, Any]] = None
     __properties: ClassVar[List[str]] = ["id_tache", "statut", "resultat"]
 
