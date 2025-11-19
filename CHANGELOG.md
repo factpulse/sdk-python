@@ -7,10 +7,10 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-## [2.0.4] - 2025-11-18
+## [2.0.4] - 2025-11-19
 
 ### Added
-- Version initiale du SDK python
+- Version initiale du SDK Python
 - Support complet de l'API FactPulse v1.0.0
 - Endpoints Factur-X (génération, validation)
 - Endpoints AFNOR PDP/PA (Flow Service, Directory Service)
