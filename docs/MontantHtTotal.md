@@ -1,6 +1,6 @@
 # MontantHtTotal
 
-Montant total HT. (Accepte number, string ou integer)
+Montant total HT.
 
 ## Properties
 

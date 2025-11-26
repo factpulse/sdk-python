@@ -8,7 +8,7 @@ Client Python officiel pour l'API FactPulse - Facturation électronique françai
 - **Chorus Pro** : Intégration avec la plateforme de facturation publique française
 - **AFNOR PDP/PA** : Soumission de flux conformes à la norme XP Z12-013
 - **Signature électronique** : Signature PDF (PAdES-B-B, PAdES-B-T, PAdES-B-LT)
-- **Client simplifié** : Authentification JWT et polling intégrés via `factpulse_helpers`
+- **Traitement asynchrone** : Support Celery pour opérations longues
 
 ## 🚀 Installation
 
@@ -18,23 +18,33 @@ pip install factpulse
 
 ## 📖 Démarrage rapide
 
-### Méthode recommandée : Client simplifié avec helpers
-
-Le module `factpulse_helpers` offre une API simplifiée avec authentification et polling automatiques :
+### 1. Authentification
 
 ```python
-from factpulse_helpers import FactPulseClient
+from factpulse import ApiClient, Configuration
 
-# Créer le client (authentification automatique)
-client = FactPulseClient(
-    email="votre_email@example.com",
-    password="votre_mot_de_passe"
-)
+# Configuration du client
+config = Configuration(host='https://factpulse.fr/api/facturation/')
+config.access_token = 'votre_token_jwt'
+
+client = ApiClient(configuration=config)
+```
+
+### 2. Générer une facture Factur-X
+
+```python
+from factpulse.api.traitement_facture_api import TraitementFactureApi
+import json
+
+api = TraitementFactureApi(client)
 
 # Données de la facture
+# IMPORTANT: Les montants sont des strings pour préserver la précision monétaire
 facture_data = {
     "numero_facture": "FAC-2025-001",
     "date_facture": "2025-01-15",
+    "montant_total_ht": "1000.00",  # String, pas float !
+    "montant_total_ttc": "1200.00",  # String, pas float !
     "fournisseur": {
         "nom": "Mon Entreprise SAS",
         "siret": "12345678901234",
@@ -55,49 +65,58 @@ facture_data = {
             "pays_code_iso": "FR"
         }
     },
-    "montant_total": {
-        "montant_ht_total": "1000.00",
-        "montant_tva": "200.00",
-        "montant_ttc_total": "1200.00",
-        "montant_a_payer": "1200.00"
-    },
     "lignes_de_poste": [{
         "numero": 1,
         "denomination": "Prestation de conseil",
         "quantite": "10.00",
-        "unite": "PIECE",
-        "montant_unitaire_ht": "100.00"
+        "montant_unitaire_ht": "100.00",
+        "montant_ligne_ht": "1000.00"
     }]
 }
 
-# Lire le PDF source
-with open("facture_source.pdf", "rb") as f:
-    pdf_source = f.read()
-
-# Générer le PDF Factur-X (polling automatique)
-pdf_bytes = client.generer_facturx(
-    facture_data=facture_data,
-    pdf_source=pdf_source,
-    profil="EN16931",
-    sync=True  # Attend le résultat automatiquement
+# Générer le PDF Factur-X (multipart/form-data)
+pdf_bytes = api.generer_facture_api_v1_traitement_generer_facture_post(
+    donnees_facture=json.dumps(facture_data),
+    profil='EN16931',
+    format_sortie='pdf'
 )
 
 # Sauvegarder
-with open("facture_facturx.pdf", "wb") as f:
+with open('facture.pdf', 'wb') as f:
     f.write(pdf_bytes)
 ```
 
-### Méthode alternative : SDK brut
-
-Pour un contrôle total, utilisez le SDK généré directement :
+### 3. Soumettre une facture complète (Chorus Pro / AFNOR PDP)
 
 ```python
-from factpulse import ApiClient, Configuration
-from factpulse.api import TraitementFactureApi
-import requests
-import json
+from factpulse.api.traitement_facture_api import TraitementFactureApi
 
-# 1. Obtenir le token JWT
+api = TraitementFactureApi(client)
+
+# Soumettre une facture avec destination Chorus Pro
+response = api.soumettre_facture_complete_api_v1_traitement_factures_soumettre_complete_post(
+    body={
+        "facture": facture_data,
+        "destination": {
+            "type": "chorus_pro",
+            "credentials": {
+                "login": "votre_login_chorus",
+                "password": "votre_password_chorus"
+            }
+        }
+    }
+)
+
+print(f"Facture soumise : {response.id_facture_chorus}")
+```
+
+## 🔑 Obtention du token JWT
+
+### Via l'API
+
+```python
+import requests
+
 response = requests.post(
     'https://factpulse.fr/api/token/',
     json={
@@ -105,85 +124,32 @@ response = requests.post(
         'password': 'votre_mot_de_passe'
     }
 )
+
 token = response.json()['access']
-
-# 2. Configurer le client
-config = Configuration(host='https://factpulse.fr/api/facturation')
-config.access_token = token
-client = ApiClient(configuration=config)
-
-# 3. Appeler l'API
-api = TraitementFactureApi(client)
-response = api.generer_facture_api_v1_traitement_generer_facture_post(
-    donnees_facture=json.dumps(facture_data),
-    profil='EN16931',
-    format_sortie='pdf',
-    source_pdf=pdf_source
-)
-
-# 4. Polling manuel pour récupérer le résultat
-task_id = response.id_tache
-# ... (implémenter le polling)
 ```
 
-## 🔧 Avantages de factpulse_helpers
+**Accès aux credentials d'un client spécifique :**
 
-| Fonctionnalité | SDK brut | factpulse_helpers |
-|----------------|----------|-------------------|
-| Authentification | Manuelle | Automatique |
-| Refresh token | Manuel | Automatique |
-| Polling tâches async | Manuel | Automatique (backoff) |
-| Retry sur 401 | Manuel | Automatique |
-| Conversion Decimal | Manuelle | Helper inclus |
-
-## 🔑 Options d'authentification
-
-### Client UID (multi-clients)
-
-Si vous gérez plusieurs clients et souhaitez accéder aux credentials d'un client spécifique :
+Si vous gérez plusieurs clients et souhaitez accéder aux credentials (Chorus Pro, AFNOR PDP) d'un client particulier, ajoutez le champ `client_uid` :
 
 ```python
-client = FactPulseClient(
-    email="votre_email@example.com",
-    password="votre_mot_de_passe",
-    client_uid="identifiant_client"  # UID du client cible
+response = requests.post(
+    'https://factpulse.fr/api/token/',
+    json={
+        'username': 'votre_email@example.com',
+        'password': 'votre_mot_de_passe',
+        'client_uid': 'identifiant_client'  # UID du client cible
+    }
 )
+
+token = response.json()['access']
 ```
 
-### Configuration avancée
+### Via le Dashboard
 
-```python
-client = FactPulseClient(
-    email="votre_email@example.com",
-    password="votre_mot_de_passe",
-    api_url="https://factpulse.fr",  # URL personnalisée
-    polling_interval=2,  # Intervalle de polling initial (secondes)
-    polling_timeout=120,  # Timeout de polling (secondes)
-    max_retries=2  # Tentatives en cas de 401
-)
-```
-
-## 💡 Formats de montants acceptés
-
-L'API accepte plusieurs formats pour les montants monétaires :
-
-```python
-# String (recommandé pour la précision)
-montant = "1234.56"
-
-# Number (float)
-montant = 1234.56
-
-# Integer
-montant = 1234
-
-# Decimal Python
-from decimal import Decimal
-montant = Decimal("1234.56")
-
-# Helper de formatage
-montant_formate = FactPulseClient.format_montant(1234.5)  # "1234.50"
-```
+1. Connectez-vous sur https://factpulse.fr/api/dashboard/
+2. Générez un token API
+3. Copiez et utilisez le token dans votre configuration
 
 ## 📚 Ressources
 

@@ -1,6 +1,6 @@
 # LigneDePosteTauxTvaManuel
 
-Taux de TVA avec valeur manuelle. (Accepte number, string ou integer)
+Taux de TVA avec valeur manuelle.
 
 ## Properties
 

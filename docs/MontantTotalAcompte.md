@@ -1,6 +1,6 @@
 # MontantTotalAcompte
 
-Acompte versé. (Accepte number, string ou integer)
+Acompte versé.
 
 ## Properties
 

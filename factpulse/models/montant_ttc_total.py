@@ -28,7 +28,7 @@ MONTANTTTCTOTAL_ANY_OF_SCHEMAS = ["float", "str"]
 
 class MontantTtcTotal(BaseModel):
     """
-    Montant total TTC. (Accepte number, string ou integer)
+    Montant total TTC.
     """
 
     # data type: float

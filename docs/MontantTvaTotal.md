@@ -1,6 +1,6 @@
 # MontantTvaTotal
 
-Montant total de la TVA. (Accepte number, string ou integer)
+Montant total de la TVA.
 
 ## Properties
 

@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "2.0.12"
+__version__ = "2.0.13"
 
 # Define package exports
 __all__ = [
@@ -34,6 +34,7 @@ __all__ = [
     "ApiKeyError",
     "ApiAttributeError",
     "ApiException",
+    "APIError",
     "AdresseElectronique",
     "AdressePostale",
     "BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost",
@@ -64,6 +65,8 @@ __all__ = [
     "DestinationAFNOR",
     "DestinationChorusPro",
     "DonneesFactureSimplifiees",
+    "ErrorLevel",
+    "ErrorSource",
     "FactureEnrichieInfo",
     "FactureFacturX",
     "FormatSortie",
@@ -128,6 +131,7 @@ __all__ = [
     "Unite",
     "Utilisateur",
     "ValidationError",
+    "ValidationErrorDetail",
     "ValidationErrorLocInner",
 ]
 
@@ -152,6 +156,7 @@ from factpulse.exceptions import ApiAttributeError as ApiAttributeError
 from factpulse.exceptions import ApiException as ApiException
 
 # import models into sdk package
+from factpulse.models.api_error import APIError as APIError
 from factpulse.models.adresse_electronique import AdresseElectronique as AdresseElectronique
 from factpulse.models.adresse_postale import AdressePostale as AdressePostale
 from factpulse.models.body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post import BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost as BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost
@@ -182,6 +187,8 @@ from factpulse.models.destination import Destination as Destination
 from factpulse.models.destination_afnor import DestinationAFNOR as DestinationAFNOR
 from factpulse.models.destination_chorus_pro import DestinationChorusPro as DestinationChorusPro
 from factpulse.models.donnees_facture_simplifiees import DonneesFactureSimplifiees as DonneesFactureSimplifiees
+from factpulse.models.error_level import ErrorLevel as ErrorLevel
+from factpulse.models.error_source import ErrorSource as ErrorSource
 from factpulse.models.facture_enrichie_info import FactureEnrichieInfo as FactureEnrichieInfo
 from factpulse.models.facture_factur_x import FactureFacturX as FactureFacturX
 from factpulse.models.format_sortie import FormatSortie as FormatSortie
@@ -246,5 +253,6 @@ from factpulse.models.type_tva import TypeTVA as TypeTVA
 from factpulse.models.unite import Unite as Unite
 from factpulse.models.utilisateur import Utilisateur as Utilisateur
 from factpulse.models.validation_error import ValidationError as ValidationError
+from factpulse.models.validation_error_detail import ValidationErrorDetail as ValidationErrorDetail
 from factpulse.models.validation_error_loc_inner import ValidationErrorLocInner as ValidationErrorLocInner
 

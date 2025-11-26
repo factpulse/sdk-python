@@ -28,7 +28,7 @@ MONTANTTOTALACOMPTE_ANY_OF_SCHEMAS = ["float", "str"]
 
 class MontantTotalAcompte(BaseModel):
     """
-    Acompte versé. (Accepte number, string ou integer)
+    Acompte versé.
     """
 
     # data type: float

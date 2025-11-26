@@ -103,6 +103,11 @@ class MontantTotal(BaseModel):
         if self.acompte is None and "acompte" in self.model_fields_set:
             _dict['acompte'] = None
 
+        # set to None if montant_remise_globale_ttc (nullable) is None
+        # and model_fields_set contains the field
+        if self.montant_remise_globale_ttc is None and "montant_remise_globale_ttc" in self.model_fields_set:
+            _dict['montantRemiseGlobaleTtc'] = None
+
         # set to None if motif_remise_globale_ttc (nullable) is None
         # and model_fields_set contains the field
         if self.motif_remise_globale_ttc is None and "motif_remise_globale_ttc" in self.model_fields_set:

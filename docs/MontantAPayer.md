@@ -1,6 +1,6 @@
 # MontantAPayer
 
-Montant à payer. (Accepte number, string ou integer)
+Montant à payer.
 
 ## Properties
 

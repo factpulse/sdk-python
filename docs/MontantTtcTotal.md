@@ -1,6 +1,6 @@
 # MontantTtcTotal
 
-Montant total TTC. (Accepte number, string ou integer)
+Montant total TTC.
 
 ## Properties
 

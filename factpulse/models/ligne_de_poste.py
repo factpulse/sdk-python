@@ -115,6 +115,11 @@ class LigneDePoste(BaseModel):
         if self.montant_remise_ht is None and "montant_remise_ht" in self.model_fields_set:
             _dict['montantRemiseHt'] = None
 
+        # set to None if montant_total_ligne_ht (nullable) is None
+        # and model_fields_set contains the field
+        if self.montant_total_ligne_ht is None and "montant_total_ligne_ht" in self.model_fields_set:
+            _dict['montantTotalLigneHt'] = None
+
         # set to None if taux_tva (nullable) is None
         # and model_fields_set contains the field
         if self.taux_tva is None and "taux_tva" in self.model_fields_set:

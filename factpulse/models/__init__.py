@@ -13,6 +13,7 @@
 """  # noqa: E501
 
 # import models into model package
+from factpulse.models.api_error import APIError
 from factpulse.models.adresse_electronique import AdresseElectronique
 from factpulse.models.adresse_postale import AdressePostale
 from factpulse.models.body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post import BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost
@@ -43,6 +44,8 @@ from factpulse.models.destination import Destination
 from factpulse.models.destination_afnor import DestinationAFNOR
 from factpulse.models.destination_chorus_pro import DestinationChorusPro
 from factpulse.models.donnees_facture_simplifiees import DonneesFactureSimplifiees
+from factpulse.models.error_level import ErrorLevel
+from factpulse.models.error_source import ErrorSource
 from factpulse.models.facture_enrichie_info import FactureEnrichieInfo
 from factpulse.models.facture_factur_x import FactureFacturX
 from factpulse.models.format_sortie import FormatSortie
@@ -107,5 +110,6 @@ from factpulse.models.type_tva import TypeTVA
 from factpulse.models.unite import Unite
 from factpulse.models.utilisateur import Utilisateur
 from factpulse.models.validation_error import ValidationError
+from factpulse.models.validation_error_detail import ValidationErrorDetail
 from factpulse.models.validation_error_loc_inner import ValidationErrorLocInner
 

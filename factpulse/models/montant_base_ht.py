@@ -28,7 +28,7 @@ MONTANTBASEHT_ANY_OF_SCHEMAS = ["float", "str"]
 
 class MontantBaseHt(BaseModel):
     """
-    Montant de la base HT pour cette ligne de TVA. (Accepte number, string ou integer)
+    Montant de la base HT pour cette ligne de TVA.
     """
 
     # data type: float
