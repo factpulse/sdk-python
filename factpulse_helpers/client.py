@@ -469,7 +469,7 @@ class FactPulseClient:
         for attempt in range(self.max_retries + 1):
             self.ensure_authenticated()
             try:
-                url = f"{self.api_url}/api/facturation/v1/traitement/generer-facture"
+                url = f"{self.api_url}/api/v1/traitement/generer-facture"
                 files = {
                     "donnees_facture": (None, json_data, "application/json"),
                     "profil": (None, profil),
