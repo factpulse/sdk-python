@@ -240,6 +240,15 @@ class FactPulseClient:
         """Retourne les credentials AFNOR au format API."""
         return self.afnor_credentials.to_dict() if self.afnor_credentials else None
 
+    # Alias plus courts pour faciliter l'usage
+    def get_chorus_pro_credentials(self) -> Optional[Dict[str, Any]]:
+        """Alias pour get_chorus_credentials_for_api()."""
+        return self.get_chorus_credentials_for_api()
+
+    def get_afnor_credentials(self) -> Optional[Dict[str, Any]]:
+        """Alias pour get_afnor_credentials_for_api()."""
+        return self.get_afnor_credentials_for_api()
+
     def _obtain_token(self) -> Dict[str, str]:
         """Obtient un nouveau token JWT."""
         token_url = f"{self.api_url}/api/token/"
