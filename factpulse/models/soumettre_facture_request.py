@@ -20,9 +20,9 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.chorus_pro_credentials import ChorusProCredentials
-from factpulse.models.montant_ht_total1 import MontantHtTotal1
-from factpulse.models.montant_ttc_total1 import MontantTtcTotal1
-from factpulse.models.montant_tva1 import MontantTva1
+from factpulse.models.montant_ht_total import MontantHtTotal
+from factpulse.models.montant_ttc_total import MontantTtcTotal
+from factpulse.models.montant_tva import MontantTva
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -37,9 +37,9 @@ class SoumettreFactureRequest(BaseModel):
     id_structure_cpp: StrictInt = Field(description="ID Chorus Pro de la structure destinataire")
     code_service: Optional[StrictStr] = None
     numero_engagement: Optional[StrictStr] = None
-    montant_ht_total: MontantHtTotal1
-    montant_tva: MontantTva1
-    montant_ttc_total: MontantTtcTotal1
+    montant_ht_total: MontantHtTotal
+    montant_tva: MontantTva
+    montant_ttc_total: MontantTtcTotal
     piece_jointe_principale_id: Optional[StrictInt] = None
     piece_jointe_principale_designation: Optional[StrictStr] = None
     commentaire: Optional[StrictStr] = None
@@ -162,9 +162,9 @@ class SoumettreFactureRequest(BaseModel):
             "id_structure_cpp": obj.get("id_structure_cpp"),
             "code_service": obj.get("code_service"),
             "numero_engagement": obj.get("numero_engagement"),
-            "montant_ht_total": MontantHtTotal1.from_dict(obj["montant_ht_total"]) if obj.get("montant_ht_total") is not None else None,
-            "montant_tva": MontantTva1.from_dict(obj["montant_tva"]) if obj.get("montant_tva") is not None else None,
-            "montant_ttc_total": MontantTtcTotal1.from_dict(obj["montant_ttc_total"]) if obj.get("montant_ttc_total") is not None else None,
+            "montant_ht_total": MontantHtTotal.from_dict(obj["montant_ht_total"]) if obj.get("montant_ht_total") is not None else None,
+            "montant_tva": MontantTva.from_dict(obj["montant_tva"]) if obj.get("montant_tva") is not None else None,
+            "montant_ttc_total": MontantTtcTotal.from_dict(obj["montant_ttc_total"]) if obj.get("montant_ttc_total") is not None else None,
             "piece_jointe_principale_id": obj.get("piece_jointe_principale_id"),
             "piece_jointe_principale_designation": obj.get("piece_jointe_principale_designation"),
             "commentaire": obj.get("commentaire"),

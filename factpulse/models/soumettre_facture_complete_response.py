@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.facture_enrichie_info_output import FactureEnrichieInfoOutput
+from factpulse.models.facture_enrichie_info import FactureEnrichieInfo
 from factpulse.models.pdf_factur_x_info import PDFFacturXInfo
 from factpulse.models.resultat_afnor import ResultatAFNOR
 from factpulse.models.resultat_chorus_pro import ResultatChorusPro
@@ -35,7 +35,7 @@ class SoumettreFactureCompleteResponse(BaseModel):
     destination_type: StrictStr = Field(description="Type de destination")
     resultat_chorus: Optional[ResultatChorusPro] = None
     resultat_afnor: Optional[ResultatAFNOR] = None
-    facture_enrichie: FactureEnrichieInfoOutput = Field(description="Données de la facture enrichie")
+    facture_enrichie: FactureEnrichieInfo = Field(description="Données de la facture enrichie")
     pdf_facturx: PDFFacturXInfo = Field(description="Informations sur le PDF généré")
     signature: Optional[SignatureInfo] = None
     pdf_base64: StrictStr = Field(description="PDF Factur-X généré (et signé si demandé) encodé en base64")
@@ -134,7 +134,7 @@ class SoumettreFactureCompleteResponse(BaseModel):
             "destination_type": obj.get("destination_type"),
             "resultat_chorus": ResultatChorusPro.from_dict(obj["resultat_chorus"]) if obj.get("resultat_chorus") is not None else None,
             "resultat_afnor": ResultatAFNOR.from_dict(obj["resultat_afnor"]) if obj.get("resultat_afnor") is not None else None,
-            "facture_enrichie": FactureEnrichieInfoOutput.from_dict(obj["facture_enrichie"]) if obj.get("facture_enrichie") is not None else None,
+            "facture_enrichie": FactureEnrichieInfo.from_dict(obj["facture_enrichie"]) if obj.get("facture_enrichie") is not None else None,
             "pdf_facturx": PDFFacturXInfo.from_dict(obj["pdf_facturx"]) if obj.get("pdf_facturx") is not None else None,
             "signature": SignatureInfo.from_dict(obj["signature"]) if obj.get("signature") is not None else None,
             "pdf_base64": obj.get("pdf_base64"),

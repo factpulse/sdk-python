@@ -14,32 +14,37 @@
 
 import unittest
 
-from factpulse.api.sant_api import SantApi
+from factpulse.models.montant_a_payer import MontantAPayer
 
+class TestMontantAPayer(unittest.TestCase):
+    """MontantAPayer unit test stubs"""
 
-class TestSantApi(unittest.TestCase):
-    """SantApi unit test stubs"""
-
-    def setUp(self) -> None:
-        self.api = SantApi()
-
-    def tearDown(self) -> None:
+    def setUp(self):
         pass
 
-    def test_healthcheck_healthcheck_get(self) -> None:
-        """Test case for healthcheck_healthcheck_get
+    def tearDown(self):
+        pass
 
-        Endpoint de healthcheck pour Docker
+    def make_instance(self, include_optional) -> MontantAPayer:
+        """Test MontantAPayer
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `MontantAPayer`
         """
-        pass
-
-    def test_racine_get(self) -> None:
-        """Test case for racine_get
-
-        Vérifier l'état de l'API
+        model = MontantAPayer()
+        if include_optional:
+            return MontantAPayer(
+            )
+        else:
+            return MontantAPayer(
+        )
         """
-        pass
 
+    def testMontantAPayer(self):
+        """Test MontantAPayer"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
 
 if __name__ == '__main__':
     unittest.main()

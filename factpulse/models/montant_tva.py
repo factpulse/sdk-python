@@ -28,7 +28,7 @@ MONTANTTVA_ANY_OF_SCHEMAS = ["float", "str"]
 
 class MontantTva(BaseModel):
     """
-    MontantTva
+    Montant TVA
     """
 
     # data type: float

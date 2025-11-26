@@ -1,6 +1,6 @@
-# MontantTva1
+# Tauxmanuel
 
-Montant TVA
+Taux de TVA avec valeur manuelle. (Accepte number, string ou integer)
 
 ## Properties
 
@@ -10,19 +10,19 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from factpulse.models.montant_tva1 import MontantTva1
+from factpulse.models.tauxmanuel import Tauxmanuel
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of MontantTva1 from a JSON string
-montant_tva1_instance = MontantTva1.from_json(json)
+# create an instance of Tauxmanuel from a JSON string
+tauxmanuel_instance = Tauxmanuel.from_json(json)
 # print the JSON string representation of the object
-print(MontantTva1.to_json())
+print(Tauxmanuel.to_json())
 
 # convert the object into a dict
-montant_tva1_dict = montant_tva1_instance.to_dict()
-# create an instance of MontantTva1 from a dict
-montant_tva1_from_dict = MontantTva1.from_dict(montant_tva1_dict)
+tauxmanuel_dict = tauxmanuel_instance.to_dict()
+# create an instance of Tauxmanuel from a dict
+tauxmanuel_from_dict = Tauxmanuel.from_dict(tauxmanuel_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

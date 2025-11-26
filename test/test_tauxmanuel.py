@@ -14,32 +14,37 @@
 
 import unittest
 
-from factpulse.api.sant_api import SantApi
+from factpulse.models.tauxmanuel import Tauxmanuel
 
+class TestTauxmanuel(unittest.TestCase):
+    """Tauxmanuel unit test stubs"""
 
-class TestSantApi(unittest.TestCase):
-    """SantApi unit test stubs"""
-
-    def setUp(self) -> None:
-        self.api = SantApi()
-
-    def tearDown(self) -> None:
+    def setUp(self):
         pass
 
-    def test_healthcheck_healthcheck_get(self) -> None:
-        """Test case for healthcheck_healthcheck_get
+    def tearDown(self):
+        pass
 
-        Endpoint de healthcheck pour Docker
+    def make_instance(self, include_optional) -> Tauxmanuel:
+        """Test Tauxmanuel
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `Tauxmanuel`
         """
-        pass
-
-    def test_racine_get(self) -> None:
-        """Test case for racine_get
-
-        Vérifier l'état de l'API
+        model = Tauxmanuel()
+        if include_optional:
+            return Tauxmanuel(
+            )
+        else:
+            return Tauxmanuel(
+        )
         """
-        pass
 
+    def testTauxmanuel(self):
+        """Test Tauxmanuel"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
 
 if __name__ == '__main__':
     unittest.main()

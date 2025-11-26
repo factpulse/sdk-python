@@ -14,32 +14,37 @@
 
 import unittest
 
-from factpulse.api.sant_api import SantApi
+from factpulse.models.ligne_de_poste_montant_remise_ht import LigneDePosteMontantRemiseHt
 
+class TestLigneDePosteMontantRemiseHt(unittest.TestCase):
+    """LigneDePosteMontantRemiseHt unit test stubs"""
 
-class TestSantApi(unittest.TestCase):
-    """SantApi unit test stubs"""
-
-    def setUp(self) -> None:
-        self.api = SantApi()
-
-    def tearDown(self) -> None:
+    def setUp(self):
         pass
 
-    def test_healthcheck_healthcheck_get(self) -> None:
-        """Test case for healthcheck_healthcheck_get
+    def tearDown(self):
+        pass
 
-        Endpoint de healthcheck pour Docker
+    def make_instance(self, include_optional) -> LigneDePosteMontantRemiseHt:
+        """Test LigneDePosteMontantRemiseHt
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `LigneDePosteMontantRemiseHt`
         """
-        pass
-
-    def test_racine_get(self) -> None:
-        """Test case for racine_get
-
-        Vérifier l'état de l'API
+        model = LigneDePosteMontantRemiseHt()
+        if include_optional:
+            return LigneDePosteMontantRemiseHt(
+            )
+        else:
+            return LigneDePosteMontantRemiseHt(
+        )
         """
-        pass
 
+    def testLigneDePosteMontantRemiseHt(self):
+        """Test LigneDePosteMontantRemiseHt"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
 
 if __name__ == '__main__':
     unittest.main()

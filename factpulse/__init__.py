@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "2.0.10"
+__version__ = "2.0.11"
 
 # Define package exports
 __all__ = [
@@ -64,8 +64,7 @@ __all__ = [
     "DestinationAFNOR",
     "DestinationChorusPro",
     "DonneesFactureSimplifiees",
-    "FactureEnrichieInfoInput",
-    "FactureEnrichieInfoOutput",
+    "FactureEnrichieInfo",
     "FactureFacturX",
     "FormatSortie",
     "Fournisseur",
@@ -74,16 +73,22 @@ __all__ = [
     "HTTPValidationError",
     "InformationSignatureAPI",
     "LigneDePoste",
+    "LigneDePosteMontantRemiseHt",
+    "LigneDePosteTauxTvaManuel",
     "LigneDeTVA",
     "ModeDepot",
     "ModePaiement",
+    "MontantAPayer",
+    "MontantBaseHt",
     "MontantHtTotal",
-    "MontantHtTotal1",
+    "MontantRemiseGlobaleTtc",
     "MontantTotal",
+    "MontantTotalAcompte",
+    "MontantTotalLigneHt",
     "MontantTtcTotal",
-    "MontantTtcTotal1",
     "MontantTva",
-    "MontantTva1",
+    "MontantTvaLigne",
+    "MontantTvaTotal",
     "MontantUnitaireHt",
     "Note",
     "ObtenirIdChorusProRequest",
@@ -117,6 +122,7 @@ __all__ = [
     "StatutFacture",
     "StatutTache",
     "StructureInfo",
+    "Tauxmanuel",
     "TypeFacture",
     "TypeTVA",
     "Unite",
@@ -176,8 +182,7 @@ from factpulse.models.destination import Destination as Destination
 from factpulse.models.destination_afnor import DestinationAFNOR as DestinationAFNOR
 from factpulse.models.destination_chorus_pro import DestinationChorusPro as DestinationChorusPro
 from factpulse.models.donnees_facture_simplifiees import DonneesFactureSimplifiees as DonneesFactureSimplifiees
-from factpulse.models.facture_enrichie_info_input import FactureEnrichieInfoInput as FactureEnrichieInfoInput
-from factpulse.models.facture_enrichie_info_output import FactureEnrichieInfoOutput as FactureEnrichieInfoOutput
+from factpulse.models.facture_enrichie_info import FactureEnrichieInfo as FactureEnrichieInfo
 from factpulse.models.facture_factur_x import FactureFacturX as FactureFacturX
 from factpulse.models.format_sortie import FormatSortie as FormatSortie
 from factpulse.models.fournisseur import Fournisseur as Fournisseur
@@ -186,16 +191,22 @@ from factpulse.models.generate_certificate_response import GenerateCertificateRe
 from factpulse.models.http_validation_error import HTTPValidationError as HTTPValidationError
 from factpulse.models.information_signature_api import InformationSignatureAPI as InformationSignatureAPI
 from factpulse.models.ligne_de_poste import LigneDePoste as LigneDePoste
+from factpulse.models.ligne_de_poste_montant_remise_ht import LigneDePosteMontantRemiseHt as LigneDePosteMontantRemiseHt
+from factpulse.models.ligne_de_poste_taux_tva_manuel import LigneDePosteTauxTvaManuel as LigneDePosteTauxTvaManuel
 from factpulse.models.ligne_de_tva import LigneDeTVA as LigneDeTVA
 from factpulse.models.mode_depot import ModeDepot as ModeDepot
 from factpulse.models.mode_paiement import ModePaiement as ModePaiement
+from factpulse.models.montant_a_payer import MontantAPayer as MontantAPayer
+from factpulse.models.montant_base_ht import MontantBaseHt as MontantBaseHt
 from factpulse.models.montant_ht_total import MontantHtTotal as MontantHtTotal
-from factpulse.models.montant_ht_total1 import MontantHtTotal1 as MontantHtTotal1
+from factpulse.models.montant_remise_globale_ttc import MontantRemiseGlobaleTtc as MontantRemiseGlobaleTtc
 from factpulse.models.montant_total import MontantTotal as MontantTotal
+from factpulse.models.montant_total_acompte import MontantTotalAcompte as MontantTotalAcompte
+from factpulse.models.montant_total_ligne_ht import MontantTotalLigneHt as MontantTotalLigneHt
 from factpulse.models.montant_ttc_total import MontantTtcTotal as MontantTtcTotal
-from factpulse.models.montant_ttc_total1 import MontantTtcTotal1 as MontantTtcTotal1
 from factpulse.models.montant_tva import MontantTva as MontantTva
-from factpulse.models.montant_tva1 import MontantTva1 as MontantTva1
+from factpulse.models.montant_tva_ligne import MontantTvaLigne as MontantTvaLigne
+from factpulse.models.montant_tva_total import MontantTvaTotal as MontantTvaTotal
 from factpulse.models.montant_unitaire_ht import MontantUnitaireHt as MontantUnitaireHt
 from factpulse.models.note import Note as Note
 from factpulse.models.obtenir_id_chorus_pro_request import ObtenirIdChorusProRequest as ObtenirIdChorusProRequest
@@ -229,6 +240,7 @@ from factpulse.models.statut_celery import StatutCelery as StatutCelery
 from factpulse.models.statut_facture import StatutFacture as StatutFacture
 from factpulse.models.statut_tache import StatutTache as StatutTache
 from factpulse.models.structure_info import StructureInfo as StructureInfo
+from factpulse.models.tauxmanuel import Tauxmanuel as Tauxmanuel
 from factpulse.models.type_facture import TypeFacture as TypeFacture
 from factpulse.models.type_tva import TypeTVA as TypeTVA
 from factpulse.models.unite import Unite as Unite

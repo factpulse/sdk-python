@@ -12,34 +12,122 @@
 """  # noqa: E501
 
 
-import unittest
+from __future__ import annotations
+import pprint
+import re  # noqa: F401
+import json
 
-from factpulse.api.sant_api import SantApi
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
+from typing import Optional, Set
+from typing_extensions import Self
+
+class FactureEnrichieInfo(BaseModel):
+    """
+    Informations sur la facture enrichie.
+    """ # noqa: E501
+    numero_facture: StrictStr
+    id_emetteur: Optional[StrictInt] = None
+    id_destinataire: Optional[StrictInt] = None
+    nom_emetteur: StrictStr
+    nom_destinataire: StrictStr
+    montant_ht_total: Annotated[str, Field(strict=True)]
+    montant_tva: Annotated[str, Field(strict=True)]
+    montant_ttc_total: Annotated[str, Field(strict=True)]
+    __properties: ClassVar[List[str]] = ["numero_facture", "id_emetteur", "id_destinataire", "nom_emetteur", "nom_destinataire", "montant_ht_total", "montant_tva", "montant_ttc_total"]
+
+    @field_validator('montant_ht_total')
+    def montant_ht_total_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if not re.match(r"^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$", value):
+            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$/")
+        return value
+
+    @field_validator('montant_tva')
+    def montant_tva_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if not re.match(r"^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$", value):
+            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$/")
+        return value
+
+    @field_validator('montant_ttc_total')
+    def montant_ttc_total_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if not re.match(r"^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$", value):
+            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$/")
+        return value
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
 
-class TestSantApi(unittest.TestCase):
-    """SantApi unit test stubs"""
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.model_dump(by_alias=True))
 
-    def setUp(self) -> None:
-        self.api = SantApi()
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
+        return json.dumps(self.to_dict())
 
-    def tearDown(self) -> None:
-        pass
+    @classmethod
+    def from_json(cls, json_str: str) -> Optional[Self]:
+        """Create an instance of FactureEnrichieInfo from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
 
-    def test_healthcheck_healthcheck_get(self) -> None:
-        """Test case for healthcheck_healthcheck_get
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
 
-        Endpoint de healthcheck pour Docker
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
         """
-        pass
+        excluded_fields: Set[str] = set([
+        ])
 
-    def test_racine_get(self) -> None:
-        """Test case for racine_get
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
+        # set to None if id_emetteur (nullable) is None
+        # and model_fields_set contains the field
+        if self.id_emetteur is None and "id_emetteur" in self.model_fields_set:
+            _dict['id_emetteur'] = None
 
-        Vérifier l'état de l'API
-        """
-        pass
+        # set to None if id_destinataire (nullable) is None
+        # and model_fields_set contains the field
+        if self.id_destinataire is None and "id_destinataire" in self.model_fields_set:
+            _dict['id_destinataire'] = None
+
+        return _dict
+
+    @classmethod
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+        """Create an instance of FactureEnrichieInfo from a dict"""
+        if obj is None:
+            return None
+
+        if not isinstance(obj, dict):
+            return cls.model_validate(obj)
+
+        _obj = cls.model_validate({
+            "numero_facture": obj.get("numero_facture"),
+            "id_emetteur": obj.get("id_emetteur"),
+            "id_destinataire": obj.get("id_destinataire"),
+            "nom_emetteur": obj.get("nom_emetteur"),
+            "nom_destinataire": obj.get("nom_destinataire"),
+            "montant_ht_total": obj.get("montant_ht_total"),
+            "montant_tva": obj.get("montant_tva"),
+            "montant_ttc_total": obj.get("montant_ttc_total")
+        })
+        return _obj
 
 
-if __name__ == '__main__':
-    unittest.main()

@@ -12,10 +12,10 @@ Name | Type | Description | Notes
 **quantite** | [**Quantite**](Quantite.md) |  | 
 **unite** | [**Unite**](Unite.md) |  | 
 **montant_unitaire_ht** | [**MontantUnitaireHt**](MontantUnitaireHt.md) |  | 
-**montant_remise_ht** | **decimal.Decimal** | Montant de la remise HT. | [optional] 
-**montant_total_ligne_ht** | **decimal.Decimal** | Montant total HT de la ligne (quantité × prix unitaire - remise). | [optional] 
+**montant_remise_ht** | [**LigneDePosteMontantRemiseHt**](LigneDePosteMontantRemiseHt.md) |  | [optional] 
+**montant_total_ligne_ht** | [**MontantTotalLigneHt**](MontantTotalLigneHt.md) |  | [optional] 
 **taux_tva** | **str** |  | [optional] 
-**taux_tva_manuel** | **decimal.Decimal** | Taux de TVA avec valeur manuelle. | [optional] 
+**taux_tva_manuel** | [**LigneDePosteTauxTvaManuel**](LigneDePosteTauxTvaManuel.md) |  | [optional] 
 **categorie_tva** | [**CategorieTVA**](CategorieTVA.md) |  | [optional] 
 **date_debut_periode** | **str** |  | [optional] 
 **date_fin_periode** | **str** |  | [optional] 

@@ -12,112 +12,39 @@
 """  # noqa: E501
 
 
-from __future__ import annotations
-import pprint
-import re  # noqa: F401
-import json
+import unittest
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.montant_ht_total import MontantHtTotal
-from factpulse.models.montant_ttc_total import MontantTtcTotal
-from factpulse.models.montant_tva import MontantTva
-from typing import Optional, Set
-from typing_extensions import Self
+from factpulse.models.montant_total_acompte import MontantTotalAcompte
 
-class FactureEnrichieInfoInput(BaseModel):
-    """
-    Informations sur la facture enrichie.
-    """ # noqa: E501
-    numero_facture: StrictStr
-    id_emetteur: Optional[StrictInt] = None
-    id_destinataire: Optional[StrictInt] = None
-    nom_emetteur: StrictStr
-    nom_destinataire: StrictStr
-    montant_ht_total: MontantHtTotal
-    montant_tva: MontantTva
-    montant_ttc_total: MontantTtcTotal
-    __properties: ClassVar[List[str]] = ["numero_facture", "id_emetteur", "id_destinataire", "nom_emetteur", "nom_destinataire", "montant_ht_total", "montant_tva", "montant_ttc_total"]
+class TestMontantTotalAcompte(unittest.TestCase):
+    """MontantTotalAcompte unit test stubs"""
 
-    model_config = ConfigDict(
-        populate_by_name=True,
-        validate_assignment=True,
-        protected_namespaces=(),
-    )
+    def setUp(self):
+        pass
 
+    def tearDown(self):
+        pass
 
-    def to_str(self) -> str:
-        """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.model_dump(by_alias=True))
-
-    def to_json(self) -> str:
-        """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
-
-    @classmethod
-    def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FactureEnrichieInfoInput from a JSON string"""
-        return cls.from_dict(json.loads(json_str))
-
-    def to_dict(self) -> Dict[str, Any]:
-        """Return the dictionary representation of the model using alias.
-
-        This has the following differences from calling pydantic's
-        `self.model_dump(by_alias=True)`:
-
-        * `None` is only added to the output dict for nullable fields that
-          were set at model initialization. Other fields with value `None`
-          are ignored.
+    def make_instance(self, include_optional) -> MontantTotalAcompte:
+        """Test MontantTotalAcompte
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `MontantTotalAcompte`
         """
-        excluded_fields: Set[str] = set([
-        ])
-
-        _dict = self.model_dump(
-            by_alias=True,
-            exclude=excluded_fields,
-            exclude_none=True,
+        model = MontantTotalAcompte()
+        if include_optional:
+            return MontantTotalAcompte(
+            )
+        else:
+            return MontantTotalAcompte(
         )
-        # override the default output from pydantic by calling `to_dict()` of montant_ht_total
-        if self.montant_ht_total:
-            _dict['montant_ht_total'] = self.montant_ht_total.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of montant_tva
-        if self.montant_tva:
-            _dict['montant_tva'] = self.montant_tva.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of montant_ttc_total
-        if self.montant_ttc_total:
-            _dict['montant_ttc_total'] = self.montant_ttc_total.to_dict()
-        # set to None if id_emetteur (nullable) is None
-        # and model_fields_set contains the field
-        if self.id_emetteur is None and "id_emetteur" in self.model_fields_set:
-            _dict['id_emetteur'] = None
+        """
 
-        # set to None if id_destinataire (nullable) is None
-        # and model_fields_set contains the field
-        if self.id_destinataire is None and "id_destinataire" in self.model_fields_set:
-            _dict['id_destinataire'] = None
+    def testMontantTotalAcompte(self):
+        """Test MontantTotalAcompte"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
 
-        return _dict
-
-    @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FactureEnrichieInfoInput from a dict"""
-        if obj is None:
-            return None
-
-        if not isinstance(obj, dict):
-            return cls.model_validate(obj)
-
-        _obj = cls.model_validate({
-            "numero_facture": obj.get("numero_facture"),
-            "id_emetteur": obj.get("id_emetteur"),
-            "id_destinataire": obj.get("id_destinataire"),
-            "nom_emetteur": obj.get("nom_emetteur"),
-            "nom_destinataire": obj.get("nom_destinataire"),
-            "montant_ht_total": MontantHtTotal.from_dict(obj["montant_ht_total"]) if obj.get("montant_ht_total") is not None else None,
-            "montant_tva": MontantTva.from_dict(obj["montant_tva"]) if obj.get("montant_tva") is not None else None,
-            "montant_ttc_total": MontantTtcTotal.from_dict(obj["montant_ttc_total"]) if obj.get("montant_ttc_total") is not None else None
-        })
-        return _obj
-
-
+if __name__ == '__main__':
+    unittest.main()

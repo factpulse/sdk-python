@@ -17,9 +17,14 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from typing_extensions import Annotated
+from factpulse.models.montant_a_payer import MontantAPayer
+from factpulse.models.montant_ht_total import MontantHtTotal
+from factpulse.models.montant_remise_globale_ttc import MontantRemiseGlobaleTtc
+from factpulse.models.montant_total_acompte import MontantTotalAcompte
+from factpulse.models.montant_ttc_total import MontantTtcTotal
+from factpulse.models.montant_tva_total import MontantTvaTotal
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,62 +32,14 @@ class MontantTotal(BaseModel):
     """
     Contient tous les montants totaux de la facture.
     """ # noqa: E501
-    montant_ht_total: Annotated[str, Field(strict=True)] = Field(description="Montant total HT.", alias="montantHtTotal")
-    montant_tva: Annotated[str, Field(strict=True)] = Field(description="Montant total de la TVA.", alias="montantTva")
-    montant_ttc_total: Annotated[str, Field(strict=True)] = Field(description="Montant total TTC.", alias="montantTtcTotal")
-    montant_a_payer: Annotated[str, Field(strict=True)] = Field(description="Montant à payer.", alias="montantAPayer")
-    acompte: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Acompte versé.")
-    montant_remise_globale_ttc: Optional[Annotated[str, Field(strict=True)]] = Field(default=None, description="Montant de la remise globale TTC.", alias="montantRemiseGlobaleTtc")
+    montant_ht_total: MontantHtTotal = Field(alias="montantHtTotal")
+    montant_tva: MontantTvaTotal = Field(alias="montantTva")
+    montant_ttc_total: MontantTtcTotal = Field(alias="montantTtcTotal")
+    montant_a_payer: MontantAPayer = Field(alias="montantAPayer")
+    acompte: Optional[MontantTotalAcompte] = None
+    montant_remise_globale_ttc: Optional[MontantRemiseGlobaleTtc] = Field(default=None, alias="montantRemiseGlobaleTtc")
     motif_remise_globale_ttc: Optional[StrictStr] = Field(default=None, alias="motifRemiseGlobaleTtc")
     __properties: ClassVar[List[str]] = ["montantHtTotal", "montantTva", "montantTtcTotal", "montantAPayer", "acompte", "montantRemiseGlobaleTtc", "motifRemiseGlobaleTtc"]
-
-    @field_validator('montant_ht_total')
-    def montant_ht_total_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if not re.match(r"^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)", value):
-            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)/")
-        return value
-
-    @field_validator('montant_tva')
-    def montant_tva_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if not re.match(r"^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)", value):
-            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)/")
-        return value
-
-    @field_validator('montant_ttc_total')
-    def montant_ttc_total_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if not re.match(r"^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)", value):
-            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)/")
-        return value
-
-    @field_validator('montant_a_payer')
-    def montant_a_payer_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if not re.match(r"^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)", value):
-            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)/")
-        return value
-
-    @field_validator('acompte')
-    def acompte_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if value is None:
-            return value
-
-        if not re.match(r"^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)", value):
-            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)/")
-        return value
-
-    @field_validator('montant_remise_globale_ttc')
-    def montant_remise_globale_ttc_validate_regular_expression(cls, value):
-        """Validates the regular expression"""
-        if value is None:
-            return value
-
-        if not re.match(r"^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)", value):
-            raise ValueError(r"must validate the regular expression /^(?!^[-+.]*$)[+-]?0*(?:\d{0,8}|(?=[\d.]{1,13}0*$)\d{0,8}\.\d{0,4}0*$)/")
-        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -123,6 +80,24 @@ class MontantTotal(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of montant_ht_total
+        if self.montant_ht_total:
+            _dict['montantHtTotal'] = self.montant_ht_total.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of montant_tva
+        if self.montant_tva:
+            _dict['montantTva'] = self.montant_tva.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of montant_ttc_total
+        if self.montant_ttc_total:
+            _dict['montantTtcTotal'] = self.montant_ttc_total.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of montant_a_payer
+        if self.montant_a_payer:
+            _dict['montantAPayer'] = self.montant_a_payer.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of acompte
+        if self.acompte:
+            _dict['acompte'] = self.acompte.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of montant_remise_globale_ttc
+        if self.montant_remise_globale_ttc:
+            _dict['montantRemiseGlobaleTtc'] = self.montant_remise_globale_ttc.to_dict()
         # set to None if acompte (nullable) is None
         # and model_fields_set contains the field
         if self.acompte is None and "acompte" in self.model_fields_set:
@@ -145,12 +120,12 @@ class MontantTotal(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "montantHtTotal": obj.get("montantHtTotal"),
-            "montantTva": obj.get("montantTva"),
-            "montantTtcTotal": obj.get("montantTtcTotal"),
-            "montantAPayer": obj.get("montantAPayer"),
-            "acompte": obj.get("acompte"),
-            "montantRemiseGlobaleTtc": obj.get("montantRemiseGlobaleTtc"),
+            "montantHtTotal": MontantHtTotal.from_dict(obj["montantHtTotal"]) if obj.get("montantHtTotal") is not None else None,
+            "montantTva": MontantTvaTotal.from_dict(obj["montantTva"]) if obj.get("montantTva") is not None else None,
+            "montantTtcTotal": MontantTtcTotal.from_dict(obj["montantTtcTotal"]) if obj.get("montantTtcTotal") is not None else None,
+            "montantAPayer": MontantAPayer.from_dict(obj["montantAPayer"]) if obj.get("montantAPayer") is not None else None,
+            "acompte": MontantTotalAcompte.from_dict(obj["acompte"]) if obj.get("acompte") is not None else None,
+            "montantRemiseGlobaleTtc": MontantRemiseGlobaleTtc.from_dict(obj["montantRemiseGlobaleTtc"]) if obj.get("montantRemiseGlobaleTtc") is not None else None,
             "motifRemiseGlobaleTtc": obj.get("motifRemiseGlobaleTtc")
         })
         return _obj

@@ -14,32 +14,51 @@
 
 import unittest
 
-from factpulse.api.sant_api import SantApi
+from factpulse.models.facture_enrichie_info import FactureEnrichieInfo
 
+class TestFactureEnrichieInfo(unittest.TestCase):
+    """FactureEnrichieInfo unit test stubs"""
 
-class TestSantApi(unittest.TestCase):
-    """SantApi unit test stubs"""
-
-    def setUp(self) -> None:
-        self.api = SantApi()
-
-    def tearDown(self) -> None:
+    def setUp(self):
         pass
 
-    def test_healthcheck_healthcheck_get(self) -> None:
-        """Test case for healthcheck_healthcheck_get
+    def tearDown(self):
+        pass
 
-        Endpoint de healthcheck pour Docker
+    def make_instance(self, include_optional) -> FactureEnrichieInfo:
+        """Test FactureEnrichieInfo
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `FactureEnrichieInfo`
         """
-        pass
-
-    def test_racine_get(self) -> None:
-        """Test case for racine_get
-
-        Vérifier l'état de l'API
+        model = FactureEnrichieInfo()
+        if include_optional:
+            return FactureEnrichieInfo(
+                numero_facture = '',
+                id_emetteur = 56,
+                id_destinataire = 56,
+                nom_emetteur = '',
+                nom_destinataire = '',
+                montant_ht_total = ERROR_TO_EXAMPLE_VALUE,
+                montant_tva = ERROR_TO_EXAMPLE_VALUE,
+                montant_ttc_total = ERROR_TO_EXAMPLE_VALUE
+            )
+        else:
+            return FactureEnrichieInfo(
+                numero_facture = '',
+                nom_emetteur = '',
+                nom_destinataire = '',
+                montant_ht_total = ERROR_TO_EXAMPLE_VALUE,
+                montant_tva = ERROR_TO_EXAMPLE_VALUE,
+                montant_ttc_total = ERROR_TO_EXAMPLE_VALUE,
+        )
         """
-        pass
 
+    def testFactureEnrichieInfo(self):
+        """Test FactureEnrichieInfo"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
 
 if __name__ == '__main__':
     unittest.main()
