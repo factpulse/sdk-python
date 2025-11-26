@@ -181,7 +181,7 @@ def ligne_de_poste(
         "quantite": montant(quantite),
         "montantUnitaireHt": montant(montant_unitaire_ht),
         "montantTotalLigneHt": montant(montant_ligne_ht),
-        "tauxTva": montant(taux_tva),
+        "tauxTvaManuel": montant(taux_tva),
         "categorieTva": categorie_tva,
         "unite": unite,
     }
@@ -219,7 +219,7 @@ def ligne_de_tva(
 ) -> Dict[str, Any]:
     """Crée une ligne de TVA simplifiée."""
     result = {
-        "tauxTva": montant(taux),
+        "tauxTvaManuel": montant(taux),
         "montantBaseHt": montant(base_ht),
         "montantTva": montant(montant_tva),
         "categorieTva": categorie,
