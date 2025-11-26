@@ -1,43 +1,46 @@
-"""
-Exceptions personnalisées pour le client FactPulse.
-"""
+"""Exceptions personnalisées pour le client FactPulse."""
+from dataclasses import dataclass, field
+from typing import List, Optional
 
 
 class FactPulseError(Exception):
     """Classe de base pour toutes les erreurs FactPulse."""
-
     pass
 
 
 class FactPulseAuthError(FactPulseError):
-    """Erreur d'authentification (credentials invalides, token expiré, etc.)."""
-
+    """Erreur d'authentification FactPulse."""
     pass
 
 
 class FactPulsePollingTimeout(FactPulseError):
     """Timeout lors du polling d'une tâche asynchrone."""
-
-    def __init__(self, task_id: str, timeout: int, message: str = None):
+    def __init__(self, task_id: str, timeout: int):
         self.task_id = task_id
         self.timeout = timeout
-        super().__init__(
-            message or f"Timeout ({timeout}s) atteint pour la tâche {task_id}"
-        )
+        super().__init__(f"Timeout ({timeout}ms) atteint pour la tâche {task_id}")
+
+
+@dataclass
+class ValidationErrorDetail:
+    """Détail d'une erreur de validation au format AFNOR."""
+    level: str = ""
+    item: str = ""
+    reason: str = ""
+    source: Optional[str] = None
+    code: Optional[str] = None
+
+    def __str__(self) -> str:
+        item = self.item or "unknown"
+        reason = self.reason or "Unknown error"
+        return f"[{item}] {reason}"
 
 
 class FactPulseValidationError(FactPulseError):
-    """Erreur de validation Factur-X (Schematron, BR-FR, etc.)."""
-
-    def __init__(self, message: str, errors: list = None):
+    """Erreur de validation avec détails structurés."""
+    def __init__(self, message: str, errors: List[ValidationErrorDetail] = None):
         self.errors = errors or []
-        super().__init__(message)
-
-    def __str__(self):
         if self.errors:
-            error_messages = "\n".join(
-                f"  - [{e.get('item', 'unknown')}] {e.get('reason', e.get('message', 'Unknown error'))}"
-                for e in self.errors
-            )
-            return f"{super().__str__()}\n\nDétails:\n{error_messages}"
-        return super().__str__()
+            details = "\n".join(f"  - {e}" for e in self.errors)
+            message = f"{message}\n\nDétails:\n{details}"
+        super().__init__(message)
