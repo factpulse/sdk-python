@@ -420,69 +420,108 @@ class FactPulseClient:
 
     def generer_facturx(
         self,
-        facture_data: Union[Dict, str],
+        facture_data: Union[Dict, str, Any],
         pdf_source: Union[bytes, str, Path],
         profil: str = "EN16931",
         format_sortie: str = "pdf",
         sync: bool = True,
         timeout: Optional[int] = None,
     ) -> bytes:
-        """Génère une facture Factur-X."""
-        if isinstance(facture_data, dict):
-            json_data = json.dumps(facture_data)
-        else:
-            json_data = facture_data
+        """Génère une facture Factur-X.
 
+        Accepte les données de facture sous plusieurs formes :
+        - Dict : dictionnaire Python (recommandé avec les helpers montant_total(), ligne_de_poste(), etc.)
+        - str : JSON sérialisé
+        - Modèle Pydantic : modèle généré par le SDK (sera converti via .to_dict())
+
+        Args:
+            facture_data: Données de la facture (dict, JSON string, ou modèle Pydantic)
+            pdf_source: Chemin vers le PDF source, ou bytes du PDF
+            profil: Profil Factur-X (MINIMUM, BASIC, EN16931, EXTENDED)
+            format_sortie: Format de sortie (pdf, xml, both)
+            sync: Si True, attend la fin de la tâche et retourne le résultat
+            timeout: Timeout en ms pour le polling
+
+        Returns:
+            bytes: Contenu du fichier généré (PDF ou XML)
+        """
+        # Conversion des données en JSON string
+        if isinstance(facture_data, str):
+            json_data = facture_data
+        elif isinstance(facture_data, dict):
+            json_data = json.dumps(facture_data, ensure_ascii=False)
+        elif hasattr(facture_data, "to_dict"):
+            # Modèle Pydantic généré par le SDK
+            json_data = json.dumps(facture_data.to_dict(), ensure_ascii=False)
+        else:
+            raise FactPulseValidationError(f"Type de données non supporté: {type(facture_data)}")
+
+        # Préparation du PDF
         if isinstance(pdf_source, (str, Path)):
-            pdf_bytes = Path(pdf_source).read_bytes()
+            pdf_path = Path(pdf_source)
+            pdf_bytes = pdf_path.read_bytes()
+            pdf_filename = pdf_path.name
         else:
             pdf_bytes = pdf_source
+            pdf_filename = "source.pdf"
 
-        task_id = None
+        # Envoi direct via requests (bypass des modèles Pydantic du SDK)
         for attempt in range(self.max_retries + 1):
+            self.ensure_authenticated()
             try:
-                api = self.get_traitement_api()
-                response = api.generer_facture_api_v1_traitement_generer_facture_post(
-                    donnees_facture=json_data,
-                    profil=profil,
-                    format_sortie=format_sortie,
-                    source_pdf=pdf_bytes,
-                )
-                task_id = response.id_tache
-                break
-            except Exception as e:
-                if "401" in str(e) and attempt < self.max_retries:
+                url = f"{self.api_url}/api/facturation/v1/traitement/generer-facture"
+                files = {
+                    "donnees_facture": (None, json_data, "application/json"),
+                    "profil": (None, profil),
+                    "format_sortie": (None, format_sortie),
+                    "source_pdf": (pdf_filename, pdf_bytes, "application/pdf"),
+                }
+                headers = {"Authorization": f"Bearer {self._access_token}"}
+                response = requests.post(url, files=files, headers=headers, timeout=60)
+
+                if response.status_code == 401 and attempt < self.max_retries:
                     logger.warning("Erreur 401, réinitialisation du token (tentative %d/%d)", attempt + 1, self.max_retries + 1)
                     self.reset_auth()
                     continue
+
+                response.raise_for_status()
+                result = response.json()
+                task_id = result.get("id_tache")
+
+                if not task_id:
+                    raise FactPulseValidationError("Pas d'ID de tâche dans la réponse")
+
+                if not sync:
+                    return task_id.encode()
+
+                poll_result = self.poll_task(task_id, timeout)
+
+                if poll_result.get("statut") == "ERREUR":
+                    error_msg = poll_result.get("message_erreur", "Erreur de validation")
+                    errors = [
+                        ValidationErrorDetail(
+                            level=e.get("level", ""),
+                            item=e.get("item", ""),
+                            reason=e.get("reason", ""),
+                            source=e.get("source"),
+                            code=e.get("code"),
+                        )
+                        for e in poll_result.get("erreurs", [])
+                    ]
+                    raise FactPulseValidationError(error_msg, errors)
+
+                if "contenu_b64" in poll_result:
+                    return base64.b64decode(poll_result["contenu_b64"])
+
+                raise FactPulseValidationError("Le résultat ne contient pas de contenu")
+
+            except requests.RequestException as e:
+                if attempt < self.max_retries:
+                    logger.warning("Erreur réseau (tentative %d/%d): %s", attempt + 1, self.max_retries + 1, e)
+                    continue
                 raise FactPulseValidationError(f"Erreur API: {e}")
 
-        if not task_id:
-            raise FactPulseValidationError("Pas d'ID de tâche dans la réponse")
-
-        if not sync:
-            return task_id.encode()
-
-        result = self.poll_task(task_id, timeout)
-
-        if result.get("statut") == "ERREUR":
-            error_msg = result.get("message_erreur", "Erreur de validation")
-            errors = [
-                ValidationErrorDetail(
-                    level=e.get("level", ""),
-                    item=e.get("item", ""),
-                    reason=e.get("reason", ""),
-                    source=e.get("source"),
-                    code=e.get("code"),
-                )
-                for e in result.get("erreurs", [])
-            ]
-            raise FactPulseValidationError(error_msg, errors)
-
-        if "contenu_b64" in result:
-            return base64.b64decode(result["contenu_b64"])
-
-        raise FactPulseValidationError("Le résultat ne contient pas de contenu")
+        raise FactPulseValidationError("Échec après toutes les tentatives")
 
     @staticmethod
     def format_montant(montant) -> str:
