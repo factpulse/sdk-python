@@ -28,7 +28,7 @@ MONTANTTVALIGNE_ANY_OF_SCHEMAS = ["float", "str"]
 
 class MontantTvaLigne(BaseModel):
     """
-    Montant de la TVA pour cette ligne.
+    Montant de la TVA pour cette ligne. (Accepte number, string ou integer)
     """
 
     # data type: float

@@ -28,7 +28,7 @@ LIGNEDEPOSTEMONTANTREMISEHT_ANY_OF_SCHEMAS = ["float", "str"]
 
 class LigneDePosteMontantRemiseHt(BaseModel):
     """
-    Montant de la remise HT.
+    Montant de la remise HT. (Accepte number, string ou integer)
     """
 
     # data type: float

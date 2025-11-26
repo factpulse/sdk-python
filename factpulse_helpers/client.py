@@ -3,10 +3,11 @@ import base64
 import json
 import logging
 import time
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from decimal import Decimal
 from pathlib import Path
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 import requests
 
@@ -23,8 +24,181 @@ from .exceptions import (
 logger = logging.getLogger(__name__)
 
 
+# =============================================================================
+# Credentials dataclasses - pour une configuration simplifiée
+# =============================================================================
+
+@dataclass
+class ChorusProCredentials:
+    """Credentials Chorus Pro pour le mode Zero-Trust.
+
+    Ces credentials sont passés dans chaque requête et ne sont jamais stockés côté serveur.
+
+    Attributes:
+        piste_client_id: Client ID PISTE (portail API gouvernement)
+        piste_client_secret: Client Secret PISTE
+        chorus_pro_login: Login Chorus Pro
+        chorus_pro_password: Mot de passe Chorus Pro
+        sandbox: True pour l'environnement sandbox, False pour production
+    """
+    piste_client_id: str
+    piste_client_secret: str
+    chorus_pro_login: str
+    chorus_pro_password: str
+    sandbox: bool = True
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convertit en dictionnaire pour l'API."""
+        return {
+            "piste_client_id": self.piste_client_id,
+            "piste_client_secret": self.piste_client_secret,
+            "chorus_pro_login": self.chorus_pro_login,
+            "chorus_pro_password": self.chorus_pro_password,
+            "sandbox": self.sandbox,
+        }
+
+
+@dataclass
+class AFNORCredentials:
+    """Credentials AFNOR PDP pour le mode Zero-Trust.
+
+    Ces credentials sont passés dans chaque requête et ne sont jamais stockés côté serveur.
+
+    Attributes:
+        client_id: Client ID OAuth2 de la PDP
+        client_secret: Client Secret OAuth2 de la PDP
+        flow_service_url: URL du Flow Service de la PDP
+    """
+    client_id: str
+    client_secret: str
+    flow_service_url: str
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convertit en dictionnaire pour l'API."""
+        return {
+            "client_id": self.client_id,
+            "client_secret": self.client_secret,
+            "flow_service_url": self.flow_service_url,
+        }
+
+
+# =============================================================================
+# Helpers pour les types anyOf - évite la verbosité des wrappers générés
+# =============================================================================
+
+def montant(value: Union[str, float, int, Decimal, None]) -> str:
+    """Convertit une valeur en string de montant pour l'API.
+
+    L'API FactPulse accepte les montants comme strings ou floats.
+    Cette fonction normalise en string pour garantir la précision monétaire.
+    """
+    if value is None:
+        return "0.00"
+    if isinstance(value, Decimal):
+        return f"{value:.2f}"
+    if isinstance(value, (int, float)):
+        return f"{value:.2f}"
+    if isinstance(value, str):
+        return value
+    return "0.00"
+
+
+def montant_total(
+    ht: Union[str, float, int, Decimal],
+    tva: Union[str, float, int, Decimal],
+    ttc: Union[str, float, int, Decimal],
+    a_payer: Union[str, float, int, Decimal],
+    remise_ttc: Union[str, float, int, Decimal, None] = None,
+    motif_remise: Optional[str] = None,
+    acompte: Union[str, float, int, Decimal, None] = None,
+) -> Dict[str, Any]:
+    """Crée un objet MontantTotal simplifié.
+
+    Évite d'avoir à utiliser les wrappers MontantHtTotal, MontantTvaTotal, etc.
+    """
+    result = {
+        "montantHtTotal": montant(ht),
+        "montantTva": montant(tva),
+        "montantTtcTotal": montant(ttc),
+        "montantAPayer": montant(a_payer),
+    }
+    if remise_ttc is not None:
+        result["montantRemiseGlobaleTtc"] = montant(remise_ttc)
+    if motif_remise is not None:
+        result["motifRemiseGlobaleTtc"] = motif_remise
+    if acompte is not None:
+        result["acompte"] = montant(acompte)
+    return result
+
+
+def ligne_de_poste(
+    numero: int,
+    denomination: str,
+    quantite: Union[str, float, int, Decimal],
+    montant_unitaire_ht: Union[str, float, int, Decimal],
+    montant_ligne_ht: Union[str, float, int, Decimal],
+    taux_tva: Union[str, float, int, Decimal] = "20.00",
+    unite: str = "C62",
+    montant_tva_ligne: Union[str, float, int, Decimal, None] = None,
+    montant_remise_ht: Union[str, float, int, Decimal, None] = None,
+    code_raison_remise: Optional[str] = None,
+    motif_remise: Optional[str] = None,
+    description: Optional[str] = None,
+    reference_acheteur: Optional[str] = None,
+    reference_vendeur: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Crée une ligne de poste simplifiée."""
+    result = {
+        "numero": numero,
+        "denomination": denomination,
+        "quantite": montant(quantite),
+        "montantUnitaireHt": montant(montant_unitaire_ht),
+        "montantTotalLigneHt": montant(montant_ligne_ht),
+        "tauxTva": montant(taux_tva),
+        "unite": unite,
+    }
+    if montant_tva_ligne is not None:
+        result["montantTvaLigne"] = montant(montant_tva_ligne)
+    if montant_remise_ht is not None:
+        result["montantRemiseHt"] = montant(montant_remise_ht)
+    if code_raison_remise is not None:
+        result["codeRaisonReduction"] = code_raison_remise
+    if motif_remise is not None:
+        result["motifRemise"] = motif_remise
+    if description is not None:
+        result["description"] = description
+    if reference_acheteur is not None:
+        result["referenceArticleAcheteur"] = reference_acheteur
+    if reference_vendeur is not None:
+        result["referenceArticleVendeur"] = reference_vendeur
+    return result
+
+
+def ligne_de_tva(
+    taux: Union[str, float, int, Decimal],
+    base_ht: Union[str, float, int, Decimal],
+    montant_tva: Union[str, float, int, Decimal],
+    categorie: str = "S",
+    motif_exoneration: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Crée une ligne de TVA simplifiée."""
+    result = {
+        "tauxTva": montant(taux),
+        "montantBaseHt": montant(base_ht),
+        "montantTva": montant(montant_tva),
+        "categorieTva": categorie,
+    }
+    if motif_exoneration is not None:
+        result["motifExoneration"] = motif_exoneration
+    return result
+
+
 class FactPulseClient:
-    """Client simplifié pour l'API FactPulse."""
+    """Client simplifié pour l'API FactPulse.
+
+    Gère l'authentification JWT, le polling des tâches asynchrones,
+    et permet de configurer les credentials Chorus Pro / AFNOR à l'initialisation.
+    """
 
     DEFAULT_API_URL = "https://factpulse.fr"
     DEFAULT_POLLING_INTERVAL = 2000  # ms
@@ -37,6 +211,8 @@ class FactPulseClient:
         password: str,
         api_url: Optional[str] = None,
         client_uid: Optional[str] = None,
+        chorus_credentials: Optional[ChorusProCredentials] = None,
+        afnor_credentials: Optional[AFNORCredentials] = None,
         polling_interval: Optional[int] = None,
         polling_timeout: Optional[int] = None,
         max_retries: Optional[int] = None,
@@ -45,6 +221,8 @@ class FactPulseClient:
         self.password = password
         self.api_url = (api_url or self.DEFAULT_API_URL).rstrip("/")
         self.client_uid = client_uid
+        self.chorus_credentials = chorus_credentials
+        self.afnor_credentials = afnor_credentials
         self.polling_interval = polling_interval or self.DEFAULT_POLLING_INTERVAL
         self.polling_timeout = polling_timeout or self.DEFAULT_POLLING_TIMEOUT
         self.max_retries = max_retries if max_retries is not None else self.DEFAULT_MAX_RETRIES
@@ -53,6 +231,14 @@ class FactPulseClient:
         self._refresh_token: Optional[str] = None
         self._token_expires_at: Optional[datetime] = None
         self._api_client: Optional[ApiClient] = None
+
+    def get_chorus_credentials_for_api(self) -> Optional[Dict[str, Any]]:
+        """Retourne les credentials Chorus Pro au format API."""
+        return self.chorus_credentials.to_dict() if self.chorus_credentials else None
+
+    def get_afnor_credentials_for_api(self) -> Optional[Dict[str, Any]]:
+        """Retourne les credentials AFNOR au format API."""
+        return self.afnor_credentials.to_dict() if self.afnor_credentials else None
 
     def _obtain_token(self) -> Dict[str, str]:
         """Obtient un nouveau token JWT."""

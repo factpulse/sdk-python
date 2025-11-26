@@ -1,6 +1,6 @@
 # MontantTvaLigne
 
-Montant de la TVA pour cette ligne.
+Montant de la TVA pour cette ligne. (Accepte number, string ou integer)
 
 ## Properties
 

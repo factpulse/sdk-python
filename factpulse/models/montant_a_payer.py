@@ -28,7 +28,7 @@ MONTANTAPAYER_ANY_OF_SCHEMAS = ["float", "str"]
 
 class MontantAPayer(BaseModel):
     """
-    Montant à payer.
+    Montant à payer. (Accepte number, string ou integer)
     """
 
     # data type: float

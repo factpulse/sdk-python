@@ -1,6 +1,6 @@
 # MontantRemiseGlobaleTtc
 
-Montant de la remise globale TTC.
+Montant de la remise globale TTC. (Accepte number, string ou integer)
 
 ## Properties
 

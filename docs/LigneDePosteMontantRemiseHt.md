@@ -1,6 +1,6 @@
 # LigneDePosteMontantRemiseHt
 
-Montant de la remise HT.
+Montant de la remise HT. (Accepte number, string ou integer)
 
 ## Properties
 

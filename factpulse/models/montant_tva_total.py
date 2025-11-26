@@ -28,7 +28,7 @@ MONTANTTVATOTAL_ANY_OF_SCHEMAS = ["float", "str"]
 
 class MontantTvaTotal(BaseModel):
     """
-    Montant total de la TVA.
+    Montant total de la TVA. (Accepte number, string ou integer)
     """
 
     # data type: float

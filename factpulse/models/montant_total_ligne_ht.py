@@ -28,7 +28,7 @@ MONTANTTOTALLIGNEHT_ANY_OF_SCHEMAS = ["float", "str"]
 
 class MontantTotalLigneHt(BaseModel):
     """
-    Montant total HT de la ligne (quantité × prix unitaire - remise).
+    Montant total HT de la ligne (quantité × prix unitaire - remise). (Accepte number, string ou integer)
     """
 
     # data type: float
@@ -58,9 +58,6 @@ class MontantTotalLigneHt(BaseModel):
 
     @field_validator('actual_instance')
     def actual_instance_must_validate_anyof(cls, v):
-        if v is None:
-            return v
-
         instance = MontantTotalLigneHt.model_construct()
         error_messages = []
         # validate data type: float
@@ -89,9 +86,6 @@ class MontantTotalLigneHt(BaseModel):
     def from_json(cls, json_str: str) -> Self:
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
-        if json_str is None:
-            return instance
-
         error_messages = []
         # deserialize data into float
         try:

@@ -28,7 +28,7 @@ LIGNEDEPOSTETAUXTVAMANUEL_ANY_OF_SCHEMAS = ["float", "str"]
 
 class LigneDePosteTauxTvaManuel(BaseModel):
     """
-    Taux de TVA avec valeur manuelle.
+    Taux de TVA avec valeur manuelle. (Accepte number, string ou integer)
     """
 
     # data type: float
