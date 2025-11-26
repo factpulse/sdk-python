@@ -7,7 +7,7 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-## [1.0.0] - 2025-11-26
+## [2.0.19] - 2025-11-26
 
 ### Added
 - Version initiale du SDK python
@@ -24,5 +24,5 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Guide d'authentification JWT
 - Configuration avancée (timeout, proxy, debug)
 
-[Unreleased]: https://github.com/factpulse/sdk-python/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/factpulse/sdk-python/releases/tag/v1.0.0
+[Unreleased]: https://github.com/factpulse/sdk-python/compare/v2.0.19...HEAD
+[2.0.19]: https://github.com/factpulse/sdk-python/releases/tag/v2.0.19
