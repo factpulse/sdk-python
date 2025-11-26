@@ -138,16 +138,43 @@ def ligne_de_poste(
     montant_unitaire_ht: Union[str, float, int, Decimal],
     montant_ligne_ht: Union[str, float, int, Decimal],
     taux_tva: Union[str, float, int, Decimal] = "20.00",
+    categorie_tva: str = "S",
     unite: str = "C62",
+    reference: Optional[str] = None,
     montant_tva_ligne: Union[str, float, int, Decimal, None] = None,
     montant_remise_ht: Union[str, float, int, Decimal, None] = None,
-    code_raison_remise: Optional[str] = None,
-    motif_remise: Optional[str] = None,
+    code_raison_reduction: Optional[str] = None,
+    raison_reduction: Optional[str] = None,
+    motif_exoneration: Optional[str] = None,
+    date_debut_periode: Optional[str] = None,
+    date_fin_periode: Optional[str] = None,
     description: Optional[str] = None,
     reference_acheteur: Optional[str] = None,
     reference_vendeur: Optional[str] = None,
 ) -> Dict[str, Any]:
-    """Crée une ligne de poste simplifiée."""
+    """Crée une ligne de poste simplifiée.
+
+    Args:
+        numero: Numéro de la ligne
+        denomination: Libellé du produit/service
+        quantite: Quantité
+        montant_unitaire_ht: Prix unitaire HT
+        montant_ligne_ht: Total ligne HT
+        taux_tva: Taux de TVA (défaut: "20.00")
+        categorie_tva: Catégorie TVA - S (standard), Z (zéro), E (exonéré), AE (autoliquidation), K (intracommunautaire)
+        unite: Code unité UN/ECE (défaut: "C62" = unité)
+        reference: Référence article vendeur
+        montant_tva_ligne: Montant TVA de la ligne (optionnel)
+        montant_remise_ht: Montant de remise HT (optionnel)
+        code_raison_reduction: Code raison de la réduction (ex: "95" = remise)
+        raison_reduction: Description textuelle de la réduction
+        motif_exoneration: Code motif d'exonération TVA (ex: "VATEX-EU-AE")
+        date_debut_periode: Date début période de facturation (YYYY-MM-DD)
+        date_fin_periode: Date fin période de facturation (YYYY-MM-DD)
+        description: Description détaillée
+        reference_acheteur: Référence article côté acheteur
+        reference_vendeur: Référence article côté vendeur
+    """
     result = {
         "numero": numero,
         "denomination": denomination,
@@ -155,16 +182,25 @@ def ligne_de_poste(
         "montantUnitaireHt": montant(montant_unitaire_ht),
         "montantTotalLigneHt": montant(montant_ligne_ht),
         "tauxTva": montant(taux_tva),
+        "categorieTva": categorie_tva,
         "unite": unite,
     }
+    if reference is not None:
+        result["reference"] = reference
     if montant_tva_ligne is not None:
         result["montantTvaLigne"] = montant(montant_tva_ligne)
     if montant_remise_ht is not None:
         result["montantRemiseHt"] = montant(montant_remise_ht)
-    if code_raison_remise is not None:
-        result["codeRaisonReduction"] = code_raison_remise
-    if motif_remise is not None:
-        result["motifRemise"] = motif_remise
+    if code_raison_reduction is not None:
+        result["codeRaisonReduction"] = code_raison_reduction
+    if raison_reduction is not None:
+        result["raisonReduction"] = raison_reduction
+    if motif_exoneration is not None:
+        result["motifExoneration"] = motif_exoneration
+    if date_debut_periode is not None:
+        result["dateDebutPeriode"] = date_debut_periode
+    if date_fin_periode is not None:
+        result["dateFinPeriode"] = date_fin_periode
     if description is not None:
         result["description"] = description
     if reference_acheteur is not None:
