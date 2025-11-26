@@ -219,10 +219,10 @@ def ligne_de_tva(
 ) -> Dict[str, Any]:
     """Crée une ligne de TVA simplifiée."""
     result = {
-        "tauxTvaManuel": montant(taux),
+        "tauxManuel": montant(taux),
         "montantBaseHt": montant(base_ht),
         "montantTva": montant(montant_tva),
-        "categorieTva": categorie,
+        "categorie": categorie,
     }
     if motif_exoneration is not None:
         result["motifExoneration"] = motif_exoneration
