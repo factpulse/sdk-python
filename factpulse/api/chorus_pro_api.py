@@ -17,18 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import StrictInt
-from typing import Any
-from factpulse.models.body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post import BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost
-from factpulse.models.body_completer_facture_api_v1_chorus_pro_factures_completer_post import BodyCompleterFactureApiV1ChorusProFacturesCompleterPost
-from factpulse.models.body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get import BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet
-from factpulse.models.body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post import BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost
-from factpulse.models.body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post import BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost
-from factpulse.models.body_recycler_facture_api_v1_chorus_pro_factures_recycler_post import BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost
-from factpulse.models.body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post import BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost
-from factpulse.models.body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post import BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost
-from factpulse.models.body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post import BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost
-from factpulse.models.body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post import BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost
-from factpulse.models.body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post import BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost
+from typing import Any, Dict
 from factpulse.models.consulter_facture_request import ConsulterFactureRequest
 from factpulse.models.consulter_facture_response import ConsulterFactureResponse
 from factpulse.models.consulter_structure_request import ConsulterStructureRequest
@@ -62,7 +51,7 @@ class ChorusProApi:
     @validate_call
     def ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post(
         self,
-        body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post: BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -80,8 +69,8 @@ class ChorusProApi:
 
         Ajoute une pièce jointe au compte utilisateur courant.      **Taille max** : 10 Mo par fichier      **Payload exemple** :     ```json     {       \"pieceJointeFichier\": \"JVBERi0xLjQKJeLjz9MKNSAwIG9iago8P...\",       \"pieceJointeNom\": \"bon_commande.pdf\",       \"pieceJointeTypeMime\": \"application/pdf\",       \"pieceJointeExtension\": \"PDF\"     }     ```      **Retour** : L'ID de la pièce jointe (`pieceJointeIdFichier`) à utiliser ensuite dans `/factures/completer`.      **Extensions acceptées** : PDF, JPG, PNG, ZIP, XML, etc.
 
-        :param body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post: (required)
-        :type body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post: BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -105,7 +94,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post_serialize(
-            body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post=body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -130,7 +119,7 @@ class ChorusProApi:
     @validate_call
     def ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post_with_http_info(
         self,
-        body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post: BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -148,8 +137,8 @@ class ChorusProApi:
 
         Ajoute une pièce jointe au compte utilisateur courant.      **Taille max** : 10 Mo par fichier      **Payload exemple** :     ```json     {       \"pieceJointeFichier\": \"JVBERi0xLjQKJeLjz9MKNSAwIG9iago8P...\",       \"pieceJointeNom\": \"bon_commande.pdf\",       \"pieceJointeTypeMime\": \"application/pdf\",       \"pieceJointeExtension\": \"PDF\"     }     ```      **Retour** : L'ID de la pièce jointe (`pieceJointeIdFichier`) à utiliser ensuite dans `/factures/completer`.      **Extensions acceptées** : PDF, JPG, PNG, ZIP, XML, etc.
 
-        :param body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post: (required)
-        :type body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post: BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -173,7 +162,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post_serialize(
-            body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post=body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -198,7 +187,7 @@ class ChorusProApi:
     @validate_call
     def ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post_without_preload_content(
         self,
-        body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post: BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -216,8 +205,8 @@ class ChorusProApi:
 
         Ajoute une pièce jointe au compte utilisateur courant.      **Taille max** : 10 Mo par fichier      **Payload exemple** :     ```json     {       \"pieceJointeFichier\": \"JVBERi0xLjQKJeLjz9MKNSAwIG9iago8P...\",       \"pieceJointeNom\": \"bon_commande.pdf\",       \"pieceJointeTypeMime\": \"application/pdf\",       \"pieceJointeExtension\": \"PDF\"     }     ```      **Retour** : L'ID de la pièce jointe (`pieceJointeIdFichier`) à utiliser ensuite dans `/factures/completer`.      **Extensions acceptées** : PDF, JPG, PNG, ZIP, XML, etc.
 
-        :param body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post: (required)
-        :type body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post: BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -241,7 +230,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post_serialize(
-            body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post=body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -261,7 +250,7 @@ class ChorusProApi:
 
     def _ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post_serialize(
         self,
-        body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post,
+        request_body,
         _request_auth,
         _content_type,
         _headers,
@@ -287,8 +276,8 @@ class ChorusProApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post is not None:
-            _body_params = body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post
+        if request_body is not None:
+            _body_params = request_body
 
 
         # set the HTTP header `Accept`
@@ -339,7 +328,7 @@ class ChorusProApi:
     @validate_call
     def completer_facture_api_v1_chorus_pro_factures_completer_post(
         self,
-        body_completer_facture_api_v1_chorus_pro_factures_completer_post: BodyCompleterFactureApiV1ChorusProFacturesCompleterPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -357,8 +346,8 @@ class ChorusProApi:
 
         Complète une facture au statut SUSPENDUE en ajoutant des pièces jointes ou un commentaire.      **Statut requis** : SUSPENDUE      **Actions possibles** :     - Ajouter des pièces jointes (justificatifs, bons de commande, etc.)     - Modifier le commentaire      **Payload exemple** :     ```json     {       \"identifiantFactureCPP\": 12345,       \"commentaire\": \"Voici les justificatifs demandés\",       \"listePiecesJointes\": [         {           \"pieceJointeIdFichier\": 98765,           \"pieceJointeNom\": \"bon_commande.pdf\"         }       ]     }     ```      **Note** : Les pièces jointes doivent d'abord être uploadées via `/transverses/ajouter-fichier`.      **Après complétion** : La facture repasse au statut MISE_A_DISPOSITION.
 
-        :param body_completer_facture_api_v1_chorus_pro_factures_completer_post: (required)
-        :type body_completer_facture_api_v1_chorus_pro_factures_completer_post: BodyCompleterFactureApiV1ChorusProFacturesCompleterPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -382,7 +371,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._completer_facture_api_v1_chorus_pro_factures_completer_post_serialize(
-            body_completer_facture_api_v1_chorus_pro_factures_completer_post=body_completer_facture_api_v1_chorus_pro_factures_completer_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -407,7 +396,7 @@ class ChorusProApi:
     @validate_call
     def completer_facture_api_v1_chorus_pro_factures_completer_post_with_http_info(
         self,
-        body_completer_facture_api_v1_chorus_pro_factures_completer_post: BodyCompleterFactureApiV1ChorusProFacturesCompleterPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -425,8 +414,8 @@ class ChorusProApi:
 
         Complète une facture au statut SUSPENDUE en ajoutant des pièces jointes ou un commentaire.      **Statut requis** : SUSPENDUE      **Actions possibles** :     - Ajouter des pièces jointes (justificatifs, bons de commande, etc.)     - Modifier le commentaire      **Payload exemple** :     ```json     {       \"identifiantFactureCPP\": 12345,       \"commentaire\": \"Voici les justificatifs demandés\",       \"listePiecesJointes\": [         {           \"pieceJointeIdFichier\": 98765,           \"pieceJointeNom\": \"bon_commande.pdf\"         }       ]     }     ```      **Note** : Les pièces jointes doivent d'abord être uploadées via `/transverses/ajouter-fichier`.      **Après complétion** : La facture repasse au statut MISE_A_DISPOSITION.
 
-        :param body_completer_facture_api_v1_chorus_pro_factures_completer_post: (required)
-        :type body_completer_facture_api_v1_chorus_pro_factures_completer_post: BodyCompleterFactureApiV1ChorusProFacturesCompleterPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -450,7 +439,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._completer_facture_api_v1_chorus_pro_factures_completer_post_serialize(
-            body_completer_facture_api_v1_chorus_pro_factures_completer_post=body_completer_facture_api_v1_chorus_pro_factures_completer_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -475,7 +464,7 @@ class ChorusProApi:
     @validate_call
     def completer_facture_api_v1_chorus_pro_factures_completer_post_without_preload_content(
         self,
-        body_completer_facture_api_v1_chorus_pro_factures_completer_post: BodyCompleterFactureApiV1ChorusProFacturesCompleterPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -493,8 +482,8 @@ class ChorusProApi:
 
         Complète une facture au statut SUSPENDUE en ajoutant des pièces jointes ou un commentaire.      **Statut requis** : SUSPENDUE      **Actions possibles** :     - Ajouter des pièces jointes (justificatifs, bons de commande, etc.)     - Modifier le commentaire      **Payload exemple** :     ```json     {       \"identifiantFactureCPP\": 12345,       \"commentaire\": \"Voici les justificatifs demandés\",       \"listePiecesJointes\": [         {           \"pieceJointeIdFichier\": 98765,           \"pieceJointeNom\": \"bon_commande.pdf\"         }       ]     }     ```      **Note** : Les pièces jointes doivent d'abord être uploadées via `/transverses/ajouter-fichier`.      **Après complétion** : La facture repasse au statut MISE_A_DISPOSITION.
 
-        :param body_completer_facture_api_v1_chorus_pro_factures_completer_post: (required)
-        :type body_completer_facture_api_v1_chorus_pro_factures_completer_post: BodyCompleterFactureApiV1ChorusProFacturesCompleterPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -518,7 +507,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._completer_facture_api_v1_chorus_pro_factures_completer_post_serialize(
-            body_completer_facture_api_v1_chorus_pro_factures_completer_post=body_completer_facture_api_v1_chorus_pro_factures_completer_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -538,7 +527,7 @@ class ChorusProApi:
 
     def _completer_facture_api_v1_chorus_pro_factures_completer_post_serialize(
         self,
-        body_completer_facture_api_v1_chorus_pro_factures_completer_post,
+        request_body,
         _request_auth,
         _content_type,
         _headers,
@@ -564,8 +553,8 @@ class ChorusProApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body_completer_facture_api_v1_chorus_pro_factures_completer_post is not None:
-            _body_params = body_completer_facture_api_v1_chorus_pro_factures_completer_post
+        if request_body is not None:
+            _body_params = request_body
 
 
         # set the HTTP header `Accept`
@@ -1171,7 +1160,6 @@ class ChorusProApi:
     def lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get(
         self,
         id_structure_cpp: StrictInt,
-        body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get: BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1191,8 +1179,6 @@ class ChorusProApi:
 
         :param id_structure_cpp: (required)
         :type id_structure_cpp: int
-        :param body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get: (required)
-        :type body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get: BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1217,7 +1203,6 @@ class ChorusProApi:
 
         _param = self._lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get_serialize(
             id_structure_cpp=id_structure_cpp,
-            body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get=body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1243,7 +1228,6 @@ class ChorusProApi:
     def lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get_with_http_info(
         self,
         id_structure_cpp: StrictInt,
-        body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get: BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1263,8 +1247,6 @@ class ChorusProApi:
 
         :param id_structure_cpp: (required)
         :type id_structure_cpp: int
-        :param body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get: (required)
-        :type body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get: BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1289,7 +1271,6 @@ class ChorusProApi:
 
         _param = self._lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get_serialize(
             id_structure_cpp=id_structure_cpp,
-            body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get=body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1315,7 +1296,6 @@ class ChorusProApi:
     def lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get_without_preload_content(
         self,
         id_structure_cpp: StrictInt,
-        body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get: BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1335,8 +1315,6 @@ class ChorusProApi:
 
         :param id_structure_cpp: (required)
         :type id_structure_cpp: int
-        :param body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get: (required)
-        :type body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get: BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1361,7 +1339,6 @@ class ChorusProApi:
 
         _param = self._lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get_serialize(
             id_structure_cpp=id_structure_cpp,
-            body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get=body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1382,7 +1359,6 @@ class ChorusProApi:
     def _lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get_serialize(
         self,
         id_structure_cpp,
-        body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get,
         _request_auth,
         _content_type,
         _headers,
@@ -1410,8 +1386,6 @@ class ChorusProApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get is not None:
-            _body_params = body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get
 
 
         # set the HTTP header `Accept`
@@ -1422,19 +1396,6 @@ class ChorusProApi:
                 ]
             )
 
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
-            )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1739,7 +1700,7 @@ class ChorusProApi:
     @validate_call
     def rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post(
         self,
-        body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post: BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1757,8 +1718,8 @@ class ChorusProApi:
 
         Recherche les factures reçues par le destinataire connecté.      **Filtres** :     - Téléchargée / non téléchargée     - Dates de réception     - Statut (MISE_A_DISPOSITION, SUSPENDUE, etc.)     - Fournisseur      **Indicateur utile** : `factureTelechargeeParDestinataire` permet de savoir si la facture a déjà été téléchargée.
 
-        :param body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post: (required)
-        :type body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post: BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1782,7 +1743,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post_serialize(
-            body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post=body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1807,7 +1768,7 @@ class ChorusProApi:
     @validate_call
     def rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post_with_http_info(
         self,
-        body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post: BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1825,8 +1786,8 @@ class ChorusProApi:
 
         Recherche les factures reçues par le destinataire connecté.      **Filtres** :     - Téléchargée / non téléchargée     - Dates de réception     - Statut (MISE_A_DISPOSITION, SUSPENDUE, etc.)     - Fournisseur      **Indicateur utile** : `factureTelechargeeParDestinataire` permet de savoir si la facture a déjà été téléchargée.
 
-        :param body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post: (required)
-        :type body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post: BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1850,7 +1811,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post_serialize(
-            body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post=body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1875,7 +1836,7 @@ class ChorusProApi:
     @validate_call
     def rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post_without_preload_content(
         self,
-        body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post: BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1893,8 +1854,8 @@ class ChorusProApi:
 
         Recherche les factures reçues par le destinataire connecté.      **Filtres** :     - Téléchargée / non téléchargée     - Dates de réception     - Statut (MISE_A_DISPOSITION, SUSPENDUE, etc.)     - Fournisseur      **Indicateur utile** : `factureTelechargeeParDestinataire` permet de savoir si la facture a déjà été téléchargée.
 
-        :param body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post: (required)
-        :type body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post: BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1918,7 +1879,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post_serialize(
-            body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post=body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1938,7 +1899,7 @@ class ChorusProApi:
 
     def _rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post_serialize(
         self,
-        body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post,
+        request_body,
         _request_auth,
         _content_type,
         _headers,
@@ -1964,8 +1925,8 @@ class ChorusProApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post is not None:
-            _body_params = body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post
+        if request_body is not None:
+            _body_params = request_body
 
 
         # set the HTTP header `Accept`
@@ -2016,7 +1977,7 @@ class ChorusProApi:
     @validate_call
     def rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post(
         self,
-        body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post: BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2034,8 +1995,8 @@ class ChorusProApi:
 
         Recherche les factures émises par le fournisseur connecté.      **Filtres disponibles** :     - Numéro de facture     - Dates (début/fin)     - Statut     - Structure destinataire     - Montant      **Cas d'usage** :     - Suivi des factures émises     - Vérification des statuts     - Export pour comptabilité
 
-        :param body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post: (required)
-        :type body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post: BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2059,7 +2020,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post_serialize(
-            body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post=body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2084,7 +2045,7 @@ class ChorusProApi:
     @validate_call
     def rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post_with_http_info(
         self,
-        body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post: BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2102,8 +2063,8 @@ class ChorusProApi:
 
         Recherche les factures émises par le fournisseur connecté.      **Filtres disponibles** :     - Numéro de facture     - Dates (début/fin)     - Statut     - Structure destinataire     - Montant      **Cas d'usage** :     - Suivi des factures émises     - Vérification des statuts     - Export pour comptabilité
 
-        :param body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post: (required)
-        :type body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post: BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2127,7 +2088,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post_serialize(
-            body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post=body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2152,7 +2113,7 @@ class ChorusProApi:
     @validate_call
     def rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post_without_preload_content(
         self,
-        body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post: BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2170,8 +2131,8 @@ class ChorusProApi:
 
         Recherche les factures émises par le fournisseur connecté.      **Filtres disponibles** :     - Numéro de facture     - Dates (début/fin)     - Statut     - Structure destinataire     - Montant      **Cas d'usage** :     - Suivi des factures émises     - Vérification des statuts     - Export pour comptabilité
 
-        :param body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post: (required)
-        :type body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post: BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2195,7 +2156,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post_serialize(
-            body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post=body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2215,7 +2176,7 @@ class ChorusProApi:
 
     def _rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post_serialize(
         self,
-        body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post,
+        request_body,
         _request_auth,
         _content_type,
         _headers,
@@ -2241,8 +2202,8 @@ class ChorusProApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post is not None:
-            _body_params = body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post
+        if request_body is not None:
+            _body_params = request_body
 
 
         # set the HTTP header `Accept`
@@ -2570,7 +2531,7 @@ class ChorusProApi:
     @validate_call
     def recycler_facture_api_v1_chorus_pro_factures_recycler_post(
         self,
-        body_recycler_facture_api_v1_chorus_pro_factures_recycler_post: BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2588,8 +2549,8 @@ class ChorusProApi:
 
         Recycle une facture au statut A_RECYCLER en modifiant les données d'acheminement.      **Statut requis** : A_RECYCLER      **Champs modifiables** :     - Destinataire (`idStructureCPP`)     - Code service     - Numéro d'engagement      **Cas d'usage** :     - Erreur de destinataire     - Changement de service facturation     - Mise à jour du numéro d'engagement      **Payload exemple** :     ```json     {       \"identifiantFactureCPP\": 12345,       \"idStructureCPP\": 67890,       \"codeService\": \"SERVICE_01\",       \"numeroEngagement\": \"ENG2024001\"     }     ```      **Note** : La facture conserve son numéro et ses montants, seuls les champs d'acheminement changent.
 
-        :param body_recycler_facture_api_v1_chorus_pro_factures_recycler_post: (required)
-        :type body_recycler_facture_api_v1_chorus_pro_factures_recycler_post: BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2613,7 +2574,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._recycler_facture_api_v1_chorus_pro_factures_recycler_post_serialize(
-            body_recycler_facture_api_v1_chorus_pro_factures_recycler_post=body_recycler_facture_api_v1_chorus_pro_factures_recycler_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2638,7 +2599,7 @@ class ChorusProApi:
     @validate_call
     def recycler_facture_api_v1_chorus_pro_factures_recycler_post_with_http_info(
         self,
-        body_recycler_facture_api_v1_chorus_pro_factures_recycler_post: BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2656,8 +2617,8 @@ class ChorusProApi:
 
         Recycle une facture au statut A_RECYCLER en modifiant les données d'acheminement.      **Statut requis** : A_RECYCLER      **Champs modifiables** :     - Destinataire (`idStructureCPP`)     - Code service     - Numéro d'engagement      **Cas d'usage** :     - Erreur de destinataire     - Changement de service facturation     - Mise à jour du numéro d'engagement      **Payload exemple** :     ```json     {       \"identifiantFactureCPP\": 12345,       \"idStructureCPP\": 67890,       \"codeService\": \"SERVICE_01\",       \"numeroEngagement\": \"ENG2024001\"     }     ```      **Note** : La facture conserve son numéro et ses montants, seuls les champs d'acheminement changent.
 
-        :param body_recycler_facture_api_v1_chorus_pro_factures_recycler_post: (required)
-        :type body_recycler_facture_api_v1_chorus_pro_factures_recycler_post: BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2681,7 +2642,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._recycler_facture_api_v1_chorus_pro_factures_recycler_post_serialize(
-            body_recycler_facture_api_v1_chorus_pro_factures_recycler_post=body_recycler_facture_api_v1_chorus_pro_factures_recycler_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2706,7 +2667,7 @@ class ChorusProApi:
     @validate_call
     def recycler_facture_api_v1_chorus_pro_factures_recycler_post_without_preload_content(
         self,
-        body_recycler_facture_api_v1_chorus_pro_factures_recycler_post: BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2724,8 +2685,8 @@ class ChorusProApi:
 
         Recycle une facture au statut A_RECYCLER en modifiant les données d'acheminement.      **Statut requis** : A_RECYCLER      **Champs modifiables** :     - Destinataire (`idStructureCPP`)     - Code service     - Numéro d'engagement      **Cas d'usage** :     - Erreur de destinataire     - Changement de service facturation     - Mise à jour du numéro d'engagement      **Payload exemple** :     ```json     {       \"identifiantFactureCPP\": 12345,       \"idStructureCPP\": 67890,       \"codeService\": \"SERVICE_01\",       \"numeroEngagement\": \"ENG2024001\"     }     ```      **Note** : La facture conserve son numéro et ses montants, seuls les champs d'acheminement changent.
 
-        :param body_recycler_facture_api_v1_chorus_pro_factures_recycler_post: (required)
-        :type body_recycler_facture_api_v1_chorus_pro_factures_recycler_post: BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2749,7 +2710,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._recycler_facture_api_v1_chorus_pro_factures_recycler_post_serialize(
-            body_recycler_facture_api_v1_chorus_pro_factures_recycler_post=body_recycler_facture_api_v1_chorus_pro_factures_recycler_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2769,7 +2730,7 @@ class ChorusProApi:
 
     def _recycler_facture_api_v1_chorus_pro_factures_recycler_post_serialize(
         self,
-        body_recycler_facture_api_v1_chorus_pro_factures_recycler_post,
+        request_body,
         _request_auth,
         _content_type,
         _headers,
@@ -2795,8 +2756,8 @@ class ChorusProApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body_recycler_facture_api_v1_chorus_pro_factures_recycler_post is not None:
-            _body_params = body_recycler_facture_api_v1_chorus_pro_factures_recycler_post
+        if request_body is not None:
+            _body_params = request_body
 
 
         # set the HTTP header `Accept`
@@ -3124,7 +3085,7 @@ class ChorusProApi:
     @validate_call
     def telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post(
         self,
-        body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post: BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3142,8 +3103,8 @@ class ChorusProApi:
 
         Télécharge une ou plusieurs factures (max 10 recommandé) avec leurs pièces jointes.      **Formats disponibles** :     - PDF : Fichier PDF uniquement     - XML : Fichier XML uniquement     - ZIP : Archive contenant PDF + XML + pièces jointes      **Taille maximale** : 120 Mo par téléchargement      **Payload exemple** :     ```json     {       \"listeIdentifiantsFactureCPP\": [12345, 12346],       \"inclurePiecesJointes\": true,       \"formatFichier\": \"ZIP\"     }     ```      **Retour** : Le fichier est encodé en base64 dans le champ `fichierBase64`.      **Note** : Le flag `factureTelechargeeParDestinataire` est mis à jour automatiquement.
 
-        :param body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post: (required)
-        :type body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post: BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3167,7 +3128,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post_serialize(
-            body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post=body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3192,7 +3153,7 @@ class ChorusProApi:
     @validate_call
     def telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post_with_http_info(
         self,
-        body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post: BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3210,8 +3171,8 @@ class ChorusProApi:
 
         Télécharge une ou plusieurs factures (max 10 recommandé) avec leurs pièces jointes.      **Formats disponibles** :     - PDF : Fichier PDF uniquement     - XML : Fichier XML uniquement     - ZIP : Archive contenant PDF + XML + pièces jointes      **Taille maximale** : 120 Mo par téléchargement      **Payload exemple** :     ```json     {       \"listeIdentifiantsFactureCPP\": [12345, 12346],       \"inclurePiecesJointes\": true,       \"formatFichier\": \"ZIP\"     }     ```      **Retour** : Le fichier est encodé en base64 dans le champ `fichierBase64`.      **Note** : Le flag `factureTelechargeeParDestinataire` est mis à jour automatiquement.
 
-        :param body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post: (required)
-        :type body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post: BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3235,7 +3196,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post_serialize(
-            body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post=body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3260,7 +3221,7 @@ class ChorusProApi:
     @validate_call
     def telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post_without_preload_content(
         self,
-        body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post: BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3278,8 +3239,8 @@ class ChorusProApi:
 
         Télécharge une ou plusieurs factures (max 10 recommandé) avec leurs pièces jointes.      **Formats disponibles** :     - PDF : Fichier PDF uniquement     - XML : Fichier XML uniquement     - ZIP : Archive contenant PDF + XML + pièces jointes      **Taille maximale** : 120 Mo par téléchargement      **Payload exemple** :     ```json     {       \"listeIdentifiantsFactureCPP\": [12345, 12346],       \"inclurePiecesJointes\": true,       \"formatFichier\": \"ZIP\"     }     ```      **Retour** : Le fichier est encodé en base64 dans le champ `fichierBase64`.      **Note** : Le flag `factureTelechargeeParDestinataire` est mis à jour automatiquement.
 
-        :param body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post: (required)
-        :type body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post: BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3303,7 +3264,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post_serialize(
-            body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post=body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3323,7 +3284,7 @@ class ChorusProApi:
 
     def _telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post_serialize(
         self,
-        body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post,
+        request_body,
         _request_auth,
         _content_type,
         _headers,
@@ -3349,8 +3310,8 @@ class ChorusProApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post is not None:
-            _body_params = body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post
+        if request_body is not None:
+            _body_params = request_body
 
 
         # set the HTTP header `Accept`
@@ -3401,7 +3362,7 @@ class ChorusProApi:
     @validate_call
     def traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post(
         self,
-        body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post: BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3419,8 +3380,8 @@ class ChorusProApi:
 
         Change le statut d'une facture reçue.      **Statuts possibles** :     - MISE_A_DISPOSITION : Facture acceptée     - SUSPENDUE : En attente d'informations complémentaires (motif obligatoire)     - REJETEE : Facture refusée (motif obligatoire)     - MANDATEE : Facture mandatée     - MISE_EN_PAIEMENT : Facture en cours de paiement     - COMPTABILISEE : Facture comptabilisée     - MISE_A_DISPOSITION_COMPTABLE : Mise à disposition comptable     - A_RECYCLER : À recycler     - COMPLETEE : Complétée     - SERVICE-FAIT : Service fait     - PRISE_EN_COMPTE_DESTINATAIRE : Prise en compte     - TRANSMISE_MOA : Transmise à la MOA      **Payload exemple** :     ```json     {       \"identifiantFactureCPP\": 12345,       \"nouveauStatut\": \"REJETEE\",       \"motifRejet\": \"Facture en double\",       \"commentaire\": \"Facture déjà reçue sous la référence ABC123\"     }     ```      **Règles** :     - Un motif est **obligatoire** pour SUSPENDUE et REJETEE     - Seuls certains statuts sont autorisés selon le statut actuel de la facture
 
-        :param body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post: (required)
-        :type body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post: BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3444,7 +3405,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post_serialize(
-            body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post=body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3469,7 +3430,7 @@ class ChorusProApi:
     @validate_call
     def traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post_with_http_info(
         self,
-        body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post: BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3487,8 +3448,8 @@ class ChorusProApi:
 
         Change le statut d'une facture reçue.      **Statuts possibles** :     - MISE_A_DISPOSITION : Facture acceptée     - SUSPENDUE : En attente d'informations complémentaires (motif obligatoire)     - REJETEE : Facture refusée (motif obligatoire)     - MANDATEE : Facture mandatée     - MISE_EN_PAIEMENT : Facture en cours de paiement     - COMPTABILISEE : Facture comptabilisée     - MISE_A_DISPOSITION_COMPTABLE : Mise à disposition comptable     - A_RECYCLER : À recycler     - COMPLETEE : Complétée     - SERVICE-FAIT : Service fait     - PRISE_EN_COMPTE_DESTINATAIRE : Prise en compte     - TRANSMISE_MOA : Transmise à la MOA      **Payload exemple** :     ```json     {       \"identifiantFactureCPP\": 12345,       \"nouveauStatut\": \"REJETEE\",       \"motifRejet\": \"Facture en double\",       \"commentaire\": \"Facture déjà reçue sous la référence ABC123\"     }     ```      **Règles** :     - Un motif est **obligatoire** pour SUSPENDUE et REJETEE     - Seuls certains statuts sont autorisés selon le statut actuel de la facture
 
-        :param body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post: (required)
-        :type body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post: BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3512,7 +3473,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post_serialize(
-            body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post=body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3537,7 +3498,7 @@ class ChorusProApi:
     @validate_call
     def traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post_without_preload_content(
         self,
-        body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post: BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3555,8 +3516,8 @@ class ChorusProApi:
 
         Change le statut d'une facture reçue.      **Statuts possibles** :     - MISE_A_DISPOSITION : Facture acceptée     - SUSPENDUE : En attente d'informations complémentaires (motif obligatoire)     - REJETEE : Facture refusée (motif obligatoire)     - MANDATEE : Facture mandatée     - MISE_EN_PAIEMENT : Facture en cours de paiement     - COMPTABILISEE : Facture comptabilisée     - MISE_A_DISPOSITION_COMPTABLE : Mise à disposition comptable     - A_RECYCLER : À recycler     - COMPLETEE : Complétée     - SERVICE-FAIT : Service fait     - PRISE_EN_COMPTE_DESTINATAIRE : Prise en compte     - TRANSMISE_MOA : Transmise à la MOA      **Payload exemple** :     ```json     {       \"identifiantFactureCPP\": 12345,       \"nouveauStatut\": \"REJETEE\",       \"motifRejet\": \"Facture en double\",       \"commentaire\": \"Facture déjà reçue sous la référence ABC123\"     }     ```      **Règles** :     - Un motif est **obligatoire** pour SUSPENDUE et REJETEE     - Seuls certains statuts sont autorisés selon le statut actuel de la facture
 
-        :param body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post: (required)
-        :type body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post: BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3580,7 +3541,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post_serialize(
-            body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post=body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3600,7 +3561,7 @@ class ChorusProApi:
 
     def _traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post_serialize(
         self,
-        body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post,
+        request_body,
         _request_auth,
         _content_type,
         _headers,
@@ -3626,8 +3587,8 @@ class ChorusProApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post is not None:
-            _body_params = body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post
+        if request_body is not None:
+            _body_params = request_body
 
 
         # set the HTTP header `Accept`
@@ -3678,7 +3639,7 @@ class ChorusProApi:
     @validate_call
     def valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post(
         self,
-        body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post: BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3694,10 +3655,9 @@ class ChorusProApi:
     ) -> object:
         """Consulter une facture (Valideur)
 
-        Consulte facture (valideur).
 
-        :param body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post: (required)
-        :type body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post: BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3721,7 +3681,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post_serialize(
-            body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post=body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3746,7 +3706,7 @@ class ChorusProApi:
     @validate_call
     def valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post_with_http_info(
         self,
-        body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post: BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3762,10 +3722,9 @@ class ChorusProApi:
     ) -> ApiResponse[object]:
         """Consulter une facture (Valideur)
 
-        Consulte facture (valideur).
 
-        :param body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post: (required)
-        :type body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post: BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3789,7 +3748,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post_serialize(
-            body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post=body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3814,7 +3773,7 @@ class ChorusProApi:
     @validate_call
     def valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post_without_preload_content(
         self,
-        body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post: BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3830,10 +3789,9 @@ class ChorusProApi:
     ) -> RESTResponseType:
         """Consulter une facture (Valideur)
 
-        Consulte facture (valideur).
 
-        :param body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post: (required)
-        :type body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post: BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3857,7 +3815,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post_serialize(
-            body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post=body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3877,7 +3835,7 @@ class ChorusProApi:
 
     def _valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post_serialize(
         self,
-        body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post,
+        request_body,
         _request_auth,
         _content_type,
         _headers,
@@ -3903,8 +3861,8 @@ class ChorusProApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post is not None:
-            _body_params = body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post
+        if request_body is not None:
+            _body_params = request_body
 
 
         # set the HTTP header `Accept`
@@ -3955,7 +3913,7 @@ class ChorusProApi:
     @validate_call
     def valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post(
         self,
-        body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post: BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3973,8 +3931,8 @@ class ChorusProApi:
 
         Recherche les factures en attente de validation par le valideur connecté.      **Rôle** : Valideur dans le circuit de validation interne.      **Filtres** : Dates, structure, service, etc.
 
-        :param body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post: (required)
-        :type body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post: BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3998,7 +3956,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post_serialize(
-            body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post=body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4023,7 +3981,7 @@ class ChorusProApi:
     @validate_call
     def valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post_with_http_info(
         self,
-        body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post: BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4041,8 +3999,8 @@ class ChorusProApi:
 
         Recherche les factures en attente de validation par le valideur connecté.      **Rôle** : Valideur dans le circuit de validation interne.      **Filtres** : Dates, structure, service, etc.
 
-        :param body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post: (required)
-        :type body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post: BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4066,7 +4024,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post_serialize(
-            body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post=body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4091,7 +4049,7 @@ class ChorusProApi:
     @validate_call
     def valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post_without_preload_content(
         self,
-        body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post: BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4109,8 +4067,8 @@ class ChorusProApi:
 
         Recherche les factures en attente de validation par le valideur connecté.      **Rôle** : Valideur dans le circuit de validation interne.      **Filtres** : Dates, structure, service, etc.
 
-        :param body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post: (required)
-        :type body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post: BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4134,7 +4092,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post_serialize(
-            body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post=body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4154,7 +4112,7 @@ class ChorusProApi:
 
     def _valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post_serialize(
         self,
-        body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post,
+        request_body,
         _request_auth,
         _content_type,
         _headers,
@@ -4180,8 +4138,8 @@ class ChorusProApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post is not None:
-            _body_params = body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post
+        if request_body is not None:
+            _body_params = request_body
 
 
         # set the HTTP header `Accept`
@@ -4232,7 +4190,7 @@ class ChorusProApi:
     @validate_call
     def valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post(
         self,
-        body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post: BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4250,8 +4208,8 @@ class ChorusProApi:
 
         Valide ou refuse une facture en attente de validation.      **Actions** :     - Valider : La facture passe au statut suivant du circuit     - Refuser : La facture est rejetée (motif obligatoire)
 
-        :param body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post: (required)
-        :type body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post: BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4275,7 +4233,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post_serialize(
-            body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post=body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4300,7 +4258,7 @@ class ChorusProApi:
     @validate_call
     def valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post_with_http_info(
         self,
-        body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post: BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4318,8 +4276,8 @@ class ChorusProApi:
 
         Valide ou refuse une facture en attente de validation.      **Actions** :     - Valider : La facture passe au statut suivant du circuit     - Refuser : La facture est rejetée (motif obligatoire)
 
-        :param body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post: (required)
-        :type body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post: BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4343,7 +4301,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post_serialize(
-            body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post=body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4368,7 +4326,7 @@ class ChorusProApi:
     @validate_call
     def valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post_without_preload_content(
         self,
-        body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post: BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost,
+        request_body: Dict[str, Any],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4386,8 +4344,8 @@ class ChorusProApi:
 
         Valide ou refuse une facture en attente de validation.      **Actions** :     - Valider : La facture passe au statut suivant du circuit     - Refuser : La facture est rejetée (motif obligatoire)
 
-        :param body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post: (required)
-        :type body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post: BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost
+        :param request_body: (required)
+        :type request_body: Dict[str, object]
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4411,7 +4369,7 @@ class ChorusProApi:
         """ # noqa: E501
 
         _param = self._valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post_serialize(
-            body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post=body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post,
+            request_body=request_body,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4431,7 +4389,7 @@ class ChorusProApi:
 
     def _valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post_serialize(
         self,
-        body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post,
+        request_body,
         _request_auth,
         _content_type,
         _headers,
@@ -4457,8 +4415,8 @@ class ChorusProApi:
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post is not None:
-            _body_params = body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post
+        if request_body is not None:
+            _body_params = request_body
 
 
         # set the HTTP header `Accept`

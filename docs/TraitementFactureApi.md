@@ -466,6 +466,8 @@ Signe un PDF uploadé avec le certificat électronique configuré pour le client
 
     **Niveaux eIDAS** : SES (auto-signé), AdES (CA commerciale), QES (PSCO - hors scope).
 
+    **Sécurité** : Double authentification X-Internal-Secret + JWT Bearer pour récupérer le certificat.
+
     **⚠️ Disclaimer légal** : Les signatures générées sont des cachets électroniques au sens
     du règlement eIDAS. Le niveau de validité juridique dépend du certificat utilisé (SES/AdES/QES).
     FactPulse ne fournit pas de certificats qualifiés QES - vous devez obtenir un certificat auprès

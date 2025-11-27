@@ -63,23 +63,33 @@ class AFNORCredentials:
     """Credentials AFNOR PDP pour le mode Zero-Trust.
 
     Ces credentials sont passés dans chaque requête et ne sont jamais stockés côté serveur.
+    L'API FactPulse utilise ces credentials pour s'authentifier auprès de la PDP AFNOR
+    et obtenir un token OAuth2 spécifique.
 
     Attributes:
+        flow_service_url: URL du Flow Service de la PDP (ex: https://api.pdp.fr/flow/v1)
+        token_url: URL du serveur OAuth2 de la PDP (ex: https://auth.pdp.fr/oauth/token)
         client_id: Client ID OAuth2 de la PDP
         client_secret: Client Secret OAuth2 de la PDP
-        flow_service_url: URL du Flow Service de la PDP
+        directory_service_url: URL du Directory Service (optionnel, déduit de flow_service_url)
     """
+    flow_service_url: str
+    token_url: str
     client_id: str
     client_secret: str
-    flow_service_url: str
+    directory_service_url: Optional[str] = None
 
     def to_dict(self) -> Dict[str, Any]:
         """Convertit en dictionnaire pour l'API."""
-        return {
+        result = {
+            "flow_service_url": self.flow_service_url,
+            "token_url": self.token_url,
             "client_id": self.client_id,
             "client_secret": self.client_secret,
-            "flow_service_url": self.flow_service_url,
         }
+        if self.directory_service_url:
+            result["directory_service_url"] = self.directory_service_url
+        return result
 
 
 # =============================================================================
@@ -136,96 +146,310 @@ def ligne_de_poste(
     denomination: str,
     quantite: Union[str, float, int, Decimal],
     montant_unitaire_ht: Union[str, float, int, Decimal],
-    montant_ligne_ht: Union[str, float, int, Decimal],
-    taux_tva: Union[str, float, int, Decimal] = "20.00",
+    montant_total_ligne_ht: Union[str, float, int, Decimal],
+    taux_tva: Optional[str] = None,
+    taux_tva_manuel: Union[str, float, int, Decimal, None] = "20.00",
     categorie_tva: str = "S",
-    unite: str = "C62",
+    unite: str = "FORFAIT",
     reference: Optional[str] = None,
-    montant_tva_ligne: Union[str, float, int, Decimal, None] = None,
     montant_remise_ht: Union[str, float, int, Decimal, None] = None,
     code_raison_reduction: Optional[str] = None,
     raison_reduction: Optional[str] = None,
-    motif_exoneration: Optional[str] = None,
     date_debut_periode: Optional[str] = None,
     date_fin_periode: Optional[str] = None,
-    description: Optional[str] = None,
-    reference_acheteur: Optional[str] = None,
-    reference_vendeur: Optional[str] = None,
 ) -> Dict[str, Any]:
-    """Crée une ligne de poste simplifiée.
+    """Crée une ligne de poste pour l'API FactPulse.
+
+    Les clés JSON sont en camelCase (convention API FactPulse).
+    Les champs correspondent exactement à LigneDePoste dans models.py.
+
+    Pour le taux de TVA, vous pouvez utiliser soit:
+    - taux_tva: Code prédéfini (ex: "TVA20", "TVA10", "TVA5.5")
+    - taux_tva_manuel: Valeur numérique (ex: "20.00", 20, 20.0)
 
     Args:
         numero: Numéro de la ligne
         denomination: Libellé du produit/service
         quantite: Quantité
         montant_unitaire_ht: Prix unitaire HT
-        montant_ligne_ht: Total ligne HT
-        taux_tva: Taux de TVA (défaut: "20.00")
+        montant_total_ligne_ht: Montant total HT de la ligne
+        taux_tva: Code TVA prédéfini (ex: "TVA20") - optionnel
+        taux_tva_manuel: Taux de TVA en valeur (défaut: "20.00") - utilisé si taux_tva non fourni
         categorie_tva: Catégorie TVA - S (standard), Z (zéro), E (exonéré), AE (autoliquidation), K (intracommunautaire)
-        unite: Code unité UN/ECE (défaut: "C62" = unité)
-        reference: Référence article vendeur
-        montant_tva_ligne: Montant TVA de la ligne (optionnel)
+        unite: Unité de facturation (défaut: "FORFAIT")
+        reference: Référence article
         montant_remise_ht: Montant de remise HT (optionnel)
-        code_raison_reduction: Code raison de la réduction (ex: "95" = remise)
+        code_raison_reduction: Code raison de la réduction
         raison_reduction: Description textuelle de la réduction
-        motif_exoneration: Code motif d'exonération TVA (ex: "VATEX-EU-AE")
         date_debut_periode: Date début période de facturation (YYYY-MM-DD)
         date_fin_periode: Date fin période de facturation (YYYY-MM-DD)
-        description: Description détaillée
-        reference_acheteur: Référence article côté acheteur
-        reference_vendeur: Référence article côté vendeur
     """
     result = {
         "numero": numero,
         "denomination": denomination,
         "quantite": montant(quantite),
         "montantUnitaireHt": montant(montant_unitaire_ht),
-        "montantTotalLigneHt": montant(montant_ligne_ht),
-        "tauxTvaManuel": montant(taux_tva),
+        "montantTotalLigneHt": montant(montant_total_ligne_ht),
         "categorieTva": categorie_tva,
         "unite": unite,
     }
+    # Soit taux_tva (code) soit taux_tva_manuel (valeur)
+    if taux_tva is not None:
+        result["tauxTva"] = taux_tva
+    elif taux_tva_manuel is not None:
+        result["tauxTvaManuel"] = montant(taux_tva_manuel)
     if reference is not None:
         result["reference"] = reference
-    if montant_tva_ligne is not None:
-        result["montantTvaLigne"] = montant(montant_tva_ligne)
     if montant_remise_ht is not None:
         result["montantRemiseHt"] = montant(montant_remise_ht)
     if code_raison_reduction is not None:
         result["codeRaisonReduction"] = code_raison_reduction
     if raison_reduction is not None:
         result["raisonReduction"] = raison_reduction
-    if motif_exoneration is not None:
-        result["motifExoneration"] = motif_exoneration
     if date_debut_periode is not None:
         result["dateDebutPeriode"] = date_debut_periode
     if date_fin_periode is not None:
         result["dateFinPeriode"] = date_fin_periode
-    if description is not None:
-        result["description"] = description
-    if reference_acheteur is not None:
-        result["referenceArticleAcheteur"] = reference_acheteur
-    if reference_vendeur is not None:
-        result["referenceArticleVendeur"] = reference_vendeur
     return result
 
 
 def ligne_de_tva(
-    taux: Union[str, float, int, Decimal],
-    base_ht: Union[str, float, int, Decimal],
+    montant_base_ht: Union[str, float, int, Decimal],
     montant_tva: Union[str, float, int, Decimal],
+    taux: Optional[str] = None,
+    taux_manuel: Union[str, float, int, Decimal, None] = "20.00",
     categorie: str = "S",
-    motif_exoneration: Optional[str] = None,
 ) -> Dict[str, Any]:
-    """Crée une ligne de TVA simplifiée."""
+    """Crée une ligne de TVA pour l'API FactPulse.
+
+    Les clés JSON sont en camelCase (convention API FactPulse).
+    Les champs correspondent exactement à LigneDeTVA dans models.py.
+
+    Pour le taux de TVA, vous pouvez utiliser soit:
+    - taux: Code prédéfini (ex: "TVA20", "TVA10", "TVA5.5")
+    - taux_manuel: Valeur numérique (ex: "20.00", 20, 20.0)
+
+    Args:
+        montant_base_ht: Montant de la base HT
+        montant_tva: Montant de la TVA
+        taux: Code TVA prédéfini (ex: "TVA20") - optionnel
+        taux_manuel: Taux de TVA en valeur (défaut: "20.00") - utilisé si taux non fourni
+        categorie: Catégorie de TVA (défaut: "S" pour standard)
+    """
     result = {
-        "tauxManuel": montant(taux),
-        "montantBaseHt": montant(base_ht),
+        "montantBaseHt": montant(montant_base_ht),
         "montantTva": montant(montant_tva),
         "categorie": categorie,
     }
-    if motif_exoneration is not None:
-        result["motifExoneration"] = motif_exoneration
+    # Soit taux (code) soit taux_manuel (valeur)
+    if taux is not None:
+        result["taux"] = taux
+    elif taux_manuel is not None:
+        result["tauxManuel"] = montant(taux_manuel)
+    return result
+
+
+def adresse_postale(
+    ligne1: str,
+    code_postal: str,
+    ville: str,
+    pays: str = "FR",
+    ligne2: Optional[str] = None,
+    ligne3: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Crée une adresse postale pour l'API FactPulse.
+
+    Args:
+        ligne1: Première ligne d'adresse (numéro, rue)
+        code_postal: Code postal
+        ville: Nom de la ville
+        pays: Code pays ISO (défaut: "FR")
+        ligne2: Deuxième ligne d'adresse (optionnel)
+        ligne3: Troisième ligne d'adresse (optionnel)
+
+    Example:
+        >>> adresse = adresse_postale("123 rue Example", "75001", "Paris")
+    """
+    result = {
+        "ligneUn": ligne1,
+        "codePostal": code_postal,
+        "nomVille": ville,
+        "paysCodeIso": pays,
+    }
+    if ligne2:
+        result["ligneDeux"] = ligne2
+    if ligne3:
+        result["ligneTrois"] = ligne3
+    return result
+
+
+def adresse_electronique(
+    identifiant: str,
+    scheme_id: str = "0009",
+) -> Dict[str, Any]:
+    """Crée une adresse électronique pour l'API FactPulse.
+
+    Args:
+        identifiant: Identifiant de l'adresse (SIRET, SIREN, etc.)
+        scheme_id: Schéma d'identification (défaut: "0009" pour SIREN)
+            - "0009": SIREN
+            - "0088": EAN
+            - "0096": DUNS
+            - "0130": Codification propre
+            - "0225": FR - SIRET (schéma français)
+
+    Example:
+        >>> adresse = adresse_electronique("12345678901234", "0225")  # SIRET
+    """
+    return {
+        "identifiant": identifiant,
+        "schemeId": scheme_id,
+    }
+
+
+def fournisseur(
+    nom: str,
+    siret: str,
+    adresse_ligne1: str,
+    code_postal: str,
+    ville: str,
+    id_fournisseur: int = 0,
+    siren: Optional[str] = None,
+    numero_tva_intra: Optional[str] = None,
+    iban: Optional[str] = None,
+    pays: str = "FR",
+    adresse_ligne2: Optional[str] = None,
+    code_service: Optional[int] = None,
+    code_coordonnees_bancaires: Optional[int] = None,
+) -> Dict[str, Any]:
+    """Crée un fournisseur (émetteur de la facture) pour l'API FactPulse.
+
+    Cette fonction simplifie la création d'un fournisseur en générant automatiquement:
+    - L'adresse postale structurée
+    - L'adresse électronique (basée sur le SIRET)
+    - Le SIREN (extrait du SIRET si non fourni)
+    - Le numéro de TVA intracommunautaire (calculé depuis le SIREN si non fourni)
+
+    Args:
+        nom: Raison sociale / dénomination
+        siret: Numéro SIRET (14 chiffres)
+        adresse_ligne1: Première ligne d'adresse
+        code_postal: Code postal
+        ville: Ville
+        id_fournisseur: ID Chorus Pro du fournisseur (défaut: 0)
+        siren: Numéro SIREN (9 chiffres) - calculé depuis SIRET si absent
+        numero_tva_intra: Numéro TVA intracommunautaire - calculé si absent
+        iban: IBAN pour le paiement
+        pays: Code pays ISO (défaut: "FR")
+        adresse_ligne2: Deuxième ligne d'adresse (optionnel)
+        code_service: ID du service fournisseur Chorus Pro (optionnel)
+        code_coordonnees_bancaires: Code coordonnées bancaires Chorus Pro (optionnel)
+
+    Returns:
+        Dict prêt à être utilisé dans une facture
+
+    Example:
+        >>> f = fournisseur(
+        ...     nom="Ma Société SAS",
+        ...     siret="12345678900001",
+        ...     adresse_ligne1="123 Rue de la République",
+        ...     code_postal="75001",
+        ...     ville="Paris",
+        ...     iban="FR7630006000011234567890189",
+        ... )
+    """
+    # Auto-calcul SIREN depuis SIRET
+    if not siren and len(siret) == 14:
+        siren = siret[:9]
+
+    # Auto-calcul TVA intracommunautaire française
+    if not numero_tva_intra and siren and len(siren) == 9:
+        # Clé TVA = (12 + 3 * (SIREN % 97)) % 97
+        try:
+            cle = (12 + 3 * (int(siren) % 97)) % 97
+            numero_tva_intra = f"FR{cle:02d}{siren}"
+        except ValueError:
+            pass  # SIREN non numérique, on skip
+
+    result: Dict[str, Any] = {
+        "nom": nom,
+        "idFournisseur": id_fournisseur,
+        "siret": siret,
+        "adresseElectronique": adresse_electronique(siret, "0225"),
+        "adressePostale": adresse_postale(adresse_ligne1, code_postal, ville, pays, adresse_ligne2),
+    }
+
+    if siren:
+        result["siren"] = siren
+    if numero_tva_intra:
+        result["numeroTvaIntra"] = numero_tva_intra
+    if iban:
+        result["iban"] = iban
+    if code_service:
+        result["idServiceFournisseur"] = code_service
+    if code_coordonnees_bancaires:
+        result["codeCoordonnesBancairesFournisseur"] = code_coordonnees_bancaires
+
+    return result
+
+
+def destinataire(
+    nom: str,
+    siret: str,
+    adresse_ligne1: str,
+    code_postal: str,
+    ville: str,
+    siren: Optional[str] = None,
+    pays: str = "FR",
+    adresse_ligne2: Optional[str] = None,
+    code_service_executant: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Crée un destinataire (client de la facture) pour l'API FactPulse.
+
+    Cette fonction simplifie la création d'un destinataire en générant automatiquement:
+    - L'adresse postale structurée
+    - L'adresse électronique (basée sur le SIRET)
+    - Le SIREN (extrait du SIRET si non fourni)
+
+    Args:
+        nom: Raison sociale / dénomination
+        siret: Numéro SIRET (14 chiffres)
+        adresse_ligne1: Première ligne d'adresse
+        code_postal: Code postal
+        ville: Ville
+        siren: Numéro SIREN (9 chiffres) - calculé depuis SIRET si absent
+        pays: Code pays ISO (défaut: "FR")
+        adresse_ligne2: Deuxième ligne d'adresse (optionnel)
+        code_service_executant: Code du service destinataire (optionnel)
+
+    Returns:
+        Dict prêt à être utilisé dans une facture
+
+    Example:
+        >>> d = destinataire(
+        ...     nom="Client SARL",
+        ...     siret="98765432109876",
+        ...     adresse_ligne1="456 Avenue des Champs",
+        ...     code_postal="69001",
+        ...     ville="Lyon",
+        ... )
+    """
+    # Auto-calcul SIREN depuis SIRET
+    if not siren and len(siret) == 14:
+        siren = siret[:9]
+
+    result: Dict[str, Any] = {
+        "nom": nom,
+        "siret": siret,
+        "adresseElectronique": adresse_electronique(siret, "0225"),
+        "adressePostale": adresse_postale(adresse_ligne1, code_postal, ville, pays, adresse_ligne2),
+    }
+
+    if siren:
+        result["siren"] = siren
+    if code_service_executant:
+        result["codeServiceExecutant"] = code_service_executant
+
     return result
 
 
@@ -535,3 +759,826 @@ class FactPulseClient:
         if isinstance(montant, str):
             return montant
         return "0.00"
+
+    # =========================================================================
+    # AFNOR PDP/PA - Flow Service
+    # =========================================================================
+
+    def _make_afnor_request(
+        self,
+        method: str,
+        endpoint: str,
+        json_data: Optional[Dict] = None,
+        files: Optional[Dict] = None,
+        params: Optional[Dict] = None,
+    ) -> requests.Response:
+        """Effectue une requête vers l'API AFNOR avec gestion d'auth et d'erreurs.
+
+        Args:
+            method: Méthode HTTP (GET, POST, etc.)
+            endpoint: Endpoint relatif (ex: /flow/v1/flows)
+            json_data: Données JSON (optionnel)
+            files: Fichiers multipart (optionnel)
+            params: Query params (optionnel)
+
+        Returns:
+            Response de l'API
+
+        Raises:
+            FactPulseAuthError: Si 401
+            FactPulseNotFoundError: Si 404
+            FactPulseServiceUnavailableError: Si 503
+            FactPulseValidationError: Si 400/422
+            FactPulseAPIError: Autres erreurs
+        """
+        from .exceptions import (
+            parse_api_error,
+            FactPulseServiceUnavailableError,
+        )
+
+        self.ensure_authenticated()
+        url = f"{self.api_url}/api/v1/afnor{endpoint}"
+
+        headers = {"Authorization": f"Bearer {self._access_token}"}
+
+        try:
+            if files:
+                response = requests.request(
+                    method, url, files=files, headers=headers, params=params, timeout=60
+                )
+            else:
+                response = requests.request(
+                    method, url, json=json_data, headers=headers, params=params, timeout=30
+                )
+        except requests.RequestException as e:
+            raise FactPulseServiceUnavailableError("AFNOR PDP", e)
+
+        if response.status_code >= 400:
+            try:
+                error_json = response.json()
+            except Exception:
+                error_json = {"errorMessage": response.text or f"Erreur HTTP {response.status_code}"}
+            raise parse_api_error(error_json, response.status_code)
+
+        return response
+
+    def soumettre_facture_afnor(
+        self,
+        pdf_path: Union[str, Path],
+        flow_name: str,
+        flow_syntax: str = "CII",
+        flow_profile: str = "EN16931",
+        tracking_id: Optional[str] = None,
+        sha256: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Soumet une facture Factur-X à une PDP via l'API AFNOR.
+
+        L'authentification utilise soit le client_uid du JWT (mode stocké),
+        soit les afnor_credentials fournis au constructeur (mode zero-trust).
+
+        Args:
+            pdf_path: Chemin vers le fichier PDF/A-3 avec XML embarqué
+            flow_name: Nom du flux (ex: "Facture FAC-2025-001")
+            flow_syntax: Syntaxe du flux (CII ou UBL)
+            flow_profile: Profil Factur-X (MINIMUM, BASIC, EN16931, EXTENDED)
+            tracking_id: Identifiant de suivi métier (optionnel)
+            sha256: Empreinte SHA-256 du fichier (calculée auto si absent)
+
+        Returns:
+            Dict avec flowId, trackingId, status, sha256, etc.
+
+        Raises:
+            FactPulseValidationError: Si le PDF n'est pas valide
+            FactPulseServiceUnavailableError: Si la PDP est indisponible
+
+        Example:
+            >>> result = client.soumettre_facture_afnor(
+            ...     pdf_path="facture.pdf",
+            ...     flow_name="Facture FAC-2025-001",
+            ...     tracking_id="FAC-2025-001",
+            ... )
+            >>> print(result["flowId"])
+        """
+        import hashlib
+
+        pdf_path = Path(pdf_path)
+        pdf_bytes = pdf_path.read_bytes()
+
+        # Calculer SHA-256 si non fourni
+        if not sha256:
+            sha256 = hashlib.sha256(pdf_bytes).hexdigest()
+
+        # Préparer flowInfo
+        flow_info = {
+            "name": flow_name,
+            "flowSyntax": flow_syntax,
+            "flowProfile": flow_profile,
+            "sha256": sha256,
+        }
+        if tracking_id:
+            flow_info["trackingId"] = tracking_id
+
+        # Ajouter credentials AFNOR si mode zero-trust
+        if self.afnor_credentials:
+            flow_info["pdp_credentials"] = self.afnor_credentials.to_dict()
+
+        files = {
+            "file": (pdf_path.name, pdf_bytes, "application/pdf"),
+            "flowInfo": (None, json.dumps(flow_info), "application/json"),
+        }
+
+        response = self._make_afnor_request("POST", "/flow/v1/flows", files=files)
+        return response.json()
+
+    def rechercher_flux_afnor(
+        self,
+        tracking_id: Optional[str] = None,
+        status: Optional[str] = None,
+        offset: int = 0,
+        limit: int = 25,
+    ) -> Dict[str, Any]:
+        """Recherche des flux de facturation AFNOR.
+
+        Args:
+            tracking_id: Filtrer par trackingId
+            status: Filtrer par status (submitted, processing, delivered, etc.)
+            offset: Index de début (pagination)
+            limit: Nombre max de résultats
+
+        Returns:
+            Dict avec flows (liste), total, offset, limit
+
+        Example:
+            >>> results = client.rechercher_flux_afnor(tracking_id="FAC-2025-001")
+            >>> for flux in results["flows"]:
+            ...     print(flux["flowId"], flux["status"])
+        """
+        search_body = {
+            "offset": offset,
+            "limit": limit,
+            "where": {},
+        }
+        if tracking_id:
+            search_body["where"]["trackingId"] = tracking_id
+        if status:
+            search_body["where"]["status"] = status
+
+        # Ajouter credentials AFNOR si mode zero-trust
+        if self.afnor_credentials:
+            search_body["pdp_credentials"] = self.afnor_credentials.to_dict()
+
+        response = self._make_afnor_request("POST", "/flow/v1/flows/search", json_data=search_body)
+        return response.json()
+
+    def telecharger_flux_afnor(self, flow_id: str) -> bytes:
+        """Télécharge le fichier PDF d'un flux AFNOR.
+
+        Args:
+            flow_id: Identifiant du flux (UUID)
+
+        Returns:
+            Contenu du fichier PDF
+
+        Raises:
+            FactPulseNotFoundError: Si le flux n'existe pas
+
+        Example:
+            >>> pdf_bytes = client.telecharger_flux_afnor("550e8400-e29b-41d4-a716-446655440000")
+            >>> with open("facture.pdf", "wb") as f:
+            ...     f.write(pdf_bytes)
+        """
+        response = self._make_afnor_request("GET", f"/flow/v1/flows/{flow_id}")
+        return response.content
+
+    def healthcheck_afnor(self) -> Dict[str, Any]:
+        """Vérifie la disponibilité du Flow Service AFNOR.
+
+        Returns:
+            Dict avec status et service
+
+        Example:
+            >>> status = client.healthcheck_afnor()
+            >>> print(status["status"])  # "ok"
+        """
+        response = self._make_afnor_request("GET", "/flow/v1/healthcheck")
+        return response.json()
+
+    # =========================================================================
+    # Chorus Pro
+    # =========================================================================
+
+    def _make_chorus_request(
+        self,
+        method: str,
+        endpoint: str,
+        json_data: Optional[Dict] = None,
+        params: Optional[Dict] = None,
+    ) -> requests.Response:
+        """Effectue une requête vers l'API Chorus Pro avec gestion d'auth et d'erreurs.
+
+        Args:
+            method: Méthode HTTP (GET, POST, etc.)
+            endpoint: Endpoint relatif (ex: /structures/rechercher)
+            json_data: Données JSON (optionnel)
+            params: Query params (optionnel)
+
+        Returns:
+            Response de l'API
+        """
+        from .exceptions import (
+            parse_api_error,
+            FactPulseServiceUnavailableError,
+        )
+
+        self.ensure_authenticated()
+        url = f"{self.api_url}/api/v1/chorus-pro{endpoint}"
+
+        headers = {"Authorization": f"Bearer {self._access_token}"}
+
+        # Ajouter credentials dans le body si mode zero-trust
+        if json_data is None:
+            json_data = {}
+        if self.chorus_credentials:
+            json_data["credentials"] = self.chorus_credentials.to_dict()
+
+        try:
+            response = requests.request(
+                method, url, json=json_data, headers=headers, params=params, timeout=30
+            )
+        except requests.RequestException as e:
+            raise FactPulseServiceUnavailableError("Chorus Pro", e)
+
+        if response.status_code >= 400:
+            try:
+                error_json = response.json()
+            except Exception:
+                error_json = {"errorMessage": response.text or f"Erreur HTTP {response.status_code}"}
+            raise parse_api_error(error_json, response.status_code)
+
+        return response
+
+    def rechercher_structure_chorus(
+        self,
+        identifiant_structure: Optional[str] = None,
+        raison_sociale: Optional[str] = None,
+        type_identifiant: str = "SIRET",
+        restreindre_privees: bool = True,
+    ) -> Dict[str, Any]:
+        """Recherche des structures sur Chorus Pro.
+
+        Args:
+            identifiant_structure: SIRET ou SIREN de la structure
+            raison_sociale: Raison sociale (recherche partielle)
+            type_identifiant: Type d'identifiant (SIRET, SIREN, etc.)
+            restreindre_privees: Si True, limite aux structures privées
+
+        Returns:
+            Dict avec liste_structures, total, code_retour, libelle
+
+        Example:
+            >>> result = client.rechercher_structure_chorus(identifiant_structure="12345678901234")
+            >>> for struct in result["liste_structures"]:
+            ...     print(struct["id_structure_cpp"], struct["designation_structure"])
+        """
+        body = {
+            "restreindre_structures_privees": restreindre_privees,
+        }
+        if identifiant_structure:
+            body["identifiant_structure"] = identifiant_structure
+        if raison_sociale:
+            body["raison_sociale_structure"] = raison_sociale
+        if type_identifiant:
+            body["type_identifiant_structure"] = type_identifiant
+
+        response = self._make_chorus_request("POST", "/structures/rechercher", json_data=body)
+        return response.json()
+
+    def consulter_structure_chorus(self, id_structure_cpp: int) -> Dict[str, Any]:
+        """Consulte les détails d'une structure Chorus Pro.
+
+        Retourne notamment les paramètres obligatoires pour soumettre une facture :
+        - code_service_doit_etre_renseigne
+        - numero_ej_doit_etre_renseigne
+
+        Args:
+            id_structure_cpp: ID Chorus Pro de la structure
+
+        Returns:
+            Dict avec les détails de la structure et ses paramètres
+
+        Example:
+            >>> details = client.consulter_structure_chorus(12345)
+            >>> if details["parametres"]["code_service_doit_etre_renseigne"]:
+            ...     print("Code service obligatoire")
+        """
+        body = {"id_structure_cpp": id_structure_cpp}
+        response = self._make_chorus_request("POST", "/structures/consulter", json_data=body)
+        return response.json()
+
+    def obtenir_id_chorus_depuis_siret(
+        self,
+        siret: str,
+        type_identifiant: str = "SIRET",
+    ) -> Dict[str, Any]:
+        """Obtient l'ID Chorus Pro d'une structure depuis son SIRET.
+
+        Raccourci pratique pour obtenir l'id_structure_cpp avant de soumettre une facture.
+
+        Args:
+            siret: Numéro SIRET ou SIREN
+            type_identifiant: Type d'identifiant (SIRET ou SIREN)
+
+        Returns:
+            Dict avec id_structure_cpp, designation_structure, message
+
+        Example:
+            >>> result = client.obtenir_id_chorus_depuis_siret("12345678901234")
+            >>> id_cpp = result["id_structure_cpp"]
+            >>> if id_cpp > 0:
+            ...     print(f"Structure trouvée: {result['designation_structure']}")
+        """
+        body = {
+            "siret": siret,
+            "type_identifiant": type_identifiant,
+        }
+        response = self._make_chorus_request("POST", "/structures/obtenir-id-depuis-siret", json_data=body)
+        return response.json()
+
+    def lister_services_structure_chorus(self, id_structure_cpp: int) -> Dict[str, Any]:
+        """Liste les services d'une structure Chorus Pro.
+
+        Args:
+            id_structure_cpp: ID Chorus Pro de la structure
+
+        Returns:
+            Dict avec liste_services, total, code_retour, libelle
+
+        Example:
+            >>> services = client.lister_services_structure_chorus(12345)
+            >>> for svc in services["liste_services"]:
+            ...     if svc["est_actif"]:
+            ...         print(svc["code_service"], svc["libelle_service"])
+        """
+        response = self._make_chorus_request("GET", f"/structures/{id_structure_cpp}/services")
+        return response.json()
+
+    def soumettre_facture_chorus(
+        self,
+        numero_facture: str,
+        date_facture: str,
+        date_echeance_paiement: str,
+        id_structure_cpp: int,
+        montant_ht_total: str,
+        montant_tva: str,
+        montant_ttc_total: str,
+        piece_jointe_principale_id: Optional[int] = None,
+        piece_jointe_principale_designation: str = "Facture",
+        code_service: Optional[str] = None,
+        numero_engagement: Optional[str] = None,
+        numero_bon_commande: Optional[str] = None,
+        numero_marche: Optional[str] = None,
+        commentaire: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Soumet une facture à Chorus Pro.
+
+        **Workflow complet** :
+        1. Obtenir l'id_structure_cpp via rechercher_structure_chorus()
+        2. Vérifier les paramètres obligatoires via consulter_structure_chorus()
+        3. Uploader le PDF via l'API /transverses/ajouter-fichier
+        4. Soumettre la facture avec cette méthode
+
+        Args:
+            numero_facture: Numéro de la facture
+            date_facture: Date de la facture (YYYY-MM-DD)
+            date_echeance_paiement: Date d'échéance (YYYY-MM-DD)
+            id_structure_cpp: ID Chorus Pro du destinataire
+            montant_ht_total: Montant HT total (ex: "1000.00")
+            montant_tva: Montant TVA (ex: "200.00")
+            montant_ttc_total: Montant TTC total (ex: "1200.00")
+            piece_jointe_principale_id: ID de la pièce jointe (optionnel)
+            piece_jointe_principale_designation: Désignation (défaut: "Facture")
+            code_service: Code service (si requis par la structure)
+            numero_engagement: Numéro d'engagement (si requis)
+            numero_bon_commande: Numéro de bon de commande
+            numero_marche: Numéro de marché
+            commentaire: Commentaire libre
+
+        Returns:
+            Dict avec identifiant_facture_cpp, numero_flux_depot, code_retour, libelle
+
+        Example:
+            >>> result = client.soumettre_facture_chorus(
+            ...     numero_facture="FAC-2025-001",
+            ...     date_facture="2025-01-15",
+            ...     date_echeance_paiement="2025-02-15",
+            ...     id_structure_cpp=12345,
+            ...     montant_ht_total="1000.00",
+            ...     montant_tva="200.00",
+            ...     montant_ttc_total="1200.00",
+            ... )
+            >>> print(f"Facture soumise: {result['identifiant_facture_cpp']}")
+        """
+        body = {
+            "numero_facture": numero_facture,
+            "date_facture": date_facture,
+            "date_echeance_paiement": date_echeance_paiement,
+            "id_structure_cpp": id_structure_cpp,
+            "montant_ht_total": montant_ht_total,
+            "montant_tva": montant_tva,
+            "montant_ttc_total": montant_ttc_total,
+        }
+        if piece_jointe_principale_id:
+            body["piece_jointe_principale_id"] = piece_jointe_principale_id
+            body["piece_jointe_principale_designation"] = piece_jointe_principale_designation
+        if code_service:
+            body["code_service"] = code_service
+        if numero_engagement:
+            body["numero_engagement"] = numero_engagement
+        if numero_bon_commande:
+            body["numero_bon_commande"] = numero_bon_commande
+        if numero_marche:
+            body["numero_marche"] = numero_marche
+        if commentaire:
+            body["commentaire"] = commentaire
+
+        response = self._make_chorus_request("POST", "/factures/soumettre", json_data=body)
+        return response.json()
+
+    def consulter_facture_chorus(self, identifiant_facture_cpp: int) -> Dict[str, Any]:
+        """Consulte le statut d'une facture Chorus Pro.
+
+        Args:
+            identifiant_facture_cpp: ID Chorus Pro de la facture
+
+        Returns:
+            Dict avec statut_courant, numero_facture, date_facture, montant_ttc_total, etc.
+
+        Example:
+            >>> status = client.consulter_facture_chorus(12345)
+            >>> print(f"Statut: {status['statut_courant']['code']}")
+        """
+        body = {"identifiant_facture_cpp": identifiant_facture_cpp}
+        response = self._make_chorus_request("POST", "/factures/consulter", json_data=body)
+        return response.json()
+
+    # ==================== AFNOR Directory ====================
+
+    def rechercher_siret_afnor(self, siret: str) -> Dict[str, Any]:
+        """Recherche une entreprise par SIRET dans l'annuaire AFNOR.
+
+        Args:
+            siret: Numéro SIRET (14 chiffres)
+
+        Returns:
+            Dict avec informations entreprise: raison_sociale, adresse, etc.
+
+        Example:
+            >>> result = client.rechercher_siret_afnor("12345678901234")
+            >>> print(f"Entreprise: {result['raison_sociale']}")
+        """
+        response = self._make_afnor_request("GET", f"/directory/siret/{siret}")
+        return response.json()
+
+    def rechercher_siren_afnor(self, siren: str) -> Dict[str, Any]:
+        """Recherche une entreprise par SIREN dans l'annuaire AFNOR.
+
+        Args:
+            siren: Numéro SIREN (9 chiffres)
+
+        Returns:
+            Dict avec informations entreprise et liste des établissements
+
+        Example:
+            >>> result = client.rechercher_siren_afnor("123456789")
+            >>> for etab in result.get('etablissements', []):
+            ...     print(f"SIRET: {etab['siret']}")
+        """
+        response = self._make_afnor_request("GET", f"/directory/siren/{siren}")
+        return response.json()
+
+    def lister_codes_routage_afnor(self, siren: str) -> List[Dict[str, Any]]:
+        """Liste les codes de routage disponibles pour un SIREN.
+
+        Args:
+            siren: Numéro SIREN (9 chiffres)
+
+        Returns:
+            Liste des codes de routage avec leurs paramètres
+
+        Example:
+            >>> codes = client.lister_codes_routage_afnor("123456789")
+            >>> for code in codes:
+            ...     print(f"Code: {code['code_routage']}")
+        """
+        response = self._make_afnor_request("GET", f"/directory/siren/{siren}/routing-codes")
+        return response.json()
+
+    # ==================== Validation ====================
+
+    def valider_pdf_facturx(
+        self,
+        pdf_path: Optional[str] = None,
+        pdf_bytes: Optional[bytes] = None,
+        profil: str = "EN16931"
+    ) -> Dict[str, Any]:
+        """Valide un PDF Factur-X.
+
+        Args:
+            pdf_path: Chemin vers le fichier PDF (exclusif avec pdf_bytes)
+            pdf_bytes: Contenu PDF en bytes (exclusif avec pdf_path)
+            profil: Profil Factur-X attendu (MINIMUM, BASIC, EN16931, EXTENDED)
+
+        Returns:
+            Dict avec: est_conforme (bool), erreurs (list), avertissements (list), profil_detecte
+
+        Example:
+            >>> result = client.valider_pdf_facturx("facture.pdf")
+            >>> if result['est_conforme']:
+            ...     print("PDF Factur-X valide!")
+            >>> else:
+            ...     for err in result['erreurs']:
+            ...         print(f"Erreur: {err}")
+        """
+        if pdf_path:
+            with open(pdf_path, "rb") as f:
+                pdf_bytes = f.read()
+        if not pdf_bytes:
+            raise ValueError("pdf_path ou pdf_bytes requis")
+
+        files = {"fichier_pdf": ("facture.pdf", pdf_bytes, "application/pdf")}
+        data = {"profil": profil}
+        response = self._request("POST", "/traitement/valider-pdf-facturx", files=files, data=data)
+        return response.json()
+
+    def valider_signature_pdf(
+        self,
+        pdf_path: Optional[str] = None,
+        pdf_bytes: Optional[bytes] = None
+    ) -> Dict[str, Any]:
+        """Valide la signature d'un PDF signé.
+
+        Args:
+            pdf_path: Chemin vers le fichier PDF signé
+            pdf_bytes: Contenu PDF en bytes
+
+        Returns:
+            Dict avec: is_signed (bool), signatures (list), etc.
+
+        Example:
+            >>> result = client.valider_signature_pdf("facture_signee.pdf")
+            >>> if result['is_signed']:
+            ...     print("PDF signé!")
+            ...     for sig in result.get('signatures', []):
+            ...         print(f"Signé par: {sig.get('signer_cn')}")
+        """
+        if pdf_path:
+            with open(pdf_path, "rb") as f:
+                pdf_bytes = f.read()
+        if not pdf_bytes:
+            raise ValueError("pdf_path ou pdf_bytes requis")
+
+        files = {"fichier_pdf": ("document.pdf", pdf_bytes, "application/pdf")}
+        response = self._request("POST", "/traitement/valider-signature-pdf", files=files)
+        return response.json()
+
+    # ==================== Signature ====================
+
+    def signer_pdf(
+        self,
+        pdf_path: Optional[str] = None,
+        pdf_bytes: Optional[bytes] = None,
+        raison: Optional[str] = None,
+        localisation: Optional[str] = None,
+        contact: Optional[str] = None,
+        use_pades_lt: bool = False,
+        use_timestamp: bool = True,
+        output_path: Optional[str] = None
+    ) -> Union[bytes, str]:
+        """Signe un PDF avec le certificat configuré côté serveur.
+
+        Le certificat doit être préalablement configuré dans Django Admin
+        pour le client identifié par le client_uid du JWT.
+
+        Args:
+            pdf_path: Chemin vers le PDF à signer
+            pdf_bytes: Contenu PDF en bytes
+            raison: Raison de la signature (optionnel)
+            localisation: Lieu de signature (optionnel)
+            contact: Email de contact (optionnel)
+            use_pades_lt: Activer PAdES-B-LT archivage long terme (défaut: False)
+            use_timestamp: Activer l'horodatage RFC 3161 (défaut: True)
+            output_path: Si fourni, sauvegarde le PDF signé à ce chemin
+
+        Returns:
+            bytes du PDF signé, ou chemin si output_path fourni
+
+        Example:
+            >>> pdf_signe = client.signer_pdf(
+            ...     pdf_path="facture.pdf",
+            ...     raison="Conformité Factur-X",
+            ...     output_path="facture_signee.pdf"
+            ... )
+        """
+        if pdf_path:
+            with open(pdf_path, "rb") as f:
+                pdf_bytes = f.read()
+
+        if not pdf_bytes:
+            raise ValueError("pdf_path ou pdf_bytes requis")
+
+        files = {
+            "fichier_pdf": ("document.pdf", pdf_bytes, "application/pdf"),
+        }
+        data: Dict[str, Any] = {
+            "use_pades_lt": str(use_pades_lt).lower(),
+            "use_timestamp": str(use_timestamp).lower(),
+        }
+        if raison:
+            data["raison"] = raison
+        if localisation:
+            data["localisation"] = localisation
+        if contact:
+            data["contact"] = contact
+
+        response = self._request("POST", "/traitement/signer-pdf", files=files, data=data)
+        result = response.json()
+
+        # L'API retourne du JSON avec pdf_signe_base64
+        pdf_signe_b64 = result.get("pdf_signe_base64")
+        if not pdf_signe_b64:
+            raise FactPulseValidationError("Réponse de signature invalide")
+
+        import base64
+        pdf_signe = base64.b64decode(pdf_signe_b64)
+
+        if output_path:
+            with open(output_path, "wb") as f:
+                f.write(pdf_signe)
+            return output_path
+
+        return pdf_signe
+
+    def generer_certificat_test(
+        self,
+        cn: str = "Test Organisation",
+        organisation: str = "Test Organisation",
+        email: str = "test@example.com",
+        duree_jours: int = 365,
+        taille_cle: int = 2048,
+    ) -> Dict[str, Any]:
+        """Génère un certificat de test pour la signature (NON PRODUCTION).
+
+        Le certificat généré doit ensuite être configuré dans Django Admin.
+
+        Args:
+            cn: Common Name du certificat
+            organisation: Nom de l'organisation
+            email: Email associé au certificat
+            duree_jours: Durée de validité en jours (défaut: 365)
+            taille_cle: Taille de la clé RSA (2048 ou 4096)
+
+        Returns:
+            Dict avec certificat_pem, cle_privee_pem, pkcs12_base64, etc.
+
+        Example:
+            >>> result = client.generer_certificat_test(
+            ...     cn="Ma Société - Cachet",
+            ...     organisation="Ma Société SAS",
+            ...     email="contact@masociete.fr",
+            ... )
+            >>> print(result["certificat_pem"])
+        """
+        data = {
+            "cn": cn,
+            "organisation": organisation,
+            "email": email,
+            "duree_jours": duree_jours,
+            "taille_cle": taille_cle,
+        }
+        response = self._request("POST", "/traitement/generer-certificat-test", json_data=data)
+        return response.json()
+
+    # ==================== Workflow complet ====================
+
+    def generer_facturx_complet(
+        self,
+        facture: Dict[str, Any],
+        pdf_source_path: Optional[str] = None,
+        pdf_source_bytes: Optional[bytes] = None,
+        profil: str = "EN16931",
+        valider: bool = True,
+        signer: bool = False,
+        soumettre_afnor: bool = False,
+        afnor_flow_name: Optional[str] = None,
+        afnor_tracking_id: Optional[str] = None,
+        output_path: Optional[str] = None,
+        timeout: int = 120000
+    ) -> Dict[str, Any]:
+        """Génère un PDF Factur-X complet avec validation, signature et soumission optionnelles.
+
+        Cette méthode enchaîne automatiquement:
+        1. Génération du PDF Factur-X
+        2. Validation (optionnelle)
+        3. Signature (optionnelle, utilise le certificat côté serveur)
+        4. Soumission à la PDP AFNOR (optionnelle)
+
+        Note: La signature utilise le certificat configuré dans Django Admin
+        pour le client identifié par le client_uid du JWT.
+
+        Args:
+            facture: Données de la facture (format FactureFacturX)
+            pdf_source_path: Chemin vers le PDF source
+            pdf_source_bytes: PDF source en bytes
+            profil: Profil Factur-X (MINIMUM, BASIC, EN16931, EXTENDED)
+            valider: Si True, valide le PDF généré
+            signer: Si True, signe le PDF (certificat côté serveur)
+            soumettre_afnor: Si True, soumet le PDF à la PDP AFNOR
+            afnor_flow_name: Nom du flux AFNOR (défaut: "Facture {numero_facture}")
+            afnor_tracking_id: Tracking ID AFNOR (défaut: numero_facture)
+            output_path: Chemin de sortie pour le PDF final
+            timeout: Timeout en ms pour le polling
+
+        Returns:
+            Dict avec:
+                - pdf_bytes: bytes du PDF final
+                - pdf_path: chemin si output_path fourni
+                - validation: résultat de validation si valider=True
+                - signature: infos signature si signer=True
+                - afnor: résultat soumission AFNOR si soumettre_afnor=True
+
+        Example:
+            >>> result = client.generer_facturx_complet(
+            ...     facture=ma_facture,
+            ...     pdf_source_path="devis.pdf",
+            ...     profil="EN16931",
+            ...     valider=True,
+            ...     signer=True,
+            ...     soumettre_afnor=True,
+            ...     output_path="facture_finale.pdf"
+            ... )
+            >>> if result['validation']['valide']:
+            ...     print(f"Facture soumise! Flow ID: {result['afnor']['flowId']}")
+        """
+        result: Dict[str, Any] = {}
+
+        # 1. Génération
+        if pdf_source_path:
+            with open(pdf_source_path, "rb") as f:
+                pdf_source_bytes = f.read()
+
+        pdf_bytes = self.generer_facturx(
+            facture_data=facture,
+            pdf_source=pdf_source_bytes,
+            profil=profil,
+            timeout=timeout
+        )
+        result["pdf_bytes"] = pdf_bytes
+
+        # 2. Validation
+        if valider:
+            validation = self.valider_pdf_facturx(pdf_bytes=pdf_bytes, profil=profil)
+            result["validation"] = validation
+            if not validation.get("est_conforme", False):
+                # Retourne quand même le résultat mais avec les erreurs
+                if output_path:
+                    with open(output_path, "wb") as f:
+                        f.write(pdf_bytes)
+                    result["pdf_path"] = output_path
+                return result
+
+        # 3. Signature (utilise le certificat côté serveur)
+        if signer:
+            pdf_bytes = self.signer_pdf(pdf_bytes=pdf_bytes)
+            result["pdf_bytes"] = pdf_bytes
+            result["signature"] = {"signe": True}
+
+        # 4. Soumission AFNOR
+        if soumettre_afnor:
+            import tempfile
+            numero_facture = facture.get("numeroFacture", facture.get("numero_facture", "FACTURE"))
+            flow_name = afnor_flow_name or f"Facture {numero_facture}"
+            tracking_id = afnor_tracking_id or numero_facture
+
+            # Créer un fichier temporaire pour soumettre_facture_afnor
+            with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+                tmp.write(pdf_bytes)
+                tmp_path = tmp.name
+
+            try:
+                afnor_result = self.soumettre_facture_afnor(
+                    pdf_path=tmp_path,
+                    flow_name=flow_name,
+                    tracking_id=tracking_id,
+                )
+                result["afnor"] = afnor_result
+            finally:
+                import os
+                os.unlink(tmp_path)
+
+        # Sauvegarde finale
+        if output_path:
+            with open(output_path, "wb") as f:
+                f.write(pdf_bytes)
+            result["pdf_path"] = output_path
+
+        return result

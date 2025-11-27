@@ -23,7 +23,7 @@ Method | HTTP request | Description
 
 
 # **ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post**
-> object ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post(body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post)
+> object ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post(request_body)
 
 Ajouter une pièce jointe
 
@@ -51,7 +51,6 @@ Ajoute une pièce jointe au compte utilisateur courant.
 
 ```python
 import factpulse
-from factpulse.models.body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post import BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost
 from factpulse.rest import ApiException
 from pprint import pprint
 
@@ -75,11 +74,11 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ChorusProApi(api_client)
-    body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post = factpulse.BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost() # BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost | 
+    request_body = None # Dict[str, object] | 
 
     try:
         # Ajouter une pièce jointe
-        api_response = api_instance.ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post(body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post)
+        api_response = api_instance.ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post(request_body)
         print("The response of ChorusProApi->ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -93,7 +92,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post** | [**BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost**](BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost.md)|  | 
+ **request_body** | [**Dict[str, object]**](object.md)|  | 
 
 ### Return type
 
@@ -118,7 +117,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **completer_facture_api_v1_chorus_pro_factures_completer_post**
-> object completer_facture_api_v1_chorus_pro_factures_completer_post(body_completer_facture_api_v1_chorus_pro_factures_completer_post)
+> object completer_facture_api_v1_chorus_pro_factures_completer_post(request_body)
 
 Compléter une facture suspendue (Fournisseur)
 
@@ -154,7 +153,6 @@ Complète une facture au statut SUSPENDUE en ajoutant des pièces jointes ou un 
 
 ```python
 import factpulse
-from factpulse.models.body_completer_facture_api_v1_chorus_pro_factures_completer_post import BodyCompleterFactureApiV1ChorusProFacturesCompleterPost
 from factpulse.rest import ApiException
 from pprint import pprint
 
@@ -178,11 +176,11 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ChorusProApi(api_client)
-    body_completer_facture_api_v1_chorus_pro_factures_completer_post = factpulse.BodyCompleterFactureApiV1ChorusProFacturesCompleterPost() # BodyCompleterFactureApiV1ChorusProFacturesCompleterPost | 
+    request_body = None # Dict[str, object] | 
 
     try:
         # Compléter une facture suspendue (Fournisseur)
-        api_response = api_instance.completer_facture_api_v1_chorus_pro_factures_completer_post(body_completer_facture_api_v1_chorus_pro_factures_completer_post)
+        api_response = api_instance.completer_facture_api_v1_chorus_pro_factures_completer_post(request_body)
         print("The response of ChorusProApi->completer_facture_api_v1_chorus_pro_factures_completer_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -196,7 +194,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body_completer_facture_api_v1_chorus_pro_factures_completer_post** | [**BodyCompleterFactureApiV1ChorusProFacturesCompleterPost**](BodyCompleterFactureApiV1ChorusProFacturesCompleterPost.md)|  | 
+ **request_body** | [**Dict[str, object]**](object.md)|  | 
 
 ### Return type
 
@@ -403,7 +401,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get**
-> RechercherServicesResponse lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get(id_structure_cpp, body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get)
+> RechercherServicesResponse lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get(id_structure_cpp)
 
 Lister les services d'une structure
 
@@ -422,7 +420,6 @@ Récupère la liste des services actifs d'une structure publique.
 
 ```python
 import factpulse
-from factpulse.models.body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get import BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet
 from factpulse.models.rechercher_services_response import RechercherServicesResponse
 from factpulse.rest import ApiException
 from pprint import pprint
@@ -448,11 +445,10 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ChorusProApi(api_client)
     id_structure_cpp = 56 # int | 
-    body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get = factpulse.BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet() # BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet | 
 
     try:
         # Lister les services d'une structure
-        api_response = api_instance.lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get(id_structure_cpp, body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get)
+        api_response = api_instance.lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get(id_structure_cpp)
         print("The response of ChorusProApi->lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get:\n")
         pprint(api_response)
     except Exception as e:
@@ -467,7 +463,6 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id_structure_cpp** | **int**|  | 
- **body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get** | [**BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet**](BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet.md)|  | 
 
 ### Return type
 
@@ -479,7 +474,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 ### HTTP response details
@@ -588,7 +583,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post**
-> object rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post(body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post)
+> object rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post(request_body)
 
 Rechercher factures reçues (Destinataire)
 
@@ -608,7 +603,6 @@ Recherche les factures reçues par le destinataire connecté.
 
 ```python
 import factpulse
-from factpulse.models.body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post import BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost
 from factpulse.rest import ApiException
 from pprint import pprint
 
@@ -632,11 +626,11 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ChorusProApi(api_client)
-    body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post = factpulse.BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost() # BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost | 
+    request_body = None # Dict[str, object] | 
 
     try:
         # Rechercher factures reçues (Destinataire)
-        api_response = api_instance.rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post(body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post)
+        api_response = api_instance.rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post(request_body)
         print("The response of ChorusProApi->rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -650,7 +644,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post** | [**BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost**](BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost.md)|  | 
+ **request_body** | [**Dict[str, object]**](object.md)|  | 
 
 ### Return type
 
@@ -675,7 +669,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post**
-> object rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post(body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post)
+> object rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post(request_body)
 
 Rechercher factures émises (Fournisseur)
 
@@ -699,7 +693,6 @@ Recherche les factures émises par le fournisseur connecté.
 
 ```python
 import factpulse
-from factpulse.models.body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post import BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost
 from factpulse.rest import ApiException
 from pprint import pprint
 
@@ -723,11 +716,11 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ChorusProApi(api_client)
-    body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post = factpulse.BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost() # BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost | 
+    request_body = None # Dict[str, object] | 
 
     try:
         # Rechercher factures émises (Fournisseur)
-        api_response = api_instance.rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post(body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post)
+        api_response = api_instance.rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post(request_body)
         print("The response of ChorusProApi->rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -741,7 +734,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post** | [**BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost**](BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost.md)|  | 
+ **request_body** | [**Dict[str, object]**](object.md)|  | 
 
 ### Return type
 
@@ -859,7 +852,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **recycler_facture_api_v1_chorus_pro_factures_recycler_post**
-> object recycler_facture_api_v1_chorus_pro_factures_recycler_post(body_recycler_facture_api_v1_chorus_pro_factures_recycler_post)
+> object recycler_facture_api_v1_chorus_pro_factures_recycler_post(request_body)
 
 Recycler une facture (Fournisseur)
 
@@ -895,7 +888,6 @@ Recycle une facture au statut A_RECYCLER en modifiant les données d'acheminemen
 
 ```python
 import factpulse
-from factpulse.models.body_recycler_facture_api_v1_chorus_pro_factures_recycler_post import BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost
 from factpulse.rest import ApiException
 from pprint import pprint
 
@@ -919,11 +911,11 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ChorusProApi(api_client)
-    body_recycler_facture_api_v1_chorus_pro_factures_recycler_post = factpulse.BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost() # BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost | 
+    request_body = None # Dict[str, object] | 
 
     try:
         # Recycler une facture (Fournisseur)
-        api_response = api_instance.recycler_facture_api_v1_chorus_pro_factures_recycler_post(body_recycler_facture_api_v1_chorus_pro_factures_recycler_post)
+        api_response = api_instance.recycler_facture_api_v1_chorus_pro_factures_recycler_post(request_body)
         print("The response of ChorusProApi->recycler_facture_api_v1_chorus_pro_factures_recycler_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -937,7 +929,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body_recycler_facture_api_v1_chorus_pro_factures_recycler_post** | [**BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost**](BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost.md)|  | 
+ **request_body** | [**Dict[str, object]**](object.md)|  | 
 
 ### Return type
 
@@ -1073,7 +1065,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post**
-> object telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post(body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post)
+> object telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post(request_body)
 
 Télécharger un groupe de factures
 
@@ -1105,7 +1097,6 @@ Télécharge une ou plusieurs factures (max 10 recommandé) avec leurs pièces j
 
 ```python
 import factpulse
-from factpulse.models.body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post import BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost
 from factpulse.rest import ApiException
 from pprint import pprint
 
@@ -1129,11 +1120,11 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ChorusProApi(api_client)
-    body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post = factpulse.BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost() # BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost | 
+    request_body = None # Dict[str, object] | 
 
     try:
         # Télécharger un groupe de factures
-        api_response = api_instance.telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post(body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post)
+        api_response = api_instance.telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post(request_body)
         print("The response of ChorusProApi->telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -1147,7 +1138,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post** | [**BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost**](BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost.md)|  | 
+ **request_body** | [**Dict[str, object]**](object.md)|  | 
 
 ### Return type
 
@@ -1172,7 +1163,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post**
-> object traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post(body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post)
+> object traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post(request_body)
 
 Traiter une facture reçue (Destinataire)
 
@@ -1212,7 +1203,6 @@ Change le statut d'une facture reçue.
 
 ```python
 import factpulse
-from factpulse.models.body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post import BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost
 from factpulse.rest import ApiException
 from pprint import pprint
 
@@ -1236,11 +1226,11 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ChorusProApi(api_client)
-    body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post = factpulse.BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost() # BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost | 
+    request_body = None # Dict[str, object] | 
 
     try:
         # Traiter une facture reçue (Destinataire)
-        api_response = api_instance.traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post(body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post)
+        api_response = api_instance.traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post(request_body)
         print("The response of ChorusProApi->traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -1254,7 +1244,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post** | [**BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost**](BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost.md)|  | 
+ **request_body** | [**Dict[str, object]**](object.md)|  | 
 
 ### Return type
 
@@ -1279,11 +1269,9 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post**
-> object valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post(body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post)
+> object valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post(request_body)
 
 Consulter une facture (Valideur)
-
-Consulte facture (valideur).
 
 ### Example
 
@@ -1291,7 +1279,6 @@ Consulte facture (valideur).
 
 ```python
 import factpulse
-from factpulse.models.body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post import BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost
 from factpulse.rest import ApiException
 from pprint import pprint
 
@@ -1315,11 +1302,11 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ChorusProApi(api_client)
-    body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post = factpulse.BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost() # BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost | 
+    request_body = None # Dict[str, object] | 
 
     try:
         # Consulter une facture (Valideur)
-        api_response = api_instance.valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post(body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post)
+        api_response = api_instance.valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post(request_body)
         print("The response of ChorusProApi->valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -1333,7 +1320,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post** | [**BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost**](BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost.md)|  | 
+ **request_body** | [**Dict[str, object]**](object.md)|  | 
 
 ### Return type
 
@@ -1358,7 +1345,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post**
-> object valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post(body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post)
+> object valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post(request_body)
 
 Rechercher factures à valider (Valideur)
 
@@ -1374,7 +1361,6 @@ Recherche les factures en attente de validation par le valideur connecté.
 
 ```python
 import factpulse
-from factpulse.models.body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post import BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost
 from factpulse.rest import ApiException
 from pprint import pprint
 
@@ -1398,11 +1384,11 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ChorusProApi(api_client)
-    body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post = factpulse.BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost() # BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost | 
+    request_body = None # Dict[str, object] | 
 
     try:
         # Rechercher factures à valider (Valideur)
-        api_response = api_instance.valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post(body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post)
+        api_response = api_instance.valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post(request_body)
         print("The response of ChorusProApi->valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -1416,7 +1402,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post** | [**BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost**](BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost.md)|  | 
+ **request_body** | [**Dict[str, object]**](object.md)|  | 
 
 ### Return type
 
@@ -1441,7 +1427,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post**
-> object valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post(body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post)
+> object valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post(request_body)
 
 Valider ou refuser une facture (Valideur)
 
@@ -1457,7 +1443,6 @@ Valide ou refuse une facture en attente de validation.
 
 ```python
 import factpulse
-from factpulse.models.body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post import BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost
 from factpulse.rest import ApiException
 from pprint import pprint
 
@@ -1481,11 +1466,11 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ChorusProApi(api_client)
-    body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post = factpulse.BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost() # BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost | 
+    request_body = None # Dict[str, object] | 
 
     try:
         # Valider ou refuser une facture (Valideur)
-        api_response = api_instance.valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post(body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post)
+        api_response = api_instance.valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post(request_body)
         print("The response of ChorusProApi->valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -1499,7 +1484,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post** | [**BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost**](BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost.md)|  | 
+ **request_body** | [**Dict[str, object]**](object.md)|  | 
 
 ### Return type
 

@@ -34,13 +34,22 @@ from .client import (
     montant_total,
     ligne_de_poste,
     ligne_de_tva,
+    adresse_postale,
+    adresse_electronique,
+    fournisseur,
+    destinataire,
 )
 from .exceptions import (
     FactPulseError,
     FactPulseAuthError,
     FactPulsePollingTimeout,
     FactPulseValidationError,
+    FactPulseNotFoundError,
+    FactPulseServiceUnavailableError,
+    FactPulseAPIError,
     ValidationErrorDetail,
+    parse_api_error,
+    api_exception_to_validation_error,
 )
 
 __all__ = [
@@ -49,17 +58,28 @@ __all__ = [
     # Credentials
     "ChorusProCredentials",
     "AFNORCredentials",
-    # Helpers montants
+    # Helpers montants et lignes
     "montant",
     "montant_total",
     "ligne_de_poste",
     "ligne_de_tva",
+    # Helpers parties (fournisseur/destinataire)
+    "adresse_postale",
+    "adresse_electronique",
+    "fournisseur",
+    "destinataire",
     # Exceptions
     "FactPulseError",
     "FactPulseAuthError",
     "FactPulsePollingTimeout",
     "FactPulseValidationError",
+    "FactPulseNotFoundError",
+    "FactPulseServiceUnavailableError",
+    "FactPulseAPIError",
     "ValidationErrorDetail",
+    # Helpers pour parser les erreurs API
+    "parse_api_error",
+    "api_exception_to_validation_error",
 ]
 
 

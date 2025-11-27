@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "2.0.20"
+__version__ = "2.0.12"
 
 # Define package exports
 __all__ = [
@@ -37,17 +37,6 @@ __all__ = [
     "APIError",
     "AdresseElectronique",
     "AdressePostale",
-    "BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost",
-    "BodyCompleterFactureApiV1ChorusProFacturesCompleterPost",
-    "BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet",
-    "BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost",
-    "BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost",
-    "BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost",
-    "BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost",
-    "BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost",
-    "BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost",
-    "BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost",
-    "BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost",
     "CadreDeFacturation",
     "CategorieTVA",
     "CertificateInfoResponse",
@@ -103,7 +92,6 @@ __all__ = [
     "PieceJointeComplementaire",
     "ProfilAPI",
     "Quantite",
-    "QuotaInfo",
     "RechercherServicesResponse",
     "RechercherStructureRequest",
     "RechercherStructureResponse",
@@ -129,7 +117,6 @@ __all__ = [
     "TypeFacture",
     "TypeTVA",
     "Unite",
-    "Utilisateur",
     "ValidationError",
     "ValidationErrorDetail",
     "ValidationErrorLocInner",
@@ -159,17 +146,6 @@ from factpulse.exceptions import ApiException as ApiException
 from factpulse.models.api_error import APIError as APIError
 from factpulse.models.adresse_electronique import AdresseElectronique as AdresseElectronique
 from factpulse.models.adresse_postale import AdressePostale as AdressePostale
-from factpulse.models.body_ajouter_fichier_api_v1_chorus_pro_transverses_ajouter_fichier_post import BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost as BodyAjouterFichierApiV1ChorusProTransversesAjouterFichierPost
-from factpulse.models.body_completer_facture_api_v1_chorus_pro_factures_completer_post import BodyCompleterFactureApiV1ChorusProFacturesCompleterPost as BodyCompleterFactureApiV1ChorusProFacturesCompleterPost
-from factpulse.models.body_lister_services_structure_api_v1_chorus_pro_structures_id_structure_cpp_services_get import BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet as BodyListerServicesStructureApiV1ChorusProStructuresIdStructureCppServicesGet
-from factpulse.models.body_rechercher_factures_destinataire_api_v1_chorus_pro_factures_rechercher_destinataire_post import BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost as BodyRechercherFacturesDestinataireApiV1ChorusProFacturesRechercherDestinatairePost
-from factpulse.models.body_rechercher_factures_fournisseur_api_v1_chorus_pro_factures_rechercher_fournisseur_post import BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost as BodyRechercherFacturesFournisseurApiV1ChorusProFacturesRechercherFournisseurPost
-from factpulse.models.body_recycler_facture_api_v1_chorus_pro_factures_recycler_post import BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost as BodyRecyclerFactureApiV1ChorusProFacturesRecyclerPost
-from factpulse.models.body_telecharger_groupe_factures_api_v1_chorus_pro_factures_telecharger_groupe_post import BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost as BodyTelechargerGroupeFacturesApiV1ChorusProFacturesTelechargerGroupePost
-from factpulse.models.body_traiter_facture_recue_api_v1_chorus_pro_factures_traiter_facture_recue_post import BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost as BodyTraiterFactureRecueApiV1ChorusProFacturesTraiterFactureRecuePost
-from factpulse.models.body_valideur_consulter_facture_api_v1_chorus_pro_factures_valideur_consulter_post import BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost as BodyValideurConsulterFactureApiV1ChorusProFacturesValideurConsulterPost
-from factpulse.models.body_valideur_rechercher_factures_api_v1_chorus_pro_factures_valideur_rechercher_post import BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost as BodyValideurRechercherFacturesApiV1ChorusProFacturesValideurRechercherPost
-from factpulse.models.body_valideur_traiter_facture_api_v1_chorus_pro_factures_valideur_traiter_post import BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost as BodyValideurTraiterFactureApiV1ChorusProFacturesValideurTraiterPost
 from factpulse.models.cadre_de_facturation import CadreDeFacturation as CadreDeFacturation
 from factpulse.models.categorie_tva import CategorieTVA as CategorieTVA
 from factpulse.models.certificate_info_response import CertificateInfoResponse as CertificateInfoResponse
@@ -225,7 +201,6 @@ from factpulse.models.parametres_structure import ParametresStructure as Paramet
 from factpulse.models.piece_jointe_complementaire import PieceJointeComplementaire as PieceJointeComplementaire
 from factpulse.models.profil_api import ProfilAPI as ProfilAPI
 from factpulse.models.quantite import Quantite as Quantite
-from factpulse.models.quota_info import QuotaInfo as QuotaInfo
 from factpulse.models.rechercher_services_response import RechercherServicesResponse as RechercherServicesResponse
 from factpulse.models.rechercher_structure_request import RechercherStructureRequest as RechercherStructureRequest
 from factpulse.models.rechercher_structure_response import RechercherStructureResponse as RechercherStructureResponse
@@ -251,7 +226,6 @@ from factpulse.models.tauxmanuel import Tauxmanuel as Tauxmanuel
 from factpulse.models.type_facture import TypeFacture as TypeFacture
 from factpulse.models.type_tva import TypeTVA as TypeTVA
 from factpulse.models.unite import Unite as Unite
-from factpulse.models.utilisateur import Utilisateur as Utilisateur
 from factpulse.models.validation_error import ValidationError as ValidationError
 from factpulse.models.validation_error_detail import ValidationErrorDetail as ValidationErrorDetail
 from factpulse.models.validation_error_loc_inner import ValidationErrorLocInner as ValidationErrorLocInner
