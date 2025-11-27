@@ -864,7 +864,7 @@ class FactPulseClient:
         self.ensure_authenticated()  # S'assurer qu'on a un token JWT FactPulse
 
         url = f"{self.api_url}/api/v1/afnor/credentials"
-        headers = {"Authorization": f"Bearer {self.access_token}"}
+        headers = {"Authorization": f"Bearer {self._access_token}"}
 
         try:
             response = requests.get(url, headers=headers, timeout=10)
