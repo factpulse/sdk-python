@@ -857,8 +857,13 @@ class FactPulseClient:
             "client_secret": self.afnor_credentials.client_secret,
         }
 
+        # Header pour indiquer au proxy vers quelle PDP router
+        headers = {
+            "X-PDP-Token-URL": self.afnor_credentials.token_url,
+        }
+
         try:
-            response = requests.post(url, data=oauth_data, timeout=10)
+            response = requests.post(url, data=oauth_data, headers=headers, timeout=10)
         except requests.RequestException as e:
             raise FactPulseServiceUnavailableError("AFNOR OAuth", e)
 
@@ -917,7 +922,11 @@ class FactPulseClient:
         afnor_token = self._get_afnor_token()
 
         url = f"{self.api_url}/api/v1/afnor{endpoint}"
-        headers = {"Authorization": f"Bearer {afnor_token}"}
+        headers = {
+            "Authorization": f"Bearer {afnor_token}",
+            # Header pour indiquer au proxy vers quelle PDP router
+            "X-PDP-Base-URL": self.afnor_credentials.flow_service_url,
+        }
 
         try:
             if files:
