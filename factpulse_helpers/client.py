@@ -861,7 +861,7 @@ class FactPulseClient:
         # Mode stored : récupérer les credentials via l'API
         logger.info("Mode stored: récupération des credentials via /api/v1/afnor/credentials")
 
-        self._ensure_authenticated()  # S'assurer qu'on a un token JWT FactPulse
+        self.ensure_authenticated()  # S'assurer qu'on a un token JWT FactPulse
 
         url = f"{self.api_url}/api/v1/afnor/credentials"
         headers = {"Authorization": f"Bearer {self.access_token}"}
