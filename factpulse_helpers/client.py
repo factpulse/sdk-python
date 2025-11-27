@@ -640,8 +640,10 @@ class FactPulseClient:
                 raise FactPulsePollingTimeout(task_id, timeout_ms)
 
             try:
+                logger.debug("Polling tâche %s (elapsed: %.0fms)...", task_id, elapsed)
                 api = self.get_traitement_api()
                 statut = api.obtenir_statut_tache_api_v1_traitement_taches_id_tache_statut_get(id_tache=task_id)
+                logger.debug("Réponse statut reçue: %s", statut)
 
                 status_value = statut.statut.value if hasattr(statut.statut, "value") else str(statut.statut)
                 logger.info("Tâche %s: statut=%s (%.0fms)", task_id, status_value, elapsed)
@@ -670,13 +672,34 @@ class FactPulseClient:
                             ))
                     raise FactPulseValidationError(f"La tâche {task_id} a échoué: {error_msg}", errors)
 
-            except FactPulseValidationError:
+            except (FactPulseValidationError, FactPulsePollingTimeout):
                 raise
             except Exception as e:
-                if "401" in str(e):
+                error_str = str(e)
+                logger.warning("Erreur lors du polling: %s", error_str)
+
+                # Rate limit (429) - attendre et réessayer avec backoff
+                if "429" in error_str:
+                    wait_time = min(current_interval * 2, 30000)  # Max 30s
+                    logger.warning("Rate limit (429), attente de %.1fs avant retry...", wait_time / 1000)
+                    time.sleep(wait_time / 1000)
+                    current_interval = wait_time
+                    continue
+
+                # Token expiré (401) - re-authentification
+                if "401" in error_str:
                     logger.warning("Token expiré, re-authentification...")
                     self.reset_auth()
                     continue
+
+                # Erreur serveur temporaire (502, 503, 504) - retry avec backoff
+                if any(code in error_str for code in ("502", "503", "504")):
+                    wait_time = min(current_interval * 1.5, 15000)
+                    logger.warning("Erreur serveur temporaire, attente de %.1fs avant retry...", wait_time / 1000)
+                    time.sleep(wait_time / 1000)
+                    current_interval = wait_time
+                    continue
+
                 raise FactPulseValidationError(f"Erreur API: {e}")
 
             time.sleep(current_interval / 1000)
@@ -804,6 +827,58 @@ class FactPulseClient:
     # AFNOR PDP/PA - Flow Service
     # =========================================================================
 
+    def _get_afnor_token(self) -> str:
+        """Obtient un token OAuth2 AFNOR pour les appels aux endpoints flow.
+
+        Utilise les afnor_credentials fournis au constructeur pour faire
+        l'authentification OAuth2 auprès du proxy AFNOR FactPulse.
+
+        Returns:
+            Token OAuth2 AFNOR
+
+        Raises:
+            FactPulseAuthError: Si les credentials sont manquants ou invalides
+            FactPulseServiceUnavailableError: Si le service OAuth est indisponible
+        """
+        from .exceptions import FactPulseServiceUnavailableError
+
+        if not self.afnor_credentials:
+            raise FactPulseAuthError(
+                "afnor_credentials requis pour les opérations AFNOR. "
+                "Fournissez AFNORCredentials au constructeur du client."
+            )
+
+        # Endpoint OAuth AFNOR via le proxy FactPulse
+        url = f"{self.api_url}/api/v1/afnor/oauth/token"
+
+        oauth_data = {
+            "grant_type": "client_credentials",
+            "client_id": self.afnor_credentials.client_id,
+            "client_secret": self.afnor_credentials.client_secret,
+        }
+
+        try:
+            response = requests.post(url, data=oauth_data, timeout=10)
+        except requests.RequestException as e:
+            raise FactPulseServiceUnavailableError("AFNOR OAuth", e)
+
+        if response.status_code != 200:
+            try:
+                error_json = response.json()
+                error_msg = error_json.get("detail", error_json.get("error", str(error_json)))
+            except Exception:
+                error_msg = response.text or f"HTTP {response.status_code}"
+            raise FactPulseAuthError(f"Échec OAuth2 AFNOR: {error_msg}")
+
+        token_data = response.json()
+        afnor_token = token_data.get("access_token")
+
+        if not afnor_token:
+            raise FactPulseAuthError("Réponse OAuth2 AFNOR invalide: access_token manquant")
+
+        logger.info("Token OAuth2 AFNOR obtenu avec succès")
+        return afnor_token
+
     def _make_afnor_request(
         self,
         method: str,
@@ -813,6 +888,8 @@ class FactPulseClient:
         params: Optional[Dict] = None,
     ) -> requests.Response:
         """Effectue une requête vers l'API AFNOR avec gestion d'auth et d'erreurs.
+
+        Utilise un token OAuth2 AFNOR (obtenu via _get_afnor_token), pas le token FactPulse.
 
         Args:
             method: Méthode HTTP (GET, POST, etc.)
@@ -825,7 +902,7 @@ class FactPulseClient:
             Response de l'API
 
         Raises:
-            FactPulseAuthError: Si 401
+            FactPulseAuthError: Si 401 ou credentials manquants
             FactPulseNotFoundError: Si 404
             FactPulseServiceUnavailableError: Si 503
             FactPulseValidationError: Si 400/422
@@ -836,10 +913,11 @@ class FactPulseClient:
             FactPulseServiceUnavailableError,
         )
 
-        self.ensure_authenticated()
-        url = f"{self.api_url}/api/v1/afnor{endpoint}"
+        # Obtenir un token OAuth2 AFNOR (pas le token FactPulse !)
+        afnor_token = self._get_afnor_token()
 
-        headers = {"Authorization": f"Bearer {self._access_token}"}
+        url = f"{self.api_url}/api/v1/afnor{endpoint}"
+        headers = {"Authorization": f"Bearer {afnor_token}"}
 
         try:
             if files:
@@ -939,10 +1017,6 @@ class FactPulseClient:
         if tracking_id:
             flow_info["trackingId"] = tracking_id
 
-        # Ajouter credentials AFNOR si mode zero-trust
-        if self.afnor_credentials:
-            flow_info["pdp_credentials"] = self.afnor_credentials.to_dict()
-
         files = {
             "file": (filename, pdf_bytes, "application/pdf"),
             "flowInfo": (None, json_dumps_safe(flow_info), "application/json"),
@@ -983,10 +1057,6 @@ class FactPulseClient:
             search_body["where"]["trackingId"] = tracking_id
         if status:
             search_body["where"]["status"] = status
-
-        # Ajouter credentials AFNOR si mode zero-trust
-        if self.afnor_credentials:
-            search_body["pdp_credentials"] = self.afnor_credentials.to_dict()
 
         response = self._make_afnor_request("POST", "/flow/v1/flows/search", json_data=search_body)
         return response.json()
