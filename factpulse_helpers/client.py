@@ -824,8 +824,10 @@ class FactPulseClient:
 
     def soumettre_facture_afnor(
         self,
-        pdf_path: Union[str, Path],
         flow_name: str,
+        pdf_path: Optional[Union[str, Path]] = None,
+        pdf_bytes: Optional[bytes] = None,
+        pdf_filename: str = "facture.pdf",
         flow_syntax: str = "CII",
         flow_profile: str = "EN16931",
         tracking_id: Optional[str] = None,
@@ -837,8 +839,10 @@ class FactPulseClient:
         soit les afnor_credentials fournis au constructeur (mode zero-trust).
 
         Args:
-            pdf_path: Chemin vers le fichier PDF/A-3 avec XML embarqué
             flow_name: Nom du flux (ex: "Facture FAC-2025-001")
+            pdf_path: Chemin vers le fichier PDF/A-3 (exclusif avec pdf_bytes)
+            pdf_bytes: Contenu PDF en bytes (exclusif avec pdf_path)
+            pdf_filename: Nom du fichier pour les bytes (défaut: "facture.pdf")
             flow_syntax: Syntaxe du flux (CII ou UBL)
             flow_profile: Profil Factur-X (MINIMUM, BASIC, EN16931, EXTENDED)
             tracking_id: Identifiant de suivi métier (optionnel)
@@ -850,19 +854,36 @@ class FactPulseClient:
         Raises:
             FactPulseValidationError: Si le PDF n'est pas valide
             FactPulseServiceUnavailableError: Si la PDP est indisponible
+            ValueError: Si ni pdf_path ni pdf_bytes n'est fourni
 
         Example:
+            >>> # Avec un chemin de fichier
             >>> result = client.soumettre_facture_afnor(
-            ...     pdf_path="facture.pdf",
             ...     flow_name="Facture FAC-2025-001",
+            ...     pdf_path="facture.pdf",
             ...     tracking_id="FAC-2025-001",
             ... )
             >>> print(result["flowId"])
+
+            >>> # Avec des bytes (ex: après génération Factur-X)
+            >>> result = client.soumettre_facture_afnor(
+            ...     flow_name="Facture FAC-2025-001",
+            ...     pdf_bytes=pdf_content,
+            ...     pdf_filename="FAC-2025-001.pdf",
+            ...     tracking_id="FAC-2025-001",
+            ... )
         """
         import hashlib
 
-        pdf_path = Path(pdf_path)
-        pdf_bytes = pdf_path.read_bytes()
+        # Charger le PDF depuis le chemin si fourni
+        filename = pdf_filename
+        if pdf_path:
+            pdf_path = Path(pdf_path)
+            pdf_bytes = pdf_path.read_bytes()
+            filename = pdf_path.name
+
+        if not pdf_bytes:
+            raise ValueError("pdf_path ou pdf_bytes requis")
 
         # Calculer SHA-256 si non fourni
         if not sha256:
@@ -883,7 +904,7 @@ class FactPulseClient:
             flow_info["pdp_credentials"] = self.afnor_credentials.to_dict()
 
         files = {
-            "file": (pdf_path.name, pdf_bytes, "application/pdf"),
+            "file": (filename, pdf_bytes, "application/pdf"),
             "flowInfo": (None, json.dumps(flow_info), "application/json"),
         }
 
@@ -1554,26 +1575,18 @@ class FactPulseClient:
 
         # 4. Soumission AFNOR
         if soumettre_afnor:
-            import tempfile
             numero_facture = facture.get("numeroFacture", facture.get("numero_facture", "FACTURE"))
             flow_name = afnor_flow_name or f"Facture {numero_facture}"
             tracking_id = afnor_tracking_id or numero_facture
 
-            # Créer un fichier temporaire pour soumettre_facture_afnor
-            with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
-                tmp.write(pdf_bytes)
-                tmp_path = tmp.name
-
-            try:
-                afnor_result = self.soumettre_facture_afnor(
-                    pdf_path=tmp_path,
-                    flow_name=flow_name,
-                    tracking_id=tracking_id,
-                )
-                result["afnor"] = afnor_result
-            finally:
-                import os
-                os.unlink(tmp_path)
+            # Soumission directe avec bytes (plus de fichier temporaire nécessaire)
+            afnor_result = self.soumettre_facture_afnor(
+                flow_name=flow_name,
+                pdf_bytes=pdf_bytes,
+                pdf_filename=f"{numero_facture}.pdf",
+                tracking_id=tracking_id,
+            )
+            result["afnor"] = afnor_result
 
         # Sauvegarde finale
         if output_path:

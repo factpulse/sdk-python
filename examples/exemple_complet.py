@@ -12,7 +12,7 @@ Ce script démontre toutes les fonctionnalités du SDK avec les bonnes pratiques
 - Workflow complet de facturation
 
 Auteur: FactPulse
-Version: 2.0.21
+Version: 2.0.22
 """
 
 import logging
@@ -722,22 +722,38 @@ def exemple_healthcheck_afnor(client: FactPulseClient):
     return result
 
 
-def exemple_soumettre_facture_afnor(client: FactPulseClient, pdf_path: str):
+def exemple_soumettre_facture_afnor(client: FactPulseClient, pdf_path: str = None, pdf_bytes: bytes = None):
     """Soumet une facture à une PDP via AFNOR."""
     print("\n" + "="*60)
     print("7b. SOUMETTRE FACTURE AFNOR")
     print("="*60)
 
-    # Signature: soumettre_facture_afnor(pdf_path, flow_name, flow_syntax="CII",
+    # Signature: soumettre_facture_afnor(flow_name, pdf_path=None, pdf_bytes=None,
+    #                                    pdf_filename="facture.pdf", flow_syntax="CII",
     #                                    flow_profile="EN16931", tracking_id=None, sha256=None)
-    result = client.soumettre_facture_afnor(
-        pdf_path=pdf_path,
-        flow_name="Facture FAC-2025-001",
-        flow_syntax="CII",  # CII ou UBL
-        flow_profile="EN16931",
-        tracking_id="FAC-2025-001",  # Votre référence interne
-        # sha256 est calculé automatiquement si non fourni
-    )
+
+    # Exemple 1: Avec un chemin de fichier
+    if pdf_path:
+        result = client.soumettre_facture_afnor(
+            flow_name="Facture FAC-2025-001",
+            pdf_path=pdf_path,
+            flow_syntax="CII",  # CII ou UBL
+            flow_profile="EN16931",
+            tracking_id="FAC-2025-001",  # Votre référence interne
+            # sha256 est calculé automatiquement si non fourni
+        )
+    # Exemple 2: Avec des bytes (ex: après génération Factur-X)
+    elif pdf_bytes:
+        result = client.soumettre_facture_afnor(
+            flow_name="Facture FAC-2025-001",
+            pdf_bytes=pdf_bytes,
+            pdf_filename="FAC-2025-001.pdf",  # Nom du fichier pour l'upload
+            flow_syntax="CII",
+            flow_profile="EN16931",
+            tracking_id="FAC-2025-001",
+        )
+    else:
+        raise ValueError("pdf_path ou pdf_bytes requis")
 
     print(f"✅ Facture soumise à la PDP AFNOR")
     print(f"   Flow ID: {result.get('flowId')}")
