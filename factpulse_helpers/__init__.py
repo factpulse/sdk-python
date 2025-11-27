@@ -5,6 +5,7 @@ Ce module fournit :
 - FactPulseClient : Client avec auth JWT et polling automatique
 - ChorusProCredentials / AFNORCredentials : Dataclasses pour le mode Zero-Trust
 - Helpers montants : montant(), montant_total(), ligne_de_poste(), ligne_de_tva()
+- Helpers JSON : DecimalEncoder, json_dumps_safe() pour sérialiser Decimal/datetime
 
 Example:
     >>> from factpulse_helpers import (
@@ -38,6 +39,9 @@ from .client import (
     adresse_electronique,
     fournisseur,
     destinataire,
+    # Utilitaires JSON
+    DecimalEncoder,
+    json_dumps_safe,
 )
 from .exceptions import (
     FactPulseError,
@@ -68,6 +72,9 @@ __all__ = [
     "adresse_electronique",
     "fournisseur",
     "destinataire",
+    # Utilitaires JSON (gestion Decimal, datetime, etc.)
+    "DecimalEncoder",
+    "json_dumps_safe",
     # Exceptions
     "FactPulseError",
     "FactPulseAuthError",

@@ -12,7 +12,7 @@ Ce script démontre toutes les fonctionnalités du SDK avec les bonnes pratiques
 - Workflow complet de facturation
 
 Auteur: FactPulse
-Version: 2.0.22
+Version: 2.0.23
 """
 
 import logging
@@ -756,6 +756,46 @@ def exemple_soumettre_facture_afnor(client: FactPulseClient, pdf_path: str = Non
         raise ValueError("pdf_path ou pdf_bytes requis")
 
     print(f"✅ Facture soumise à la PDP AFNOR")
+    print(f"   Flow ID: {result.get('flowId')}")
+    print(f"   Tracking ID: {result.get('trackingId')}")
+    print(f"   Status: {result.get('status')}")
+
+    return result
+
+
+def exemple_generer_et_soumettre_afnor(client: FactPulseClient, pdf_source_path: str):
+    """Génère une facture Factur-X puis la soumet directement à AFNOR (sans fichier intermédiaire)."""
+    print("\n" + "="*60)
+    print("7b-bis. GÉNÉRER ET SOUMETTRE AFNOR (WORKFLOW OPTIMISÉ)")
+    print("="*60)
+
+    # Construire les données de facture
+    facture_data = construire_facture_complete()
+
+    # Lire le PDF source
+    with open(pdf_source_path, "rb") as f:
+        pdf_source = f.read()
+
+    # 1. Générer le PDF Factur-X
+    print("📄 Génération du PDF Factur-X...")
+    pdf_facturx = client.generer_facturx(
+        facture_data=facture_data,
+        pdf_source=pdf_source,
+        profil="EN16931",
+        sync=True,
+    )
+    print(f"   ✅ PDF généré: {len(pdf_facturx)} bytes")
+
+    # 2. Soumettre directement les bytes à AFNOR (sans créer de fichier)
+    print("📤 Soumission directe à AFNOR...")
+    result = client.soumettre_facture_afnor(
+        flow_name=f"Facture {facture_data['numero_facture']}",
+        pdf_bytes=pdf_facturx,  # Passer directement les bytes !
+        pdf_filename=f"{facture_data['numero_facture']}.pdf",
+        tracking_id=facture_data["numero_facture"],
+    )
+
+    print(f"✅ Facture générée et soumise en un seul flux")
     print(f"   Flow ID: {result.get('flowId')}")
     print(f"   Tracking ID: {result.get('trackingId')}")
     print(f"   Status: {result.get('status')}")

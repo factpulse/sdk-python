@@ -25,6 +25,46 @@ logger = logging.getLogger(__name__)
 
 
 # =============================================================================
+# JSON Encoder pour Decimal et autres types non sérialisables
+# =============================================================================
+
+class DecimalEncoder(json.JSONEncoder):
+    """Encoder JSON personnalisé qui gère les Decimal et autres types Python."""
+
+    def default(self, obj):
+        if isinstance(obj, Decimal):
+            # Convertir en string pour préserver la précision monétaire
+            return str(obj)
+        if hasattr(obj, "isoformat"):
+            # datetime, date, time
+            return obj.isoformat()
+        if hasattr(obj, "to_dict"):
+            # Modèles Pydantic ou dataclasses avec to_dict
+            return obj.to_dict()
+        return super().default(obj)
+
+
+def json_dumps_safe(data: Any, **kwargs) -> str:
+    """Sérialise en JSON en gérant les Decimal et autres types Python.
+
+    Args:
+        data: Données à sérialiser (dict, list, etc.)
+        **kwargs: Arguments supplémentaires pour json.dumps
+
+    Returns:
+        String JSON
+
+    Example:
+        >>> from decimal import Decimal
+        >>> json_dumps_safe({"montant": Decimal("1234.56")})
+        '{"montant": "1234.56"}'
+    """
+    kwargs.setdefault("ensure_ascii", False)
+    kwargs.setdefault("cls", DecimalEncoder)
+    return json.dumps(data, **kwargs)
+
+
+# =============================================================================
 # Credentials dataclasses - pour une configuration simplifiée
 # =============================================================================
 
@@ -669,14 +709,14 @@ class FactPulseClient:
         Returns:
             bytes: Contenu du fichier généré (PDF ou XML)
         """
-        # Conversion des données en JSON string
+        # Conversion des données en JSON string (gère Decimal, datetime, etc.)
         if isinstance(facture_data, str):
             json_data = facture_data
         elif isinstance(facture_data, dict):
-            json_data = json.dumps(facture_data, ensure_ascii=False)
+            json_data = json_dumps_safe(facture_data)
         elif hasattr(facture_data, "to_dict"):
             # Modèle Pydantic généré par le SDK
-            json_data = json.dumps(facture_data.to_dict(), ensure_ascii=False)
+            json_data = json_dumps_safe(facture_data.to_dict())
         else:
             raise FactPulseValidationError(f"Type de données non supporté: {type(facture_data)}")
 
@@ -905,7 +945,7 @@ class FactPulseClient:
 
         files = {
             "file": (filename, pdf_bytes, "application/pdf"),
-            "flowInfo": (None, json.dumps(flow_info), "application/json"),
+            "flowInfo": (None, json_dumps_safe(flow_info), "application/json"),
         }
 
         response = self._make_afnor_request("POST", "/flow/v1/flows", files=files)
