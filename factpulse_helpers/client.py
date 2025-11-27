@@ -826,40 +826,113 @@ class FactPulseClient:
     # =========================================================================
     # AFNOR PDP/PA - Flow Service
     # =========================================================================
+    #
+    # ARCHITECTURE GRAVÉE DANS LE MARBRE - NE PAS MODIFIER SANS COMPRENDRE
+    #
+    # Le proxy AFNOR est 100% TRANSPARENT. Il a le même OpenAPI que l'AFNOR.
+    # Le SDK doit TOUJOURS :
+    # 1. Obtenir les credentials AFNOR (mode stored: via /credentials, mode zero-trust: fournis)
+    # 2. Faire l'OAuth AFNOR lui-même
+    # 3. Appeler les endpoints avec le token AFNOR + header X-PDP-Base-URL
+    #
+    # Le token JWT FactPulse n'est JAMAIS utilisé pour appeler la PDP !
+    # =========================================================================
 
-    def _get_afnor_token(self) -> str:
-        """Obtient un token OAuth2 AFNOR pour les appels aux endpoints flow.
+    def _get_afnor_credentials(self) -> "AFNORCredentials":
+        """Obtient les credentials AFNOR (mode stored ou zero-trust).
 
-        Utilise les afnor_credentials fournis au constructeur pour faire
-        l'authentification OAuth2 auprès du proxy AFNOR FactPulse.
+        **Mode zero-trust** : Retourne les afnor_credentials fournis au constructeur.
+        **Mode stored** : Récupère les credentials via GET /api/v1/afnor/credentials.
 
         Returns:
-            Token OAuth2 AFNOR
+            AFNORCredentials avec flow_service_url, token_url, client_id, client_secret
 
         Raises:
-            FactPulseAuthError: Si les credentials sont manquants ou invalides
-            FactPulseServiceUnavailableError: Si le service OAuth est indisponible
+            FactPulseAuthError: Si pas de credentials disponibles
+            FactPulseServiceUnavailableError: Si le serveur est indisponible
         """
         from .exceptions import FactPulseServiceUnavailableError
 
-        if not self.afnor_credentials:
-            raise FactPulseAuthError(
-                "afnor_credentials requis pour les opérations AFNOR. "
-                "Fournissez AFNORCredentials au constructeur du client."
-            )
+        # Mode zero-trust : credentials fournis au constructeur
+        if self.afnor_credentials:
+            logger.info("Mode zero-trust: utilisation des AFNORCredentials fournis")
+            return self.afnor_credentials
 
-        # Endpoint OAuth AFNOR via le proxy FactPulse
+        # Mode stored : récupérer les credentials via l'API
+        logger.info("Mode stored: récupération des credentials via /api/v1/afnor/credentials")
+
+        self._ensure_authenticated()  # S'assurer qu'on a un token JWT FactPulse
+
+        url = f"{self.api_url}/api/v1/afnor/credentials"
+        headers = {"Authorization": f"Bearer {self.access_token}"}
+
+        try:
+            response = requests.get(url, headers=headers, timeout=10)
+        except requests.RequestException as e:
+            raise FactPulseServiceUnavailableError("FactPulse AFNOR credentials", e)
+
+        if response.status_code == 400:
+            error_json = response.json()
+            error_detail = error_json.get("detail", {})
+            if isinstance(error_detail, dict) and error_detail.get("error") == "NO_CLIENT_UID":
+                raise FactPulseAuthError(
+                    "Aucun client_uid dans le JWT. "
+                    "Pour utiliser les endpoints AFNOR, soit :\n"
+                    "1. Générez un token avec un client_uid (mode stored)\n"
+                    "2. Fournissez AFNORCredentials au constructeur du client (mode zero-trust)"
+                )
+            raise FactPulseAuthError(f"Erreur credentials AFNOR: {error_detail}")
+
+        if response.status_code != 200:
+            try:
+                error_json = response.json()
+                error_msg = error_json.get("detail", str(error_json))
+            except Exception:
+                error_msg = response.text or f"HTTP {response.status_code}"
+            raise FactPulseAuthError(f"Échec récupération credentials AFNOR: {error_msg}")
+
+        creds = response.json()
+        logger.info(f"Credentials AFNOR récupérés pour PDP: {creds.get('flow_service_url')}")
+
+        # Créer un AFNORCredentials temporaire
+        return AFNORCredentials(
+            flow_service_url=creds["flow_service_url"],
+            token_url=creds["token_url"],
+            client_id=creds["client_id"],
+            client_secret=creds["client_secret"],
+        )
+
+    def _get_afnor_token_and_url(self) -> Tuple[str, str]:
+        """Obtient le token OAuth2 AFNOR et l'URL de la PDP.
+
+        Cette méthode :
+        1. Récupère les credentials AFNOR (mode stored ou zero-trust)
+        2. Fait l'OAuth AFNOR pour obtenir un token
+        3. Retourne le token et l'URL de la PDP
+
+        Returns:
+            Tuple (afnor_token, pdp_base_url)
+
+        Raises:
+            FactPulseAuthError: Si l'authentification échoue
+            FactPulseServiceUnavailableError: Si le service est indisponible
+        """
+        from .exceptions import FactPulseServiceUnavailableError
+
+        # Étape 1: Obtenir les credentials AFNOR
+        credentials = self._get_afnor_credentials()
+
+        # Étape 2: Faire l'OAuth AFNOR
+        logger.info(f"OAuth AFNOR vers: {credentials.token_url}")
+
         url = f"{self.api_url}/api/v1/afnor/oauth/token"
-
         oauth_data = {
             "grant_type": "client_credentials",
-            "client_id": self.afnor_credentials.client_id,
-            "client_secret": self.afnor_credentials.client_secret,
+            "client_id": credentials.client_id,
+            "client_secret": credentials.client_secret,
         }
-
-        # Header pour indiquer au proxy vers quelle PDP router
         headers = {
-            "X-PDP-Token-URL": self.afnor_credentials.token_url,
+            "X-PDP-Token-URL": credentials.token_url,
         }
 
         try:
@@ -882,7 +955,7 @@ class FactPulseClient:
             raise FactPulseAuthError("Réponse OAuth2 AFNOR invalide: access_token manquant")
 
         logger.info("Token OAuth2 AFNOR obtenu avec succès")
-        return afnor_token
+        return afnor_token, credentials.flow_service_url
 
     def _make_afnor_request(
         self,
@@ -894,7 +967,21 @@ class FactPulseClient:
     ) -> requests.Response:
         """Effectue une requête vers l'API AFNOR avec gestion d'auth et d'erreurs.
 
-        Utilise un token OAuth2 AFNOR (obtenu via _get_afnor_token), pas le token FactPulse.
+        ================================================================================
+        ARCHITECTURE GRAVÉE DANS LE MARBRE
+        ================================================================================
+
+        Cette méthode :
+        1. Récupère les credentials AFNOR (mode stored: API, mode zero-trust: fournis)
+        2. Fait l'OAuth AFNOR pour obtenir un token AFNOR
+        3. Appelle l'endpoint avec :
+           - Authorization: Bearer {token_afnor}  ← TOKEN AFNOR, PAS JWT FACTPULSE !
+           - X-PDP-Base-URL: {url_pdp}  ← Pour que le proxy route vers la bonne PDP
+
+        Le token JWT FactPulse n'est JAMAIS utilisé pour appeler la PDP.
+        Il sert uniquement à récupérer les credentials en mode stored.
+
+        ================================================================================
 
         Args:
             method: Méthode HTTP (GET, POST, etc.)
@@ -918,14 +1005,17 @@ class FactPulseClient:
             FactPulseServiceUnavailableError,
         )
 
-        # Obtenir un token OAuth2 AFNOR (pas le token FactPulse !)
-        afnor_token = self._get_afnor_token()
+        # Obtenir le token AFNOR et l'URL de la PDP
+        # (mode stored: récupère credentials via API, mode zero-trust: utilise credentials fournis)
+        afnor_token, pdp_base_url = self._get_afnor_token_and_url()
 
         url = f"{self.api_url}/api/v1/afnor{endpoint}"
+
+        # TOUJOURS utiliser le token AFNOR + header X-PDP-Base-URL
+        # Le token JWT FactPulse n'est JAMAIS utilisé pour appeler la PDP !
         headers = {
             "Authorization": f"Bearer {afnor_token}",
-            # Header pour indiquer au proxy vers quelle PDP router
-            "X-PDP-Base-URL": self.afnor_credentials.flow_service_url,
+            "X-PDP-Base-URL": pdp_base_url,
         }
 
         try:

@@ -12,7 +12,7 @@ Ce script démontre toutes les fonctionnalités du SDK avec les bonnes pratiques
 - Workflow complet de facturation
 
 Auteur: FactPulse
-Version: 2.0.24
+Version: 2.0.25
 """
 
 import logging
@@ -20,13 +20,6 @@ import os
 import sys
 from pathlib import Path
 from datetime import date, timedelta
-
-# Configuration du logging pour voir les détails
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
-)
-logger = logging.getLogger(__name__)
 
 # Import du SDK FactPulse
 from factpulse_helpers import (
@@ -45,11 +38,16 @@ from factpulse_helpers import (
     fournisseur,
     destinataire,
     # Exceptions
-    FactPulseError,
     FactPulseAuthError,
     FactPulsePollingTimeout,
     FactPulseValidationError,
 )
+
+# Configuration du logging pour voir les détails
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
 
 
 # =============================================================================
@@ -69,11 +67,12 @@ API_URL = os.getenv("FACTPULSE_API_URL", "https://www.factpulse.fr")
 # 1. INITIALISATION DU CLIENT
 # =============================================================================
 
+
 def exemple_initialisation_simple():
     """Initialisation simple du client avec email/password."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("1. INITIALISATION SIMPLE")
-    print("="*60)
+    print("=" * 60)
 
     client = FactPulseClient(
         email=EMAIL,
@@ -81,16 +80,16 @@ def exemple_initialisation_simple():
         api_url=API_URL,
     )
 
-    print(f"✅ Client initialisé avec succès")
+    print("✅ Client initialisé avec succès")
     print(f"   API URL: {client.api_url}")
     return client
 
 
 def exemple_initialisation_multi_client():
     """Initialisation avec client_uid pour accéder aux credentials d'un client spécifique."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("1b. INITIALISATION MULTI-CLIENT")
-    print("="*60)
+    print("=" * 60)
 
     client = FactPulseClient(
         email=EMAIL,
@@ -105,9 +104,9 @@ def exemple_initialisation_multi_client():
 
 def exemple_initialisation_zero_trust():
     """Initialisation en mode Zero-Trust (credentials passés à chaque requête)."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("1c. INITIALISATION MODE ZERO-TRUST")
-    print("="*60)
+    print("=" * 60)
 
     # Credentials Chorus Pro (jamais stockés côté serveur)
     chorus_creds = ChorusProCredentials(
@@ -143,11 +142,12 @@ def exemple_initialisation_zero_trust():
 # 2. HELPERS POUR CONSTRUIRE LES DONNÉES DE FACTURE
 # =============================================================================
 
+
 def exemple_helpers_construction_facture():
     """Utilisation des helpers pour construire une facture proprement."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("2. HELPERS DE CONSTRUCTION DE FACTURE")
-    print("="*60)
+    print("=" * 60)
 
     # Helper montant() - convertit n'importe quel type en string formaté
     print("\n--- montant() ---")
@@ -270,7 +270,6 @@ def construire_facture_complete():
         "date_facture": date_facture,
         "date_echeance_paiement": date_echeance,
         "mode_depot": "DEPOT_PDF_API",
-
         # Fournisseur avec helper
         "fournisseur": fournisseur(
             nom="Ma Société SAS",
@@ -288,7 +287,6 @@ def construire_facture_complete():
                 scheme_id="0009",
             ),
         ),
-
         # Destinataire avec helper
         "destinataire": destinataire(
             nom="Client SARL",
@@ -304,7 +302,6 @@ def construire_facture_complete():
                 scheme_id="0009",
             ),
         ),
-
         # Références
         "references": {
             "type_facture": "FACTURE",
@@ -313,7 +310,6 @@ def construire_facture_complete():
             "devise_facture": "EUR",
             "numero_bon_commande": "CMD-2025-042",
         },
-
         # Lignes de poste avec helper
         "lignes_de_poste": [
             ligne_de_poste(
@@ -335,7 +331,6 @@ def construire_facture_complete():
                 reference="REF-FORM-002",
             ),
         ],
-
         # Lignes de TVA avec helper
         "lignes_de_tva": [
             ligne_de_tva(
@@ -345,7 +340,6 @@ def construire_facture_complete():
                 categorie="S",
             ),
         ],
-
         # Montant total avec helper
         "montant_total": montant_total(
             ht=2500.00,
@@ -353,7 +347,6 @@ def construire_facture_complete():
             ttc=3000.00,
             a_payer=3000.00,
         ),
-
         "commentaire": "Facture pour prestations du mois en cours",
     }
 
@@ -362,11 +355,12 @@ def construire_facture_complete():
 # 3. GÉNÉRATION DE FACTURES FACTUR-X
 # =============================================================================
 
+
 def exemple_generer_facturx(client: FactPulseClient, pdf_source_path: str):
     """Génère une facture Factur-X à partir d'un PDF source."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("3. GÉNÉRATION FACTUR-X")
-    print("="*60)
+    print("=" * 60)
 
     # Construire les données de facture avec les helpers
     facture_data = construire_facture_complete()
@@ -410,9 +404,9 @@ def exemple_generer_facturx(client: FactPulseClient, pdf_source_path: str):
 
 def exemple_generer_facturx_async(client: FactPulseClient, pdf_source_path: str):
     """Génère une facture Factur-X en mode asynchrone (polling manuel)."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("3b. GÉNÉRATION FACTUR-X (ASYNC)")
-    print("="*60)
+    print("=" * 60)
 
     facture_data = construire_facture_complete()
 
@@ -438,6 +432,7 @@ def exemple_generer_facturx_async(client: FactPulseClient, pdf_source_path: str)
         pdf_b64 = result.get("resultat", {}).get("fichier_base64")
         if pdf_b64:
             import base64
+
             pdf_bytes = base64.b64decode(pdf_b64)
             print(f"✅ Génération terminée: {len(pdf_bytes)} bytes")
             return pdf_bytes
@@ -450,11 +445,12 @@ def exemple_generer_facturx_async(client: FactPulseClient, pdf_source_path: str)
 # 4. VALIDATION DE PDF/XML FACTUR-X
 # =============================================================================
 
+
 def exemple_valider_pdf_facturx(client: FactPulseClient, pdf_path: str):
     """Valide un PDF Factur-X existant."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("4. VALIDATION PDF FACTUR-X")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: valider_pdf_facturx(pdf_path=None, pdf_bytes=None, profil="EN16931")
     result = client.valider_pdf_facturx(
@@ -481,9 +477,9 @@ def exemple_valider_pdf_facturx(client: FactPulseClient, pdf_path: str):
 
 def exemple_valider_signature_pdf(client: FactPulseClient, pdf_path: str):
     """Valide les signatures électroniques d'un PDF."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("4b. VALIDATION SIGNATURE PDF")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: valider_signature_pdf(pdf_path=None, pdf_bytes=None)
     result = client.valider_signature_pdf(pdf_path=pdf_path)
@@ -506,15 +502,16 @@ def exemple_valider_signature_pdf(client: FactPulseClient, pdf_path: str):
 # 5. SIGNATURE ÉLECTRONIQUE DE PDF
 # =============================================================================
 
+
 def exemple_signer_pdf(client: FactPulseClient, pdf_path: str):
     """Signe un PDF avec le certificat configuré côté serveur.
 
     Note: Le certificat doit être préalablement configuré dans Django Admin
     et associé au client_uid du JWT.
     """
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("5. SIGNATURE ÉLECTRONIQUE PDF")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: signer_pdf(pdf_path, pdf_bytes, raison, localisation, contact,
     #                       use_pades_lt, use_timestamp, output_path)
@@ -528,7 +525,7 @@ def exemple_signer_pdf(client: FactPulseClient, pdf_path: str):
         output_path="facture_signee.pdf",  # Sauvegarde automatique
     )
 
-    print(f"✅ PDF signé: facture_signee.pdf")
+    print("✅ PDF signé: facture_signee.pdf")
     return result
 
 
@@ -537,9 +534,9 @@ def exemple_generer_certificat_test(client: FactPulseClient):
 
     Note: Ce certificat doit ensuite être configuré dans Django Admin.
     """
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("5b. GÉNÉRATION CERTIFICAT TEST")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: generer_certificat_test(cn, organisation, email, duree_jours, taille_cle)
     result = client.generer_certificat_test(
@@ -550,7 +547,7 @@ def exemple_generer_certificat_test(client: FactPulseClient):
         taille_cle=2048,
     )
 
-    print(f"✅ Certificat généré")
+    print("✅ Certificat généré")
     print(f"   CN: {result.get('cn')}")
     print(f"   Organisation: {result.get('organisation')}")
     print(f"   Validité: {result.get('duree_jours')} jours")
@@ -567,11 +564,12 @@ def exemple_generer_certificat_test(client: FactPulseClient):
 # 6. INTÉGRATION CHORUS PRO
 # =============================================================================
 
+
 def exemple_rechercher_structure_chorus(client: FactPulseClient, siret: str):
     """Recherche une structure Chorus Pro par SIRET."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("6. RECHERCHE STRUCTURE CHORUS PRO")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: rechercher_structure_chorus(identifiant, type_identifiant="SIRET")
     result = client.rechercher_structure_chorus(
@@ -584,7 +582,7 @@ def exemple_rechercher_structure_chorus(client: FactPulseClient, siret: str):
     print(f"📊 Structures trouvées: {len(structures)}")
 
     for struct in structures:
-        print(f"\n   Structure:")
+        print("\n   Structure:")
         print(f"   - ID CPP: {struct.get('id_structure_cpp')}")
         print(f"   - Raison sociale: {struct.get('raison_sociale')}")
         print(f"   - SIRET: {struct.get('siret')}")
@@ -595,9 +593,9 @@ def exemple_rechercher_structure_chorus(client: FactPulseClient, siret: str):
 
 def exemple_obtenir_id_chorus_depuis_siret(client: FactPulseClient, siret: str):
     """Obtient l'ID Chorus Pro à partir d'un SIRET (helper simplifié)."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("6b. OBTENIR ID CHORUS PRO DEPUIS SIRET")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: obtenir_id_chorus_depuis_siret(siret)
     id_cpp = client.obtenir_id_chorus_depuis_siret(siret)
@@ -610,9 +608,9 @@ def exemple_obtenir_id_chorus_depuis_siret(client: FactPulseClient, siret: str):
 
 def exemple_consulter_structure_chorus(client: FactPulseClient, id_structure_cpp: int):
     """Consulte les détails d'une structure Chorus Pro."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("6c. CONSULTER STRUCTURE CHORUS PRO")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: consulter_structure_chorus(id_structure_cpp)
     result = client.consulter_structure_chorus(id_structure_cpp)
@@ -627,9 +625,9 @@ def exemple_consulter_structure_chorus(client: FactPulseClient, id_structure_cpp
 
 def exemple_lister_services_structure_chorus(client: FactPulseClient, id_structure_cpp: int):
     """Liste les services d'une structure Chorus Pro."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("6d. LISTER SERVICES STRUCTURE CHORUS PRO")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: lister_services_structure_chorus(id_structure_cpp)
     result = client.lister_services_structure_chorus(id_structure_cpp)
@@ -639,7 +637,7 @@ def exemple_lister_services_structure_chorus(client: FactPulseClient, id_structu
     print(f"📊 Services trouvés: {len(services)}")
 
     for svc in services:
-        print(f"\n   Service:")
+        print("\n   Service:")
         print(f"   - Code: {svc.get('code_service')}")
         print(f"   - Nom: {svc.get('nom_service')}")
         print(f"   - Statut: {svc.get('statut')}")
@@ -655,9 +653,9 @@ def exemple_soumettre_facture_chorus(client: FactPulseClient, id_structure_cpp: 
     2. Vérifié les paramètres requis (consulter_structure_chorus)
     3. Éventuellement uploadé le PDF via l'API transverses
     """
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("6e. SOUMETTRE FACTURE CHORUS PRO")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: soumettre_facture_chorus(
     #     numero_facture, date_facture, date_echeance_paiement, id_structure_cpp,
@@ -679,7 +677,7 @@ def exemple_soumettre_facture_chorus(client: FactPulseClient, id_structure_cpp: 
         commentaire="Facture de prestations",
     )
 
-    print(f"✅ Facture soumise à Chorus Pro")
+    print("✅ Facture soumise à Chorus Pro")
     print(f"   ID Facture CPP: {result.get('identifiant_facture_cpp')}")
     print(f"   Statut: {result.get('statut')}")
 
@@ -688,9 +686,9 @@ def exemple_soumettre_facture_chorus(client: FactPulseClient, id_structure_cpp: 
 
 def exemple_consulter_facture_chorus(client: FactPulseClient, identifiant_facture_cpp: int):
     """Consulte une facture Chorus Pro."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("6f. CONSULTER FACTURE CHORUS PRO")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: consulter_facture_chorus(identifiant_facture_cpp)
     result = client.consulter_facture_chorus(identifiant_facture_cpp)
@@ -707,11 +705,12 @@ def exemple_consulter_facture_chorus(client: FactPulseClient, identifiant_factur
 # 7. INTÉGRATION AFNOR PDP/PA
 # =============================================================================
 
+
 def exemple_healthcheck_afnor(client: FactPulseClient):
     """Vérifie la disponibilité du Flow Service AFNOR."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("7. HEALTHCHECK AFNOR")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: healthcheck_afnor()
     result = client.healthcheck_afnor()
@@ -722,11 +721,13 @@ def exemple_healthcheck_afnor(client: FactPulseClient):
     return result
 
 
-def exemple_soumettre_facture_afnor(client: FactPulseClient, pdf_path: str = None, pdf_bytes: bytes = None):
+def exemple_soumettre_facture_afnor(
+    client: FactPulseClient, pdf_path: str = None, pdf_bytes: bytes = None
+):
     """Soumet une facture à une PDP via AFNOR."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("7b. SOUMETTRE FACTURE AFNOR")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: soumettre_facture_afnor(flow_name, pdf_path=None, pdf_bytes=None,
     #                                    pdf_filename="facture.pdf", flow_syntax="CII",
@@ -755,7 +756,7 @@ def exemple_soumettre_facture_afnor(client: FactPulseClient, pdf_path: str = Non
     else:
         raise ValueError("pdf_path ou pdf_bytes requis")
 
-    print(f"✅ Facture soumise à la PDP AFNOR")
+    print("✅ Facture soumise à la PDP AFNOR")
     print(f"   Flow ID: {result.get('flowId')}")
     print(f"   Tracking ID: {result.get('trackingId')}")
     print(f"   Status: {result.get('status')}")
@@ -765,9 +766,9 @@ def exemple_soumettre_facture_afnor(client: FactPulseClient, pdf_path: str = Non
 
 def exemple_generer_et_soumettre_afnor(client: FactPulseClient, pdf_source_path: str):
     """Génère une facture Factur-X puis la soumet directement à AFNOR (sans fichier intermédiaire)."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("7b-bis. GÉNÉRER ET SOUMETTRE AFNOR (WORKFLOW OPTIMISÉ)")
-    print("="*60)
+    print("=" * 60)
 
     # Construire les données de facture
     facture_data = construire_facture_complete()
@@ -795,7 +796,7 @@ def exemple_generer_et_soumettre_afnor(client: FactPulseClient, pdf_source_path:
         tracking_id=facture_data["numero_facture"],
     )
 
-    print(f"✅ Facture générée et soumise en un seul flux")
+    print("✅ Facture générée et soumise en un seul flux")
     print(f"   Flow ID: {result.get('flowId')}")
     print(f"   Tracking ID: {result.get('trackingId')}")
     print(f"   Status: {result.get('status')}")
@@ -805,9 +806,9 @@ def exemple_generer_et_soumettre_afnor(client: FactPulseClient, pdf_source_path:
 
 def exemple_rechercher_flux_afnor(client: FactPulseClient):
     """Recherche des flux de facturation AFNOR."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("7c. RECHERCHER FLUX AFNOR")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: rechercher_flux_afnor(tracking_id=None, status=None, offset=0, limit=25)
     result = client.rechercher_flux_afnor(
@@ -821,7 +822,7 @@ def exemple_rechercher_flux_afnor(client: FactPulseClient):
     print(f"📊 Flux trouvés: {result.get('total', len(flows))}")
 
     for flow in flows:
-        print(f"\n   Flux:")
+        print("\n   Flux:")
         print(f"   - Flow ID: {flow.get('flowId')}")
         print(f"   - Tracking ID: {flow.get('trackingId')}")
         print(f"   - Status: {flow.get('status')}")
@@ -832,9 +833,9 @@ def exemple_rechercher_flux_afnor(client: FactPulseClient):
 
 def exemple_telecharger_flux_afnor(client: FactPulseClient, flow_id: str):
     """Télécharge le fichier PDF d'un flux AFNOR."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("7d. TÉLÉCHARGER FLUX AFNOR")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: telecharger_flux_afnor(flow_id)
     pdf_bytes = client.telecharger_flux_afnor(flow_id)
@@ -850,9 +851,9 @@ def exemple_telecharger_flux_afnor(client: FactPulseClient, flow_id: str):
 
 def exemple_rechercher_siret_afnor(client: FactPulseClient, siret: str):
     """Recherche une entreprise par SIRET dans le Directory Service AFNOR."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("7e. RECHERCHER SIRET AFNOR")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: rechercher_siret_afnor(siret)
     result = client.rechercher_siret_afnor(siret)
@@ -868,9 +869,9 @@ def exemple_rechercher_siret_afnor(client: FactPulseClient, siret: str):
 
 def exemple_rechercher_siren_afnor(client: FactPulseClient, siren: str):
     """Recherche une entreprise par SIREN dans le Directory Service AFNOR."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("7f. RECHERCHER SIREN AFNOR")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: rechercher_siren_afnor(siren)
     result = client.rechercher_siren_afnor(siren)
@@ -883,9 +884,9 @@ def exemple_rechercher_siren_afnor(client: FactPulseClient, siren: str):
 
 def exemple_lister_codes_routage_afnor(client: FactPulseClient, siren: str):
     """Liste les codes de routage d'une entreprise."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("7g. LISTER CODES ROUTAGE AFNOR")
-    print("="*60)
+    print("=" * 60)
 
     # Signature: lister_codes_routage_afnor(siren)
     codes = client.lister_codes_routage_afnor(siren)
@@ -903,11 +904,12 @@ def exemple_lister_codes_routage_afnor(client: FactPulseClient, siren: str):
 # 8. WORKFLOW COMPLET
 # =============================================================================
 
+
 def exemple_workflow_complet(client: FactPulseClient, pdf_source_path: str):
     """Workflow complet: génération + validation + signature + soumission."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("8. WORKFLOW COMPLET")
-    print("="*60)
+    print("=" * 60)
 
     # Construire les données de facture
     facture_data = construire_facture_complete()
@@ -936,7 +938,7 @@ def exemple_workflow_complet(client: FactPulseClient, pdf_source_path: str):
         timeout=180000,  # 3 minutes
     )
 
-    print(f"✅ Workflow complet terminé:")
+    print("✅ Workflow complet terminé:")
     print(f"   PDF généré: {result.get('pdf_bytes') is not None}")
     print(f"   Validation: {result.get('validation', {}).get('est_conforme', 'N/A')}")
     print(f"   Signé: {result.get('signe', False)}")
@@ -951,11 +953,12 @@ def exemple_workflow_complet(client: FactPulseClient, pdf_source_path: str):
 # 9. GESTION DES ERREURS
 # =============================================================================
 
+
 def exemple_gestion_erreurs():
     """Démontre la gestion des erreurs du SDK."""
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("9. GESTION DES ERREURS")
-    print("="*60)
+    print("=" * 60)
 
     # Erreur d'authentification
     print("\n--- FactPulseAuthError ---")
@@ -984,12 +987,13 @@ def exemple_gestion_erreurs():
 # MAIN
 # =============================================================================
 
+
 def main():
     """Point d'entrée principal."""
-    print("="*60)
+    print("=" * 60)
     print("EXEMPLE EXHAUSTIF SDK FACTPULSE PYTHON")
-    print("="*60)
-    print(f"Version SDK: 2.0.21")
+    print("=" * 60)
+    print("Version SDK: 2.0.21")
     print(f"API URL: {API_URL}")
 
     # Vérifier les credentials
@@ -1031,9 +1035,9 @@ def main():
     # Démontrer AFNOR (si credentials configurés)
     # exemple_healthcheck_afnor(client)
 
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("✅ EXEMPLES TERMINÉS")
-    print("="*60)
+    print("=" * 60)
 
 
 if __name__ == "__main__":

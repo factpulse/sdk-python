@@ -26,6 +26,13 @@ class TestAFNORPDPPAApi(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
+    def test_get_afnor_credentials_api_v1_afnor_credentials_get(self) -> None:
+        """Test case for get_afnor_credentials_api_v1_afnor_credentials_get
+
+        Récupérer les credentials AFNOR stockés
+        """
+        pass
+
     def test_oauth_token_proxy_api_v1_afnor_oauth_token_post(self) -> None:
         """Test case for oauth_token_proxy_api_v1_afnor_oauth_token_post
 

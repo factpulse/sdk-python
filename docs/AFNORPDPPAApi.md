@@ -4,8 +4,85 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**get_afnor_credentials_api_v1_afnor_credentials_get**](AFNORPDPPAApi.md#get_afnor_credentials_api_v1_afnor_credentials_get) | **GET** /api/v1/afnor/credentials | Récupérer les credentials AFNOR stockés
 [**oauth_token_proxy_api_v1_afnor_oauth_token_post**](AFNORPDPPAApi.md#oauth_token_proxy_api_v1_afnor_oauth_token_post) | **POST** /api/v1/afnor/oauth/token | Endpoint OAuth2 pour authentification AFNOR
 
+
+# **get_afnor_credentials_api_v1_afnor_credentials_get**
+> object get_afnor_credentials_api_v1_afnor_credentials_get()
+
+Récupérer les credentials AFNOR stockés
+
+Récupère les credentials AFNOR/PDP stockés pour le client_uid du JWT. Cet endpoint est utilisé par le SDK en mode 'stored' pour récupérer les credentials avant de faire l'OAuth AFNOR lui-même.
+
+### Example
+
+* Bearer Authentication (HTTPBearer):
+
+```python
+import factpulse
+from factpulse.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to http://localhost
+# See configuration.py for a list of all supported configuration parameters.
+configuration = factpulse.Configuration(
+    host = "http://localhost"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with factpulse.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = factpulse.AFNORPDPPAApi(api_client)
+
+    try:
+        # Récupérer les credentials AFNOR stockés
+        api_response = api_instance.get_afnor_credentials_api_v1_afnor_credentials_get()
+        print("The response of AFNORPDPPAApi->get_afnor_credentials_api_v1_afnor_credentials_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling AFNORPDPPAApi->get_afnor_credentials_api_v1_afnor_credentials_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**object**
+
+### Authorization
+
+[HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Credentials AFNOR récupérés avec succès |  -  |
+**400** | Aucun client_uid dans le JWT |  -  |
+**401** | Non authentifié - Token JWT manquant ou invalide |  -  |
+**404** | Client non trouvé ou pas de credentials AFNOR configurés |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **oauth_token_proxy_api_v1_afnor_oauth_token_post**
 > object oauth_token_proxy_api_v1_afnor_oauth_token_post()
