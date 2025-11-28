@@ -1,5 +1,5 @@
 """
-FactPulse Helpers - Client simplifié avec authentification JWT et polling intégrés.
+ FactPulse Helpers - Client simplifié avec authentification JWT et polling intégrés.
 
 Ce module fournit :
 - FactPulseClient : Client avec auth JWT et polling automatique
