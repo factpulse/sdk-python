@@ -1190,6 +1190,9 @@ class FactPulseClient:
         Télécharge un flux entrant depuis la PDP AFNOR et extrait les métadonnées
         de la facture vers un format JSON unifié. Supporte les formats Factur-X, CII et UBL.
 
+        Note: Cet endpoint utilise l'authentification JWT FactPulse (pas OAuth AFNOR).
+        Le serveur FactPulse se charge d'appeler la PDP avec les credentials stockés.
+
         Args:
             flow_id: Identifiant du flux (UUID)
             include_document: Si True, inclut le document original encodé en base64
@@ -1231,15 +1234,29 @@ class FactPulseClient:
             ...     with open(facture['document_filename'], 'wb') as f:
             ...         f.write(pdf_bytes)
         """
+        from .exceptions import FactPulseNotFoundError, FactPulseServiceUnavailableError, parse_api_error
+
+        self.ensure_authenticated()
+
+        url = f"{self.api_url}/api/v1/afnor/flux-entrants/{flow_id}"
         params = {}
         if include_document:
             params["include_document"] = "true"
 
-        response = self._make_afnor_request(
-            "GET",
-            f"/flux-entrants/{flow_id}",
-            params=params if params else None,
-        )
+        headers = {"Authorization": f"Bearer {self._access_token}"}
+
+        try:
+            response = requests.get(url, headers=headers, params=params if params else None, timeout=60)
+        except requests.RequestException as e:
+            raise FactPulseServiceUnavailableError("FactPulse AFNOR flux-entrants", e)
+
+        if response.status_code >= 400:
+            try:
+                error_json = response.json()
+            except Exception:
+                error_json = {"detail": response.text or f"Erreur HTTP {response.status_code}"}
+            raise parse_api_error(error_json, response.status_code)
+
         return response.json()
 
     def healthcheck_afnor(self) -> Dict[str, Any]:
