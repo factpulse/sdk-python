@@ -12,41 +12,27 @@
 """  # noqa: E501
 
 
-import unittest
-
-from factpulse.api.afnorpdppa_api import AFNORPDPPAApi
-
-
-class TestAFNORPDPPAApi(unittest.TestCase):
-    """AFNORPDPPAApi unit test stubs"""
-
-    def setUp(self) -> None:
-        self.api = AFNORPDPPAApi()
-
-    def tearDown(self) -> None:
-        pass
-
-    def test_get_afnor_credentials_api_v1_afnor_credentials_get(self) -> None:
-        """Test case for get_afnor_credentials_api_v1_afnor_credentials_get
-
-        Récupérer les credentials AFNOR stockés
-        """
-        pass
-
-    def test_get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get(self) -> None:
-        """Test case for get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get
-
-        Récupérer et extraire une facture entrante
-        """
-        pass
-
-    def test_oauth_token_proxy_api_v1_afnor_oauth_token_post(self) -> None:
-        """Test case for oauth_token_proxy_api_v1_afnor_oauth_token_post
-
-        Endpoint OAuth2 pour authentification AFNOR
-        """
-        pass
+from __future__ import annotations
+import json
+from enum import Enum
+from typing_extensions import Self
 
 
-if __name__ == '__main__':
-    unittest.main()
+class FormatFacture(str, Enum):
+    """
+    Formats de facture supportés pour l'extraction.
+    """
+
+    """
+    allowed enum values
+    """
+    CII = 'CII'
+    UBL = 'UBL'
+    FACTUR_MINUS_X = 'Factur-X'
+
+    @classmethod
+    def from_json(cls, json_str: str) -> Self:
+        """Create an instance of FormatFacture from a JSON string"""
+        return cls(json.loads(json_str))
+
+

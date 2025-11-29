@@ -12,7 +12,7 @@ Ce script démontre toutes les fonctionnalités du SDK avec les bonnes pratiques
 - Workflow complet de facturation
 
 Auteur: FactPulse
-Version: 2.0.30
+Version: 2.0.31
 """
 
 import logging
@@ -41,8 +41,6 @@ from factpulse_helpers import (
     FactPulseAuthError,
     FactPulsePollingTimeout,
     FactPulseValidationError,
-    FactPulseNotFoundError,
-    FactPulseServiceUnavailableError,
 )
 
 # Configuration du logging pour voir les détails
@@ -160,15 +158,17 @@ def exemple_helpers_construction_facture():
     # -------------------------------------------------------------------------
     print("\n--- montant(value) ---")
     print("Convertit une valeur en string de montant pour l'API.")
-    print(f"  montant(100.50) = '{montant(100.50)}'")      # "100.50"
+    print(f"  montant(100.50) = '{montant(100.50)}'")  # "100.50"
     print(f"  montant('200.00') = '{montant('200.00')}'")  # "200.00"
-    print(f"  montant(1000) = '{montant(1000)}'")          # "1000.00"
-    print(f"  montant(None) = '{montant(None)}'")          # "0.00"
+    print(f"  montant(1000) = '{montant(1000)}'")  # "1000.00"
+    print(f"  montant(None) = '{montant(None)}'")  # "0.00"
 
     # -------------------------------------------------------------------------
     # Helper montant_total() - construit le bloc montant_total
     # -------------------------------------------------------------------------
-    print("\n--- montant_total(ht, tva, ttc, a_payer, remise_ttc=None, motif_remise=None, acompte=None) ---")
+    print(
+        "\n--- montant_total(ht, tva, ttc, a_payer, remise_ttc=None, motif_remise=None, acompte=None) ---"
+    )
     print("Crée un objet MontantTotal simplifié.")
     total = montant_total(
         ht=1000.00,
@@ -198,7 +198,9 @@ def exemple_helpers_construction_facture():
     print("\n--- ligne_de_poste() ---")
     print("Crée une ligne de poste pour l'API FactPulse.")
     print("Signature: ligne_de_poste(numero, denomination, quantite, montant_unitaire_ht,")
-    print("                           montant_total_ligne_ht, taux_tva=None, taux_tva_manuel='20.00',")
+    print(
+        "                           montant_total_ligne_ht, taux_tva=None, taux_tva_manuel='20.00',"
+    )
     print("                           categorie_tva='S', unite='FORFAIT', reference=None, ...)")
 
     # Exemple basique avec taux_tva_manuel (par défaut 20%)
@@ -268,7 +270,9 @@ def exemple_helpers_construction_facture():
     # -------------------------------------------------------------------------
     print("\n--- ligne_de_tva() ---")
     print("Crée une ligne de TVA pour l'API FactPulse.")
-    print("Signature: ligne_de_tva(montant_base_ht, montant_tva, taux=None, taux_manuel='20.00', categorie='S')")
+    print(
+        "Signature: ligne_de_tva(montant_base_ht, montant_tva, taux=None, taux_manuel='20.00', categorie='S')"
+    )
 
     # Exemple avec taux manuel
     tva1 = ligne_de_tva(
@@ -296,7 +300,9 @@ def exemple_helpers_construction_facture():
     # -------------------------------------------------------------------------
     print("\n--- adresse_postale() ---")
     print("Crée une adresse postale pour l'API FactPulse.")
-    print("Signature: adresse_postale(ligne1, code_postal, ville, pays='FR', ligne2=None, ligne3=None)")
+    print(
+        "Signature: adresse_postale(ligne1, code_postal, ville, pays='FR', ligne2=None, ligne3=None)"
+    )
 
     adresse = adresse_postale(
         ligne1="123 Rue de la République",
@@ -422,7 +428,6 @@ def construire_facture_complete():
         "dateFacture": date_facture,
         "dateEcheancePaiement": date_echeance,
         "modeDepot": "DEPOT_PDF_API",
-
         # Fournisseur avec helper (génère automatiquement les adresses et TVA)
         "fournisseur": fournisseur(
             nom="Ma Société SAS",
@@ -432,7 +437,6 @@ def construire_facture_complete():
             ville="Paris",
             iban="FR7630006000011234567890189",
         ),
-
         # Destinataire avec helper
         "destinataire": destinataire(
             nom="Client SARL",
@@ -441,7 +445,6 @@ def construire_facture_complete():
             code_postal="69001",
             ville="Lyon",
         ),
-
         # Références
         "references": {
             "typeFacture": "FACTURE",
@@ -450,7 +453,6 @@ def construire_facture_complete():
             "deviseFacture": "EUR",
             "numeroBonCommande": "CMD-2025-042",
         },
-
         # Lignes de poste avec helper
         "lignesDePoste": [
             ligne_de_poste(
@@ -474,7 +476,6 @@ def construire_facture_complete():
                 reference="REF-FORM-002",
             ),
         ],
-
         # Lignes de TVA avec helper
         "lignesDeTva": [
             ligne_de_tva(
@@ -484,7 +485,6 @@ def construire_facture_complete():
                 categorie="S",
             ),
         ],
-
         # Montant total avec helper
         "montantTotal": montant_total(
             ht=2500.00,
@@ -492,7 +492,6 @@ def construire_facture_complete():
             ttc=3000.00,
             a_payer=3000.00,
         ),
-
         "commentaire": "Facture pour prestations du mois en cours",
     }
 
@@ -565,10 +564,13 @@ def exemple_generer_facturx_async(client: FactPulseClient, pdf_source_path: str)
     print(f"📋 Tâche créée: {task_id}")
 
     # Polling manuel avec la méthode poll_task
-    result = client.poll_task(task_id.decode() if isinstance(task_id, bytes) else task_id, timeout=120000)
+    result = client.poll_task(
+        task_id.decode() if isinstance(task_id, bytes) else task_id, timeout=120000
+    )
 
     if result.get("contenu_b64"):
         import base64
+
         pdf_bytes = base64.b64decode(result["contenu_b64"])
         print(f"✅ Génération terminée: {len(pdf_bytes)} bytes")
         return pdf_bytes
@@ -622,7 +624,7 @@ def exemple_valider_signature_pdf(client: FactPulseClient, pdf_path: str):
     print(f"✍️ Signé: {result.get('is_signed', False)}")
 
     for sig in result.get("signatures", []):
-        print(f"\n   Signature:")
+        print("\n   Signature:")
         print(f"   - Signataire: {sig.get('signer_cn', 'N/A')}")
         print(f"   - Date: {sig.get('signing_time', 'N/A')}")
         print(f"   - Valide: {sig.get('valid', False)}")
@@ -769,7 +771,7 @@ def exemple_lister_services_structure_chorus(client: FactPulseClient, id_structu
 
     for svc in services:
         if svc.get("est_actif"):
-            print(f"\n   Service actif:")
+            print("\n   Service actif:")
             print(f"   - Code: {svc.get('code_service')}")
             print(f"   - Libellé: {svc.get('libelle_service')}")
 
@@ -812,7 +814,7 @@ def exemple_consulter_facture_chorus(client: FactPulseClient, identifiant_factur
 
     print(f"📋 Facture #{identifiant_facture_cpp}:")
     print(f"   - Numéro: {result.get('numero_facture')}")
-    statut = result.get('statut_courant', {})
+    statut = result.get("statut_courant", {})
     print(f"   - Statut: {statut.get('code', 'N/A')}")
     print(f"   - Montant TTC: {result.get('montant_ttc_total')}")
 

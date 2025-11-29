@@ -14,39 +14,77 @@
 
 import unittest
 
-from factpulse.api.afnorpdppa_api import AFNORPDPPAApi
+from factpulse.models.facture_entrante import FactureEntrante
 
+class TestFactureEntrante(unittest.TestCase):
+    """FactureEntrante unit test stubs"""
 
-class TestAFNORPDPPAApi(unittest.TestCase):
-    """AFNORPDPPAApi unit test stubs"""
-
-    def setUp(self) -> None:
-        self.api = AFNORPDPPAApi()
-
-    def tearDown(self) -> None:
+    def setUp(self):
         pass
 
-    def test_get_afnor_credentials_api_v1_afnor_credentials_get(self) -> None:
-        """Test case for get_afnor_credentials_api_v1_afnor_credentials_get
+    def tearDown(self):
+        pass
 
-        Récupérer les credentials AFNOR stockés
+    def make_instance(self, include_optional) -> FactureEntrante:
+        """Test FactureEntrante
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `FactureEntrante`
         """
-        pass
-
-    def test_get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get(self) -> None:
-        """Test case for get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get
-
-        Récupérer et extraire une facture entrante
+        model = FactureEntrante()
+        if include_optional:
+            return FactureEntrante(
+                flow_id = '',
+                format_source = 'CII',
+                ref_fournisseur = '',
+                type_document = '380',
+                fournisseur = factpulse.models.fournisseur_entrant.FournisseurEntrant(
+                    nom = '', 
+                    siren = '', 
+                    siret = '', 
+                    numero_tva_intra = '', 
+                    adresse_postale = null, 
+                    adresse_electronique = null, 
+                    email = '', 
+                    telephone = '', ),
+                site_facturation_nom = '',
+                site_facturation_siret = '',
+                date_de_piece = '',
+                date_reglement = '',
+                devise = 'EUR',
+                montant_ht = ERROR_TO_EXAMPLE_VALUE,
+                montant_tva = ERROR_TO_EXAMPLE_VALUE,
+                montant_ttc = ERROR_TO_EXAMPLE_VALUE,
+                numero_bon_commande = '',
+                reference_contrat = '',
+                objet_facture = ''
+            )
+        else:
+            return FactureEntrante(
+                format_source = 'CII',
+                ref_fournisseur = '',
+                fournisseur = factpulse.models.fournisseur_entrant.FournisseurEntrant(
+                    nom = '', 
+                    siren = '', 
+                    siret = '', 
+                    numero_tva_intra = '', 
+                    adresse_postale = null, 
+                    adresse_electronique = null, 
+                    email = '', 
+                    telephone = '', ),
+                site_facturation_nom = '',
+                date_de_piece = '',
+                montant_ht = ERROR_TO_EXAMPLE_VALUE,
+                montant_tva = ERROR_TO_EXAMPLE_VALUE,
+                montant_ttc = ERROR_TO_EXAMPLE_VALUE,
+        )
         """
-        pass
 
-    def test_oauth_token_proxy_api_v1_afnor_oauth_token_post(self) -> None:
-        """Test case for oauth_token_proxy_api_v1_afnor_oauth_token_post
-
-        Endpoint OAuth2 pour authentification AFNOR
-        """
-        pass
-
+    def testFactureEntrante(self):
+        """Test FactureEntrante"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
 
 if __name__ == '__main__':
     unittest.main()

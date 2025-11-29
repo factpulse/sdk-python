@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "2.0.30"
+__version__ = "2.0.31"
 
 # Define package exports
 __all__ = [
@@ -57,9 +57,12 @@ __all__ = [
     "ErrorLevel",
     "ErrorSource",
     "FactureEnrichieInfo",
+    "FactureEntrante",
     "FactureFacturX",
+    "FormatFacture",
     "FormatSortie",
     "Fournisseur",
+    "FournisseurEntrant",
     "GenerateCertificateRequest",
     "GenerateCertificateResponse",
     "HTTPValidationError",
@@ -114,6 +117,7 @@ __all__ = [
     "StatutTache",
     "StructureInfo",
     "Tauxmanuel",
+    "TypeDocument",
     "TypeFacture",
     "TypeTVA",
     "Unite",
@@ -166,9 +170,12 @@ from factpulse.models.donnees_facture_simplifiees import DonneesFactureSimplifie
 from factpulse.models.error_level import ErrorLevel as ErrorLevel
 from factpulse.models.error_source import ErrorSource as ErrorSource
 from factpulse.models.facture_enrichie_info import FactureEnrichieInfo as FactureEnrichieInfo
+from factpulse.models.facture_entrante import FactureEntrante as FactureEntrante
 from factpulse.models.facture_factur_x import FactureFacturX as FactureFacturX
+from factpulse.models.format_facture import FormatFacture as FormatFacture
 from factpulse.models.format_sortie import FormatSortie as FormatSortie
 from factpulse.models.fournisseur import Fournisseur as Fournisseur
+from factpulse.models.fournisseur_entrant import FournisseurEntrant as FournisseurEntrant
 from factpulse.models.generate_certificate_request import GenerateCertificateRequest as GenerateCertificateRequest
 from factpulse.models.generate_certificate_response import GenerateCertificateResponse as GenerateCertificateResponse
 from factpulse.models.http_validation_error import HTTPValidationError as HTTPValidationError
@@ -223,6 +230,7 @@ from factpulse.models.statut_facture import StatutFacture as StatutFacture
 from factpulse.models.statut_tache import StatutTache as StatutTache
 from factpulse.models.structure_info import StructureInfo as StructureInfo
 from factpulse.models.tauxmanuel import Tauxmanuel as Tauxmanuel
+from factpulse.models.type_document import TypeDocument as TypeDocument
 from factpulse.models.type_facture import TypeFacture as TypeFacture
 from factpulse.models.type_tva import TypeTVA as TypeTVA
 from factpulse.models.unite import Unite as Unite

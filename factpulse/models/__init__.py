@@ -36,9 +36,12 @@ from factpulse.models.donnees_facture_simplifiees import DonneesFactureSimplifie
 from factpulse.models.error_level import ErrorLevel
 from factpulse.models.error_source import ErrorSource
 from factpulse.models.facture_enrichie_info import FactureEnrichieInfo
+from factpulse.models.facture_entrante import FactureEntrante
 from factpulse.models.facture_factur_x import FactureFacturX
+from factpulse.models.format_facture import FormatFacture
 from factpulse.models.format_sortie import FormatSortie
 from factpulse.models.fournisseur import Fournisseur
+from factpulse.models.fournisseur_entrant import FournisseurEntrant
 from factpulse.models.generate_certificate_request import GenerateCertificateRequest
 from factpulse.models.generate_certificate_response import GenerateCertificateResponse
 from factpulse.models.http_validation_error import HTTPValidationError
@@ -93,6 +96,7 @@ from factpulse.models.statut_facture import StatutFacture
 from factpulse.models.statut_tache import StatutTache
 from factpulse.models.structure_info import StructureInfo
 from factpulse.models.tauxmanuel import Tauxmanuel
+from factpulse.models.type_document import TypeDocument
 from factpulse.models.type_facture import TypeFacture
 from factpulse.models.type_tva import TypeTVA
 from factpulse.models.unite import Unite

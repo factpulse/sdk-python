@@ -14,39 +14,53 @@
 
 import unittest
 
-from factpulse.api.afnorpdppa_api import AFNORPDPPAApi
+from factpulse.models.fournisseur_entrant import FournisseurEntrant
 
+class TestFournisseurEntrant(unittest.TestCase):
+    """FournisseurEntrant unit test stubs"""
 
-class TestAFNORPDPPAApi(unittest.TestCase):
-    """AFNORPDPPAApi unit test stubs"""
-
-    def setUp(self) -> None:
-        self.api = AFNORPDPPAApi()
-
-    def tearDown(self) -> None:
+    def setUp(self):
         pass
 
-    def test_get_afnor_credentials_api_v1_afnor_credentials_get(self) -> None:
-        """Test case for get_afnor_credentials_api_v1_afnor_credentials_get
+    def tearDown(self):
+        pass
 
-        Récupérer les credentials AFNOR stockés
+    def make_instance(self, include_optional) -> FournisseurEntrant:
+        """Test FournisseurEntrant
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `FournisseurEntrant`
         """
-        pass
-
-    def test_get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get(self) -> None:
-        """Test case for get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get
-
-        Récupérer et extraire une facture entrante
+        model = FournisseurEntrant()
+        if include_optional:
+            return FournisseurEntrant(
+                nom = '',
+                siren = '',
+                siret = '',
+                numero_tva_intra = '',
+                adresse_postale = factpulse.models.adresse_postale.AdressePostale(
+                    code_postal = '', 
+                    ligne_un = '', 
+                    ligne_deux = '', 
+                    nom_ville = '', 
+                    pays_code_iso = '', ),
+                adresse_electronique = factpulse.models.adresse_electronique.AdresseElectronique(
+                    identifiant = '', 
+                    scheme_id = null, ),
+                email = '',
+                telephone = ''
+            )
+        else:
+            return FournisseurEntrant(
+                nom = '',
+        )
         """
-        pass
 
-    def test_oauth_token_proxy_api_v1_afnor_oauth_token_post(self) -> None:
-        """Test case for oauth_token_proxy_api_v1_afnor_oauth_token_post
-
-        Endpoint OAuth2 pour authentification AFNOR
-        """
-        pass
-
+    def testFournisseurEntrant(self):
+        """Test FournisseurEntrant"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
 
 if __name__ == '__main__':
     unittest.main()
