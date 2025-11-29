@@ -16,8 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictStr
-from typing import Any
+from pydantic import StrictBool, StrictStr
+from typing import Any, Optional
 from factpulse.models.facture_entrante import FactureEntrante
 
 from factpulse.api_client import ApiClient, RequestSerialized
@@ -297,6 +297,7 @@ class AFNORPDPPAApi:
     def get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get(
         self,
         flow_id: StrictStr,
+        include_document: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -316,6 +317,8 @@ class AFNORPDPPAApi:
 
         :param flow_id: (required)
         :type flow_id: str
+        :param include_document:
+        :type include_document: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -340,6 +343,7 @@ class AFNORPDPPAApi:
 
         _param = self._get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get_serialize(
             flow_id=flow_id,
+            include_document=include_document,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -369,6 +373,7 @@ class AFNORPDPPAApi:
     def get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get_with_http_info(
         self,
         flow_id: StrictStr,
+        include_document: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -388,6 +393,8 @@ class AFNORPDPPAApi:
 
         :param flow_id: (required)
         :type flow_id: str
+        :param include_document:
+        :type include_document: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -412,6 +419,7 @@ class AFNORPDPPAApi:
 
         _param = self._get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get_serialize(
             flow_id=flow_id,
+            include_document=include_document,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -441,6 +449,7 @@ class AFNORPDPPAApi:
     def get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get_without_preload_content(
         self,
         flow_id: StrictStr,
+        include_document: Optional[StrictBool] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -460,6 +469,8 @@ class AFNORPDPPAApi:
 
         :param flow_id: (required)
         :type flow_id: str
+        :param include_document:
+        :type include_document: bool
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -484,6 +495,7 @@ class AFNORPDPPAApi:
 
         _param = self._get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get_serialize(
             flow_id=flow_id,
+            include_document=include_document,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -508,6 +520,7 @@ class AFNORPDPPAApi:
     def _get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get_serialize(
         self,
         flow_id,
+        include_document,
         _request_auth,
         _content_type,
         _headers,
@@ -532,6 +545,10 @@ class AFNORPDPPAApi:
         if flow_id is not None:
             _path_params['flow_id'] = flow_id
         # process the query parameters
+        if include_document is not None:
+            
+            _query_params.append(('include_document', include_document))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter

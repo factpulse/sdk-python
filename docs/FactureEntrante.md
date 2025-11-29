@@ -22,6 +22,9 @@ Name | Type | Description | Notes
 **numero_bon_commande** | **str** |  | [optional] 
 **reference_contrat** | **str** |  | [optional] 
 **objet_facture** | **str** |  | [optional] 
+**document_base64** | **str** |  | [optional] 
+**document_content_type** | **str** |  | [optional] 
+**document_filename** | **str** |  | [optional] 
 
 ## Example
 

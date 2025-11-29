@@ -58,7 +58,10 @@ class TestFactureEntrante(unittest.TestCase):
                 montant_ttc = ERROR_TO_EXAMPLE_VALUE,
                 numero_bon_commande = '',
                 reference_contrat = '',
-                objet_facture = ''
+                objet_facture = '',
+                document_base64 = '',
+                document_content_type = '',
+                document_filename = ''
             )
         else:
             return FactureEntrante(

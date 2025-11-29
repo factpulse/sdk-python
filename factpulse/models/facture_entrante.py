@@ -46,7 +46,10 @@ class FactureEntrante(BaseModel):
     numero_bon_commande: Optional[StrictStr] = None
     reference_contrat: Optional[StrictStr] = None
     objet_facture: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["flow_id", "format_source", "ref_fournisseur", "type_document", "fournisseur", "site_facturation_nom", "site_facturation_siret", "date_de_piece", "date_reglement", "devise", "montant_ht", "montant_tva", "montant_ttc", "numero_bon_commande", "reference_contrat", "objet_facture"]
+    document_base64: Optional[StrictStr] = None
+    document_content_type: Optional[StrictStr] = None
+    document_filename: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["flow_id", "format_source", "ref_fournisseur", "type_document", "fournisseur", "site_facturation_nom", "site_facturation_siret", "date_de_piece", "date_reglement", "devise", "montant_ht", "montant_tva", "montant_ttc", "numero_bon_commande", "reference_contrat", "objet_facture", "document_base64", "document_content_type", "document_filename"]
 
     @field_validator('montant_ht')
     def montant_ht_validate_regular_expression(cls, value):
@@ -141,6 +144,21 @@ class FactureEntrante(BaseModel):
         if self.objet_facture is None and "objet_facture" in self.model_fields_set:
             _dict['objet_facture'] = None
 
+        # set to None if document_base64 (nullable) is None
+        # and model_fields_set contains the field
+        if self.document_base64 is None and "document_base64" in self.model_fields_set:
+            _dict['document_base64'] = None
+
+        # set to None if document_content_type (nullable) is None
+        # and model_fields_set contains the field
+        if self.document_content_type is None and "document_content_type" in self.model_fields_set:
+            _dict['document_content_type'] = None
+
+        # set to None if document_filename (nullable) is None
+        # and model_fields_set contains the field
+        if self.document_filename is None and "document_filename" in self.model_fields_set:
+            _dict['document_filename'] = None
+
         return _dict
 
     @classmethod
@@ -168,7 +186,10 @@ class FactureEntrante(BaseModel):
             "montant_ttc": obj.get("montant_ttc"),
             "numero_bon_commande": obj.get("numero_bon_commande"),
             "reference_contrat": obj.get("reference_contrat"),
-            "objet_facture": obj.get("objet_facture")
+            "objet_facture": obj.get("objet_facture"),
+            "document_base64": obj.get("document_base64"),
+            "document_content_type": obj.get("document_content_type"),
+            "document_filename": obj.get("document_filename")
         })
         return _obj
 

@@ -86,7 +86,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get**
-> FactureEntrante get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get(flow_id)
+> FactureEntrante get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get(flow_id, include_document=include_document)
 
 Récupérer et extraire une facture entrante
 
@@ -123,10 +123,11 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.AFNORPDPPAApi(api_client)
     flow_id = 'flow_id_example' # str | 
+    include_document = False # bool |  (optional) (default to False)
 
     try:
         # Récupérer et extraire une facture entrante
-        api_response = api_instance.get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get(flow_id)
+        api_response = api_instance.get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get(flow_id, include_document=include_document)
         print("The response of AFNORPDPPAApi->get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get:\n")
         pprint(api_response)
     except Exception as e:
@@ -141,6 +142,7 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **flow_id** | **str**|  | 
+ **include_document** | **bool**|  | [optional] [default to False]
 
 ### Return type
 
