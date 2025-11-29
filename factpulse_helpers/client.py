@@ -1180,6 +1180,68 @@ class FactPulseClient:
         response = self._make_afnor_request("GET", f"/flow/v1/flows/{flow_id}")
         return response.content
 
+    def obtenir_facture_entrante_afnor(
+        self,
+        flow_id: str,
+        include_document: bool = False,
+    ) -> Dict[str, Any]:
+        """Récupère les métadonnées JSON d'un flux entrant (facture fournisseur).
+
+        Télécharge un flux entrant depuis la PDP AFNOR et extrait les métadonnées
+        de la facture vers un format JSON unifié. Supporte les formats Factur-X, CII et UBL.
+
+        Args:
+            flow_id: Identifiant du flux (UUID)
+            include_document: Si True, inclut le document original encodé en base64
+
+        Returns:
+            Dict avec les métadonnées de la facture:
+                - flow_id: Identifiant du flux
+                - format_source: Format détecté (Factur-X, CII, UBL)
+                - ref_fournisseur: Numéro de facture fournisseur
+                - type_document: Code type (380=facture, 381=avoir, etc.)
+                - fournisseur: Dict avec nom, siret, numero_tva_intra
+                - site_facturation_nom: Nom du destinataire
+                - site_facturation_siret: SIRET du destinataire
+                - date_de_piece: Date de la facture (YYYY-MM-DD)
+                - date_reglement: Date d'échéance (YYYY-MM-DD)
+                - devise: Code devise (EUR, USD, etc.)
+                - montant_ht: Montant HT
+                - montant_tva: Montant TVA
+                - montant_ttc: Montant TTC
+                - document_base64: (si include_document=True) Document encodé
+                - document_content_type: (si include_document=True) Type MIME
+                - document_filename: (si include_document=True) Nom de fichier
+
+        Raises:
+            FactPulseNotFoundError: Si le flux n'existe pas
+            FactPulseValidationError: Si le format n'est pas supporté
+
+        Example:
+            >>> # Récupérer les métadonnées d'une facture entrante
+            >>> facture = client.obtenir_facture_entrante_afnor("550e8400-e29b-41d4-a716-446655440000")
+            >>> print(f"Fournisseur: {facture['fournisseur']['nom']}")
+            >>> print(f"Montant TTC: {facture['montant_ttc']} {facture['devise']}")
+
+            >>> # Avec le document original
+            >>> facture = client.obtenir_facture_entrante_afnor(flow_id, include_document=True)
+            >>> if facture.get('document_base64'):
+            ...     import base64
+            ...     pdf_bytes = base64.b64decode(facture['document_base64'])
+            ...     with open(facture['document_filename'], 'wb') as f:
+            ...         f.write(pdf_bytes)
+        """
+        params = {}
+        if include_document:
+            params["include_document"] = "true"
+
+        response = self._make_afnor_request(
+            "GET",
+            f"/flux-entrants/{flow_id}",
+            params=params if params else None,
+        )
+        return response.json()
+
     def healthcheck_afnor(self) -> Dict[str, Any]:
         """Vérifie la disponibilité du Flow Service AFNOR.
 
