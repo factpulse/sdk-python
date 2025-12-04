@@ -110,8 +110,8 @@ class TestFactureFacturX(unittest.TestCase):
                     ],
                 notes = [
                     factpulse.models.note.Note(
-                        subject_code = '', 
-                        content = '', )
+                        code_sujet = '', 
+                        contenu = '', )
                     ],
                 commentaire = '',
                 id_utilisateur_courant = 56,

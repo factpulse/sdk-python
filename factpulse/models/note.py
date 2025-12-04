@@ -26,9 +26,9 @@ class Note(BaseModel):
     """
     Note de facture (IncludedNote en Factur-X).  Les notes obligatoires pour BR-FR-05 sont : - PMT : Indemnité forfaitaire pour frais de recouvrement - PMD : Pénalités de retard - AAB : Escompte pour paiement anticipé
     """ # noqa: E501
-    subject_code: Optional[StrictStr] = Field(default=None, alias="subjectCode")
-    content: StrictStr
-    __properties: ClassVar[List[str]] = ["subjectCode", "content"]
+    code_sujet: Optional[StrictStr] = Field(default=None, alias="codeSujet")
+    contenu: StrictStr
+    __properties: ClassVar[List[str]] = ["codeSujet", "contenu"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -69,10 +69,10 @@ class Note(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if subject_code (nullable) is None
+        # set to None if code_sujet (nullable) is None
         # and model_fields_set contains the field
-        if self.subject_code is None and "subject_code" in self.model_fields_set:
-            _dict['subjectCode'] = None
+        if self.code_sujet is None and "code_sujet" in self.model_fields_set:
+            _dict['codeSujet'] = None
 
         return _dict
 
@@ -86,8 +86,8 @@ class Note(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "subjectCode": obj.get("subjectCode"),
-            "content": obj.get("content")
+            "codeSujet": obj.get("codeSujet"),
+            "contenu": obj.get("contenu")
         })
         return _obj
 

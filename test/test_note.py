@@ -35,12 +35,12 @@ class TestNote(unittest.TestCase):
         model = Note()
         if include_optional:
             return Note(
-                subject_code = '',
-                content = ''
+                code_sujet = '',
+                contenu = ''
             )
         else:
             return Note(
-                content = '',
+                contenu = '',
         )
         """
 
