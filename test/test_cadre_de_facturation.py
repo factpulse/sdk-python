@@ -36,6 +36,7 @@ class TestCadreDeFacturation(unittest.TestCase):
         if include_optional:
             return CadreDeFacturation(
                 code_cadre_facturation = 'A1_FACTURE_FOURNISSEUR',
+                nature_operation = 'B1',
                 code_service_valideur = '',
                 code_structure_valideur = ''
             )

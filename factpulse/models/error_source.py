@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class ErrorSource(str, Enum):
     """
-    Source de l'erreur pour faciliter le diagnostic.
+    ErrorSource
     """
 
     """

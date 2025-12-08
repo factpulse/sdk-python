@@ -661,8 +661,9 @@ class FactPulseClient:
                     errors = []
                     if statut.resultat:
                         result = statut.resultat.to_dict() if hasattr(statut.resultat, "to_dict") else dict(statut.resultat)
-                        error_msg = result.get("message_erreur", error_msg)
-                        for err in result.get("erreurs", []):
+                        # Format AFNOR: errorMessage, details
+                        error_msg = result.get("errorMessage", error_msg)
+                        for err in result.get("details", []):
                             errors.append(ValidationErrorDetail(
                                 level=err.get("level", ""),
                                 item=err.get("item", ""),
@@ -784,7 +785,8 @@ class FactPulseClient:
                 poll_result = self.poll_task(task_id, timeout)
 
                 if poll_result.get("statut") == "ERREUR":
-                    error_msg = poll_result.get("message_erreur", "Erreur de validation")
+                    # Format AFNOR: errorMessage, details
+                    error_msg = poll_result.get("errorMessage", "Erreur de validation")
                     errors = [
                         ValidationErrorDetail(
                             level=e.get("level", ""),
@@ -793,7 +795,7 @@ class FactPulseClient:
                             source=e.get("source"),
                             code=e.get("code"),
                         )
-                        for e in poll_result.get("erreurs", [])
+                        for e in poll_result.get("details", [])
                     ]
                     raise FactPulseValidationError(error_msg, errors)
 

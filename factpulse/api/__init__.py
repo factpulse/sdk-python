@@ -8,4 +8,5 @@ from factpulse.api.chorus_pro_api import ChorusProApi
 from factpulse.api.sant_api import SantApi
 from factpulse.api.traitement_facture_api import TraitementFactureApi
 from factpulse.api.utilisateur_api import UtilisateurApi
+from factpulse.api.vrification_pdfxml_api import VrificationPDFXMLApi
 

@@ -63,6 +63,7 @@ class TestFactureFacturX(unittest.TestCase):
                     adresse_postale = null, ),
                 cadre_de_facturation = factpulse.models.cadre_de_facturation.CadreDeFacturation(
                     code_cadre_facturation = 'A1_FACTURE_FOURNISSEUR', 
+                    nature_operation = null, 
                     code_service_valideur = '', 
                     code_structure_valideur = '', ),
                 references = factpulse.models.references.References(
@@ -106,7 +107,9 @@ class TestFactureFacturX(unittest.TestCase):
                         montant_tva = null, 
                         taux = '', 
                         taux_manuel = null, 
-                        categorie = null, )
+                        categorie = null, 
+                        motif_exoneration = '', 
+                        code_vatex = '', )
                     ],
                 notes = [
                     factpulse.models.note.Note(
@@ -153,6 +156,7 @@ class TestFactureFacturX(unittest.TestCase):
                     adresse_postale = null, ),
                 cadre_de_facturation = factpulse.models.cadre_de_facturation.CadreDeFacturation(
                     code_cadre_facturation = 'A1_FACTURE_FOURNISSEUR', 
+                    nature_operation = null, 
                     code_service_valideur = '', 
                     code_structure_valideur = '', ),
                 references = factpulse.models.references.References(

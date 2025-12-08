@@ -1,6 +1,5 @@
 # ErrorLevel
 
-Niveau de gravité d'une erreur (aligné sur AFNOR AcknowledgementDetail).
 
 ## Enum
 

@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class CodeCadreFacturation(str, Enum):
     """
-    CodeCadreFacturation
+    Codes Chorus Pro pour le cadre de facturation (usage B2G).
     """
 
     """

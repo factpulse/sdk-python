@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "2.0.35"
+__version__ = "2.0.36"
 
 # Define package exports
 __all__ = [
@@ -25,6 +25,7 @@ __all__ = [
     "SantApi",
     "TraitementFactureApi",
     "UtilisateurApi",
+    "VrificationPDFXMLApi",
     "ApiResponse",
     "ApiClient",
     "Configuration",
@@ -37,9 +38,11 @@ __all__ = [
     "APIError",
     "AdresseElectronique",
     "AdressePostale",
+    "BoundingBoxSchema",
     "CadreDeFacturation",
     "CategorieTVA",
     "CertificateInfoResponse",
+    "ChampVerifieSchema",
     "ChorusProCredentials",
     "CodeCadreFacturation",
     "CodeRaisonReduction",
@@ -53,12 +56,15 @@ __all__ = [
     "Destination",
     "DestinationAFNOR",
     "DestinationChorusPro",
+    "DimensionPageSchema",
+    "DirectionFlux",
     "DonneesFactureSimplifiees",
     "ErrorLevel",
     "ErrorSource",
     "FactureEnrichieInfo",
     "FactureEntrante",
     "FactureFacturX",
+    "FluxResume",
     "FormatFacture",
     "FormatSortie",
     "Fournisseur",
@@ -85,23 +91,33 @@ __all__ = [
     "MontantTvaLigne",
     "MontantTvaTotal",
     "MontantUnitaireHt",
+    "NatureOperation",
     "Note",
+    "NoteObligatoireSchema",
     "ObtenirIdChorusProRequest",
     "ObtenirIdChorusProResponse",
     "OptionsProcessing",
     "PDFFacturXInfo",
+    "PDPCredentials",
     "ParametresSignature",
     "ParametresStructure",
     "PieceJointeComplementaire",
     "ProfilAPI",
+    "ProfilFlux",
     "Quantite",
     "RechercherServicesResponse",
     "RechercherStructureRequest",
     "RechercherStructureResponse",
     "References",
+    "ReponseHealthcheckAFNOR",
+    "ReponseRechercheFlux",
+    "ReponseSoumissionFlux",
     "ReponseTache",
     "ReponseValidationErreur",
     "ReponseValidationSucces",
+    "ReponseVerificationSucces",
+    "RequeteRechercheFlux",
+    "RequeteSoumissionFlux",
     "ResultatAFNOR",
     "ResultatChorusPro",
     "ResultatValidationPDFAPI",
@@ -112,13 +128,17 @@ __all__ = [
     "SoumettreFactureCompleteResponse",
     "SoumettreFactureRequest",
     "SoumettreFactureResponse",
+    "StatutAcquittement",
     "StatutCelery",
+    "StatutChampAPI",
     "StatutFacture",
     "StatutTache",
     "StructureInfo",
+    "SyntaxeFlux",
     "Tauxmanuel",
     "TypeDocument",
     "TypeFacture",
+    "TypeFlux",
     "TypeTVA",
     "Unite",
     "ValidationError",
@@ -134,6 +154,7 @@ from factpulse.api.chorus_pro_api import ChorusProApi as ChorusProApi
 from factpulse.api.sant_api import SantApi as SantApi
 from factpulse.api.traitement_facture_api import TraitementFactureApi as TraitementFactureApi
 from factpulse.api.utilisateur_api import UtilisateurApi as UtilisateurApi
+from factpulse.api.vrification_pdfxml_api import VrificationPDFXMLApi as VrificationPDFXMLApi
 
 # import ApiClient
 from factpulse.api_response import ApiResponse as ApiResponse
@@ -150,9 +171,11 @@ from factpulse.exceptions import ApiException as ApiException
 from factpulse.models.api_error import APIError as APIError
 from factpulse.models.adresse_electronique import AdresseElectronique as AdresseElectronique
 from factpulse.models.adresse_postale import AdressePostale as AdressePostale
+from factpulse.models.bounding_box_schema import BoundingBoxSchema as BoundingBoxSchema
 from factpulse.models.cadre_de_facturation import CadreDeFacturation as CadreDeFacturation
 from factpulse.models.categorie_tva import CategorieTVA as CategorieTVA
 from factpulse.models.certificate_info_response import CertificateInfoResponse as CertificateInfoResponse
+from factpulse.models.champ_verifie_schema import ChampVerifieSchema as ChampVerifieSchema
 from factpulse.models.chorus_pro_credentials import ChorusProCredentials as ChorusProCredentials
 from factpulse.models.code_cadre_facturation import CodeCadreFacturation as CodeCadreFacturation
 from factpulse.models.code_raison_reduction import CodeRaisonReduction as CodeRaisonReduction
@@ -166,12 +189,15 @@ from factpulse.models.destinataire import Destinataire as Destinataire
 from factpulse.models.destination import Destination as Destination
 from factpulse.models.destination_afnor import DestinationAFNOR as DestinationAFNOR
 from factpulse.models.destination_chorus_pro import DestinationChorusPro as DestinationChorusPro
+from factpulse.models.dimension_page_schema import DimensionPageSchema as DimensionPageSchema
+from factpulse.models.direction_flux import DirectionFlux as DirectionFlux
 from factpulse.models.donnees_facture_simplifiees import DonneesFactureSimplifiees as DonneesFactureSimplifiees
 from factpulse.models.error_level import ErrorLevel as ErrorLevel
 from factpulse.models.error_source import ErrorSource as ErrorSource
 from factpulse.models.facture_enrichie_info import FactureEnrichieInfo as FactureEnrichieInfo
 from factpulse.models.facture_entrante import FactureEntrante as FactureEntrante
 from factpulse.models.facture_factur_x import FactureFacturX as FactureFacturX
+from factpulse.models.flux_resume import FluxResume as FluxResume
 from factpulse.models.format_facture import FormatFacture as FormatFacture
 from factpulse.models.format_sortie import FormatSortie as FormatSortie
 from factpulse.models.fournisseur import Fournisseur as Fournisseur
@@ -198,23 +224,33 @@ from factpulse.models.montant_tva import MontantTva as MontantTva
 from factpulse.models.montant_tva_ligne import MontantTvaLigne as MontantTvaLigne
 from factpulse.models.montant_tva_total import MontantTvaTotal as MontantTvaTotal
 from factpulse.models.montant_unitaire_ht import MontantUnitaireHt as MontantUnitaireHt
+from factpulse.models.nature_operation import NatureOperation as NatureOperation
 from factpulse.models.note import Note as Note
+from factpulse.models.note_obligatoire_schema import NoteObligatoireSchema as NoteObligatoireSchema
 from factpulse.models.obtenir_id_chorus_pro_request import ObtenirIdChorusProRequest as ObtenirIdChorusProRequest
 from factpulse.models.obtenir_id_chorus_pro_response import ObtenirIdChorusProResponse as ObtenirIdChorusProResponse
 from factpulse.models.options_processing import OptionsProcessing as OptionsProcessing
 from factpulse.models.pdf_factur_x_info import PDFFacturXInfo as PDFFacturXInfo
+from factpulse.models.pdp_credentials import PDPCredentials as PDPCredentials
 from factpulse.models.parametres_signature import ParametresSignature as ParametresSignature
 from factpulse.models.parametres_structure import ParametresStructure as ParametresStructure
 from factpulse.models.piece_jointe_complementaire import PieceJointeComplementaire as PieceJointeComplementaire
 from factpulse.models.profil_api import ProfilAPI as ProfilAPI
+from factpulse.models.profil_flux import ProfilFlux as ProfilFlux
 from factpulse.models.quantite import Quantite as Quantite
 from factpulse.models.rechercher_services_response import RechercherServicesResponse as RechercherServicesResponse
 from factpulse.models.rechercher_structure_request import RechercherStructureRequest as RechercherStructureRequest
 from factpulse.models.rechercher_structure_response import RechercherStructureResponse as RechercherStructureResponse
 from factpulse.models.references import References as References
+from factpulse.models.reponse_healthcheck_afnor import ReponseHealthcheckAFNOR as ReponseHealthcheckAFNOR
+from factpulse.models.reponse_recherche_flux import ReponseRechercheFlux as ReponseRechercheFlux
+from factpulse.models.reponse_soumission_flux import ReponseSoumissionFlux as ReponseSoumissionFlux
 from factpulse.models.reponse_tache import ReponseTache as ReponseTache
 from factpulse.models.reponse_validation_erreur import ReponseValidationErreur as ReponseValidationErreur
 from factpulse.models.reponse_validation_succes import ReponseValidationSucces as ReponseValidationSucces
+from factpulse.models.reponse_verification_succes import ReponseVerificationSucces as ReponseVerificationSucces
+from factpulse.models.requete_recherche_flux import RequeteRechercheFlux as RequeteRechercheFlux
+from factpulse.models.requete_soumission_flux import RequeteSoumissionFlux as RequeteSoumissionFlux
 from factpulse.models.resultat_afnor import ResultatAFNOR as ResultatAFNOR
 from factpulse.models.resultat_chorus_pro import ResultatChorusPro as ResultatChorusPro
 from factpulse.models.resultat_validation_pdfapi import ResultatValidationPDFAPI as ResultatValidationPDFAPI
@@ -225,13 +261,17 @@ from factpulse.models.soumettre_facture_complete_request import SoumettreFacture
 from factpulse.models.soumettre_facture_complete_response import SoumettreFactureCompleteResponse as SoumettreFactureCompleteResponse
 from factpulse.models.soumettre_facture_request import SoumettreFactureRequest as SoumettreFactureRequest
 from factpulse.models.soumettre_facture_response import SoumettreFactureResponse as SoumettreFactureResponse
+from factpulse.models.statut_acquittement import StatutAcquittement as StatutAcquittement
 from factpulse.models.statut_celery import StatutCelery as StatutCelery
+from factpulse.models.statut_champ_api import StatutChampAPI as StatutChampAPI
 from factpulse.models.statut_facture import StatutFacture as StatutFacture
 from factpulse.models.statut_tache import StatutTache as StatutTache
 from factpulse.models.structure_info import StructureInfo as StructureInfo
+from factpulse.models.syntaxe_flux import SyntaxeFlux as SyntaxeFlux
 from factpulse.models.tauxmanuel import Tauxmanuel as Tauxmanuel
 from factpulse.models.type_document import TypeDocument as TypeDocument
 from factpulse.models.type_facture import TypeFacture as TypeFacture
+from factpulse.models.type_flux import TypeFlux as TypeFlux
 from factpulse.models.type_tva import TypeTVA as TypeTVA
 from factpulse.models.unite import Unite as Unite
 from factpulse.models.validation_error import ValidationError as ValidationError

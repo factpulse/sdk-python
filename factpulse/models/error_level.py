@@ -20,7 +20,7 @@ from typing_extensions import Self
 
 class ErrorLevel(str, Enum):
     """
-    Niveau de gravité d'une erreur (aligné sur AFNOR AcknowledgementDetail).
+    ErrorLevel
     """
 
     """

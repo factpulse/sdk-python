@@ -1,6 +1,6 @@
 # LigneDeTVA
 
-Représente une ligne de totalisation par taux de TVA.
+Représente une ligne de totalisation par taux de TVA.  Pour les exonérations (catégories E, AE, K, G, O), les champs `motif_exoneration` et `code_vatex` sont requis selon EN16931.
 
 ## Properties
 
@@ -11,6 +11,8 @@ Name | Type | Description | Notes
 **taux** | **str** |  | [optional] 
 **taux_manuel** | [**Tauxmanuel**](Tauxmanuel.md) |  | [optional] 
 **categorie** | [**CategorieTVA**](CategorieTVA.md) |  | [optional] 
+**motif_exoneration** | **str** |  | [optional] 
+**code_vatex** | **str** |  | [optional] 
 
 ## Example
 

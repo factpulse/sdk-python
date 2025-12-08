@@ -20,17 +20,19 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.code_cadre_facturation import CodeCadreFacturation
+from factpulse.models.nature_operation import NatureOperation
 from typing import Optional, Set
 from typing_extensions import Self
 
 class CadreDeFacturation(BaseModel):
     """
-    Définit le cadre de facturation (ex: A1 pour une facture fournisseur).
+    Définit le cadre de facturation.  - code_cadre_facturation: Code Chorus Pro (A1, A2, A9, A12) - utilisé pour B2G - nature_operation: Nature de l'opération (B1, S1, M1, etc.) - prioritaire pour Factur-X  Si nature_operation est fourni, il sera utilisé directement dans le XML Factur-X (BT-23). Sinon, le code sera déduit de code_cadre_facturation via un mapping automatique.  Exemple:     >>> cadre = CadreDeFacturation(     ...     code_cadre_facturation=CodeCadreFacturation.A1_FACTURE_FOURNISSEUR,     ...     nature_operation=NatureOperation.BIENS  # Force B1 au lieu de S1     ... )
     """ # noqa: E501
     code_cadre_facturation: CodeCadreFacturation = Field(alias="codeCadreFacturation")
+    nature_operation: Optional[NatureOperation] = Field(default=None, alias="natureOperation")
     code_service_valideur: Optional[StrictStr] = Field(default=None, alias="codeServiceValideur")
     code_structure_valideur: Optional[StrictStr] = Field(default=None, alias="codeStructureValideur")
-    __properties: ClassVar[List[str]] = ["codeCadreFacturation", "codeServiceValideur", "codeStructureValideur"]
+    __properties: ClassVar[List[str]] = ["codeCadreFacturation", "natureOperation", "codeServiceValideur", "codeStructureValideur"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -71,6 +73,11 @@ class CadreDeFacturation(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if nature_operation (nullable) is None
+        # and model_fields_set contains the field
+        if self.nature_operation is None and "nature_operation" in self.model_fields_set:
+            _dict['natureOperation'] = None
+
         # set to None if code_service_valideur (nullable) is None
         # and model_fields_set contains the field
         if self.code_service_valideur is None and "code_service_valideur" in self.model_fields_set:
@@ -94,6 +101,7 @@ class CadreDeFacturation(BaseModel):
 
         _obj = cls.model_validate({
             "codeCadreFacturation": obj.get("codeCadreFacturation"),
+            "natureOperation": obj.get("natureOperation"),
             "codeServiceValideur": obj.get("codeServiceValideur"),
             "codeStructureValideur": obj.get("codeStructureValideur")
         })

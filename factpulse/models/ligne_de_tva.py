@@ -28,14 +28,16 @@ from typing_extensions import Self
 
 class LigneDeTVA(BaseModel):
     """
-    Représente une ligne de totalisation par taux de TVA.
+    Représente une ligne de totalisation par taux de TVA.  Pour les exonérations (catégories E, AE, K, G, O), les champs `motif_exoneration` et `code_vatex` sont requis selon EN16931.
     """ # noqa: E501
     montant_base_ht: MontantBaseHt = Field(alias="montantBaseHt")
     montant_tva: MontantTvaLigne = Field(alias="montantTva")
     taux: Optional[StrictStr] = None
     taux_manuel: Optional[Tauxmanuel] = Field(default=None, alias="tauxManuel")
     categorie: Optional[CategorieTVA] = None
-    __properties: ClassVar[List[str]] = ["montantBaseHt", "montantTva", "taux", "tauxManuel", "categorie"]
+    motif_exoneration: Optional[StrictStr] = Field(default=None, alias="motifExoneration")
+    code_vatex: Optional[StrictStr] = Field(default=None, alias="codeVatex")
+    __properties: ClassVar[List[str]] = ["montantBaseHt", "montantTva", "taux", "tauxManuel", "categorie", "motifExoneration", "codeVatex"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -95,6 +97,16 @@ class LigneDeTVA(BaseModel):
         if self.categorie is None and "categorie" in self.model_fields_set:
             _dict['categorie'] = None
 
+        # set to None if motif_exoneration (nullable) is None
+        # and model_fields_set contains the field
+        if self.motif_exoneration is None and "motif_exoneration" in self.model_fields_set:
+            _dict['motifExoneration'] = None
+
+        # set to None if code_vatex (nullable) is None
+        # and model_fields_set contains the field
+        if self.code_vatex is None and "code_vatex" in self.model_fields_set:
+            _dict['codeVatex'] = None
+
         return _dict
 
     @classmethod
@@ -111,7 +123,9 @@ class LigneDeTVA(BaseModel):
             "montantTva": MontantTvaLigne.from_dict(obj["montantTva"]) if obj.get("montantTva") is not None else None,
             "taux": obj.get("taux"),
             "tauxManuel": Tauxmanuel.from_dict(obj["tauxManuel"]) if obj.get("tauxManuel") is not None else None,
-            "categorie": obj.get("categorie")
+            "categorie": obj.get("categorie"),
+            "motifExoneration": obj.get("motifExoneration"),
+            "codeVatex": obj.get("codeVatex")
         })
         return _obj
 

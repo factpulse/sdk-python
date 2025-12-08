@@ -39,7 +39,9 @@ class TestLigneDeTVA(unittest.TestCase):
                 montant_tva = None,
                 taux = '',
                 taux_manuel = None,
-                categorie = 'S'
+                categorie = 'S',
+                motif_exoneration = '',
+                code_vatex = ''
             )
         else:
             return LigneDeTVA(

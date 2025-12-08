@@ -376,7 +376,7 @@ Voir la documentation du schéma `StatutCelery` pour les détails.
 Quand `statut="SUCCESS"`, le champ `resultat` contient :
 - `statut` : "SUCCES" ou "ERREUR" (résultat métier)
 - `chemin_fichier` : Chemin du fichier généré (si succès)
-- `message_erreur` : Détails de l'erreur (si échec métier)
+- `errorCode`, `errorMessage`, `details` : Format AFNOR (si échec métier)
 
 ## Usage
 
@@ -1191,7 +1191,7 @@ while True:
         print(f"Conforme: {resultat['est_conforme']}")
         break
     elif status["statut"] == "FAILURE":
-        print(f"Erreur: {status['resultat']['message_erreur']}")
+        print(f"Erreur: {status['resultat']['errorMessage']}")
         break
 
     time.sleep(2)  # Attendre 2 secondes avant le prochain check
