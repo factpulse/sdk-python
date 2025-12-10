@@ -21,6 +21,7 @@ Name | Type | Description | Notes
 **commentaire** | **str** |  | [optional] 
 **id_utilisateur_courant** | **int** |  | [optional] 
 **pieces_jointes_complementaires** | [**List[PieceJointeComplementaire]**](PieceJointeComplementaire.md) |  | [optional] 
+**beneficiaire** | [**Beneficiaire**](Beneficiaire.md) |  | [optional] 
 
 ## Example
 

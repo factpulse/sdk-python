@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from factpulse.models.beneficiaire import Beneficiaire
 from factpulse.models.cadre_de_facturation import CadreDeFacturation
 from factpulse.models.destinataire import Destinataire
 from factpulse.models.fournisseur import Fournisseur
@@ -51,7 +52,8 @@ class FactureFacturX(BaseModel):
     commentaire: Optional[StrictStr] = None
     id_utilisateur_courant: Optional[StrictInt] = Field(default=None, alias="idUtilisateurCourant")
     pieces_jointes_complementaires: Optional[List[PieceJointeComplementaire]] = Field(default=None, alias="piecesJointesComplementaires")
-    __properties: ClassVar[List[str]] = ["numeroFacture", "dateEcheancePaiement", "dateFacture", "modeDepot", "destinataire", "fournisseur", "cadreDeFacturation", "references", "montantTotal", "lignesDePoste", "lignesDeTva", "notes", "commentaire", "idUtilisateurCourant", "piecesJointesComplementaires"]
+    beneficiaire: Optional[Beneficiaire] = None
+    __properties: ClassVar[List[str]] = ["numeroFacture", "dateEcheancePaiement", "dateFacture", "modeDepot", "destinataire", "fournisseur", "cadreDeFacturation", "references", "montantTotal", "lignesDePoste", "lignesDeTva", "notes", "commentaire", "idUtilisateurCourant", "piecesJointesComplementaires", "beneficiaire"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -135,6 +137,9 @@ class FactureFacturX(BaseModel):
                 if _item_pieces_jointes_complementaires:
                     _items.append(_item_pieces_jointes_complementaires.to_dict())
             _dict['piecesJointesComplementaires'] = _items
+        # override the default output from pydantic by calling `to_dict()` of beneficiaire
+        if self.beneficiaire:
+            _dict['beneficiaire'] = self.beneficiaire.to_dict()
         # set to None if commentaire (nullable) is None
         # and model_fields_set contains the field
         if self.commentaire is None and "commentaire" in self.model_fields_set:
@@ -149,6 +154,11 @@ class FactureFacturX(BaseModel):
         # and model_fields_set contains the field
         if self.pieces_jointes_complementaires is None and "pieces_jointes_complementaires" in self.model_fields_set:
             _dict['piecesJointesComplementaires'] = None
+
+        # set to None if beneficiaire (nullable) is None
+        # and model_fields_set contains the field
+        if self.beneficiaire is None and "beneficiaire" in self.model_fields_set:
+            _dict['beneficiaire'] = None
 
         return _dict
 
@@ -176,7 +186,8 @@ class FactureFacturX(BaseModel):
             "notes": [Note.from_dict(_item) for _item in obj["notes"]] if obj.get("notes") is not None else None,
             "commentaire": obj.get("commentaire"),
             "idUtilisateurCourant": obj.get("idUtilisateurCourant"),
-            "piecesJointesComplementaires": [PieceJointeComplementaire.from_dict(_item) for _item in obj["piecesJointesComplementaires"]] if obj.get("piecesJointesComplementaires") is not None else None
+            "piecesJointesComplementaires": [PieceJointeComplementaire.from_dict(_item) for _item in obj["piecesJointesComplementaires"]] if obj.get("piecesJointesComplementaires") is not None else None,
+            "beneficiaire": Beneficiaire.from_dict(obj["beneficiaire"]) if obj.get("beneficiaire") is not None else None
         })
         return _obj
 

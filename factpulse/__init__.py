@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "2.0.38"
+__version__ = "2.0.39"
 
 # Define package exports
 __all__ = [
@@ -38,6 +38,7 @@ __all__ = [
     "APIError",
     "AdresseElectronique",
     "AdressePostale",
+    "Beneficiaire",
     "BoundingBoxSchema",
     "CadreDeFacturation",
     "CategorieTVA",
@@ -171,6 +172,7 @@ from factpulse.exceptions import ApiException as ApiException
 from factpulse.models.api_error import APIError as APIError
 from factpulse.models.adresse_electronique import AdresseElectronique as AdresseElectronique
 from factpulse.models.adresse_postale import AdressePostale as AdressePostale
+from factpulse.models.beneficiaire import Beneficiaire as Beneficiaire
 from factpulse.models.bounding_box_schema import BoundingBoxSchema as BoundingBoxSchema
 from factpulse.models.cadre_de_facturation import CadreDeFacturation as CadreDeFacturation
 from factpulse.models.categorie_tva import CategorieTVA as CategorieTVA

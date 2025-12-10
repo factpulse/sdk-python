@@ -16,6 +16,7 @@
 from factpulse.models.api_error import APIError
 from factpulse.models.adresse_electronique import AdresseElectronique
 from factpulse.models.adresse_postale import AdressePostale
+from factpulse.models.beneficiaire import Beneficiaire
 from factpulse.models.bounding_box_schema import BoundingBoxSchema
 from factpulse.models.cadre_de_facturation import CadreDeFacturation
 from factpulse.models.categorie_tva import CategorieTVA

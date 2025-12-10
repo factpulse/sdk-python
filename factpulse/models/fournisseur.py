@@ -28,7 +28,7 @@ class Fournisseur(BaseModel):
     """
     Informations sur le fournisseur qui émet la facture.
     """ # noqa: E501
-    adresse_electronique: AdresseElectronique = Field(alias="adresseElectronique")
+    adresse_electronique: Optional[AdresseElectronique] = Field(alias="adresseElectronique")
     id_fournisseur: StrictInt = Field(alias="idFournisseur")
     code_coordonnees_bancaires_fournisseur: Optional[StrictInt] = Field(default=None, alias="codeCoordonneesBancairesFournisseur")
     id_service_fournisseur: Optional[StrictInt] = Field(default=None, alias="idServiceFournisseur")
@@ -85,6 +85,11 @@ class Fournisseur(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of adresse_postale
         if self.adresse_postale:
             _dict['adressePostale'] = self.adresse_postale.to_dict()
+        # set to None if adresse_electronique (nullable) is None
+        # and model_fields_set contains the field
+        if self.adresse_electronique is None and "adresse_electronique" in self.model_fields_set:
+            _dict['adresseElectronique'] = None
+
         # set to None if code_coordonnees_bancaires_fournisseur (nullable) is None
         # and model_fields_set contains the field
         if self.code_coordonnees_bancaires_fournisseur is None and "code_coordonnees_bancaires_fournisseur" in self.model_fields_set:

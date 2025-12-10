@@ -17,24 +17,44 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
 from factpulse.models.adresse_electronique import AdresseElectronique
-from factpulse.models.adresse_postale import AdressePostale
 from typing import Optional, Set
 from typing_extensions import Self
 
-class Destinataire(BaseModel):
+class Beneficiaire(BaseModel):
     """
-    Informations sur le destinataire de la facture (le client).
+    Informations sur le bénéficiaire du paiement (BG-10 / PayeeTradeParty).  Le bénéficiaire est la partie qui reçoit le paiement. Ce bloc est utilisé uniquement si le bénéficiaire est différent du vendeur (fournisseur).  **Cas d'usage principal** : Affacturage (factoring) Quand une facture est affacturée, le factor (société d'affacturage) devient le bénéficiaire du paiement à la place du fournisseur.  **Business Terms (EN16931)** : - BT-59 : Nom du bénéficiaire (obligatoire) - BT-60 : Identifiant du bénéficiaire (SIRET avec schemeID 0009) - BT-61 : Identifiant légal du bénéficiaire (SIREN avec schemeID 0002)  **Référence** : docs/guide_affacturage.md
     """ # noqa: E501
-    adresse_electronique: Optional[AdresseElectronique] = Field(alias="adresseElectronique")
-    code_service_executant: Optional[StrictStr] = Field(default=None, alias="codeServiceExecutant")
-    nom: Optional[StrictStr] = None
-    siren: Optional[StrictStr] = None
-    siret: Optional[StrictStr] = None
-    adresse_postale: Optional[AdressePostale] = Field(default=None, alias="adressePostale")
-    __properties: ClassVar[List[str]] = ["adresseElectronique", "codeServiceExecutant", "nom", "siren", "siret", "adressePostale"]
+    nom: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Nom du bénéficiaire (BT-59). Obligatoire.")
+    siret: Optional[Annotated[str, Field(strict=True)]] = None
+    siren: Optional[Annotated[str, Field(strict=True)]] = None
+    adresse_electronique: Optional[AdresseElectronique] = Field(default=None, alias="adresseElectronique")
+    iban: Optional[StrictStr] = None
+    bic: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["nom", "siret", "siren", "adresseElectronique", "iban", "bic"]
+
+    @field_validator('siret')
+    def siret_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"^\d{14}$", value):
+            raise ValueError(r"must validate the regular expression /^\d{14}$/")
+        return value
+
+    @field_validator('siren')
+    def siren_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"^\d{9}$", value):
+            raise ValueError(r"must validate the regular expression /^\d{9}$/")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -54,7 +74,7 @@ class Destinataire(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Destinataire from a JSON string"""
+        """Create an instance of Beneficiaire from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -78,44 +98,36 @@ class Destinataire(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of adresse_electronique
         if self.adresse_electronique:
             _dict['adresseElectronique'] = self.adresse_electronique.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of adresse_postale
-        if self.adresse_postale:
-            _dict['adressePostale'] = self.adresse_postale.to_dict()
-        # set to None if adresse_electronique (nullable) is None
+        # set to None if siret (nullable) is None
         # and model_fields_set contains the field
-        if self.adresse_electronique is None and "adresse_electronique" in self.model_fields_set:
-            _dict['adresseElectronique'] = None
-
-        # set to None if code_service_executant (nullable) is None
-        # and model_fields_set contains the field
-        if self.code_service_executant is None and "code_service_executant" in self.model_fields_set:
-            _dict['codeServiceExecutant'] = None
-
-        # set to None if nom (nullable) is None
-        # and model_fields_set contains the field
-        if self.nom is None and "nom" in self.model_fields_set:
-            _dict['nom'] = None
+        if self.siret is None and "siret" in self.model_fields_set:
+            _dict['siret'] = None
 
         # set to None if siren (nullable) is None
         # and model_fields_set contains the field
         if self.siren is None and "siren" in self.model_fields_set:
             _dict['siren'] = None
 
-        # set to None if siret (nullable) is None
+        # set to None if adresse_electronique (nullable) is None
         # and model_fields_set contains the field
-        if self.siret is None and "siret" in self.model_fields_set:
-            _dict['siret'] = None
+        if self.adresse_electronique is None and "adresse_electronique" in self.model_fields_set:
+            _dict['adresseElectronique'] = None
 
-        # set to None if adresse_postale (nullable) is None
+        # set to None if iban (nullable) is None
         # and model_fields_set contains the field
-        if self.adresse_postale is None and "adresse_postale" in self.model_fields_set:
-            _dict['adressePostale'] = None
+        if self.iban is None and "iban" in self.model_fields_set:
+            _dict['iban'] = None
+
+        # set to None if bic (nullable) is None
+        # and model_fields_set contains the field
+        if self.bic is None and "bic" in self.model_fields_set:
+            _dict['bic'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Destinataire from a dict"""
+        """Create an instance of Beneficiaire from a dict"""
         if obj is None:
             return None
 
@@ -123,12 +135,12 @@ class Destinataire(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "adresseElectronique": AdresseElectronique.from_dict(obj["adresseElectronique"]) if obj.get("adresseElectronique") is not None else None,
-            "codeServiceExecutant": obj.get("codeServiceExecutant"),
             "nom": obj.get("nom"),
-            "siren": obj.get("siren"),
             "siret": obj.get("siret"),
-            "adressePostale": AdressePostale.from_dict(obj["adressePostale"]) if obj.get("adressePostale") is not None else None
+            "siren": obj.get("siren"),
+            "adresseElectronique": AdresseElectronique.from_dict(obj["adresseElectronique"]) if obj.get("adresseElectronique") is not None else None,
+            "iban": obj.get("iban"),
+            "bic": obj.get("bic")
         })
         return _obj
 

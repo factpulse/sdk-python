@@ -10,6 +10,7 @@ docs/AFNORPDPPAFlowServiceApi.md
 docs/APIError.md
 docs/AdresseElectronique.md
 docs/AdressePostale.md
+docs/Beneficiaire.md
 docs/BoundingBoxSchema.md
 docs/CadreDeFacturation.md
 docs/CategorieTVA.md
@@ -139,6 +140,7 @@ factpulse/models/__init__.py
 factpulse/models/adresse_electronique.py
 factpulse/models/adresse_postale.py
 factpulse/models/api_error.py
+factpulse/models/beneficiaire.py
 factpulse/models/bounding_box_schema.py
 factpulse/models/cadre_de_facturation.py
 factpulse/models/categorie_tva.py
@@ -260,6 +262,7 @@ test/test_afnorpdppa_api.py
 test/test_afnorpdppa_directory_service_api.py
 test/test_afnorpdppa_flow_service_api.py
 test/test_api_error.py
+test/test_beneficiaire.py
 test/test_bounding_box_schema.py
 test/test_cadre_de_facturation.py
 test/test_categorie_tva.py

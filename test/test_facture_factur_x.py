@@ -40,18 +40,14 @@ class TestFactureFacturX(unittest.TestCase):
                 date_facture = '',
                 mode_depot = 'SAISIE_API',
                 destinataire = factpulse.models.destinataire.Destinataire(
-                    adresse_electronique = factpulse.models.adresse_electronique.AdresseElectronique(
-                        identifiant = '', 
-                        scheme_id = null, ), 
+                    adresse_electronique = null, 
                     code_service_executant = '', 
                     nom = '', 
                     siren = '', 
                     siret = '', 
                     adresse_postale = null, ),
                 fournisseur = factpulse.models.fournisseur.Fournisseur(
-                    adresse_electronique = factpulse.models.adresse_electronique.AdresseElectronique(
-                        identifiant = '', 
-                        scheme_id = null, ), 
+                    adresse_electronique = null, 
                     id_fournisseur = 56, 
                     code_coordonnees_bancaires_fournisseur = 56, 
                     id_service_fournisseur = 56, 
@@ -69,7 +65,7 @@ class TestFactureFacturX(unittest.TestCase):
                 references = factpulse.models.references.References(
                     devise_facture = 'EUR', 
                     mode_paiement = 'CHEQUE', 
-                    type_facture = 'FACTURE', 
+                    type_facture = '380', 
                     type_tva = 'TVA_SUR_DEBIT', 
                     numero_marche = '', 
                     motif_exoneration_tva = '', 
@@ -125,7 +121,14 @@ class TestFactureFacturX(unittest.TestCase):
                         id_liaison = 56, 
                         numero_ligne_facture = 56, 
                         type = '', )
-                    ]
+                    ],
+                beneficiaire = factpulse.models.beneficiaire.Beneficiaire(
+                    nom = '0', 
+                    siret = '04807288800152', 
+                    siren = '048072888', 
+                    adresse_electronique = null, 
+                    iban = '', 
+                    bic = '', )
             )
         else:
             return FactureFacturX(
@@ -133,18 +136,14 @@ class TestFactureFacturX(unittest.TestCase):
                 date_echeance_paiement = '',
                 mode_depot = 'SAISIE_API',
                 destinataire = factpulse.models.destinataire.Destinataire(
-                    adresse_electronique = factpulse.models.adresse_electronique.AdresseElectronique(
-                        identifiant = '', 
-                        scheme_id = null, ), 
+                    adresse_electronique = null, 
                     code_service_executant = '', 
                     nom = '', 
                     siren = '', 
                     siret = '', 
                     adresse_postale = null, ),
                 fournisseur = factpulse.models.fournisseur.Fournisseur(
-                    adresse_electronique = factpulse.models.adresse_electronique.AdresseElectronique(
-                        identifiant = '', 
-                        scheme_id = null, ), 
+                    adresse_electronique = null, 
                     id_fournisseur = 56, 
                     code_coordonnees_bancaires_fournisseur = 56, 
                     id_service_fournisseur = 56, 
@@ -162,7 +161,7 @@ class TestFactureFacturX(unittest.TestCase):
                 references = factpulse.models.references.References(
                     devise_facture = 'EUR', 
                     mode_paiement = 'CHEQUE', 
-                    type_facture = 'FACTURE', 
+                    type_facture = '380', 
                     type_tva = 'TVA_SUR_DEBIT', 
                     numero_marche = '', 
                     motif_exoneration_tva = '', 

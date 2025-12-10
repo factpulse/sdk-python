@@ -12,7 +12,7 @@ Ce script démontre toutes les fonctionnalités du SDK avec les bonnes pratiques
 - Workflow complet de facturation
 
 Auteur: FactPulse
-Version: 2.0.38
+Version: 2.0.39
 """
 
 import logging
@@ -37,6 +37,7 @@ from factpulse_helpers import (
     adresse_electronique,
     fournisseur,
     destinataire,
+    beneficiaire,  # Pour l'affacturage (BG-10 / PayeeTradeParty)
     # Exceptions
     FactPulseAuthError,
     FactPulsePollingTimeout,
@@ -403,12 +404,35 @@ def exemple_helpers_construction_facture():
     )
     print(f"  Destinataire Chorus Pro: {dest_chorus}")
 
+    # -------------------------------------------------------------------------
+    # Helper beneficiaire() - construit les données du factor (affacturage)
+    # -------------------------------------------------------------------------
+    print("\n--- beneficiaire() ---")
+    print("Crée un bénéficiaire (factor) pour l'affacturage.")
+    print("Signature: beneficiaire(nom, siret=None, siren=None, iban=None, bic=None)")
+    print("\nL'affacturage permet de céder une créance à un factor qui reçoit le paiement.")
+    print("Types de documents affacturés: 393 (facture), 396 (avoir), 501, 502, 472, 473")
+
+    factor = beneficiaire(
+        nom="FACTOR SAS",
+        siret="30000000700033",
+        iban="FR76 3000 4000 0500 0012 3456 789",
+    )
+    print(f"  Factor (auto-calcul SIREN): {factor}")
+    # Le helper calcule automatiquement:
+    # - siren: 300000007 (extrait du SIRET)
+
+    # Exemple minimal (juste le nom)
+    factor_minimal = beneficiaire(nom="Mon Factor")
+    print(f"  Factor minimal: {factor_minimal}")
+
     return {
         "montant_total": total,
         "lignes": [ligne1, ligne2, ligne3, ligne4, ligne5],
         "tva": [tva1, tva2],
         "fournisseur": fourn,
         "destinataire": dest,
+        "beneficiaire": factor,
     }
 
 
@@ -493,6 +517,113 @@ def construire_facture_complete():
             a_payer=3000.00,
         ),
         "commentaire": "Facture pour prestations du mois en cours",
+    }
+
+
+def construire_facture_affacturee():
+    """Construit une facture affacturée complète avec tous les helpers.
+
+    L'affacturage permet de céder une créance à un factor qui reçoit le paiement.
+    Pour une facture affacturée, il faut:
+    1. Un type de document affacturé (393 = facture affacturée)
+    2. Un bénéficiaire (le factor)
+    3. Une note ACC avec la mention de subrogation
+    4. L'IBAN du factor (pas celui du fournisseur)
+    """
+
+    # Dates
+    date_facture = date.today().isoformat()
+    date_echeance = (date.today() + timedelta(days=30)).isoformat()
+
+    return {
+        "numeroFacture": f"FAC-{date.today().year}-001-AFF",
+        "dateFacture": date_facture,
+        "dateEcheancePaiement": date_echeance,
+        "modeDepot": "DEPOT_PDF_API",
+        # Fournisseur (émetteur de la facture)
+        "fournisseur": fournisseur(
+            nom="Ma Société SAS",
+            siret="12345678900001",
+            adresse_ligne1="123 Rue de la République",
+            code_postal="75001",
+            ville="Paris",
+            # Note: l'IBAN du fournisseur n'est pas utilisé pour le paiement
+            # car le bénéficiaire (factor) a son propre IBAN
+        ),
+        # Destinataire (client qui paie)
+        "destinataire": destinataire(
+            nom="Client SARL",
+            siret="98765432109876",
+            adresse_ligne1="456 Avenue des Champs",
+            code_postal="69001",
+            ville="Lyon",
+        ),
+        # BÉNÉFICIAIRE (factor) - reçoit le paiement
+        "beneficiaire": beneficiaire(
+            nom="FACTOR SAS",
+            siret="30000000700033",
+            iban="FR76 3000 4000 0500 0012 3456 789",  # IBAN du factor
+            bic="BNPAFRPP",
+        ),
+        # Références - TYPE AFFACTURÉ
+        "references": {
+            "typeFacture": "393",  # 393 = Facture affacturée (voir BR-FR-04)
+            "typeTva": "TVA_SUR_DEBIT",
+            "modePaiement": "VIREMENT",
+            "deviseFacture": "EUR",
+            "numeroBonCommande": "CMD-2025-042",
+        },
+        # Notes obligatoires incluant ACC (subrogation)
+        "notes": [
+            {
+                "contenu": "Taux de pénalités de retard : 3 fois le taux d'intérêt légal",
+                "codeObjet": "PMD",  # Pénalités de retard
+            },
+            {
+                "contenu": "Indemnité forfaitaire pour frais de recouvrement : 40 €",
+                "codeObjet": "PMT",  # Modalités de paiement
+            },
+            {
+                "contenu": "Pas d'escompte pour paiement anticipé",
+                "codeObjet": "AAB",  # Escompte
+            },
+            {
+                # NOTE ACC OBLIGATOIRE pour l'affacturage (BR-FR-05)
+                "contenu": "Cette créance a été cédée à FACTOR SAS. "
+                "Tout paiement doit être effectué à l'ordre du factor. "
+                "Contrat n° AFF-2025-001",
+                "codeObjet": "ACC",  # Clause de subrogation factoring
+            },
+        ],
+        # Lignes de poste
+        "lignesDePoste": [
+            ligne_de_poste(
+                numero=1,
+                denomination="Prestation de conseil",
+                quantite=5,
+                montant_unitaire_ht=200.00,
+                montant_total_ligne_ht=1000.00,
+                taux_tva_manuel="20.00",
+                unite="HEURE",
+            ),
+        ],
+        # Lignes de TVA
+        "lignesDeTva": [
+            ligne_de_tva(
+                montant_base_ht=1000.00,
+                montant_tva=200.00,
+                taux_manuel="20.00",
+                categorie="S",
+            ),
+        ],
+        # Montant total
+        "montantTotal": montant_total(
+            ht=1000.00,
+            tva=200.00,
+            ttc=1200.00,
+            a_payer=1200.00,
+        ),
+        "commentaire": "Facture affacturée - Paiement à effectuer au factor",
     }
 
 

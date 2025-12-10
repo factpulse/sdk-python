@@ -493,6 +493,85 @@ def destinataire(
     return result
 
 
+def beneficiaire(
+    nom: str,
+    siret: Optional[str] = None,
+    siren: Optional[str] = None,
+    iban: Optional[str] = None,
+    bic: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Crée un bénéficiaire (factor) pour l'affacturage.
+
+    Le bénéficiaire (BG-10 / PayeeTradeParty) est utilisé lorsque le paiement
+    doit être effectué à un tiers différent du fournisseur, typiquement un
+    factor (société d'affacturage).
+
+    Pour les factures affacturées, il faut aussi:
+    - Utiliser un type de document affacturé (393, 396, 501, 502, 472, 473)
+    - Ajouter une note ACC avec la mention de subrogation
+    - L'IBAN du bénéficiaire sera utilisé pour le paiement
+
+    Args:
+        nom: Raison sociale du factor (BT-59)
+        siret: Numéro SIRET du factor (BT-60, schemeID 0009) - 14 chiffres
+        siren: Numéro SIREN du factor (BT-61, schemeID 0002) - calculé depuis SIRET si absent
+        iban: IBAN du factor - pour recevoir le paiement
+        bic: BIC de la banque du factor (optionnel)
+
+    Returns:
+        Dict prêt à être utilisé dans une facture affacturée
+
+    Example:
+        >>> # Facture affacturée simple
+        >>> factor = beneficiaire(
+        ...     nom="FACTOR SAS",
+        ...     siret="30000000700033",
+        ...     iban="FR76 3000 4000 0500 0012 3456 789",
+        ... )
+        >>> facture = {
+        ...     "numeroFacture": "FAC-2025-001-AFF",
+        ...     "fournisseur": fournisseur(...),
+        ...     "destinataire": destinataire(...),
+        ...     "beneficiaire": factor,  # Le factor reçoit le paiement
+        ...     "references": {
+        ...         "typeFacture": "393",  # Facture affacturée
+        ...         ...
+        ...     },
+        ...     "notes": [
+        ...         {
+        ...             "contenu": "Cette créance a été cédée à FACTOR SAS. Contrat n° AFF-2025",
+        ...             "codeObjet": "ACC",  # Code subrogation obligatoire
+        ...         },
+        ...         ...
+        ...     ],
+        ...     ...
+        ... }
+
+    See Also:
+        - Guide affacturage: docs/guide_affacturage.md
+        - Types de documents affacturés: 393 (facture), 396 (avoir), 501, 502, 472, 473
+        - Note ACC: Clause de subrogation factoring (obligatoire)
+    """
+    # Auto-calcul SIREN depuis SIRET
+    if not siren and siret and len(siret) == 14:
+        siren = siret[:9]
+
+    result: Dict[str, Any] = {
+        "nom": nom,
+    }
+
+    if siret:
+        result["siret"] = siret
+    if siren:
+        result["siren"] = siren
+    if iban:
+        result["iban"] = iban
+    if bic:
+        result["bic"] = bic
+
+    return result
+
+
 class FactPulseClient:
     """Client simplifié pour l'API FactPulse.
 

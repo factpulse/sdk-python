@@ -12,40 +12,48 @@
 """  # noqa: E501
 
 
-from __future__ import annotations
-import json
-from enum import Enum
-from typing_extensions import Self
+import unittest
 
+from factpulse.models.beneficiaire import Beneficiaire
 
-class TypeFacture(str, Enum):
-    """
-    Type de document selon BR-FR-04 (codes UNTDID 1001).  Cette énumération contient tous les types de factures autorisés par la réforme française de la facturation électronique (BR-FR-04).  Les valeurs correspondent aux codes UNTDID 1001 utilisés dans le XML Factur-X.  Catégories: - Factures simples: 380, 389, 393, 501 - Factures d'acompte: 386, 500 - Factures rectificatives: 384, 471, 472, 473 - Avoirs: 261, 262, 381, 396, 502, 503
-    """
+class TestBeneficiaire(unittest.TestCase):
+    """Beneficiaire unit test stubs"""
 
-    """
-    allowed enum values
-    """
-    ENUM_380 = '380'
-    ENUM_389 = '389'
-    ENUM_393 = '393'
-    ENUM_501 = '501'
-    ENUM_386 = '386'
-    ENUM_500 = '500'
-    ENUM_384 = '384'
-    ENUM_471 = '471'
-    ENUM_472 = '472'
-    ENUM_473 = '473'
-    ENUM_381 = '381'
-    ENUM_261 = '261'
-    ENUM_262 = '262'
-    ENUM_396 = '396'
-    ENUM_502 = '502'
-    ENUM_503 = '503'
+    def setUp(self):
+        pass
 
-    @classmethod
-    def from_json(cls, json_str: str) -> Self:
-        """Create an instance of TypeFacture from a JSON string"""
-        return cls(json.loads(json_str))
+    def tearDown(self):
+        pass
 
+    def make_instance(self, include_optional) -> Beneficiaire:
+        """Test Beneficiaire
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `Beneficiaire`
+        """
+        model = Beneficiaire()
+        if include_optional:
+            return Beneficiaire(
+                nom = '0',
+                siret = '04807288800152',
+                siren = '048072888',
+                adresse_electronique = factpulse.models.adresse_electronique.AdresseElectronique(
+                    identifiant = '', 
+                    scheme_id = null, ),
+                iban = '',
+                bic = ''
+            )
+        else:
+            return Beneficiaire(
+                nom = '0',
+        )
+        """
 
+    def testBeneficiaire(self):
+        """Test Beneficiaire"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
+
+if __name__ == '__main__':
+    unittest.main()

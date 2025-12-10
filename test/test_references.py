@@ -37,7 +37,7 @@ class TestReferences(unittest.TestCase):
             return References(
                 devise_facture = 'EUR',
                 mode_paiement = 'CHEQUE',
-                type_facture = 'FACTURE',
+                type_facture = '380',
                 type_tva = 'TVA_SUR_DEBIT',
                 numero_marche = '',
                 motif_exoneration_tva = '',
@@ -47,7 +47,7 @@ class TestReferences(unittest.TestCase):
         else:
             return References(
                 mode_paiement = 'CHEQUE',
-                type_facture = 'FACTURE',
+                type_facture = '380',
                 type_tva = 'TVA_SUR_DEBIT',
         )
         """
