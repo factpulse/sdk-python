@@ -772,7 +772,67 @@ class FactPulseClient:
                     self.reset_auth()
                     continue
 
-                response.raise_for_status()
+                # Gérer les erreurs HTTP avec extraction du corps de réponse
+                if response.status_code >= 400:
+                    error_body = None
+                    try:
+                        error_body = response.json()
+                    except Exception:
+                        error_body = {"detail": response.text or f"HTTP {response.status_code}"}
+
+                    # Log détaillé de l'erreur
+                    logger.error("Erreur API %d: %s", response.status_code, error_body)
+
+                    # Extraire les détails d'erreur au format standardisé
+                    errors = []
+                    error_msg = f"Erreur HTTP {response.status_code}"
+
+                    if isinstance(error_body, dict):
+                        # Format FastAPI/Pydantic: {"detail": [{"loc": [...], "msg": "...", "type": "..."}]}
+                        if "detail" in error_body:
+                            detail = error_body["detail"]
+                            if isinstance(detail, list):
+                                # Liste d'erreurs de validation Pydantic
+                                error_msg = "Erreur de validation"
+                                for err in detail:
+                                    if isinstance(err, dict):
+                                        loc = err.get("loc", [])
+                                        loc_str = " -> ".join(str(l) for l in loc) if loc else ""
+                                        errors.append(ValidationErrorDetail(
+                                            level="ERROR",
+                                            item=loc_str,
+                                            reason=err.get("msg", str(err)),
+                                            source="validation",
+                                            code=err.get("type"),
+                                        ))
+                            elif isinstance(detail, str):
+                                error_msg = detail
+                        # Format AFNOR: {"errorMessage": "...", "details": [...]}
+                        elif "errorMessage" in error_body:
+                            error_msg = error_body["errorMessage"]
+                            for err in error_body.get("details", []):
+                                errors.append(ValidationErrorDetail(
+                                    level=err.get("level", "ERROR"),
+                                    item=err.get("item", ""),
+                                    reason=err.get("reason", ""),
+                                    source=err.get("source"),
+                                    code=err.get("code"),
+                                ))
+
+                    # Pour les erreurs 422 (validation), ne pas réessayer
+                    if response.status_code == 422:
+                        raise FactPulseValidationError(error_msg, errors)
+
+                    # Pour les autres erreurs client (4xx), ne pas réessayer non plus
+                    if 400 <= response.status_code < 500:
+                        raise FactPulseValidationError(error_msg, errors)
+
+                    # Pour les erreurs serveur (5xx), réessayer si possible
+                    if attempt < self.max_retries:
+                        logger.warning("Erreur serveur %d (tentative %d/%d)", response.status_code, attempt + 1, self.max_retries + 1)
+                        continue
+                    raise FactPulseValidationError(error_msg, errors)
+
                 result = response.json()
                 task_id = result.get("id_tache")
 
@@ -805,10 +865,11 @@ class FactPulseClient:
                 raise FactPulseValidationError("Le résultat ne contient pas de contenu")
 
             except requests.RequestException as e:
+                # Erreurs réseau (connexion, timeout, etc.) - pas d'erreur HTTP
                 if attempt < self.max_retries:
                     logger.warning("Erreur réseau (tentative %d/%d): %s", attempt + 1, self.max_retries + 1, e)
                     continue
-                raise FactPulseValidationError(f"Erreur API: {e}")
+                raise FactPulseValidationError(f"Erreur réseau: {e}")
 
         raise FactPulseValidationError("Échec après toutes les tentatives")
 
