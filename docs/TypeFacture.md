@@ -4,37 +4,37 @@ Type de document selon BR-FR-04 (codes UNTDID 1001).  Cette énumération contie
 
 ## Enum
 
-* `ENUM_380` (value: `'380'`)
+* `FACTURE` (value: `'380'`)
 
-* `ENUM_389` (value: `'389'`)
+* `FACTURE_AUTOFACTUREE` (value: `'389'`)
 
-* `ENUM_393` (value: `'393'`)
+* `FACTURE_AFFACTUREE` (value: `'393'`)
 
-* `ENUM_501` (value: `'501'`)
+* `FACTURE_AUTOFACTUREE_AFFACTUREE` (value: `'501'`)
 
-* `ENUM_386` (value: `'386'`)
+* `FACTURE_ACOMPTE` (value: `'386'`)
 
-* `ENUM_500` (value: `'500'`)
+* `FACTURE_ACOMPTE_AUTOFACTUREE` (value: `'500'`)
 
-* `ENUM_384` (value: `'384'`)
+* `FACTURE_RECTIFICATIVE` (value: `'384'`)
 
-* `ENUM_471` (value: `'471'`)
+* `FACTURE_RECTIFICATIVE_AUTOFACTUREE` (value: `'471'`)
 
-* `ENUM_472` (value: `'472'`)
+* `FACTURE_RECTIFICATIVE_AFFACTUREE` (value: `'472'`)
 
-* `ENUM_473` (value: `'473'`)
+* `FACTURE_RECTIFICATIVE_AUTOFACTUREE_AFFACTUREE` (value: `'473'`)
 
-* `ENUM_381` (value: `'381'`)
+* `AVOIR` (value: `'381'`)
 
-* `ENUM_261` (value: `'261'`)
+* `AVOIR_AUTOFACTURE` (value: `'261'`)
 
-* `ENUM_262` (value: `'262'`)
+* `AVOIR_REMISE_GLOBALE` (value: `'262'`)
 
-* `ENUM_396` (value: `'396'`)
+* `AVOIR_AFFACTURE` (value: `'396'`)
 
-* `ENUM_502` (value: `'502'`)
+* `AVOIR_AUTOFACTURE_AFFACTURE` (value: `'502'`)
 
-* `ENUM_503` (value: `'503'`)
+* `AVOIR_ACOMPTE` (value: `'503'`)
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
