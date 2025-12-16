@@ -12,7 +12,7 @@ Ce script démontre toutes les fonctionnalités du SDK avec les bonnes pratiques
 - Workflow complet de facturation
 
 Auteur: FactPulse
-Version: 2.0.41
+Version: 2.0.42
 """
 
 import logging

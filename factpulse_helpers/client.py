@@ -694,6 +694,53 @@ class FactPulseClient:
         self._api_client = None
         logger.info("Authentification réinitialisée")
 
+    def _request(
+        self,
+        method: str,
+        endpoint: str,
+        files: Optional[Dict] = None,
+        data: Optional[Dict] = None,
+        json_data: Optional[Dict] = None,
+    ) -> requests.Response:
+        """Effectue une requête HTTP vers l'API FactPulse.
+
+        Args:
+            method: Méthode HTTP (GET, POST, etc.)
+            endpoint: Endpoint relatif (ex: /traitement/valider-pdf-facturx)
+            files: Fichiers pour multipart/form-data
+            data: Données de formulaire
+            json_data: Données JSON
+
+        Returns:
+            Response de l'API
+
+        Raises:
+            FactPulseValidationError: En cas d'erreur API
+        """
+        self.ensure_authenticated()
+        url = f"{self.api_url}/api/v1{endpoint}"
+        headers = {"Authorization": f"Bearer {self._access_token}"}
+
+        try:
+            if files:
+                response = requests.request(method, url, files=files, data=data, headers=headers, timeout=60)
+            elif json_data:
+                response = requests.request(method, url, json=json_data, headers=headers, timeout=30)
+            else:
+                response = requests.request(method, url, data=data, headers=headers, timeout=30)
+        except requests.RequestException as e:
+            raise FactPulseValidationError(f"Erreur réseau: {e}")
+
+        if response.status_code >= 400:
+            try:
+                error_json = response.json()
+                error_msg = error_json.get("detail", error_json.get("errorMessage", str(error_json)))
+            except Exception:
+                error_msg = response.text or f"Erreur HTTP {response.status_code}"
+            raise FactPulseValidationError(f"Erreur API: {error_msg}")
+
+        return response
+
     def get_traitement_api(self) -> TraitementFactureApi:
         """Retourne l'API de traitement de factures."""
         self.ensure_authenticated()
