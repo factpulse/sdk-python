@@ -1730,25 +1730,44 @@ class FactPulseClient:
         self,
         pdf_path: Optional[str] = None,
         pdf_bytes: Optional[bytes] = None,
-        profil: str = "EN16931"
+        profil: Optional[str] = None,
+        use_verapdf: bool = False,
     ) -> Dict[str, Any]:
         """Valide un PDF Factur-X.
 
         Args:
             pdf_path: Chemin vers le fichier PDF (exclusif avec pdf_bytes)
             pdf_bytes: Contenu PDF en bytes (exclusif avec pdf_path)
-            profil: Profil Factur-X attendu (MINIMUM, BASIC, EN16931, EXTENDED)
+            profil: Profil Factur-X attendu (MINIMUM, BASIC, EN16931, EXTENDED).
+                Si None, le profil est auto-détecté depuis le XML embarqué.
+            use_verapdf: Active la validation stricte PDF/A avec VeraPDF (défaut: False).
+                - False: Validation rapide par métadonnées (~100ms)
+                - True: Validation stricte ISO 19005 avec 146+ règles (2-10s, recommandé en production)
 
         Returns:
-            Dict avec: est_conforme (bool), erreurs (list), avertissements (list), profil_detecte
+            Dict avec:
+                - est_conforme (bool): True si le PDF est conforme
+                - xml_present (bool): True si XML Factur-X embarqué
+                - xml_conforme (bool): True si XML valide selon Schematron
+                - profil_detecte (str): Profil détecté (MINIMUM, BASIC, EN16931, EXTENDED)
+                - erreurs_xml (list): Erreurs de validation XML
+                - pdfa_conforme (bool): True si conforme PDF/A
+                - version_pdfa (str): Version PDF/A détectée (ex: "PDF/A-3B")
+                - methode_validation_pdfa (str): "metadata" ou "verapdf"
+                - erreurs_pdfa (list): Erreurs de conformité PDF/A
 
         Example:
+            >>> # Validation avec auto-détection du profil
             >>> result = client.valider_pdf_facturx("facture.pdf")
+            >>> print(f"Profil détecté: {result['profil_detecte']}")
+
+            >>> # Validation stricte avec VeraPDF (recommandé en production)
+            >>> result = client.valider_pdf_facturx("facture.pdf", use_verapdf=True)
             >>> if result['est_conforme']:
             ...     print("PDF Factur-X valide!")
             >>> else:
-            ...     for err in result['erreurs']:
-            ...         print(f"Erreur: {err}")
+            ...     for err in result.get('erreurs_pdfa', []):
+            ...         print(f"Erreur PDF/A: {err}")
         """
         if pdf_path:
             with open(pdf_path, "rb") as f:
@@ -1757,7 +1776,9 @@ class FactPulseClient:
             raise ValueError("pdf_path ou pdf_bytes requis")
 
         files = {"fichier_pdf": ("facture.pdf", pdf_bytes, "application/pdf")}
-        data = {"profil": profil}
+        data: Dict[str, Any] = {"use_verapdf": str(use_verapdf).lower()}
+        if profil:
+            data["profil"] = profil
         response = self._request("POST", "/traitement/valider-pdf-facturx", files=files, data=data)
         return response.json()
 

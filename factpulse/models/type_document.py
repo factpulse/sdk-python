@@ -20,17 +20,17 @@ from typing_extensions import Self
 
 class TypeDocument(str, Enum):
     """
-    Types de documents commerciaux (UNTDID 1001).
+    Types de documents commerciaux (UNTDID 1001).  | Code | Nom | Description | |------|-----|-------------| | 380 | FACTURE | Facture commerciale | | 381 | AVOIR | Avoir | | 384 | FACTURE_RECTIFICATIVE | Facture rectificative | | 386 | ACOMPTE | Facture d'acompte | | 389 | AUTOFACTURATION | Facture auto-facturée |
     """
 
     """
     allowed enum values
     """
-    ENUM_380 = '380'
-    ENUM_381 = '381'
-    ENUM_384 = '384'
-    ENUM_386 = '386'
-    ENUM_389 = '389'
+    FACTURE = '380'
+    AVOIR = '381'
+    FACTURE_RECTIFICATIVE = '384'
+    ACOMPTE = '386'
+    AUTOFACTURATION = '389'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
