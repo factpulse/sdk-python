@@ -12,7 +12,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 import requests
 
 import factpulse
-from factpulse import ApiClient, Configuration, TraitementFactureApi
+from factpulse import ApiClient, Configuration, InvoiceProcessingApi
 
 from .exceptions import (
     FactPulseAuthError,
@@ -743,13 +743,13 @@ class FactPulseClient:
 
         return response
 
-    def get_traitement_api(self) -> TraitementFactureApi:
+    def get_processing_api(self) -> InvoiceProcessingApi:
         """Return the invoice processing API."""
         self.ensure_authenticated()
         config = Configuration(host=f"{self.api_url}/api/facturation")
         config.access_token = self._access_token
         self._api_client = ApiClient(configuration=config)
-        return TraitementFactureApi(api_client=self._api_client)
+        return InvoiceProcessingApi(api_client=self._api_client)
 
     def poll_task(self, task_id: str, timeout: Optional[int] = None, interval: Optional[int] = None) -> Dict[str, Any]:
         """Poll a task until completion."""
@@ -769,26 +769,26 @@ class FactPulseClient:
 
             try:
                 logger.debug("Polling task %s (elapsed: %.0fms)...", task_id, elapsed)
-                api = self.get_traitement_api()
-                status = api.obtenir_statut_tache_api_v1_traitement_taches_id_tache_statut_get(id_tache=task_id)
+                api = self.get_processing_api()
+                status = api.get_task_status_api_v1_processing_tasks_task_id_status_get(task_id=task_id)
                 logger.debug("Status response received: %s", status)
 
-                status_value = status.statut.value if hasattr(status.statut, "value") else str(status.statut)
+                status_value = status.status.value if hasattr(status.status, "value") else str(status.status)
                 logger.info("Task %s: status=%s (%.0fms)", task_id, status_value, elapsed)
 
                 if status_value == "SUCCESS":
                     logger.info("Task %s completed successfully", task_id)
-                    if status.resultat:
-                        if hasattr(status.resultat, "to_dict"):
-                            return status.resultat.to_dict()
-                        return dict(status.resultat)
+                    if status.result:
+                        if hasattr(status.result, "to_dict"):
+                            return status.result.to_dict()
+                        return dict(status.result)
                     return {}
 
                 if status_value == "FAILURE":
                     error_msg = "Unknown error"
                     errors = []
-                    if status.resultat:
-                        result = status.resultat.to_dict() if hasattr(status.resultat, "to_dict") else dict(status.resultat)
+                    if status.result:
+                        result = status.result.to_dict() if hasattr(status.result, "to_dict") else dict(status.result)
                         # AFNOR format: errorMessage, details
                         error_msg = result.get("errorMessage", error_msg)
                         for err in result.get("details", []):
