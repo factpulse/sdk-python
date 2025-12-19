@@ -164,20 +164,20 @@ def invoice_totals(
 ) -> Dict[str, Any]:
     """Create a simplified InvoiceTotals object.
 
-    Avoids having to use wrappers like MontantHtTotal, MontantTvaTotal, etc.
+    Avoids having to use wrappers like TotalNetAmount, VatAmount, etc.
     """
     result = {
-        "montantHtTotal": amount(total_excl_tax),
-        "montantTva": amount(total_vat),
-        "montantTtcTotal": amount(total_incl_tax),
-        "montantAPayer": amount(amount_due),
+        "totalNetAmount": amount(total_excl_tax),
+        "vatAmount": amount(total_vat),
+        "totalGrossAmount": amount(total_incl_tax),
+        "amountDue": amount(amount_due),
     }
     if discount_incl_tax is not None:
-        result["montantRemiseGlobaleTtc"] = amount(discount_incl_tax)
+        result["globalAllowanceAmount"] = amount(discount_incl_tax)
     if discount_reason is not None:
-        result["motifRemiseGlobaleTtc"] = discount_reason
+        result["globalAllowanceReason"] = discount_reason
     if prepayment is not None:
-        result["acompte"] = amount(prepayment)
+        result["prepayment"] = amount(prepayment)
     return result
 
 
@@ -225,31 +225,31 @@ def invoice_line(
         period_end_date: Billing period end date (YYYY-MM-DD)
     """
     result = {
-        "numero": line_number,
-        "denomination": description,
-        "quantite": amount(quantity),
-        "montantUnitaireHt": amount(unit_price_excl_tax),
-        "montantTotalLigneHt": amount(line_total_excl_tax),
-        "categorieTva": vat_category,
-        "unite": unit,
+        "lineNumber": line_number,
+        "itemName": description,
+        "quantity": amount(quantity),
+        "unitNetPrice": amount(unit_price_excl_tax),
+        "lineNetAmount": amount(line_total_excl_tax),
+        "vatCategory": vat_category,
+        "unit": unit,
     }
     # Either vat_rate_code (code) or vat_rate_value (value)
     if vat_rate_code is not None:
-        result["tauxTva"] = vat_rate_code
+        result["vatRate"] = vat_rate_code
     elif vat_rate_value is not None:
-        result["tauxTvaManuel"] = amount(vat_rate_value)
+        result["manualVatRate"] = amount(vat_rate_value)
     if reference is not None:
         result["reference"] = reference
     if discount_excl_tax is not None:
-        result["montantRemiseHt"] = amount(discount_excl_tax)
+        result["lineAllowanceAmount"] = amount(discount_excl_tax)
     if discount_reason_code is not None:
-        result["codeRaisonReduction"] = discount_reason_code
+        result["allowanceReasonCode"] = discount_reason_code
     if discount_reason is not None:
-        result["raisonReduction"] = discount_reason
+        result["allowanceReason"] = discount_reason
     if period_start_date is not None:
-        result["dateDebutPeriode"] = period_start_date
+        result["periodStartDate"] = period_start_date
     if period_end_date is not None:
-        result["dateFinPeriode"] = period_end_date
+        result["periodEndDate"] = period_end_date
     return result
 
 
@@ -277,15 +277,15 @@ def vat_line(
         category: VAT category (default: "S" for standard)
     """
     result = {
-        "montantBaseHt": amount(base_amount_excl_tax),
-        "montantTva": amount(vat_amount),
-        "categorie": category,
+        "taxableAmount": amount(base_amount_excl_tax),
+        "vatAmount": amount(vat_amount),
+        "category": category,
     }
     # Either rate_code (code) or rate_value (value)
     if rate_code is not None:
-        result["taux"] = rate_code
+        result["rate"] = rate_code
     elif rate_value is not None:
-        result["tauxManuel"] = amount(rate_value)
+        result["manualRate"] = amount(rate_value)
     return result
 
 
@@ -311,15 +311,15 @@ def postal_address(
         >>> address = postal_address("123 Example Street", "75001", "Paris")
     """
     result = {
-        "ligneUn": line1,
-        "codePostal": postal_code,
-        "nomVille": city,
-        "paysCodeIso": country,
+        "lineOne": line1,
+        "postalCode": postal_code,
+        "city": city,
+        "countryCode": country,
     }
     if line2:
-        result["ligneDeux"] = line2
+        result["lineTwo"] = line2
     if line3:
-        result["ligneTrois"] = line3
+        result["lineThree"] = line3
     return result
 
 
@@ -342,7 +342,7 @@ def electronic_address(
         >>> address = electronic_address("12345678901234", "0225")  # SIRET
     """
     return {
-        "identifiant": identifier,
+        "identifier": identifier,
         "schemeId": scheme_id,
     }
 
@@ -412,23 +412,23 @@ def supplier(
             pass  # Non-numeric SIREN, skip
 
     result: Dict[str, Any] = {
-        "nom": name,
-        "idFournisseur": supplier_id,
+        "name": name,
+        "supplierId": supplier_id,
         "siret": siret,
-        "adresseElectronique": electronic_address(siret, "0225"),
-        "adressePostale": postal_address(address_line1, postal_code, city, country, address_line2),
+        "electronicAddress": electronic_address(siret, "0225"),
+        "postalAddress": postal_address(address_line1, postal_code, city, country, address_line2),
     }
 
     if siren:
         result["siren"] = siren
     if vat_number:
-        result["numeroTvaIntra"] = vat_number
+        result["vatNumber"] = vat_number
     if iban:
         result["iban"] = iban
     if service_code:
-        result["idServiceFournisseur"] = service_code
+        result["supplierServiceId"] = service_code
     if bank_details_code:
-        result["codeCoordonnesBancairesFournisseur"] = bank_details_code
+        result["supplierBankDetailsCode"] = bank_details_code
 
     return result
 
@@ -479,16 +479,16 @@ def recipient(
         siren = siret[:9]
 
     result: Dict[str, Any] = {
-        "nom": name,
+        "name": name,
         "siret": siret,
-        "adresseElectronique": electronic_address(siret, "0225"),
-        "adressePostale": postal_address(address_line1, postal_code, city, country, address_line2),
+        "electronicAddress": electronic_address(siret, "0225"),
+        "postalAddress": postal_address(address_line1, postal_code, city, country, address_line2),
     }
 
     if siren:
         result["siren"] = siren
     if service_code:
-        result["codeServiceExecutant"] = service_code
+        result["executingServiceCode"] = service_code
 
     return result
 
@@ -557,7 +557,7 @@ def payee(
         siren = siret[:9]
 
     result: Dict[str, Any] = {
-        "nom": name,
+        "name": name,
     }
 
     if siret:
@@ -1965,8 +1965,8 @@ class FactPulseClient:
         response = self._request("POST", "/processing/sign-pdf", files=files, data=data)
         result = response.json()
 
-        # API returns JSON with pdf_signe_base64
-        pdf_signed_b64 = result.get("pdf_signe_base64")
+        # API returns JSON with signed_pdf_base64
+        pdf_signed_b64 = result.get("signed_pdf_base64")
         if not pdf_signed_b64:
             raise FactPulseValidationError("Invalid signature response")
 

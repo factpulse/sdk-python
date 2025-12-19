@@ -43,24 +43,24 @@ You can now create an invoice by providing only:
 **Simplified format example**:
 ```json
 {
-  "numero": "FACT-2025-001",
-  "emetteur": {
+  "number": "FACT-2025-001",
+  "sender": {
     "siret": "92019522900017",
     "iban": "FR7630001007941234567890185"
   },
-  "destinataire": {"siret": "35600000000048"},
-  "lignes": [
-    {"description": "Service", "quantite": 10, "prix_ht": 100.00, "tva": 20.0}
+  "recipient": {"siret": "35600000000048"},
+  "lines": [
+    {"description": "Service", "quantity": 10, "unitPrice": 100.00, "vatRate": 20.0}
   ]
 }
 ```
 
 **⚠️ Required fields (simplified format)**:
-- `numero`: Unique invoice number
-- `emetteur.siret`: Sender's SIRET (14 digits)
-- `emetteur.iban`: Bank account IBAN (no public API to retrieve it)
-- `destinataire.siret`: Recipient's SIRET
-- `lignes[]`: At least one invoice line
+- `number`: Unique invoice number
+- `sender.siret`: Sender's SIRET (14 digits)
+- `sender.iban`: Bank account IBAN (no public API to retrieve it)
+- `recipient.siret`: Recipient's SIRET
+- `lines[]`: At least one invoice line
 
 **What happens automatically with `auto_enrich=True`**:
 - ✅ Name enrichment from Chorus Pro API
