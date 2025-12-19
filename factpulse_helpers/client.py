@@ -1559,10 +1559,6 @@ class FactPulseClient:
         response = self._make_chorus_request("POST", "/structures/rechercher", json_data=body)
         return response.json()
 
-    # Backward compatibility alias
-    def rechercher_structure_chorus(self, *args, **kwargs) -> Dict[str, Any]:
-        """Alias for search_structure_chorus() (backward compatibility)."""
-        return self.search_structure_chorus(*args, **kwargs)
 
     def get_structure_details_chorus(self, structure_cpp_id: int) -> Dict[str, Any]:
         """Get details of a Chorus Pro structure.
@@ -1585,11 +1581,6 @@ class FactPulseClient:
         body = {"id_structure_cpp": structure_cpp_id}
         response = self._make_chorus_request("POST", "/structures/consulter", json_data=body)
         return response.json()
-
-    # Backward compatibility alias
-    def consulter_structure_chorus(self, *args, **kwargs) -> Dict[str, Any]:
-        """Alias for get_structure_details_chorus() (backward compatibility)."""
-        return self.get_structure_details_chorus(*args, **kwargs)
 
     def get_chorus_id_from_siret(
         self,
@@ -1620,11 +1611,6 @@ class FactPulseClient:
         response = self._make_chorus_request("POST", "/structures/obtenir-id-depuis-siret", json_data=body)
         return response.json()
 
-    # Backward compatibility alias
-    def obtenir_id_chorus_depuis_siret(self, *args, **kwargs) -> Dict[str, Any]:
-        """Alias for get_chorus_id_from_siret() (backward compatibility)."""
-        return self.get_chorus_id_from_siret(*args, **kwargs)
-
     def list_structure_services_chorus(self, structure_cpp_id: int) -> Dict[str, Any]:
         """List services of a Chorus Pro structure.
 
@@ -1642,11 +1628,6 @@ class FactPulseClient:
         """
         response = self._make_chorus_request("GET", f"/structures/{structure_cpp_id}/services")
         return response.json()
-
-    # Backward compatibility alias
-    def lister_services_structure_chorus(self, *args, **kwargs) -> Dict[str, Any]:
-        """Alias for list_structure_services_chorus() (backward compatibility)."""
-        return self.list_structure_services_chorus(*args, **kwargs)
 
     def submit_invoice_chorus(
         self,
@@ -1730,11 +1711,6 @@ class FactPulseClient:
         response = self._make_chorus_request("POST", "/factures/soumettre", json_data=body)
         return response.json()
 
-    # Backward compatibility alias
-    def soumettre_facture_chorus(self, *args, **kwargs) -> Dict[str, Any]:
-        """Alias for submit_invoice_chorus() (backward compatibility)."""
-        return self.submit_invoice_chorus(*args, **kwargs)
-
     def get_invoice_status_chorus(self, invoice_cpp_id: int) -> Dict[str, Any]:
         """Get status of a Chorus Pro invoice.
 
@@ -1751,11 +1727,6 @@ class FactPulseClient:
         body = {"identifiant_facture_cpp": invoice_cpp_id}
         response = self._make_chorus_request("POST", "/factures/consulter", json_data=body)
         return response.json()
-
-    # Backward compatibility alias
-    def consulter_facture_chorus(self, *args, **kwargs) -> Dict[str, Any]:
-        """Alias for get_invoice_status_chorus() (backward compatibility)."""
-        return self.get_invoice_status_chorus(*args, **kwargs)
 
     # ==================== AFNOR Directory ====================
 

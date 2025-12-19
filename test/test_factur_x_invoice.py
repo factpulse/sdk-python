@@ -14,10 +14,10 @@
 
 import unittest
 
-from factpulse.models.facture_factur_x import FactureFacturX
+from factpulse.models.factur_x_invoice import FacturXInvoice
 
-class TestFactureFacturX(unittest.TestCase):
-    """FactureFacturX unit test stubs"""
+class TestFacturXInvoice(unittest.TestCase):
+    """FacturXInvoice unit test stubs"""
 
     def setUp(self):
         pass
@@ -25,16 +25,16 @@ class TestFactureFacturX(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> FactureFacturX:
-        """Test FactureFacturX
+    def make_instance(self, include_optional) -> FacturXInvoice:
+        """Test FacturXInvoice
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `FactureFacturX`
+        # uncomment below to create an instance of `FacturXInvoice`
         """
-        model = FactureFacturX()
+        model = FacturXInvoice()
         if include_optional:
-            return FactureFacturX(
+            return FacturXInvoice(
                 invoice_number = '',
                 payment_due_date = '',
                 invoice_date = '',
@@ -131,7 +131,7 @@ class TestFactureFacturX(unittest.TestCase):
                     bic = '', )
             )
         else:
-            return FactureFacturX(
+            return FacturXInvoice(
                 invoice_number = '',
                 payment_due_date = '',
                 submission_mode = 'SAISIE_API',
@@ -178,8 +178,8 @@ class TestFactureFacturX(unittest.TestCase):
         )
         """
 
-    def testFactureFacturX(self):
-        """Test FactureFacturX"""
+    def testFacturXInvoice(self):
+        """Test FacturXInvoice"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

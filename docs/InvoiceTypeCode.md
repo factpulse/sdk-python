@@ -36,38 +36,6 @@ Document type according to BR-FR-04 (UNTDID 1001 codes).  | Code | Name | Descri
 
 * `PREPAYMENT_CREDIT_NOTE` (value: `'503'`)
 
-* `&#39;380&#39;2` (value: `'380'`)
-
-* `&#39;389&#39;2` (value: `'389'`)
-
-* `&#39;393&#39;2` (value: `'393'`)
-
-* `&#39;501&#39;2` (value: `'501'`)
-
-* `&#39;386&#39;2` (value: `'386'`)
-
-* `&#39;500&#39;2` (value: `'500'`)
-
-* `&#39;384&#39;2` (value: `'384'`)
-
-* `&#39;471&#39;2` (value: `'471'`)
-
-* `&#39;472&#39;2` (value: `'472'`)
-
-* `&#39;473&#39;2` (value: `'473'`)
-
-* `&#39;381&#39;2` (value: `'381'`)
-
-* `&#39;261&#39;2` (value: `'261'`)
-
-* `&#39;262&#39;2` (value: `'262'`)
-
-* `&#39;396&#39;2` (value: `'396'`)
-
-* `&#39;502&#39;2` (value: `'502'`)
-
-* `&#39;503&#39;2` (value: `'503'`)
-
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

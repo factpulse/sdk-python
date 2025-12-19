@@ -32,12 +32,6 @@ class UnitOfMeasure(str, Enum):
     KILOGRAMME = 'KILOGRAMME'
     LITRE = 'LITRE'
     FORFAIT = 'FORFAIT'
-    PIECE = 'PIECE'
-    HEURE = 'HEURE'
-    JOUR = 'JOUR'
-    KILOGRAMME = 'KILOGRAMME'
-    LITRE = 'LITRE'
-    FORFAIT = 'FORFAIT'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

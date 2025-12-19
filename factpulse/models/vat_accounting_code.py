@@ -30,10 +30,6 @@ class VATAccountingCode(str, Enum):
     TVA_SUR_ENCAISSEMENT = 'TVA_SUR_ENCAISSEMENT'
     EXONERATION = 'EXONERATION'
     SANS_TVA = 'SANS_TVA'
-    TVA_SUR_DEBIT = 'TVA_SUR_DEBIT'
-    TVA_SUR_ENCAISSEMENT = 'TVA_SUR_ENCAISSEMENT'
-    EXONERATION = 'EXONERATION'
-    SANS_TVA = 'SANS_TVA'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

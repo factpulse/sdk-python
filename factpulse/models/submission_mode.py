@@ -29,9 +29,6 @@ class SubmissionMode(str, Enum):
     SAISIE_API = 'SAISIE_API'
     DEPOT_PDF_API = 'DEPOT_PDF_API'
     DEPOT_PDF_SIGNE_API = 'DEPOT_PDF_SIGNE_API'
-    SAISIE_API = 'SAISIE_API'
-    DEPOT_PDF_API = 'DEPOT_PDF_API'
-    DEPOT_PDF_SIGNE_API = 'DEPOT_PDF_SIGNE_API'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

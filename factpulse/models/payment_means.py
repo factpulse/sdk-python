@@ -32,12 +32,6 @@ class PaymentMeans(str, Enum):
     ESPECE = 'ESPECE'
     AUTRE = 'AUTRE'
     REPORT = 'REPORT'
-    CHEQUE = 'CHEQUE'
-    PRELEVEMENT = 'PRELEVEMENT'
-    VIREMENT = 'VIREMENT'
-    ESPECE = 'ESPECE'
-    AUTRE = 'AUTRE'
-    REPORT = 'REPORT'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

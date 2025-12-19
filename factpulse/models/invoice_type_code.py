@@ -42,22 +42,6 @@ class InvoiceTypeCode(str, Enum):
     FACTORED_CREDIT_NOTE = '396'
     SELF_BILLED_FACTORED_CREDIT_NOTE = '502'
     PREPAYMENT_CREDIT_NOTE = '503'
-    '380'2 = '380'
-    '389'2 = '389'
-    '393'2 = '393'
-    '501'2 = '501'
-    '386'2 = '386'
-    '500'2 = '500'
-    '384'2 = '384'
-    '471'2 = '471'
-    '472'2 = '472'
-    '473'2 = '473'
-    '381'2 = '381'
-    '261'2 = '261'
-    '262'2 = '262'
-    '396'2 = '396'
-    '502'2 = '502'
-    '503'2 = '503'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

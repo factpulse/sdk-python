@@ -29,10 +29,10 @@ docs/ElectronicAddress.md
 docs/EnrichedInvoiceInfo.md
 docs/ErrorLevel.md
 docs/ErrorSource.md
+docs/FacturXInvoice.md
 docs/FacturXPDFInfo.md
 docs/FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.md
 docs/FactureElectroniqueRestApiSchemasProcessingChorusProCredentials.md
-docs/FactureFacturX.md
 docs/FieldStatus.md
 docs/FlowDirection.md
 docs/FlowProfile.md
@@ -160,10 +160,10 @@ factpulse/models/electronic_address.py
 factpulse/models/enriched_invoice_info.py
 factpulse/models/error_level.py
 factpulse/models/error_source.py
+factpulse/models/factur_x_invoice.py
 factpulse/models/factur_xpdf_info.py
 factpulse/models/facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials.py
 factpulse/models/facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
-factpulse/models/facture_factur_x.py
 factpulse/models/field_status.py
 factpulse/models/flow_direction.py
 factpulse/models/flow_profile.py
@@ -285,10 +285,10 @@ test/test_electronic_address.py
 test/test_enriched_invoice_info.py
 test/test_error_level.py
 test/test_error_source.py
+test/test_factur_x_invoice.py
 test/test_factur_xpdf_info.py
 test/test_facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials.py
 test/test_facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
-test/test_facture_factur_x.py
 test/test_field_status.py
 test/test_flow_direction.py
 test/test_flow_profile.py

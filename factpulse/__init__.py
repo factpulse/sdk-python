@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "3.0.3"
+__version__ = "3.0.4"
 
 # Define package exports
 __all__ = [
@@ -56,10 +56,10 @@ __all__ = [
     "EnrichedInvoiceInfo",
     "ErrorLevel",
     "ErrorSource",
+    "FacturXInvoice",
     "FacturXPDFInfo",
     "FactureElectroniqueRestApiSchemasChorusProChorusProCredentials",
     "FactureElectroniqueRestApiSchemasProcessingChorusProCredentials",
-    "FactureFacturX",
     "FieldStatus",
     "FlowDirection",
     "FlowProfile",
@@ -192,10 +192,10 @@ from factpulse.models.electronic_address import ElectronicAddress as ElectronicA
 from factpulse.models.enriched_invoice_info import EnrichedInvoiceInfo as EnrichedInvoiceInfo
 from factpulse.models.error_level import ErrorLevel as ErrorLevel
 from factpulse.models.error_source import ErrorSource as ErrorSource
+from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
 from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials as FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
 from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials as FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
-from factpulse.models.facture_factur_x import FactureFacturX as FactureFacturX
 from factpulse.models.field_status import FieldStatus as FieldStatus
 from factpulse.models.flow_direction import FlowDirection as FlowDirection
 from factpulse.models.flow_profile import FlowProfile as FlowProfile

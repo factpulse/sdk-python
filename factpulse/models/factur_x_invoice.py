@@ -33,7 +33,7 @@ from factpulse.models.vat_line import VATLine
 from typing import Optional, Set
 from typing_extensions import Self
 
-class FactureFacturX(BaseModel):
+class FacturXInvoice(BaseModel):
     """
     Data model for an invoice to be converted to Factur-X.
     """ # noqa: E501
@@ -73,7 +73,7 @@ class FactureFacturX(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FactureFacturX from a JSON string"""
+        """Create an instance of FacturXInvoice from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -164,7 +164,7 @@ class FactureFacturX(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FactureFacturX from a dict"""
+        """Create an instance of FacturXInvoice from a dict"""
         if obj is None:
             return None
 

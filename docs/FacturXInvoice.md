@@ -1,4 +1,4 @@
-# FactureFacturX
+# FacturXInvoice
 
 Data model for an invoice to be converted to Factur-X.
 
@@ -26,19 +26,19 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from factpulse.models.facture_factur_x import FactureFacturX
+from factpulse.models.factur_x_invoice import FacturXInvoice
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of FactureFacturX from a JSON string
-facture_factur_x_instance = FactureFacturX.from_json(json)
+# create an instance of FacturXInvoice from a JSON string
+factur_x_invoice_instance = FacturXInvoice.from_json(json)
 # print the JSON string representation of the object
-print(FactureFacturX.to_json())
+print(FacturXInvoice.to_json())
 
 # convert the object into a dict
-facture_factur_x_dict = facture_factur_x_instance.to_dict()
-# create an instance of FactureFacturX from a dict
-facture_factur_x_from_dict = FactureFacturX.from_dict(facture_factur_x_dict)
+factur_x_invoice_dict = factur_x_invoice_instance.to_dict()
+# create an instance of FacturXInvoice from a dict
+factur_x_invoice_from_dict = FacturXInvoice.from_dict(factur_x_invoice_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
