@@ -12,7 +12,7 @@ Ce script démontre toutes les fonctionnalités du SDK avec les bonnes pratiques
 - Workflow complet de facturation
 
 Auteur: FactPulse
-Version: 3.0.2
+Version: 3.0.3
 """
 
 import logging
@@ -1244,7 +1244,7 @@ def main():
     print("=" * 60)
     print("COMPREHENSIVE FACTPULSE PYTHON SDK EXAMPLE")
     print("=" * 60)
-    print("SDK Version: 3.0.2")
+    print("SDK Version: 3.0.3")
     print(f"API URL: {API_URL}")
 
     # Check credentials

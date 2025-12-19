@@ -23,7 +23,7 @@ from factpulse.models.celery_status import CeleryStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
-class TaskStatus(BaseModel):
+class AsyncTaskStatus(BaseModel):
     """
     Complete description of an async task status.  The `status` field indicates the Celery state of the task. When `status=\"SUCCESS\"`, check `result.status` for the business result (\"SUCCESS\" or \"ERROR\").
     """ # noqa: E501
@@ -50,7 +50,7 @@ class TaskStatus(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of TaskStatus from a JSON string"""
+        """Create an instance of AsyncTaskStatus from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -80,7 +80,7 @@ class TaskStatus(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of TaskStatus from a dict"""
+        """Create an instance of AsyncTaskStatus from a dict"""
         if obj is None:
             return None
 

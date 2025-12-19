@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "3.0.2"
+__version__ = "3.0.3"
 
 # Define package exports
 __all__ = [
@@ -44,6 +44,7 @@ __all__ = [
     "AcknowledgmentStatus",
     "AllowanceReasonCode",
     "AmountDue",
+    "AsyncTaskStatus",
     "BoundingBoxSchema",
     "CeleryStatus",
     "CertificateInfoResponse",
@@ -129,7 +130,6 @@ __all__ = [
     "SupplementaryAttachment",
     "Supplier",
     "TaskResponse",
-    "TaskStatus",
     "TaxableAmount",
     "TotalGrossAmount",
     "TotalNetAmount",
@@ -180,6 +180,7 @@ from factpulse.models.api_profile import APIProfile as APIProfile
 from factpulse.models.acknowledgment_status import AcknowledgmentStatus as AcknowledgmentStatus
 from factpulse.models.allowance_reason_code import AllowanceReasonCode as AllowanceReasonCode
 from factpulse.models.amount_due import AmountDue as AmountDue
+from factpulse.models.async_task_status import AsyncTaskStatus as AsyncTaskStatus
 from factpulse.models.bounding_box_schema import BoundingBoxSchema as BoundingBoxSchema
 from factpulse.models.celery_status import CeleryStatus as CeleryStatus
 from factpulse.models.certificate_info_response import CertificateInfoResponse as CertificateInfoResponse
@@ -265,7 +266,6 @@ from factpulse.models.submit_vat_amount import SubmitVatAmount as SubmitVatAmoun
 from factpulse.models.supplementary_attachment import SupplementaryAttachment as SupplementaryAttachment
 from factpulse.models.supplier import Supplier as Supplier
 from factpulse.models.task_response import TaskResponse as TaskResponse
-from factpulse.models.task_status import TaskStatus as TaskStatus
 from factpulse.models.taxable_amount import TaxableAmount as TaxableAmount
 from factpulse.models.total_gross_amount import TotalGrossAmount as TotalGrossAmount
 from factpulse.models.total_net_amount import TotalNetAmount as TotalNetAmount

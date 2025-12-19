@@ -22,6 +22,7 @@ from factpulse.models.api_profile import APIProfile
 from factpulse.models.acknowledgment_status import AcknowledgmentStatus
 from factpulse.models.allowance_reason_code import AllowanceReasonCode
 from factpulse.models.amount_due import AmountDue
+from factpulse.models.async_task_status import AsyncTaskStatus
 from factpulse.models.bounding_box_schema import BoundingBoxSchema
 from factpulse.models.celery_status import CeleryStatus
 from factpulse.models.certificate_info_response import CertificateInfoResponse
@@ -107,7 +108,6 @@ from factpulse.models.submit_vat_amount import SubmitVatAmount
 from factpulse.models.supplementary_attachment import SupplementaryAttachment
 from factpulse.models.supplier import Supplier
 from factpulse.models.task_response import TaskResponse
-from factpulse.models.task_status import TaskStatus
 from factpulse.models.taxable_amount import TaxableAmount
 from factpulse.models.total_gross_amount import TotalGrossAmount
 from factpulse.models.total_net_amount import TotalNetAmount

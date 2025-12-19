@@ -19,8 +19,8 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictBool, StrictBytes, StrictStr
 from typing import Optional, Tuple, Union
 from typing_extensions import Annotated
+from factpulse.models.async_task_status import AsyncTaskStatus
 from factpulse.models.task_response import TaskResponse
-from factpulse.models.task_status import TaskStatus
 from factpulse.models.verification_success_response import VerificationSuccessResponse
 
 from factpulse.api_client import ApiClient, RequestSerialized
@@ -57,7 +57,7 @@ class PDFXMLVerificationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> TaskStatus:
+    ) -> AsyncTaskStatus:
         """Get status of an asynchronous verification
 
         Retrieves the status and result of an asynchronous verification task.  **Possible statuses:** - `PENDING`: Task waiting in queue - `STARTED`: Task currently running - `SUCCESS`: Task completed successfully (see `result`) - `FAILURE`: System error (unhandled exception)  **Note:** The `result.status` field can be \"SUCCESS\" or \"ERROR\" independently of Celery status (which will always be SUCCESS if the task ran).
@@ -95,7 +95,7 @@ class PDFXMLVerificationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TaskStatus",
+            '200': "AsyncTaskStatus",
             '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
@@ -125,7 +125,7 @@ class PDFXMLVerificationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[TaskStatus]:
+    ) -> ApiResponse[AsyncTaskStatus]:
         """Get status of an asynchronous verification
 
         Retrieves the status and result of an asynchronous verification task.  **Possible statuses:** - `PENDING`: Task waiting in queue - `STARTED`: Task currently running - `SUCCESS`: Task completed successfully (see `result`) - `FAILURE`: System error (unhandled exception)  **Note:** The `result.status` field can be \"SUCCESS\" or \"ERROR\" independently of Celery status (which will always be SUCCESS if the task ran).
@@ -163,7 +163,7 @@ class PDFXMLVerificationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TaskStatus",
+            '200': "AsyncTaskStatus",
             '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
@@ -231,7 +231,7 @@ class PDFXMLVerificationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TaskStatus",
+            '200': "AsyncTaskStatus",
             '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
@@ -321,7 +321,7 @@ class PDFXMLVerificationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> TaskStatus:
+    ) -> AsyncTaskStatus:
         """Get status of an asynchronous verification
 
         Retrieves the status and result of an asynchronous verification task.  **Possible statuses:** - `PENDING`: Task waiting in queue - `STARTED`: Task currently running - `SUCCESS`: Task completed successfully (see `result`) - `FAILURE`: System error (unhandled exception)  **Note:** The `result.status` field can be \"SUCCESS\" or \"ERROR\" independently of Celery status (which will always be SUCCESS if the task ran).
@@ -359,7 +359,7 @@ class PDFXMLVerificationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TaskStatus",
+            '200': "AsyncTaskStatus",
             '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
@@ -389,7 +389,7 @@ class PDFXMLVerificationApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[TaskStatus]:
+    ) -> ApiResponse[AsyncTaskStatus]:
         """Get status of an asynchronous verification
 
         Retrieves the status and result of an asynchronous verification task.  **Possible statuses:** - `PENDING`: Task waiting in queue - `STARTED`: Task currently running - `SUCCESS`: Task completed successfully (see `result`) - `FAILURE`: System error (unhandled exception)  **Note:** The `result.status` field can be \"SUCCESS\" or \"ERROR\" independently of Celery status (which will always be SUCCESS if the task ran).
@@ -427,7 +427,7 @@ class PDFXMLVerificationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TaskStatus",
+            '200': "AsyncTaskStatus",
             '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
@@ -495,7 +495,7 @@ class PDFXMLVerificationApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TaskStatus",
+            '200': "AsyncTaskStatus",
             '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(

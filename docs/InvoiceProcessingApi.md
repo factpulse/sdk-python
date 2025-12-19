@@ -358,7 +358,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_task_status_api_v1_processing_tasks_task_id_status_get**
-> TaskStatus get_task_status_api_v1_processing_tasks_task_id_status_get(task_id)
+> AsyncTaskStatus get_task_status_api_v1_processing_tasks_task_id_status_get(task_id)
 
 Get task generation status
 
@@ -389,7 +389,7 @@ Poll this endpoint every 2-3 seconds until
 
 ```python
 import factpulse
-from factpulse.models.task_status import TaskStatus
+from factpulse.models.async_task_status import AsyncTaskStatus
 from factpulse.rest import ApiException
 from pprint import pprint
 
@@ -435,7 +435,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TaskStatus**](TaskStatus.md)
+[**AsyncTaskStatus**](AsyncTaskStatus.md)
 
 ### Authorization
 

@@ -14,10 +14,10 @@
 
 import unittest
 
-from factpulse.models.task_status import TaskStatus
+from factpulse.models.async_task_status import AsyncTaskStatus
 
-class TestTaskStatus(unittest.TestCase):
-    """TaskStatus unit test stubs"""
+class TestAsyncTaskStatus(unittest.TestCase):
+    """AsyncTaskStatus unit test stubs"""
 
     def setUp(self):
         pass
@@ -25,29 +25,29 @@ class TestTaskStatus(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> TaskStatus:
-        """Test TaskStatus
+    def make_instance(self, include_optional) -> AsyncTaskStatus:
+        """Test AsyncTaskStatus
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `TaskStatus`
+        # uncomment below to create an instance of `AsyncTaskStatus`
         """
-        model = TaskStatus()
+        model = AsyncTaskStatus()
         if include_optional:
-            return TaskStatus(
+            return AsyncTaskStatus(
                 task_id = '',
                 status = 'PENDING',
                 result = { }
             )
         else:
-            return TaskStatus(
+            return AsyncTaskStatus(
                 task_id = '',
                 status = 'PENDING',
         )
         """
 
-    def testTaskStatus(self):
-        """Test TaskStatus"""
+    def testAsyncTaskStatus(self):
+        """Test AsyncTaskStatus"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

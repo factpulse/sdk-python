@@ -19,13 +19,13 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictBool, StrictBytes, StrictStr
 from typing import Any, Optional, Tuple, Union
 from typing_extensions import Annotated
+from factpulse.models.async_task_status import AsyncTaskStatus
 from factpulse.models.generate_certificate_request import GenerateCertificateRequest
 from factpulse.models.generate_certificate_response import GenerateCertificateResponse
 from factpulse.models.pdf_validation_result_api import PDFValidationResultAPI
 from factpulse.models.submit_complete_invoice_request import SubmitCompleteInvoiceRequest
 from factpulse.models.submit_complete_invoice_response import SubmitCompleteInvoiceResponse
 from factpulse.models.task_response import TaskResponse
-from factpulse.models.task_status import TaskStatus
 from factpulse.models.validation_success_response import ValidationSuccessResponse
 
 from factpulse.api_client import ApiClient, RequestSerialized
@@ -685,7 +685,7 @@ class InvoiceProcessingApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> TaskStatus:
+    ) -> AsyncTaskStatus:
         """Get task generation status
 
         Retrieves the progress status of an invoice generation task.  ## Possible states  The `status` field uses the `CeleryStatus` enum with values: - **PENDING, STARTED, SUCCESS, FAILURE, RETRY**  See the `CeleryStatus` schema documentation for details.  ## Business result  When `status=\"SUCCESS\"`, the `result` field contains: - `status`: \"SUCCESS\" or \"ERROR\" (business result) - `content_b64`: Base64 encoded content (if success) - `errorCode`, `errorMessage`, `details`: AFNOR format (if business error)  ## Usage  Poll this endpoint every 2-3 seconds until `status` is `SUCCESS` or `FAILURE`.
@@ -723,7 +723,7 @@ class InvoiceProcessingApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TaskStatus",
+            '200': "AsyncTaskStatus",
             '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
@@ -753,7 +753,7 @@ class InvoiceProcessingApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[TaskStatus]:
+    ) -> ApiResponse[AsyncTaskStatus]:
         """Get task generation status
 
         Retrieves the progress status of an invoice generation task.  ## Possible states  The `status` field uses the `CeleryStatus` enum with values: - **PENDING, STARTED, SUCCESS, FAILURE, RETRY**  See the `CeleryStatus` schema documentation for details.  ## Business result  When `status=\"SUCCESS\"`, the `result` field contains: - `status`: \"SUCCESS\" or \"ERROR\" (business result) - `content_b64`: Base64 encoded content (if success) - `errorCode`, `errorMessage`, `details`: AFNOR format (if business error)  ## Usage  Poll this endpoint every 2-3 seconds until `status` is `SUCCESS` or `FAILURE`.
@@ -791,7 +791,7 @@ class InvoiceProcessingApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TaskStatus",
+            '200': "AsyncTaskStatus",
             '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(
@@ -859,7 +859,7 @@ class InvoiceProcessingApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "TaskStatus",
+            '200': "AsyncTaskStatus",
             '422': "HTTPValidationError",
         }
         response_data = self.api_client.call_api(

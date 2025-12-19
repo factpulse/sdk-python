@@ -16,6 +16,7 @@ docs/APIProfile.md
 docs/AcknowledgmentStatus.md
 docs/AllowanceReasonCode.md
 docs/AmountDue.md
+docs/AsyncTaskStatus.md
 docs/BoundingBoxSchema.md
 docs/CeleryStatus.md
 docs/CertificateInfoResponse.md
@@ -105,7 +106,6 @@ docs/SubmitVatAmount.md
 docs/SupplementaryAttachment.md
 docs/Supplier.md
 docs/TaskResponse.md
-docs/TaskStatus.md
 docs/TaxableAmount.md
 docs/TotalGrossAmount.md
 docs/TotalNetAmount.md
@@ -148,6 +148,7 @@ factpulse/models/allowance_reason_code.py
 factpulse/models/amount_due.py
 factpulse/models/api_error.py
 factpulse/models/api_profile.py
+factpulse/models/async_task_status.py
 factpulse/models/bounding_box_schema.py
 factpulse/models/celery_status.py
 factpulse/models/certificate_info_response.py
@@ -233,7 +234,6 @@ factpulse/models/submit_vat_amount.py
 factpulse/models/supplementary_attachment.py
 factpulse/models/supplier.py
 factpulse/models/task_response.py
-factpulse/models/task_status.py
 factpulse/models/taxable_amount.py
 factpulse/models/total_gross_amount.py
 factpulse/models/total_net_amount.py
@@ -272,6 +272,7 @@ test/test_allowance_reason_code.py
 test/test_amount_due.py
 test/test_api_error.py
 test/test_api_profile.py
+test/test_async_task_status.py
 test/test_bounding_box_schema.py
 test/test_celery_status.py
 test/test_certificate_info_response.py
@@ -361,7 +362,6 @@ test/test_submit_vat_amount.py
 test/test_supplementary_attachment.py
 test/test_supplier.py
 test/test_task_response.py
-test/test_task_status.py
 test/test_taxable_amount.py
 test/test_total_gross_amount.py
 test/test_total_net_amount.py
