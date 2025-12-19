@@ -1,9 +1,9 @@
 # coding: utf-8
 
 """
-    API REST FactPulse
+    FactPulse REST API
 
-     API REST pour la facturation électronique en France : Factur-X, AFNOR PDP/PA, signatures électroniques.  ## 🎯 Fonctionnalités principales  ### 📄 Génération de factures Factur-X - **Formats** : XML seul ou PDF/A-3 avec XML embarqué - **Profils** : MINIMUM, BASIC, EN16931, EXTENDED - **Normes** : EN 16931 (directive UE 2014/55), ISO 19005-3 (PDF/A-3), CII (UN/CEFACT) - **🆕 Format simplifié** : Génération à partir de SIRET + auto-enrichissement (API Chorus Pro + Recherche Entreprises)  ### ✅ Validation et conformité - **Validation XML** : Schematron (45 à 210+ règles selon profil) - **Validation PDF** : PDF/A-3, métadonnées XMP Factur-X, signatures électroniques - **VeraPDF** : Validation stricte PDF/A (146+ règles ISO 19005-3) - **Traitement asynchrone** : Support Celery pour validations lourdes (VeraPDF)  ### 📡 Intégration AFNOR PDP/PA (XP Z12-013) - **Soumission de flux** : Envoi de factures vers Plateformes de Dématérialisation Partenaires - **Recherche de flux** : Consultation des factures soumises - **Téléchargement** : Récupération des PDF/A-3 avec XML - **Directory Service** : Recherche d'entreprises (SIREN/SIRET) - **Multi-client** : Support de plusieurs configs PDP par utilisateur (stored credentials ou zero-storage)  ### ✍️ Signature électronique PDF - **Standards** : PAdES-B-B, PAdES-B-T (horodatage RFC 3161), PAdES-B-LT (archivage long terme) - **Niveaux eIDAS** : SES (auto-signé), AdES (CA commerciale), QES (PSCO) - **Validation** : Vérification intégrité cryptographique et certificats - **Génération de certificats** : Certificats X.509 auto-signés pour tests  ### 🔄 Traitement asynchrone - **Celery** : Génération, validation et signature asynchrones - **Polling** : Suivi d'état via `/taches/{id_tache}/statut` - **Pas de timeout** : Idéal pour gros fichiers ou validations lourdes  ## 🔒 Authentification  Toutes les requêtes nécessitent un **token JWT** dans le header Authorization : ``` Authorization: Bearer YOUR_JWT_TOKEN ```  ### Comment obtenir un token JWT ?  #### 🔑 Méthode 1 : API `/api/token/` (Recommandée)  **URL :** `https://www.factpulse.fr/api/token/`  Cette méthode est **recommandée** pour l'intégration dans vos applications et workflows CI/CD.  **Prérequis :** Avoir défini un mot de passe sur votre compte  **Pour les utilisateurs inscrits via email/password :** - Vous avez déjà un mot de passe, utilisez-le directement  **Pour les utilisateurs inscrits via OAuth (Google/GitHub) :** - Vous devez d'abord définir un mot de passe sur : https://www.factpulse.fr/accounts/password/set/ - Une fois le mot de passe créé, vous pourrez utiliser l'API  **Exemple de requête :** ```bash curl -X POST https://www.factpulse.fr/api/token/ \\   -H \"Content-Type: application/json\" \\   -d '{     \"username\": \"votre_email@example.com\",     \"password\": \"votre_mot_de_passe\"   }' ```  **Paramètre optionnel `client_uid` :**  Pour sélectionner les credentials d'un client spécifique (PA/PDP, Chorus Pro, certificats de signature), ajoutez `client_uid` :  ```bash curl -X POST https://www.factpulse.fr/api/token/ \\   -H \"Content-Type: application/json\" \\   -d '{     \"username\": \"votre_email@example.com\",     \"password\": \"votre_mot_de_passe\",     \"client_uid\": \"550e8400-e29b-41d4-a716-446655440000\"   }' ```  Le `client_uid` sera inclus dans le JWT et permettra à l'API d'utiliser automatiquement : - Les credentials AFNOR/PDP configurés pour ce client - Les credentials Chorus Pro configurés pour ce client - Les certificats de signature électronique configurés pour ce client  **Réponse :** ```json {   \"access\": \"eyJ0eXAiOiJKV1QiLCJhbGc...\",  // Token d'accès (validité: 30 min)   \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGc...\"  // Token de rafraîchissement (validité: 7 jours) } ```  **Avantages :** - ✅ Automatisation complète (CI/CD, scripts) - ✅ Gestion programmatique des tokens - ✅ Support du refresh token pour renouveler automatiquement l'accès - ✅ Intégration facile dans n'importe quel langage/outil  #### 🖥️ Méthode 2 : Génération via Dashboard (Alternative)  **URL :** https://www.factpulse.fr/dashboard/  Cette méthode convient pour des tests rapides ou une utilisation occasionnelle via l'interface graphique.  **Fonctionnement :** - Connectez-vous au dashboard - Utilisez les boutons \"Generate Test Token\" ou \"Generate Production Token\" - Fonctionne pour **tous** les utilisateurs (OAuth et email/password), sans nécessiter de mot de passe  **Types de tokens :** - **Token Test** : Validité 24h, quota 1000 appels/jour (gratuit) - **Token Production** : Validité 7 jours, quota selon votre forfait  **Avantages :** - ✅ Rapide pour tester l'API - ✅ Aucun mot de passe requis - ✅ Interface visuelle simple  **Inconvénients :** - ❌ Nécessite une action manuelle - ❌ Pas de refresh token - ❌ Moins adapté pour l'automatisation  ### 📚 Documentation complète  Pour plus d'informations sur l'authentification et l'utilisation de l'API : https://www.factpulse.fr/documentation-api/     
+     REST API for electronic invoicing in France: Factur-X, AFNOR PDP/PA, electronic signatures.  ## 🎯 Main Features  ### 📄 Factur-X Invoice Generation - **Formats**: XML only or PDF/A-3 with embedded XML - **Profiles**: MINIMUM, BASIC, EN16931, EXTENDED - **Standards**: EN 16931 (EU directive 2014/55), ISO 19005-3 (PDF/A-3), CII (UN/CEFACT) - **🆕 Simplified Format**: Generation from SIRET + auto-enrichment (Chorus Pro API + Business Search)  ### ✅ Validation and Compliance - **XML Validation**: Schematron (45 to 210+ rules depending on profile) - **PDF Validation**: PDF/A-3, Factur-X XMP metadata, electronic signatures - **VeraPDF**: Strict PDF/A validation (146+ ISO 19005-3 rules) - **Asynchronous Processing**: Celery support for heavy validations (VeraPDF)  ### 📡 AFNOR PDP/PA Integration (XP Z12-013) - **Flow Submission**: Send invoices to Partner Dematerialization Platforms - **Flow Search**: View submitted invoices - **Download**: Retrieve PDF/A-3 with XML - **Directory Service**: Company search (SIREN/SIRET) - **Multi-client**: Support for multiple PDP configs per user (stored credentials or zero-storage)  ### ✍️ PDF Electronic Signature - **Standards**: PAdES-B-B, PAdES-B-T (RFC 3161 timestamping), PAdES-B-LT (long-term archival) - **eIDAS Levels**: SES (self-signed), AdES (commercial CA), QES (QTSP) - **Validation**: Cryptographic integrity and certificate verification - **Certificate Generation**: Self-signed X.509 certificates for testing  ### 🔄 Asynchronous Processing - **Celery**: Asynchronous generation, validation and signing - **Polling**: Status tracking via `/tasks/{task_id}/status` - **No timeout**: Ideal for large files or heavy validations  ## 🔒 Authentication  All requests require a **JWT token** in the Authorization header: ``` Authorization: Bearer YOUR_JWT_TOKEN ```  ### How to obtain a JWT token?  #### 🔑 Method 1: `/api/token/` API (Recommended)  **URL:** `https://www.factpulse.fr/api/token/`  This method is **recommended** for integration in your applications and CI/CD workflows.  **Prerequisites:** Having set a password on your account  **For users registered via email/password:** - You already have a password, use it directly  **For users registered via OAuth (Google/GitHub):** - You must first set a password at: https://www.factpulse.fr/accounts/password/set/ - Once the password is created, you can use the API  **Request example:** ```bash curl -X POST https://www.factpulse.fr/api/token/ \\   -H \"Content-Type: application/json\" \\   -d '{     \"username\": \"your_email@example.com\",     \"password\": \"your_password\"   }' ```  **Optional `client_uid` parameter:**  To select credentials for a specific client (PA/PDP, Chorus Pro, signing certificates), add `client_uid`:  ```bash curl -X POST https://www.factpulse.fr/api/token/ \\   -H \"Content-Type: application/json\" \\   -d '{     \"username\": \"your_email@example.com\",     \"password\": \"your_password\",     \"client_uid\": \"550e8400-e29b-41d4-a716-446655440000\"   }' ```  The `client_uid` will be included in the JWT and allow the API to automatically use: - AFNOR/PDP credentials configured for this client - Chorus Pro credentials configured for this client - Electronic signature certificates configured for this client  **Response:** ```json {   \"access\": \"eyJ0eXAiOiJKV1QiLCJhbGc...\",  // Access token (validity: 30 min)   \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGc...\"  // Refresh token (validity: 7 days) } ```  **Advantages:** - ✅ Full automation (CI/CD, scripts) - ✅ Programmatic token management - ✅ Refresh token support for automatic access renewal - ✅ Easy integration in any language/tool  #### 🖥️ Method 2: Dashboard Generation (Alternative)  **URL:** https://www.factpulse.fr/dashboard/  This method is suitable for quick tests or occasional use via the graphical interface.  **How it works:** - Log in to the dashboard - Use the \"Generate Test Token\" or \"Generate Production Token\" buttons - Works for **all** users (OAuth and email/password), without requiring a password  **Token types:** - **Test Token**: 24h validity, 1000 calls/day quota (free) - **Production Token**: 7 days validity, quota based on your plan  **Advantages:** - ✅ Quick for API testing - ✅ No password required - ✅ Simple visual interface  **Disadvantages:** - ❌ Requires manual action - ❌ No refresh token - ❌ Less suited for automation  ### 📚 Full Documentation  For more information on authentication and API usage: https://www.factpulse.fr/documentation-api/     
 
     The version of the OpenAPI document: 1.0.0
     Generated by OpenAPI Generator (https://openapi-generator.tech)
@@ -17,43 +17,43 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.beneficiaire import Beneficiaire
-from factpulse.models.cadre_de_facturation import CadreDeFacturation
-from factpulse.models.destinataire import Destinataire
-from factpulse.models.fournisseur import Fournisseur
-from factpulse.models.ligne_de_poste import LigneDePoste
-from factpulse.models.ligne_de_tva import LigneDeTVA
-from factpulse.models.mode_depot import ModeDepot
-from factpulse.models.montant_total import MontantTotal
-from factpulse.models.note import Note
-from factpulse.models.piece_jointe_complementaire import PieceJointeComplementaire
-from factpulse.models.references import References
+from factpulse.models.invoice_line import InvoiceLine
+from factpulse.models.invoice_note import InvoiceNote
+from factpulse.models.invoice_references import InvoiceReferences
+from factpulse.models.invoice_totals import InvoiceTotals
+from factpulse.models.invoicing_framework import InvoicingFramework
+from factpulse.models.payee import Payee
+from factpulse.models.recipient import Recipient
+from factpulse.models.submission_mode import SubmissionMode
+from factpulse.models.supplementary_attachment import SupplementaryAttachment
+from factpulse.models.supplier import Supplier
+from factpulse.models.vat_line import VATLine
 from typing import Optional, Set
 from typing_extensions import Self
 
 class FactureFacturX(BaseModel):
     """
-    Modèle de données pour une facture destinée à être convertie en Factur-X.
+    Data model for an invoice to be converted to Factur-X.
     """ # noqa: E501
-    numero_facture: StrictStr = Field(alias="numeroFacture")
-    date_echeance_paiement: StrictStr = Field(alias="dateEcheancePaiement")
-    date_facture: Optional[StrictStr] = Field(default=None, alias="dateFacture")
-    mode_depot: ModeDepot = Field(alias="modeDepot")
-    destinataire: Destinataire
-    fournisseur: Fournisseur
-    cadre_de_facturation: CadreDeFacturation = Field(alias="cadreDeFacturation")
-    references: References
-    montant_total: MontantTotal = Field(alias="montantTotal")
-    lignes_de_poste: Optional[List[LigneDePoste]] = Field(default=None, alias="lignesDePoste")
-    lignes_de_tva: Optional[List[LigneDeTVA]] = Field(default=None, alias="lignesDeTva")
-    notes: Optional[List[Note]] = None
-    commentaire: Optional[StrictStr] = None
-    id_utilisateur_courant: Optional[StrictInt] = Field(default=None, alias="idUtilisateurCourant")
-    pieces_jointes_complementaires: Optional[List[PieceJointeComplementaire]] = Field(default=None, alias="piecesJointesComplementaires")
-    beneficiaire: Optional[Beneficiaire] = None
-    __properties: ClassVar[List[str]] = ["numeroFacture", "dateEcheancePaiement", "dateFacture", "modeDepot", "destinataire", "fournisseur", "cadreDeFacturation", "references", "montantTotal", "lignesDePoste", "lignesDeTva", "notes", "commentaire", "idUtilisateurCourant", "piecesJointesComplementaires", "beneficiaire"]
+    invoice_number: StrictStr
+    payment_due_date: StrictStr
+    invoice_date: Optional[StrictStr] = None
+    submission_mode: SubmissionMode
+    recipient: Recipient
+    supplier: Supplier
+    invoicing_framework: InvoicingFramework
+    references: InvoiceReferences
+    totals: InvoiceTotals
+    invoice_lines: Optional[List[InvoiceLine]] = None
+    vat_lines: Optional[List[VATLine]] = None
+    notes: Optional[List[InvoiceNote]] = None
+    comment: Optional[StrictStr] = None
+    current_user_id: Optional[StrictInt] = None
+    supplementary_attachments: Optional[List[SupplementaryAttachment]] = None
+    payee: Optional[Payee] = None
+    __properties: ClassVar[List[str]] = ["invoice_number", "payment_due_date", "invoice_date", "submission_mode", "recipient", "supplier", "invoicing_framework", "references", "totals", "invoice_lines", "vat_lines", "notes", "comment", "current_user_id", "supplementary_attachments", "payee"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -94,35 +94,35 @@ class FactureFacturX(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of destinataire
-        if self.destinataire:
-            _dict['destinataire'] = self.destinataire.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of fournisseur
-        if self.fournisseur:
-            _dict['fournisseur'] = self.fournisseur.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of cadre_de_facturation
-        if self.cadre_de_facturation:
-            _dict['cadreDeFacturation'] = self.cadre_de_facturation.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of recipient
+        if self.recipient:
+            _dict['recipient'] = self.recipient.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of supplier
+        if self.supplier:
+            _dict['supplier'] = self.supplier.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of invoicing_framework
+        if self.invoicing_framework:
+            _dict['invoicing_framework'] = self.invoicing_framework.to_dict()
         # override the default output from pydantic by calling `to_dict()` of references
         if self.references:
             _dict['references'] = self.references.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of montant_total
-        if self.montant_total:
-            _dict['montantTotal'] = self.montant_total.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of each item in lignes_de_poste (list)
+        # override the default output from pydantic by calling `to_dict()` of totals
+        if self.totals:
+            _dict['totals'] = self.totals.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in invoice_lines (list)
         _items = []
-        if self.lignes_de_poste:
-            for _item_lignes_de_poste in self.lignes_de_poste:
-                if _item_lignes_de_poste:
-                    _items.append(_item_lignes_de_poste.to_dict())
-            _dict['lignesDePoste'] = _items
-        # override the default output from pydantic by calling `to_dict()` of each item in lignes_de_tva (list)
+        if self.invoice_lines:
+            for _item_invoice_lines in self.invoice_lines:
+                if _item_invoice_lines:
+                    _items.append(_item_invoice_lines.to_dict())
+            _dict['invoice_lines'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in vat_lines (list)
         _items = []
-        if self.lignes_de_tva:
-            for _item_lignes_de_tva in self.lignes_de_tva:
-                if _item_lignes_de_tva:
-                    _items.append(_item_lignes_de_tva.to_dict())
-            _dict['lignesDeTva'] = _items
+        if self.vat_lines:
+            for _item_vat_lines in self.vat_lines:
+                if _item_vat_lines:
+                    _items.append(_item_vat_lines.to_dict())
+            _dict['vat_lines'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in notes (list)
         _items = []
         if self.notes:
@@ -130,35 +130,35 @@ class FactureFacturX(BaseModel):
                 if _item_notes:
                     _items.append(_item_notes.to_dict())
             _dict['notes'] = _items
-        # override the default output from pydantic by calling `to_dict()` of each item in pieces_jointes_complementaires (list)
+        # override the default output from pydantic by calling `to_dict()` of each item in supplementary_attachments (list)
         _items = []
-        if self.pieces_jointes_complementaires:
-            for _item_pieces_jointes_complementaires in self.pieces_jointes_complementaires:
-                if _item_pieces_jointes_complementaires:
-                    _items.append(_item_pieces_jointes_complementaires.to_dict())
-            _dict['piecesJointesComplementaires'] = _items
-        # override the default output from pydantic by calling `to_dict()` of beneficiaire
-        if self.beneficiaire:
-            _dict['beneficiaire'] = self.beneficiaire.to_dict()
-        # set to None if commentaire (nullable) is None
+        if self.supplementary_attachments:
+            for _item_supplementary_attachments in self.supplementary_attachments:
+                if _item_supplementary_attachments:
+                    _items.append(_item_supplementary_attachments.to_dict())
+            _dict['supplementary_attachments'] = _items
+        # override the default output from pydantic by calling `to_dict()` of payee
+        if self.payee:
+            _dict['payee'] = self.payee.to_dict()
+        # set to None if comment (nullable) is None
         # and model_fields_set contains the field
-        if self.commentaire is None and "commentaire" in self.model_fields_set:
-            _dict['commentaire'] = None
+        if self.comment is None and "comment" in self.model_fields_set:
+            _dict['comment'] = None
 
-        # set to None if id_utilisateur_courant (nullable) is None
+        # set to None if current_user_id (nullable) is None
         # and model_fields_set contains the field
-        if self.id_utilisateur_courant is None and "id_utilisateur_courant" in self.model_fields_set:
-            _dict['idUtilisateurCourant'] = None
+        if self.current_user_id is None and "current_user_id" in self.model_fields_set:
+            _dict['current_user_id'] = None
 
-        # set to None if pieces_jointes_complementaires (nullable) is None
+        # set to None if supplementary_attachments (nullable) is None
         # and model_fields_set contains the field
-        if self.pieces_jointes_complementaires is None and "pieces_jointes_complementaires" in self.model_fields_set:
-            _dict['piecesJointesComplementaires'] = None
+        if self.supplementary_attachments is None and "supplementary_attachments" in self.model_fields_set:
+            _dict['supplementary_attachments'] = None
 
-        # set to None if beneficiaire (nullable) is None
+        # set to None if payee (nullable) is None
         # and model_fields_set contains the field
-        if self.beneficiaire is None and "beneficiaire" in self.model_fields_set:
-            _dict['beneficiaire'] = None
+        if self.payee is None and "payee" in self.model_fields_set:
+            _dict['payee'] = None
 
         return _dict
 
@@ -172,22 +172,22 @@ class FactureFacturX(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "numeroFacture": obj.get("numeroFacture"),
-            "dateEcheancePaiement": obj.get("dateEcheancePaiement"),
-            "dateFacture": obj.get("dateFacture"),
-            "modeDepot": obj.get("modeDepot"),
-            "destinataire": Destinataire.from_dict(obj["destinataire"]) if obj.get("destinataire") is not None else None,
-            "fournisseur": Fournisseur.from_dict(obj["fournisseur"]) if obj.get("fournisseur") is not None else None,
-            "cadreDeFacturation": CadreDeFacturation.from_dict(obj["cadreDeFacturation"]) if obj.get("cadreDeFacturation") is not None else None,
-            "references": References.from_dict(obj["references"]) if obj.get("references") is not None else None,
-            "montantTotal": MontantTotal.from_dict(obj["montantTotal"]) if obj.get("montantTotal") is not None else None,
-            "lignesDePoste": [LigneDePoste.from_dict(_item) for _item in obj["lignesDePoste"]] if obj.get("lignesDePoste") is not None else None,
-            "lignesDeTva": [LigneDeTVA.from_dict(_item) for _item in obj["lignesDeTva"]] if obj.get("lignesDeTva") is not None else None,
-            "notes": [Note.from_dict(_item) for _item in obj["notes"]] if obj.get("notes") is not None else None,
-            "commentaire": obj.get("commentaire"),
-            "idUtilisateurCourant": obj.get("idUtilisateurCourant"),
-            "piecesJointesComplementaires": [PieceJointeComplementaire.from_dict(_item) for _item in obj["piecesJointesComplementaires"]] if obj.get("piecesJointesComplementaires") is not None else None,
-            "beneficiaire": Beneficiaire.from_dict(obj["beneficiaire"]) if obj.get("beneficiaire") is not None else None
+            "invoice_number": obj.get("invoice_number"),
+            "payment_due_date": obj.get("payment_due_date"),
+            "invoice_date": obj.get("invoice_date"),
+            "submission_mode": obj.get("submission_mode"),
+            "recipient": Recipient.from_dict(obj["recipient"]) if obj.get("recipient") is not None else None,
+            "supplier": Supplier.from_dict(obj["supplier"]) if obj.get("supplier") is not None else None,
+            "invoicing_framework": InvoicingFramework.from_dict(obj["invoicing_framework"]) if obj.get("invoicing_framework") is not None else None,
+            "references": InvoiceReferences.from_dict(obj["references"]) if obj.get("references") is not None else None,
+            "totals": InvoiceTotals.from_dict(obj["totals"]) if obj.get("totals") is not None else None,
+            "invoice_lines": [InvoiceLine.from_dict(_item) for _item in obj["invoice_lines"]] if obj.get("invoice_lines") is not None else None,
+            "vat_lines": [VATLine.from_dict(_item) for _item in obj["vat_lines"]] if obj.get("vat_lines") is not None else None,
+            "notes": [InvoiceNote.from_dict(_item) for _item in obj["notes"]] if obj.get("notes") is not None else None,
+            "comment": obj.get("comment"),
+            "current_user_id": obj.get("current_user_id"),
+            "supplementary_attachments": [SupplementaryAttachment.from_dict(_item) for _item in obj["supplementary_attachments"]] if obj.get("supplementary_attachments") is not None else None,
+            "payee": Payee.from_dict(obj["payee"]) if obj.get("payee") is not None else None
         })
         return _obj
 

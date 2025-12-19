@@ -4,17 +4,17 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_afnor_credentials_api_v1_afnor_credentials_get**](AFNORPDPPAApi.md#get_afnor_credentials_api_v1_afnor_credentials_get) | **GET** /api/v1/afnor/credentials | Récupérer les credentials AFNOR stockés
-[**get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get**](AFNORPDPPAApi.md#get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get) | **GET** /api/v1/afnor/flux-entrants/{flow_id} | Récupérer et extraire une facture entrante
-[**oauth_token_proxy_api_v1_afnor_oauth_token_post**](AFNORPDPPAApi.md#oauth_token_proxy_api_v1_afnor_oauth_token_post) | **POST** /api/v1/afnor/oauth/token | Endpoint OAuth2 pour authentification AFNOR
+[**get_afnor_credentials_api_v1_afnor_credentials_get**](AFNORPDPPAApi.md#get_afnor_credentials_api_v1_afnor_credentials_get) | **GET** /api/v1/afnor/credentials | Retrieve stored AFNOR credentials
+[**get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get**](AFNORPDPPAApi.md#get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get) | **GET** /api/v1/afnor/incoming-flows/{flow_id} | Retrieve and extract an incoming invoice
+[**oauth_token_proxy_api_v1_afnor_oauth_token_post**](AFNORPDPPAApi.md#oauth_token_proxy_api_v1_afnor_oauth_token_post) | **POST** /api/v1/afnor/oauth/token | OAuth2 endpoint for AFNOR authentication
 
 
 # **get_afnor_credentials_api_v1_afnor_credentials_get**
 > object get_afnor_credentials_api_v1_afnor_credentials_get()
 
-Récupérer les credentials AFNOR stockés
+Retrieve stored AFNOR credentials
 
-Récupère les credentials AFNOR/PDP stockés pour le client_uid du JWT. Cet endpoint est utilisé par le SDK en mode 'stored' pour récupérer les credentials avant de faire l'OAuth AFNOR lui-même.
+Retrieves stored AFNOR/PDP credentials for the JWT's client_uid. This endpoint is used by the SDK in 'stored' mode to retrieve credentials before performing AFNOR OAuth itself.
 
 ### Example
 
@@ -47,7 +47,7 @@ with factpulse.ApiClient(configuration) as api_client:
     api_instance = factpulse.AFNORPDPPAApi(api_client)
 
     try:
-        # Récupérer les credentials AFNOR stockés
+        # Retrieve stored AFNOR credentials
         api_response = api_instance.get_afnor_credentials_api_v1_afnor_credentials_get()
         print("The response of AFNORPDPPAApi->get_afnor_credentials_api_v1_afnor_credentials_get:\n")
         pprint(api_response)
@@ -78,19 +78,19 @@ This endpoint does not need any parameter.
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Credentials AFNOR récupérés avec succès |  -  |
-**400** | Aucun client_uid dans le JWT |  -  |
-**401** | Non authentifié - Token JWT manquant ou invalide |  -  |
-**404** | Client non trouvé ou pas de credentials AFNOR configurés |  -  |
+**200** | AFNOR credentials retrieved successfully |  -  |
+**400** | No client_uid in JWT |  -  |
+**401** | Not authenticated - Missing or invalid JWT token |  -  |
+**404** | Client not found or no AFNOR credentials configured |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get**
-> FactureEntrante get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get(flow_id, include_document=include_document)
+# **get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get**
+> IncomingInvoice get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get(flow_id, include_document=include_document)
 
-Récupérer et extraire une facture entrante
+Retrieve and extract an incoming invoice
 
-Télécharge un flux entrant depuis la PDP AFNOR et extrait les métadonnées de la facture vers un format JSON unifié. Supporte les formats Factur-X, CII et UBL.
+Downloads an incoming flow from the AFNOR PDP and extracts invoice metadata into a unified JSON format. Supports Factur-X, CII, and UBL formats.
 
 ### Example
 
@@ -98,7 +98,7 @@ Télécharge un flux entrant depuis la PDP AFNOR et extrait les métadonnées de
 
 ```python
 import factpulse
-from factpulse.models.facture_entrante import FactureEntrante
+from factpulse.models.incoming_invoice import IncomingInvoice
 from factpulse.rest import ApiException
 from pprint import pprint
 
@@ -126,12 +126,12 @@ with factpulse.ApiClient(configuration) as api_client:
     include_document = False # bool |  (optional) (default to False)
 
     try:
-        # Récupérer et extraire une facture entrante
-        api_response = api_instance.get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get(flow_id, include_document=include_document)
-        print("The response of AFNORPDPPAApi->get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get:\n")
+        # Retrieve and extract an incoming invoice
+        api_response = api_instance.get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get(flow_id, include_document=include_document)
+        print("The response of AFNORPDPPAApi->get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling AFNORPDPPAApi->get_flux_entrant_api_v1_afnor_flux_entrants_flow_id_get: %s\n" % e)
+        print("Exception when calling AFNORPDPPAApi->get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get: %s\n" % e)
 ```
 
 
@@ -146,7 +146,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**FactureEntrante**](FactureEntrante.md)
+[**IncomingInvoice**](IncomingInvoice.md)
 
 ### Authorization
 
@@ -161,11 +161,11 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Facture extraite avec succès |  -  |
-**400** | Format de facture non supporté ou invalide |  -  |
-**401** | Non authentifié |  -  |
-**404** | Flux non trouvé |  -  |
-**503** | Service PDP indisponible |  -  |
+**200** | Invoice extracted successfully |  -  |
+**400** | Unsupported or invalid invoice format |  -  |
+**401** | Not authenticated |  -  |
+**404** | Flow not found |  -  |
+**503** | PDP service unavailable |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -173,9 +173,9 @@ Name | Type | Description  | Notes
 # **oauth_token_proxy_api_v1_afnor_oauth_token_post**
 > object oauth_token_proxy_api_v1_afnor_oauth_token_post()
 
-Endpoint OAuth2 pour authentification AFNOR
+OAuth2 endpoint for AFNOR authentication
 
-Endpoint proxy OAuth2 pour obtenir un token d'accès AFNOR. Fait proxy vers le mock AFNOR (sandbox) ou la vraie PDP selon MOCK_AFNOR_BASE_URL. Cet endpoint est public (pas d'auth Django requise) car il est appelé par le SDK AFNOR.
+OAuth2 proxy endpoint to obtain an AFNOR access token. Proxies to AFNOR mock (sandbox) or real PDP depending on MOCK_AFNOR_BASE_URL. This endpoint is public (no Django auth required) as it is called by the AFNOR SDK.
 
 ### Example
 
@@ -198,7 +198,7 @@ with factpulse.ApiClient(configuration) as api_client:
     api_instance = factpulse.AFNORPDPPAApi(api_client)
 
     try:
-        # Endpoint OAuth2 pour authentification AFNOR
+        # OAuth2 endpoint for AFNOR authentication
         api_response = api_instance.oauth_token_proxy_api_v1_afnor_oauth_token_post()
         print("The response of AFNORPDPPAApi->oauth_token_proxy_api_v1_afnor_oauth_token_post:\n")
         pprint(api_response)
@@ -229,8 +229,8 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Token OAuth2 acquis avec succès |  -  |
-**401** | Credentials invalides |  -  |
+**200** | OAuth2 token acquired successfully |  -  |
+**401** | Invalid credentials |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

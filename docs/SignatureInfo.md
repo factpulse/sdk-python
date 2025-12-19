@@ -1,12 +1,12 @@
 # SignatureInfo
 
-Informations sur la signature électronique.
+Information about the electronic signature.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**signe** | **bool** | Le PDF a été signé | 
+**signed** | **bool** | PDF was signed | 
 **cn** | **str** |  | [optional] 
 **expiration** | **str** |  | [optional] 
 

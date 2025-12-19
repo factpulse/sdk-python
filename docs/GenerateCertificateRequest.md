@@ -1,22 +1,22 @@
 # GenerateCertificateRequest
 
-Requête pour générer un certificat X.509 auto-signé de test.  ⚠️ ATTENTION : Ce certificat est destiné uniquement aux TESTS. NE PAS utiliser en production ! Niveau eIDAS : SES (Simple Electronic Signature)
+Request to generate a self-signed X.509 test certificate.  WARNING: This certificate is intended for TESTING only. DO NOT use in production! eIDAS level: SES (Simple Electronic Signature)
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**cn** | **str** | Common Name (CN) - Nom du certificat | [optional] [default to 'Test Signature FactPulse']
-**organisation** | **str** | Organisation (O) | [optional] [default to 'FactPulse Test']
-**pays** | **str** | Code pays ISO 2 lettres (C) | [optional] [default to 'FR']
-**ville** | **str** | Ville (L) | [optional] [default to 'Paris']
-**province** | **str** | Province/État (ST) | [optional] [default to 'Ile-de-France']
+**cn** | **str** | Common Name (CN) - Certificate name | [optional] [default to 'Test Signature FactPulse']
+**organization** | **str** | Organization (O) | [optional] [default to 'FactPulse Test']
+**country** | **str** | ISO 2-letter country code (C) | [optional] [default to 'FR']
+**city** | **str** | City (L) | [optional] [default to 'Paris']
+**state** | **str** | State/Province (ST) | [optional] [default to 'Ile-de-France']
 **email** | **str** |  | [optional] 
-**duree_jours** | **int** | Durée de validité en jours | [optional] [default to 365]
-**taille_cle** | **int** | Taille de la clé RSA en bits | [optional] [default to 2048]
-**passphrase_cle** | **str** |  | [optional] 
-**generer_p12** | **bool** | Générer aussi un fichier PKCS#12 (.p12) | [optional] [default to False]
-**passphrase_p12** | **str** | Passphrase pour le fichier PKCS#12 | [optional] [default to 'changeme']
+**validity_days** | **int** | Validity duration in days | [optional] [default to 365]
+**key_size** | **int** | RSA key size in bits | [optional] [default to 2048]
+**key_passphrase** | **str** |  | [optional] 
+**generate_p12** | **bool** | Also generate a PKCS#12 (.p12) file | [optional] [default to False]
+**p12_passphrase** | **str** | Passphrase for PKCS#12 file | [optional] [default to 'changeme']
 
 ## Example
 

@@ -1,18 +1,18 @@
 # BoundingBoxSchema
 
-Coordonnées d'une zone rectangulaire dans le PDF.  Les coordonnées sont en points PDF (1 point = 1/72 pouce). L'origine (0,0) est en bas à gauche de la page.
+Rectangular area coordinates in PDF.  Coordinates are in PDF points (1 point = 1/72 inch). Origin (0,0) is at the bottom-left of the page.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**x0** | **float** | Coordonnée X gauche | 
-**y0** | **float** | Coordonnée Y bas | 
-**x1** | **float** | Coordonnée X droite | 
-**y1** | **float** | Coordonnée Y haut | 
-**page** | **int** | Numéro de page (0-indexed) | [optional] [default to 0]
-**width** | **float** | Largeur de la zone | 
-**height** | **float** | Hauteur de la zone | 
+**x0** | **float** | Left X coordinate | 
+**y0** | **float** | Bottom Y coordinate | 
+**x1** | **float** | Right X coordinate | 
+**y1** | **float** | Top Y coordinate | 
+**page** | **int** | Page number (0-indexed) | [optional] [default to 0]
+**width** | **float** | Area width | 
+**height** | **float** | Area height | 
 
 ## Example
 

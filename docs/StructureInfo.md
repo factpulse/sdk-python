@@ -1,16 +1,16 @@
 # StructureInfo
 
-Informations d'une structure.
+Structure information.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id_structure_cpp** | **int** | ID Chorus Pro de la structure | 
-**identifiant_structure** | **str** | Identifiant (SIRET, SIREN) | 
-**designation_structure** | **str** | Nom de la structure | 
-**type_identifiant_structure** | **str** | Type d&#39;identifiant | 
-**statut** | **str** | Statut (ACTIVE, INACTIVE) | 
+**structure_id** | **int** | Chorus Pro structure ID | 
+**structure_identifier** | **str** | Identifier (SIRET, SIREN) | 
+**structure_name** | **str** | Structure name | 
+**structure_identifier_type** | **str** | Identifier type | 
+**status** | **str** | Status (ACTIVE, INACTIVE) | 
 
 ## Example
 

@@ -1,14 +1,14 @@
 # ValidationErrorDetail
 
-Détail d'une erreur de validation (aligné sur AFNOR AcknowledgementDetail).  Format unifié pour toutes les erreurs de validation Factur-X, compatible avec la norme AFNOR XP Z12-013.
+Validation error detail (aligned with AFNOR AcknowledgementDetail).  Unified format for all Factur-X validation errors, compatible with AFNOR XP Z12-013 standard.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**level** | [**ErrorLevel**](ErrorLevel.md) | Niveau de gravité : &#39;Error&#39; ou &#39;Warning&#39; | [optional] 
-**item** | **str** | Identifiant de l&#39;élément concerné (XPath, champ, règle BR-FR, etc.) | 
-**reason** | **str** | Description de l&#39;erreur | 
+**level** | [**ErrorLevel**](ErrorLevel.md) | Severity level: &#39;Error&#39; or &#39;Warning&#39; | [optional] 
+**item** | **str** | Identifier of the concerned element (XPath, field, BR-FR rule, etc.) | 
+**reason** | **str** | Error description | 
 **source** | [**ErrorSource**](ErrorSource.md) |  | [optional] 
 **code** | **str** |  | [optional] 
 

@@ -1,27 +1,27 @@
 # FactureFacturX
 
-Modèle de données pour une facture destinée à être convertie en Factur-X.
+Data model for an invoice to be converted to Factur-X.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**numero_facture** | **str** |  | 
-**date_echeance_paiement** | **str** |  | 
-**date_facture** | **str** |  | [optional] 
-**mode_depot** | [**ModeDepot**](ModeDepot.md) |  | 
-**destinataire** | [**Destinataire**](Destinataire.md) |  | 
-**fournisseur** | [**Fournisseur**](Fournisseur.md) |  | 
-**cadre_de_facturation** | [**CadreDeFacturation**](CadreDeFacturation.md) |  | 
-**references** | [**References**](References.md) |  | 
-**montant_total** | [**MontantTotal**](MontantTotal.md) |  | 
-**lignes_de_poste** | [**List[LigneDePoste]**](LigneDePoste.md) |  | [optional] 
-**lignes_de_tva** | [**List[LigneDeTVA]**](LigneDeTVA.md) |  | [optional] 
-**notes** | [**List[Note]**](Note.md) |  | [optional] 
-**commentaire** | **str** |  | [optional] 
-**id_utilisateur_courant** | **int** |  | [optional] 
-**pieces_jointes_complementaires** | [**List[PieceJointeComplementaire]**](PieceJointeComplementaire.md) |  | [optional] 
-**beneficiaire** | [**Beneficiaire**](Beneficiaire.md) |  | [optional] 
+**invoice_number** | **str** |  | 
+**payment_due_date** | **str** |  | 
+**invoice_date** | **str** |  | [optional] 
+**submission_mode** | [**SubmissionMode**](SubmissionMode.md) |  | 
+**recipient** | [**Recipient**](Recipient.md) |  | 
+**supplier** | [**Supplier**](Supplier.md) |  | 
+**invoicing_framework** | [**InvoicingFramework**](InvoicingFramework.md) |  | 
+**references** | [**InvoiceReferences**](InvoiceReferences.md) |  | 
+**totals** | [**InvoiceTotals**](InvoiceTotals.md) |  | 
+**invoice_lines** | [**List[InvoiceLine]**](InvoiceLine.md) |  | [optional] 
+**vat_lines** | [**List[VATLine]**](VATLine.md) |  | [optional] 
+**notes** | [**List[InvoiceNote]**](InvoiceNote.md) |  | [optional] 
+**comment** | **str** |  | [optional] 
+**current_user_id** | **int** |  | [optional] 
+**supplementary_attachments** | [**List[SupplementaryAttachment]**](SupplementaryAttachment.md) |  | [optional] 
+**payee** | [**Payee**](Payee.md) |  | [optional] 
 
 ## Example
 

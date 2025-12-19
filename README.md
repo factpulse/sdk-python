@@ -1,14 +1,14 @@
 # FactPulse SDK Python
 
-Client Python officiel pour l'API FactPulse - Facturation électronique française.
+Official Python client for the FactPulse API - French electronic invoicing.
 
-## Fonctionnalités
+## Features
 
-- **Factur-X** : Génération et validation de factures électroniques (profils MINIMUM, BASIC, EN16931, EXTENDED)
-- **Chorus Pro** : Intégration avec la plateforme de facturation publique française
-- **AFNOR PDP/PA** : Soumission de flux conformes à la norme XP Z12-013
-- **Signature électronique** : Signature PDF (PAdES-B-B, PAdES-B-T, PAdES-B-LT)
-- **Client simplifié** : Authentification JWT et polling intégrés via `factpulse_helpers`
+- **Factur-X**: Generation and validation of electronic invoices (MINIMUM, BASIC, EN16931, EXTENDED profiles)
+- **Chorus Pro**: Integration with the French public invoicing platform
+- **AFNOR PDP/PA**: Submission of flows compliant with XP Z12-013 standard
+- **Electronic signature**: PDF signing (PAdES-B-B, PAdES-B-T, PAdES-B-LT)
+- **Simplified client**: JWT authentication and polling integrated via `factpulse_helpers`
 
 ## Installation
 
@@ -16,218 +16,218 @@ Client Python officiel pour l'API FactPulse - Facturation électronique françai
 pip install factpulse
 ```
 
-## Démarrage rapide
+## Quick Start
 
-Le module `factpulse_helpers` offre une API simplifiée avec authentification et polling automatiques :
+The `factpulse_helpers` module provides a simplified API with automatic authentication and polling:
 
 ```python
 from factpulse_helpers import (
     FactPulseClient,
-    montant,
-    montant_total,
-    ligne_de_poste,
-    ligne_de_tva,
-    fournisseur,
-    destinataire,
+    amount,
+    total_amount,
+    invoice_line,
+    vat_line,
+    supplier,
+    recipient,
 )
 
-# Créer le client
+# Create the client
 client = FactPulseClient(
-    email="votre_email@example.com",
-    password="votre_mot_de_passe"
+    email="your_email@example.com",
+    password="your_password"
 )
 
-# Construire la facture avec les helpers
-facture_data = {
-    "numeroFacture": "FAC-2025-001",
-    "dateFacture": "2025-01-15",
-    "fournisseur": fournisseur(
-        nom="Mon Entreprise SAS",
+# Build the invoice with helpers
+invoice_data = {
+    "number": "INV-2025-001",
+    "date": "2025-01-15",
+    "supplier": supplier(
+        name="My Company SAS",
         siret="12345678901234",
-        adresse_ligne1="123 Rue Example",
-        code_postal="75001",
-        ville="Paris",
+        address_line1="123 Example Street",
+        postal_code="75001",
+        city="Paris",
     ),
-    "destinataire": destinataire(
-        nom="Client SARL",
+    "recipient": recipient(
+        name="Client SARL",
         siret="98765432109876",
-        adresse_ligne1="456 Avenue Test",
-        code_postal="69001",
-        ville="Lyon",
+        address_line1="456 Test Avenue",
+        postal_code="69001",
+        city="Lyon",
     ),
-    "montantTotal": montant_total(
-        ht=1000.00,
-        tva=200.00,
-        ttc=1200.00,
-        a_payer=1200.00,
+    "totalAmount": total_amount(
+        excluding_tax=1000.00,
+        vat=200.00,
+        including_tax=1200.00,
+        due=1200.00,
     ),
-    "lignesDePoste": [
-        ligne_de_poste(
-            numero=1,
-            denomination="Prestation de conseil",
-            quantite=10,
-            montant_unitaire_ht=100.00,
-            montant_total_ligne_ht=1000.00,
+    "lines": [
+        invoice_line(
+            number=1,
+            description="Consulting services",
+            quantity=10,
+            unit_price=100.00,
+            line_total=1000.00,
         )
     ],
-    "lignesDeTva": [
-        ligne_de_tva(
-            montant_base_ht=1000.00,
-            montant_tva=200.00,
-            taux_manuel="20.00",
+    "vatLines": [
+        vat_line(
+            base_amount=1000.00,
+            vat_amount=200.00,
+            rate="20.00",
         )
     ],
 }
 
-# Générer le PDF Factur-X
-with open("facture_source.pdf", "rb") as f:
+# Generate the Factur-X PDF
+with open("source_invoice.pdf", "rb") as f:
     pdf_source = f.read()
 
-pdf_bytes = client.generer_facturx(
-    facture_data=facture_data,
+pdf_bytes = client.generate_facturx(
+    invoice_data=invoice_data,
     pdf_source=pdf_source,
-    profil="EN16931",
+    profile="EN16931",
     sync=True,
 )
 
-with open("facture_facturx.pdf", "wb") as f:
+with open("facturx_invoice.pdf", "wb") as f:
     f.write(pdf_bytes)
 ```
 
-## Helpers disponibles
+## Available Helpers
 
-### montant(value)
+### amount(value)
 
-Convertit une valeur en string formaté pour les montants monétaires.
+Converts a value to a formatted string for monetary amounts.
 
 ```python
-from factpulse_helpers import montant
+from factpulse_helpers import amount
 
-montant(1234.5)      # "1234.50"
-montant("1234.56")   # "1234.56"
-montant(None)        # "0.00"
+amount(1234.5)      # "1234.50"
+amount("1234.56")   # "1234.56"
+amount(None)        # "0.00"
 ```
 
-### montant_total(ht, tva, ttc, a_payer, ...)
+### total_amount(excluding_tax, vat, including_tax, due, ...)
 
-Crée un objet MontantTotal complet.
+Creates a complete TotalAmount object.
 
 ```python
-from factpulse_helpers import montant_total
+from factpulse_helpers import total_amount
 
-total = montant_total(
-    ht=1000.00,
-    tva=200.00,
-    ttc=1200.00,
-    a_payer=1200.00,
-    remise_ttc=50.00,          # Optionnel
-    motif_remise="Fidélité",   # Optionnel
-    acompte=100.00,            # Optionnel
+total = total_amount(
+    excluding_tax=1000.00,
+    vat=200.00,
+    including_tax=1200.00,
+    due=1200.00,
+    discount_including_tax=50.00,  # Optional
+    discount_reason="Loyalty",      # Optional
+    prepayment=100.00,              # Optional
 )
 ```
 
-### ligne_de_poste(numero, denomination, quantite, montant_unitaire_ht, montant_total_ligne_ht, ...)
+### invoice_line(number, description, quantity, unit_price, line_total, ...)
 
-Crée une ligne de facturation.
+Creates an invoice line.
 
 ```python
-from factpulse_helpers import ligne_de_poste
+from factpulse_helpers import invoice_line
 
-ligne = ligne_de_poste(
-    numero=1,
-    denomination="Prestation de conseil",
-    quantite=5,
-    montant_unitaire_ht=200.00,
-    montant_total_ligne_ht=1000.00,  # Requis
-    taux_tva="TVA20",                # Ou taux_tva_manuel="20.00"
-    categorie_tva="S",               # S, Z, E, AE, K
-    unite="HEURE",                   # FORFAIT, PIECE, HEURE, JOUR...
-    reference="REF-001",             # Optionnel
+line = invoice_line(
+    number=1,
+    description="Consulting services",
+    quantity=5,
+    unit_price=200.00,
+    line_total=1000.00,      # Required
+    vat_rate="VAT20",        # Or manual_vat_rate="20.00"
+    vat_category="S",        # S, Z, E, AE, K
+    unit="HOUR",             # PACKAGE, PIECE, HOUR, DAY...
+    reference="REF-001",     # Optional
 )
 ```
 
-### ligne_de_tva(montant_base_ht, montant_tva, ...)
+### vat_line(base_amount, vat_amount, ...)
 
-Crée une ligne de ventilation TVA.
+Creates a VAT breakdown line.
 
 ```python
-from factpulse_helpers import ligne_de_tva
+from factpulse_helpers import vat_line
 
-tva = ligne_de_tva(
-    montant_base_ht=1000.00,
-    montant_tva=200.00,
-    taux="TVA20",            # Ou taux_manuel="20.00"
-    categorie="S",           # S, Z, E, AE, K
+vat = vat_line(
+    base_amount=1000.00,
+    vat_amount=200.00,
+    rate="VAT20",        # Or manual_rate="20.00"
+    category="S",        # S, Z, E, AE, K
 )
 ```
 
-### adresse_postale(ligne1, code_postal, ville, ...)
+### postal_address(line1, postal_code, city, ...)
 
-Crée une adresse postale structurée.
+Creates a structured postal address.
 
 ```python
-from factpulse_helpers import adresse_postale
+from factpulse_helpers import postal_address
 
-adresse = adresse_postale(
-    ligne1="123 Rue de la République",
-    code_postal="75001",
-    ville="Paris",
-    pays="FR",               # Défaut: "FR"
-    ligne2="Bâtiment A",     # Optionnel
+address = postal_address(
+    line1="123 Republic Street",
+    postal_code="75001",
+    city="Paris",
+    country="FR",        # Default: "FR"
+    line2="Building A",  # Optional
 )
 ```
 
-### adresse_electronique(identifiant, scheme_id)
+### electronic_address(identifier, scheme_id)
 
-Crée une adresse électronique (identifiant numérique).
+Creates an electronic address (digital identifier).
 
 ```python
-from factpulse_helpers import adresse_electronique
+from factpulse_helpers import electronic_address
 
 # SIRET (scheme_id="0225")
-adresse = adresse_electronique("12345678901234", "0225")
+address = electronic_address("12345678901234", "0225")
 
 # SIREN (scheme_id="0009")
-adresse = adresse_electronique("123456789", "0009")
+address = electronic_address("123456789", "0009")
 ```
 
-### fournisseur(nom, siret, adresse_ligne1, code_postal, ville, ...)
+### supplier(name, siret, address_line1, postal_code, city, ...)
 
-Crée un fournisseur complet avec calcul automatique du SIREN et TVA intra.
+Creates a complete supplier with automatic SIREN and intra-EU VAT calculation.
 
 ```python
-from factpulse_helpers import fournisseur
+from factpulse_helpers import supplier
 
-f = fournisseur(
-    nom="Ma Société SAS",
+s = supplier(
+    name="My Company SAS",
     siret="12345678901234",
-    adresse_ligne1="123 Rue Example",
-    code_postal="75001",
-    ville="Paris",
-    iban="FR7630006000011234567890189",  # Optionnel
+    address_line1="123 Example Street",
+    postal_code="75001",
+    city="Paris",
+    iban="FR7630006000011234567890189",  # Optional
 )
-# SIREN et TVA intracommunautaire calculés automatiquement
+# SIREN and intra-EU VAT number calculated automatically
 ```
 
-### destinataire(nom, siret, adresse_ligne1, code_postal, ville, ...)
+### recipient(name, siret, address_line1, postal_code, city, ...)
 
-Crée un destinataire (client) avec calcul automatique du SIREN.
+Creates a recipient (customer) with automatic SIREN calculation.
 
 ```python
-from factpulse_helpers import destinataire
+from factpulse_helpers import recipient
 
-d = destinataire(
-    nom="Client SARL",
+r = recipient(
+    name="Client SARL",
     siret="98765432109876",
-    adresse_ligne1="456 Avenue Test",
-    code_postal="69001",
-    ville="Lyon",
+    address_line1="456 Test Avenue",
+    postal_code="69001",
+    city="Lyon",
 )
 ```
 
-## Mode Zero-Trust (Chorus Pro / AFNOR)
+## Zero-Trust Mode (Chorus Pro / AFNOR)
 
-Pour passer vos propres credentials sans stockage côté serveur :
+To pass your own credentials without server-side storage:
 
 ```python
 from factpulse_helpers import (
@@ -238,10 +238,10 @@ from factpulse_helpers import (
 
 # Chorus Pro
 chorus_creds = ChorusProCredentials(
-    piste_client_id="votre_client_id",
-    piste_client_secret="votre_client_secret",
-    chorus_pro_login="votre_login",
-    chorus_pro_password="votre_password",
+    piste_client_id="your_client_id",
+    piste_client_secret="your_client_secret",
+    chorus_pro_login="your_login",
+    chorus_pro_password="your_password",
     sandbox=True,
 )
 
@@ -249,24 +249,24 @@ chorus_creds = ChorusProCredentials(
 afnor_creds = AFNORCredentials(
     flow_service_url="https://api.pdp.fr/flow/v1",
     token_url="https://auth.pdp.fr/oauth/token",
-    client_id="votre_client_id",
-    client_secret="votre_client_secret",
+    client_id="your_client_id",
+    client_secret="your_client_secret",
 )
 
 client = FactPulseClient(
-    email="votre_email@example.com",
-    password="votre_mot_de_passe",
+    email="your_email@example.com",
+    password="your_password",
     chorus_credentials=chorus_creds,
     afnor_credentials=afnor_creds,
 )
 ```
 
-## Ressources
+## Resources
 
-- **Documentation API** : https://factpulse.fr/api/facturation/documentation
-- **Exemple complet** : Voir `exemple_complet_python.py` dans ce package
-- **Support** : contact@factpulse.fr
+- **API Documentation**: https://factpulse.fr/api/facturation/documentation
+- **Complete Example**: See `complete_example_python.py` in this package
+- **Support**: contact@factpulse.fr
 
-## Licence
+## License
 
 MIT License - Copyright (c) 2025 FactPulse

@@ -1,59 +1,59 @@
-"""Exceptions personnalisées pour le client FactPulse.
+"""Custom exceptions for the FactPulse client.
 
-Ce module définit une hiérarchie d'exceptions alignée sur le format d'erreur
-de l'API FactPulse (APIError, ValidationErrorDetail) conforme à la norme AFNOR.
+This module defines an exception hierarchy aligned with the FactPulse API error format
+(APIError, ValidationErrorDetail) compliant with AFNOR XP Z12-013 standard.
 
-Hiérarchie des exceptions:
+Exception hierarchy:
 - FactPulseError (base)
   ├── FactPulseAuthError (401)
-  ├── FactPulseValidationError (400, 422) - avec détails structurés
-  ├── FactPulsePollingTimeout (timeout polling)
+  ├── FactPulseValidationError (400, 422) - with structured details
+  ├── FactPulsePollingTimeout (polling timeout)
   ├── FactPulseNotFoundError (404)
   ├── FactPulseServiceUnavailableError (503)
-  └── FactPulseAPIError (générique avec error_code)
+  └── FactPulseAPIError (generic with error_code)
 """
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
 
 class FactPulseError(Exception):
-    """Classe de base pour toutes les erreurs FactPulse."""
+    """Base class for all FactPulse errors."""
     pass
 
 
 class FactPulseAuthError(FactPulseError):
-    """Erreur d'authentification FactPulse (401).
+    """FactPulse authentication error (401).
 
-    Levée quand:
-    - Email/mot de passe invalides
-    - Token JWT expiré ou invalide
-    - client_uid non trouvé
+    Raised when:
+    - Invalid email/password
+    - Expired or invalid JWT token
+    - client_uid not found
     """
-    def __init__(self, message: str = "Authentification requise"):
+    def __init__(self, message: str = "Authentication required"):
         self.message = message
         super().__init__(message)
 
 
 class FactPulsePollingTimeout(FactPulseError):
-    """Timeout lors du polling d'une tâche asynchrone."""
+    """Timeout while polling an asynchronous task."""
     def __init__(self, task_id: str, timeout: int):
         self.task_id = task_id
         self.timeout = timeout
-        super().__init__(f"Timeout ({timeout}ms) atteint pour la tâche {task_id}")
+        super().__init__(f"Timeout ({timeout}ms) reached for task {task_id}")
 
 
 @dataclass
 class ValidationErrorDetail:
-    """Détail d'une erreur de validation au format AFNOR.
+    """Validation error detail in AFNOR format.
 
-    Aligné sur le schéma AcknowledgementDetail de la norme AFNOR XP Z12-013.
+    Aligned with the AcknowledgementDetail schema from AFNOR XP Z12-013 standard.
 
     Attributes:
-        level: Niveau de gravité ('Error' ou 'Warning')
-        item: Identifiant de l'élément concerné (règle BR-FR, champ, XPath)
-        reason: Description de l'erreur
-        source: Source de l'erreur (schematron, pydantic, pdfa, afnor, chorus_pro)
-        code: Code d'erreur unique (ex: SCHEMATRON_BR_FR_01)
+        level: Severity level ('Error' or 'Warning')
+        item: Identifier of the affected element (BR-FR rule, field, XPath)
+        reason: Error description
+        source: Error source (schematron, pydantic, pdfa, afnor, chorus_pro)
+        code: Unique error code (e.g., SCHEMATRON_BR_FR_01)
     """
     level: str = ""
     item: str = ""
@@ -69,13 +69,13 @@ class ValidationErrorDetail:
 
 
 class FactPulseValidationError(FactPulseError):
-    """Erreur de validation avec détails structurés (400, 422).
+    """Validation error with structured details (400, 422).
 
-    Contient une liste de ValidationErrorDetail pour le diagnostic.
+    Contains a list of ValidationErrorDetail for diagnostics.
 
     Attributes:
-        errors: Liste des erreurs détaillées
-        error_code: Code d'erreur API (ex: VALIDATION_FAILED, SCHEMATRON_VALIDATION_FAILED)
+        errors: List of detailed errors
+        error_code: API error code (e.g., VALIDATION_FAILED, SCHEMATRON_VALIDATION_FAILED)
     """
     def __init__(
         self,
@@ -87,52 +87,52 @@ class FactPulseValidationError(FactPulseError):
         self.error_code = error_code
         if self.errors:
             details = "\n".join(f"  - {e}" for e in self.errors)
-            message = f"{message}\n\nDétails:\n{details}"
+            message = f"{message}\n\nDetails:\n{details}"
         super().__init__(message)
 
 
 class FactPulseNotFoundError(FactPulseError):
-    """Ressource non trouvée (404).
+    """Resource not found (404).
 
     Attributes:
-        resource: Type de ressource (facture, structure, flux, client)
-        identifier: Identifiant de la ressource
+        resource: Resource type (invoice, structure, flow, client)
+        identifier: Resource identifier
     """
     def __init__(self, resource: str, identifier: str = ""):
         self.resource = resource
         self.identifier = identifier
-        message = f"{resource.capitalize()} non trouvé(e)"
+        message = f"{resource.capitalize()} not found"
         if identifier:
-            message = f"{resource.capitalize()} '{identifier}' non trouvé(e)"
+            message = f"{resource.capitalize()} '{identifier}' not found"
         super().__init__(message)
 
 
 class FactPulseServiceUnavailableError(FactPulseError):
-    """Service externe indisponible (503).
+    """External service unavailable (503).
 
     Attributes:
-        service_name: Nom du service (AFNOR PDP, Chorus Pro, Django)
-        original_error: Exception originale (optionnel)
+        service_name: Service name (AFNOR PDP, Chorus Pro, Django)
+        original_error: Original exception (optional)
     """
     def __init__(self, service_name: str, original_error: Optional[Exception] = None):
         self.service_name = service_name
         self.original_error = original_error
-        message = f"Le service {service_name} est indisponible"
+        message = f"Service {service_name} is unavailable"
         if original_error:
             message = f"{message}: {str(original_error)}"
         super().__init__(message)
 
 
 class FactPulseAPIError(FactPulseError):
-    """Erreur API générique avec code d'erreur structuré.
+    """Generic API error with structured error code.
 
-    Utilisée pour les erreurs non couvertes par les exceptions spécifiques.
+    Used for errors not covered by specific exceptions.
 
     Attributes:
-        status_code: Code HTTP de la réponse
-        error_code: Code d'erreur API (ex: INTERNAL_ERROR)
-        error_message: Message d'erreur de l'API
-        details: Détails optionnels (ValidationErrorDetail)
+        status_code: HTTP response status code
+        error_code: API error code (e.g., INTERNAL_ERROR)
+        error_message: API error message
+        details: Optional details (ValidationErrorDetail)
     """
     def __init__(
         self,
@@ -149,18 +149,18 @@ class FactPulseAPIError(FactPulseError):
 
 
 def parse_api_error(response_json: Dict[str, Any], status_code: int = 400) -> FactPulseError:
-    """Parse une réponse d'erreur API et retourne l'exception appropriée.
+    """Parse an API error response and return the appropriate exception.
 
-    Cette fonction parse le format d'erreur unifié de l'API FactPulse
-    (APIError avec errorCode, errorMessage, details) et retourne
-    l'exception Python appropriée.
+    This function parses the unified FactPulse API error format
+    (APIError with errorCode, errorMessage, details) and returns
+    the appropriate Python exception.
 
     Args:
-        response_json: JSON de la réponse d'erreur (dict)
-        status_code: Code HTTP de la réponse
+        response_json: Error response JSON (dict)
+        status_code: HTTP response status code
 
     Returns:
-        Exception appropriée selon le status_code et error_code
+        Appropriate exception based on status_code and error_code
 
     Example:
         >>> response = requests.post(url, json=data)
@@ -168,20 +168,20 @@ def parse_api_error(response_json: Dict[str, Any], status_code: int = 400) -> Fa
         ...     error = parse_api_error(response.json(), response.status_code)
         ...     raise error
     """
-    # Extraire les champs de l'erreur API
-    # Support des deux formats : camelCase (API) et snake_case
+    # Extract API error fields
+    # Support both formats: camelCase (API) and snake_case
     error_code = response_json.get("errorCode") or response_json.get("error_code") or "UNKNOWN_ERROR"
-    error_message = response_json.get("errorMessage") or response_json.get("error_message") or "Erreur inconnue"
+    error_message = response_json.get("errorMessage") or response_json.get("error_message") or "Unknown error"
     details_raw = response_json.get("details") or []
 
-    # Parfois l'erreur est dans un wrapper "detail"
+    # Sometimes the error is wrapped in a "detail" field
     if "detail" in response_json and isinstance(response_json["detail"], dict):
         detail = response_json["detail"]
         error_code = detail.get("error") or detail.get("errorCode") or error_code
         error_message = detail.get("message") or detail.get("errorMessage") or error_message
         details_raw = detail.get("details") or details_raw
 
-    # Parser les détails en ValidationErrorDetail
+    # Parse details into ValidationErrorDetail
     details = []
     for d in details_raw:
         if isinstance(d, dict):
@@ -193,18 +193,18 @@ def parse_api_error(response_json: Dict[str, Any], status_code: int = 400) -> Fa
                 code=d.get("code"),
             ))
 
-    # Retourner l'exception appropriée selon le status_code
+    # Return appropriate exception based on status_code
     if status_code == 401:
         return FactPulseAuthError(error_message)
     elif status_code == 404:
-        # Essayer d'extraire la ressource depuis le message
-        resource = "ressource"
+        # Try to extract resource from message
+        resource = "resource"
         if "client" in error_message.lower():
             resource = "client"
         elif "flux" in error_message.lower() or "flow" in error_message.lower():
-            resource = "flux"
-        elif "facture" in error_message.lower():
-            resource = "facture"
+            resource = "flow"
+        elif "facture" in error_message.lower() or "invoice" in error_message.lower():
+            resource = "invoice"
         elif "structure" in error_message.lower():
             resource = "structure"
         return FactPulseNotFoundError(resource)
@@ -222,17 +222,17 @@ def parse_api_error(response_json: Dict[str, Any], status_code: int = 400) -> Fa
 
 
 def api_exception_to_validation_error(api_exception) -> FactPulseValidationError:
-    """Convertit une ApiException du SDK généré en FactPulseValidationError.
+    """Convert an SDK-generated ApiException to FactPulseValidationError.
 
-    Le SDK openapi-generator génère des exceptions ApiException qui ne sont
-    pas très pratiques à utiliser. Cette fonction les convertit en exceptions
-    FactPulse avec parsing intelligent des erreurs.
+    The openapi-generator SDK generates ApiException objects that are not
+    very user-friendly. This function converts them to FactPulse exceptions
+    with intelligent error parsing.
 
     Args:
-        api_exception: Exception ApiException du SDK généré
+        api_exception: ApiException from the generated SDK
 
     Returns:
-        FactPulseValidationError avec détails structurés
+        FactPulseValidationError with structured details
     """
     import json
 
@@ -246,7 +246,7 @@ def api_exception_to_validation_error(api_exception) -> FactPulseValidationError
 
     error = parse_api_error(response_json, status_code)
 
-    # Convertir en FactPulseValidationError si ce n'est pas déjà le cas
+    # Convert to FactPulseValidationError if not already
     if isinstance(error, FactPulseValidationError):
         return error
     else:

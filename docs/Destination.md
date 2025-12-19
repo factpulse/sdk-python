@@ -1,14 +1,14 @@
 # Destination
 
-Configuration de la destination (Chorus Pro ou AFNOR)
+Destination configuration (Chorus Pro or AFNOR)
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** |  | [optional] [default to 'chorus_pro']
-**credentials** | [**CredentialsAFNOR**](CredentialsAFNOR.md) |  | [optional] 
-**flow_syntax** | **str** | Syntaxe du flux à envoyer | [optional] [default to 'Factur-X']
+**credentials** | [**AFNORCredentials**](AFNORCredentials.md) |  | [optional] 
+**flow_syntax** | **str** | Flow syntax to send | [optional] [default to 'Factur-X']
 **tracking_id** | **str** |  | [optional] 
 
 ## Example

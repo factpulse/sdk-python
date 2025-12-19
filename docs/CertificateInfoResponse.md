@@ -1,23 +1,23 @@
 # CertificateInfoResponse
 
-Informations sur un certificat généré.
+Information about a generated certificate.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **cn** | **str** | Common Name | 
-**organisation** | **str** | Organisation | 
-**pays** | **str** | Code pays | 
-**ville** | **str** | Ville | 
-**province** | **str** | Province | 
+**organization** | **str** | Organization | 
+**country** | **str** | Country code | 
+**city** | **str** | City | 
+**state** | **str** | State/Province | 
 **email** | **str** |  | [optional] 
-**sujet** | **str** | Sujet complet (RFC4514) | 
-**emetteur** | **str** | Émetteur (auto-signé &#x3D; même que sujet) | 
-**numero_serie** | **int** | Numéro de série du certificat | 
-**valide_du** | **str** | Date de début de validité (ISO 8601) | 
-**valide_au** | **str** | Date de fin de validité (ISO 8601) | 
-**algorithme** | **str** | Algorithme de signature | 
+**subject** | **str** | Full subject (RFC4514) | 
+**issuer** | **str** | Issuer (self-signed &#x3D; same as subject) | 
+**serial_number** | **int** | Certificate serial number | 
+**valid_from** | **str** | Validity start date (ISO 8601) | 
+**valid_to** | **str** | Validity end date (ISO 8601) | 
+**algorithm** | **str** | Signature algorithm | 
 
 ## Example
 

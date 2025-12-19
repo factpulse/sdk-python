@@ -30,7 +30,7 @@ Method | HTTP request | Description
 
 Creating a directory line
 
-Créer une ligne dans l'annuaire
+Create a line in the directory
 
 ### Example
 
@@ -95,9 +95,9 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**201** | Ligne d&#39;annuaire créée avec succès |  -  |
-**400** | Requête invalide |  -  |
-**401** | Non authentifié |  -  |
+**201** | Directory line created successfully |  -  |
+**400** | Invalid request |  -  |
+**401** | Not authenticated |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -106,7 +106,7 @@ This endpoint does not need any parameter.
 
 Create a routing code
 
-Créer un code de routage dans l'annuaire
+Create a routing code in the directory
 
 ### Example
 
@@ -171,9 +171,9 @@ This endpoint does not need any parameter.
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**201** | Code de routage créé avec succès |  -  |
-**400** | Requête invalide |  -  |
-**401** | Non authentifié |  -  |
+**201** | Routing code created successfully |  -  |
+**400** | Invalid request |  -  |
+**401** | Not authenticated |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -182,7 +182,7 @@ This endpoint does not need any parameter.
 
 Delete a directory line
 
-Supprimer une ligne d'annuaire
+Delete a directory line
 
 ### Example
 
@@ -251,9 +251,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**204** | Ligne d&#39;annuaire supprimée |  -  |
-**404** | Ligne d&#39;annuaire non trouvée |  -  |
-**401** | Non authentifié |  -  |
+**204** | Directory line deleted |  -  |
+**404** | Directory line not found |  -  |
+**401** | Not authenticated |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -263,7 +263,7 @@ Name | Type | Description  | Notes
 
 Healthcheck Directory Service
 
-Vérifier la disponibilité du Directory Service
+Check Directory Service availability
 
 ### Example
 
@@ -317,7 +317,7 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Service opérationnel |  -  |
+**200** | Service operational |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -326,7 +326,7 @@ No authorization required
 
 Get a directory line
 
-Obtenir une ligne d'annuaire identifiée par un identifiant d'adressage
+Get a directory line identified by an addressing identifier
 
 ### Example
 
@@ -394,9 +394,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Détails de la ligne d&#39;annuaire |  -  |
-**404** | Ligne d&#39;annuaire non trouvée |  -  |
-**401** | Non authentifié |  -  |
+**200** | Directory line details |  -  |
+**404** | Directory line not found |  -  |
+**401** | Not authenticated |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -406,7 +406,7 @@ Name | Type | Description  | Notes
 
 Get a directory line
 
-Obtenir une ligne d'annuaire identifiée par son idInstance
+Get a directory line identified by its idInstance
 
 ### Example
 
@@ -474,9 +474,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Détails de la ligne d&#39;annuaire |  -  |
-**404** | Ligne d&#39;annuaire non trouvée |  -  |
-**401** | Non authentifié |  -  |
+**200** | Directory line details |  -  |
+**404** | Directory line not found |  -  |
+**401** | Not authenticated |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -486,7 +486,7 @@ Name | Type | Description  | Notes
 
 Get a routing code by instance-id
 
-Obtenir un code de routage identifié par son idInstance
+Get a routing code identified by its idInstance
 
 ### Example
 
@@ -554,9 +554,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Détails du code de routage |  -  |
-**404** | Code de routage non trouvé |  -  |
-**401** | Non authentifié |  -  |
+**200** | Routing code details |  -  |
+**404** | Routing code not found |  -  |
+**401** | Not authenticated |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -566,7 +566,7 @@ Name | Type | Description  | Notes
 
 Get a routing code by SIRET and routing identifier
 
-Consulter un code de routage identifié par SIRET et identifiant de routage
+Consult a routing code identified by SIRET and routing identifier
 
 ### Example
 
@@ -636,9 +636,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Détails du code de routage |  -  |
-**404** | Code de routage non trouvé |  -  |
-**401** | Non authentifié |  -  |
+**200** | Routing code details |  -  |
+**404** | Routing code not found |  -  |
+**401** | Not authenticated |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -648,7 +648,7 @@ Name | Type | Description  | Notes
 
 Consult a siren (legal unit) by SIREN number
 
-Retourne les détails d'une entreprise (unité légale) identifiée par son numéro SIREN
+Returns details of a company (legal unit) identified by its SIREN number
 
 ### Example
 
@@ -716,9 +716,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Informations de l&#39;entreprise |  -  |
-**404** | Entreprise non trouvée |  -  |
-**401** | Non authentifié |  -  |
+**200** | Company information |  -  |
+**404** | Company not found |  -  |
+**401** | Not authenticated |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -728,7 +728,7 @@ Name | Type | Description  | Notes
 
 Gets a siren (legal unit) by instance ID
 
-Obtenir une entreprise (unité légale) identifiée par son idInstance
+Get a company (legal unit) identified by its idInstance
 
 ### Example
 
@@ -796,9 +796,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Informations de l&#39;entreprise |  -  |
-**404** | Entreprise non trouvée |  -  |
-**401** | Non authentifié |  -  |
+**200** | Company information |  -  |
+**404** | Company not found |  -  |
+**401** | Not authenticated |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -808,7 +808,7 @@ Name | Type | Description  | Notes
 
 Gets a siret (facility) by SIRET number
 
-Obtenir un établissement identifié par son numéro SIRET
+Get an establishment identified by its SIRET number
 
 ### Example
 
@@ -876,9 +876,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Informations de l&#39;établissement |  -  |
-**404** | Établissement non trouvé |  -  |
-**401** | Non authentifié |  -  |
+**200** | Establishment information |  -  |
+**404** | Establishment not found |  -  |
+**401** | Not authenticated |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -888,7 +888,7 @@ Name | Type | Description  | Notes
 
 Gets a siret (facility) by id-instance
 
-Obtenir un établissement identifié par son idInstance
+Get an establishment identified by its idInstance
 
 ### Example
 
@@ -956,9 +956,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Informations de l&#39;établissement |  -  |
-**404** | Établissement non trouvé |  -  |
-**401** | Non authentifié |  -  |
+**200** | Establishment information |  -  |
+**404** | Establishment not found |  -  |
+**401** | Not authenticated |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -968,7 +968,7 @@ Name | Type | Description  | Notes
 
 Partially updates a directory line
 
-Mettre à jour partiellement une ligne d'annuaire
+Partially update a directory line
 
 ### Example
 
@@ -1036,9 +1036,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Ligne d&#39;annuaire mise à jour |  -  |
-**404** | Ligne d&#39;annuaire non trouvée |  -  |
-**401** | Non authentifié |  -  |
+**200** | Directory line updated |  -  |
+**404** | Directory line not found |  -  |
+**401** | Not authenticated |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1048,7 +1048,7 @@ Name | Type | Description  | Notes
 
 Partially update a private routing code
 
-Mettre à jour partiellement un code de routage privé
+Partially update a private routing code
 
 ### Example
 
@@ -1116,9 +1116,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Code de routage mis à jour |  -  |
-**404** | Code de routage non trouvé |  -  |
-**401** | Non authentifié |  -  |
+**200** | Routing code updated |  -  |
+**404** | Routing code not found |  -  |
+**401** | Not authenticated |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1128,7 +1128,7 @@ Name | Type | Description  | Notes
 
 Completely update a private routing code
 
-Mettre à jour complètement un code de routage privé
+Completely update a private routing code
 
 ### Example
 
@@ -1196,9 +1196,9 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Code de routage mis à jour |  -  |
-**404** | Code de routage non trouvé |  -  |
-**401** | Non authentifié |  -  |
+**200** | Routing code updated |  -  |
+**404** | Routing code not found |  -  |
+**401** | Not authenticated |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -1208,7 +1208,7 @@ Name | Type | Description  | Notes
 
 Search for a directory line
 
-Rechercher des lignes d'annuaire selon des critères
+Search for directory lines by criteria
 
 ### Example
 
@@ -1272,8 +1272,8 @@ This endpoint does not need any parameter.
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Résultats de recherche |  -  |
-**401** | Non authentifié |  -  |
+**200** | Search results |  -  |
+**401** | Not authenticated |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1282,7 +1282,7 @@ This endpoint does not need any parameter.
 
 Search for a routing code
 
-Rechercher des codes de routage selon des critères
+Search for routing codes by criteria
 
 ### Example
 
@@ -1346,8 +1346,8 @@ This endpoint does not need any parameter.
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Résultats de recherche |  -  |
-**401** | Non authentifié |  -  |
+**200** | Search results |  -  |
+**401** | Not authenticated |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1356,7 +1356,7 @@ This endpoint does not need any parameter.
 
 SIREN search (or legal unit)
 
-Recherche multi-critères d'entreprises (unités légales)
+Multi-criteria search for companies (legal units)
 
 ### Example
 
@@ -1420,8 +1420,8 @@ This endpoint does not need any parameter.
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Retourne une ou plusieurs entreprises |  -  |
-**401** | Non authentifié |  -  |
+**200** | Returns one or more companies |  -  |
+**401** | Not authenticated |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1430,7 +1430,7 @@ This endpoint does not need any parameter.
 
 Search for a SIRET (facility)
 
-Recherche multi-critères d'établissements
+Multi-criteria search for establishments
 
 ### Example
 
@@ -1494,8 +1494,8 @@ This endpoint does not need any parameter.
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Retourne un ou plusieurs établissements |  -  |
-**401** | Non authentifié |  -  |
+**200** | Returns one or more establishments |  -  |
+**401** | Not authenticated |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

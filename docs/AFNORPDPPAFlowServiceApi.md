@@ -4,18 +4,18 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**download_flow_proxy_api_v1_afnor_flow_v1_flows_flow_id_get**](AFNORPDPPAFlowServiceApi.md#download_flow_proxy_api_v1_afnor_flow_v1_flows_flow_id_get) | **GET** /api/v1/afnor/flow/v1/flows/{flowId} | Télécharger un flux
+[**download_flow_proxy_api_v1_afnor_flow_v1_flows_flow_id_get**](AFNORPDPPAFlowServiceApi.md#download_flow_proxy_api_v1_afnor_flow_v1_flows_flow_id_get) | **GET** /api/v1/afnor/flow/v1/flows/{flowId} | Download a flow
 [**flow_healthcheck_proxy_api_v1_afnor_flow_v1_healthcheck_get**](AFNORPDPPAFlowServiceApi.md#flow_healthcheck_proxy_api_v1_afnor_flow_v1_healthcheck_get) | **GET** /api/v1/afnor/flow/v1/healthcheck | Healthcheck Flow Service
-[**search_flows_proxy_api_v1_afnor_flow_v1_flows_search_post**](AFNORPDPPAFlowServiceApi.md#search_flows_proxy_api_v1_afnor_flow_v1_flows_search_post) | **POST** /api/v1/afnor/flow/v1/flows/search | Rechercher des flux
-[**submit_flow_proxy_api_v1_afnor_flow_v1_flows_post**](AFNORPDPPAFlowServiceApi.md#submit_flow_proxy_api_v1_afnor_flow_v1_flows_post) | **POST** /api/v1/afnor/flow/v1/flows | Soumettre un flux de facturation
+[**search_flows_proxy_api_v1_afnor_flow_v1_flows_search_post**](AFNORPDPPAFlowServiceApi.md#search_flows_proxy_api_v1_afnor_flow_v1_flows_search_post) | **POST** /api/v1/afnor/flow/v1/flows/search | Search flows
+[**submit_flow_proxy_api_v1_afnor_flow_v1_flows_post**](AFNORPDPPAFlowServiceApi.md#submit_flow_proxy_api_v1_afnor_flow_v1_flows_post) | **POST** /api/v1/afnor/flow/v1/flows | Submit an invoicing flow
 
 
 # **download_flow_proxy_api_v1_afnor_flow_v1_flows_flow_id_get**
 > object download_flow_proxy_api_v1_afnor_flow_v1_flows_flow_id_get(flow_id)
 
-Télécharger un flux
+Download a flow
 
-Télécharger le fichier PDF/A-3 d'un flux de facturation (utilise le client_uid du JWT)
+Download the PDF/A-3 file of an invoicing flow (uses JWT client_uid)
 
 ### Example
 
@@ -39,7 +39,7 @@ with factpulse.ApiClient(configuration) as api_client:
     flow_id = 'flow_id_example' # str | 
 
     try:
-        # Télécharger un flux
+        # Download a flow
         api_response = api_instance.download_flow_proxy_api_v1_afnor_flow_v1_flows_flow_id_get(flow_id)
         print("The response of AFNORPDPPAFlowServiceApi->download_flow_proxy_api_v1_afnor_flow_v1_flows_flow_id_get:\n")
         pprint(api_response)
@@ -73,10 +73,10 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Fichier PDF/A-3 |  -  |
-**400** | Configuration PDP manquante |  -  |
-**401** | Non authentifié - Token JWT manquant ou invalide |  -  |
-**404** | Flux non trouvé ou client_uid invalide |  -  |
+**200** | PDF/A-3 file |  -  |
+**400** | Missing PDP configuration |  -  |
+**401** | Not authenticated - Missing or invalid JWT token |  -  |
+**404** | Flow not found or invalid client_uid |  -  |
 **422** | Validation Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
@@ -86,7 +86,7 @@ No authorization required
 
 Healthcheck Flow Service
 
-Vérifier la disponibilité du Flow Service
+Check Flow Service availability
 
 ### Example
 
@@ -140,16 +140,16 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Service opérationnel |  -  |
+**200** | Service operational |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **search_flows_proxy_api_v1_afnor_flow_v1_flows_search_post**
 > object search_flows_proxy_api_v1_afnor_flow_v1_flows_search_post()
 
-Rechercher des flux
+Search flows
 
-Rechercher des flux de facturation selon des critères (utilise le client_uid du JWT)
+Search invoicing flows by criteria (uses JWT client_uid)
 
 ### Example
 
@@ -172,7 +172,7 @@ with factpulse.ApiClient(configuration) as api_client:
     api_instance = factpulse.AFNORPDPPAFlowServiceApi(api_client)
 
     try:
-        # Rechercher des flux
+        # Search flows
         api_response = api_instance.search_flows_proxy_api_v1_afnor_flow_v1_flows_search_post()
         print("The response of AFNORPDPPAFlowServiceApi->search_flows_proxy_api_v1_afnor_flow_v1_flows_search_post:\n")
         pprint(api_response)
@@ -203,20 +203,20 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Résultats de recherche |  -  |
-**400** | Configuration PDP manquante |  -  |
-**401** | Non authentifié - Token JWT manquant ou invalide |  -  |
-**404** | Client PDP non trouvé (client_uid invalide) |  -  |
-**429** | Trop de requêtes - Rate limit atteint (60 recherches/minute) |  -  |
+**200** | Search results |  -  |
+**400** | Missing PDP configuration |  -  |
+**401** | Not authenticated - Missing or invalid JWT token |  -  |
+**404** | PDP client not found (invalid client_uid) |  -  |
+**429** | Too many requests - Rate limit reached (60 searches/minute) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_flow_proxy_api_v1_afnor_flow_v1_flows_post**
 > object submit_flow_proxy_api_v1_afnor_flow_v1_flows_post()
 
-Soumettre un flux de facturation
+Submit an invoicing flow
 
-Soumet une facture électronique à une Plateforme de Dématérialisation Partenaire (PDP) conformément à la norme AFNOR XP Z12-013
+Submits an electronic invoice to a Partner Dematerialization Platform (PDP) in compliance with the AFNOR XP Z12-013 standard
 
 ### Example
 
@@ -239,7 +239,7 @@ with factpulse.ApiClient(configuration) as api_client:
     api_instance = factpulse.AFNORPDPPAFlowServiceApi(api_client)
 
     try:
-        # Soumettre un flux de facturation
+        # Submit an invoicing flow
         api_response = api_instance.submit_flow_proxy_api_v1_afnor_flow_v1_flows_post()
         print("The response of AFNORPDPPAFlowServiceApi->submit_flow_proxy_api_v1_afnor_flow_v1_flows_post:\n")
         pprint(api_response)
@@ -271,12 +271,12 @@ No authorization required
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**201** | Flux soumis avec succès |  -  |
-**400** | Requête invalide ou configuration PDP manquante |  -  |
-**401** | Non authentifié - Token JWT manquant ou invalide |  -  |
-**403** | Non autorisé - Quota dépassé ou permissions insuffisantes |  -  |
-**404** | Client PDP non trouvé (client_uid invalide) |  -  |
-**429** | Trop de requêtes - Rate limit atteint (30 soumissions/minute) |  -  |
+**201** | Flow submitted successfully |  -  |
+**400** | Invalid request or missing PDP configuration |  -  |
+**401** | Not authenticated - Missing or invalid JWT token |  -  |
+**403** | Not authorized - Quota exceeded or insufficient permissions |  -  |
+**404** | PDP client not found (invalid client_uid) |  -  |
+**429** | Too many requests - Rate limit reached (30 submissions/minute) |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

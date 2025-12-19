@@ -1,19 +1,19 @@
 """
- FactPulse Helpers - Client simplifié avec authentification JWT et polling intégrés.
+FactPulse Helpers - Simplified client with built-in JWT authentication and polling.
 
-Ce module fournit :
-- FactPulseClient : Client avec auth JWT et polling automatique
-- ChorusProCredentials / AFNORCredentials : Dataclasses pour le mode Zero-Trust
-- Helpers montants : montant(), montant_total(), ligne_de_poste(), ligne_de_tva()
-- Helpers JSON : DecimalEncoder, json_dumps_safe() pour sérialiser Decimal/datetime
+This module provides:
+- FactPulseClient: Client with JWT auth and automatic polling
+- ChorusProCredentials / AFNORCredentials: Dataclasses for Zero-Trust mode
+- Amount helpers: amount(), invoice_totals(), invoice_line(), vat_line()
+- JSON helpers: DecimalEncoder, json_dumps_safe() for serializing Decimal/datetime
 
 Example:
     >>> from factpulse_helpers import (
     ...     FactPulseClient,
     ...     ChorusProCredentials,
     ...     AFNORCredentials,
-    ...     montant_total,
-    ...     ligne_de_poste,
+    ...     invoice_totals,
+    ...     invoice_line,
     ... )
     >>>
     >>> client = FactPulseClient(
@@ -31,15 +31,15 @@ from .client import (
     FactPulseClient,
     ChorusProCredentials,
     AFNORCredentials,
-    montant,
-    montant_total,
-    ligne_de_poste,
-    ligne_de_tva,
-    adresse_postale,
-    adresse_electronique,
-    fournisseur,
-    destinataire,
-    # Utilitaires JSON
+    amount,
+    invoice_totals,
+    invoice_line,
+    vat_line,
+    postal_address,
+    electronic_address,
+    supplier,
+    recipient,
+    # JSON utilities
     DecimalEncoder,
     json_dumps_safe,
 )
@@ -57,22 +57,22 @@ from .exceptions import (
 )
 
 __all__ = [
-    # Client principal
+    # Main client
     "FactPulseClient",
     # Credentials
     "ChorusProCredentials",
     "AFNORCredentials",
-    # Helpers montants et lignes
-    "montant",
-    "montant_total",
-    "ligne_de_poste",
-    "ligne_de_tva",
-    # Helpers parties (fournisseur/destinataire)
-    "adresse_postale",
-    "adresse_electronique",
-    "fournisseur",
-    "destinataire",
-    # Utilitaires JSON (gestion Decimal, datetime, etc.)
+    # Amount and line helpers
+    "amount",
+    "invoice_totals",
+    "invoice_line",
+    "vat_line",
+    # Party helpers (supplier/recipient)
+    "postal_address",
+    "electronic_address",
+    "supplier",
+    "recipient",
+    # JSON utilities (Decimal, datetime handling, etc.)
     "DecimalEncoder",
     "json_dumps_safe",
     # Exceptions
@@ -84,13 +84,13 @@ __all__ = [
     "FactPulseServiceUnavailableError",
     "FactPulseAPIError",
     "ValidationErrorDetail",
-    # Helpers pour parser les erreurs API
+    # Helpers for parsing API errors
     "parse_api_error",
     "api_exception_to_validation_error",
 ]
 
 
-# Alias pour rétrocompatibilité
-def format_montant(value) -> str:
-    """Formate un montant pour l'API FactPulse. Alias de montant()."""
-    return montant(value)
+# Backward compatibility alias
+def format_amount(value) -> str:
+    """Format an amount for the FactPulse API. Alias for amount()."""
+    return amount(value)
