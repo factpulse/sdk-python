@@ -97,8 +97,11 @@ docs/SubmitCompleteInvoiceRequest.md
 docs/SubmitCompleteInvoiceResponse.md
 docs/SubmitFlowRequest.md
 docs/SubmitFlowResponse.md
+docs/SubmitGrossAmount.md
 docs/SubmitInvoiceRequest.md
 docs/SubmitInvoiceResponse.md
+docs/SubmitNetAmount.md
+docs/SubmitVatAmount.md
 docs/SupplementaryAttachment.md
 docs/Supplier.md
 docs/TaskResponse.md
@@ -119,7 +122,6 @@ docs/ValidationErrorDetail.md
 docs/ValidationErrorLocInner.md
 docs/ValidationErrorResponse.md
 docs/ValidationSuccessResponse.md
-docs/VatAmount.md
 docs/VerificationSuccessResponse.md
 docs/VerifiedFieldSchema.md
 factpulse/__init__.py
@@ -223,8 +225,11 @@ factpulse/models/submit_complete_invoice_request.py
 factpulse/models/submit_complete_invoice_response.py
 factpulse/models/submit_flow_request.py
 factpulse/models/submit_flow_response.py
+factpulse/models/submit_gross_amount.py
 factpulse/models/submit_invoice_request.py
 factpulse/models/submit_invoice_response.py
+factpulse/models/submit_net_amount.py
+factpulse/models/submit_vat_amount.py
 factpulse/models/supplementary_attachment.py
 factpulse/models/supplier.py
 factpulse/models/task_response.py
@@ -241,7 +246,6 @@ factpulse/models/validation_error_loc_inner.py
 factpulse/models/validation_error_response.py
 factpulse/models/validation_success_response.py
 factpulse/models/vat_accounting_code.py
-factpulse/models/vat_amount.py
 factpulse/models/vat_amount.py
 factpulse/models/vat_category.py
 factpulse/models/vat_line.py
@@ -349,8 +353,11 @@ test/test_submit_complete_invoice_request.py
 test/test_submit_complete_invoice_response.py
 test/test_submit_flow_request.py
 test/test_submit_flow_response.py
+test/test_submit_gross_amount.py
 test/test_submit_invoice_request.py
 test/test_submit_invoice_response.py
+test/test_submit_net_amount.py
+test/test_submit_vat_amount.py
 test/test_supplementary_attachment.py
 test/test_supplier.py
 test/test_task_response.py

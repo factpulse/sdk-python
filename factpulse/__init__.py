@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "3.0.1"
+__version__ = "3.0.2"
 
 # Define package exports
 __all__ = [
@@ -121,8 +121,11 @@ __all__ = [
     "SubmitCompleteInvoiceResponse",
     "SubmitFlowRequest",
     "SubmitFlowResponse",
+    "SubmitGrossAmount",
     "SubmitInvoiceRequest",
     "SubmitInvoiceResponse",
+    "SubmitNetAmount",
+    "SubmitVatAmount",
     "SupplementaryAttachment",
     "Supplier",
     "TaskResponse",
@@ -142,7 +145,6 @@ __all__ = [
     "ValidationErrorLocInner",
     "ValidationErrorResponse",
     "ValidationSuccessResponse",
-    "VatAmount",
     "VerificationSuccessResponse",
     "VerifiedFieldSchema",
 ]
@@ -255,8 +257,11 @@ from factpulse.models.submit_complete_invoice_request import SubmitCompleteInvoi
 from factpulse.models.submit_complete_invoice_response import SubmitCompleteInvoiceResponse as SubmitCompleteInvoiceResponse
 from factpulse.models.submit_flow_request import SubmitFlowRequest as SubmitFlowRequest
 from factpulse.models.submit_flow_response import SubmitFlowResponse as SubmitFlowResponse
+from factpulse.models.submit_gross_amount import SubmitGrossAmount as SubmitGrossAmount
 from factpulse.models.submit_invoice_request import SubmitInvoiceRequest as SubmitInvoiceRequest
 from factpulse.models.submit_invoice_response import SubmitInvoiceResponse as SubmitInvoiceResponse
+from factpulse.models.submit_net_amount import SubmitNetAmount as SubmitNetAmount
+from factpulse.models.submit_vat_amount import SubmitVatAmount as SubmitVatAmount
 from factpulse.models.supplementary_attachment import SupplementaryAttachment as SupplementaryAttachment
 from factpulse.models.supplier import Supplier as Supplier
 from factpulse.models.task_response import TaskResponse as TaskResponse
@@ -276,7 +281,6 @@ from factpulse.models.validation_error_detail import ValidationErrorDetail as Va
 from factpulse.models.validation_error_loc_inner import ValidationErrorLocInner as ValidationErrorLocInner
 from factpulse.models.validation_error_response import ValidationErrorResponse as ValidationErrorResponse
 from factpulse.models.validation_success_response import ValidationSuccessResponse as ValidationSuccessResponse
-from factpulse.models.vat_amount import VatAmount as VatAmount
 from factpulse.models.verification_success_response import VerificationSuccessResponse as VerificationSuccessResponse
 from factpulse.models.verified_field_schema import VerifiedFieldSchema as VerifiedFieldSchema
 

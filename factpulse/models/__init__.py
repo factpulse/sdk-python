@@ -99,8 +99,11 @@ from factpulse.models.submit_complete_invoice_request import SubmitCompleteInvoi
 from factpulse.models.submit_complete_invoice_response import SubmitCompleteInvoiceResponse
 from factpulse.models.submit_flow_request import SubmitFlowRequest
 from factpulse.models.submit_flow_response import SubmitFlowResponse
+from factpulse.models.submit_gross_amount import SubmitGrossAmount
 from factpulse.models.submit_invoice_request import SubmitInvoiceRequest
 from factpulse.models.submit_invoice_response import SubmitInvoiceResponse
+from factpulse.models.submit_net_amount import SubmitNetAmount
+from factpulse.models.submit_vat_amount import SubmitVatAmount
 from factpulse.models.supplementary_attachment import SupplementaryAttachment
 from factpulse.models.supplier import Supplier
 from factpulse.models.task_response import TaskResponse
@@ -120,7 +123,6 @@ from factpulse.models.validation_error_detail import ValidationErrorDetail
 from factpulse.models.validation_error_loc_inner import ValidationErrorLocInner
 from factpulse.models.validation_error_response import ValidationErrorResponse
 from factpulse.models.validation_success_response import ValidationSuccessResponse
-from factpulse.models.vat_amount import VatAmount
 from factpulse.models.verification_success_response import VerificationSuccessResponse
 from factpulse.models.verified_field_schema import VerifiedFieldSchema
 

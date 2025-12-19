@@ -20,9 +20,9 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
-from factpulse.models.total_gross_amount import TotalGrossAmount
-from factpulse.models.total_net_amount import TotalNetAmount
-from factpulse.models.vat_amount import VatAmount
+from factpulse.models.submit_gross_amount import SubmitGrossAmount
+from factpulse.models.submit_net_amount import SubmitNetAmount
+from factpulse.models.submit_vat_amount import SubmitVatAmount
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -37,9 +37,9 @@ class SubmitInvoiceRequest(BaseModel):
     structure_id: StrictInt = Field(description="Chorus Pro recipient structure ID")
     service_code: Optional[StrictStr] = None
     engagement_number: Optional[StrictStr] = None
-    total_net_amount: TotalNetAmount
-    vat_amount: VatAmount
-    total_gross_amount: TotalGrossAmount
+    total_net_amount: SubmitNetAmount
+    vat_amount: SubmitVatAmount
+    total_gross_amount: SubmitGrossAmount
     main_attachment_id: Optional[StrictInt] = None
     main_attachment_label: Optional[StrictStr] = None
     comment: Optional[StrictStr] = None
@@ -162,9 +162,9 @@ class SubmitInvoiceRequest(BaseModel):
             "structure_id": obj.get("structure_id"),
             "service_code": obj.get("service_code"),
             "engagement_number": obj.get("engagement_number"),
-            "total_net_amount": TotalNetAmount.from_dict(obj["total_net_amount"]) if obj.get("total_net_amount") is not None else None,
-            "vat_amount": VatAmount.from_dict(obj["vat_amount"]) if obj.get("vat_amount") is not None else None,
-            "total_gross_amount": TotalGrossAmount.from_dict(obj["total_gross_amount"]) if obj.get("total_gross_amount") is not None else None,
+            "total_net_amount": SubmitNetAmount.from_dict(obj["total_net_amount"]) if obj.get("total_net_amount") is not None else None,
+            "vat_amount": SubmitVatAmount.from_dict(obj["vat_amount"]) if obj.get("vat_amount") is not None else None,
+            "total_gross_amount": SubmitGrossAmount.from_dict(obj["total_gross_amount"]) if obj.get("total_gross_amount") is not None else None,
             "main_attachment_id": obj.get("main_attachment_id"),
             "main_attachment_label": obj.get("main_attachment_label"),
             "comment": obj.get("comment"),
