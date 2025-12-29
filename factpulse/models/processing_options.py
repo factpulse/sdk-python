@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.factur_x_profile import FacturXProfile
+from factpulse.models.api_profile import APIProfile
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,7 +27,7 @@ class ProcessingOptions(BaseModel):
     """
     Processing options for generation and submission.
     """ # noqa: E501
-    facturx_profile: Optional[FacturXProfile] = Field(default=None, description="Factur-X profile to use", alias="facturxProfile")
+    facturx_profile: Optional[APIProfile] = Field(default=None, description="Factur-X profile to use", alias="facturxProfile")
     auto_enrich: Optional[StrictBool] = Field(default=True, description="Auto-enrich data (Company APIs, Chorus Pro, etc.)", alias="autoEnrich")
     validate_xml: Optional[StrictBool] = Field(default=True, description="Validate Factur-X XML with Schematron", alias="validateXml")
     verify_destination_parameters: Optional[StrictBool] = Field(default=True, description="Verify required parameters for destination (e.g., service_code for Chorus)", alias="verifyDestinationParameters")

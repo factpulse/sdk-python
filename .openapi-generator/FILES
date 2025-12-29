@@ -12,6 +12,7 @@ docs/AFNORPDPPADirectoryServiceApi.md
 docs/AFNORPDPPAFlowServiceApi.md
 docs/AFNORResult.md
 docs/APIError.md
+docs/APIProfile.md
 docs/AcknowledgmentStatus.md
 docs/AdditionalDocument.md
 docs/AllowanceCharge.md
@@ -45,7 +46,6 @@ docs/ErrorSource.md
 docs/ExtractionInfo.md
 docs/FacturXInvoice.md
 docs/FacturXPDFInfo.md
-docs/FacturXProfile.md
 docs/FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.md
 docs/FactureElectroniqueRestApiSchemasProcessingChorusProCredentials.md
 docs/FieldStatus.md
@@ -183,6 +183,7 @@ factpulse/models/allowance_total_amount.py
 factpulse/models/amount.py
 factpulse/models/amount_due.py
 factpulse/models/api_error.py
+factpulse/models/api_profile.py
 factpulse/models/async_task_status.py
 factpulse/models/base_amount.py
 factpulse/models/bounding_box_schema.py
@@ -206,7 +207,6 @@ factpulse/models/error_level.py
 factpulse/models/error_source.py
 factpulse/models/extraction_info.py
 factpulse/models/factur_x_invoice.py
-factpulse/models/factur_x_profile.py
 factpulse/models/factur_xpdf_info.py
 factpulse/models/facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials.py
 factpulse/models/facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
@@ -337,6 +337,7 @@ test/test_allowance_total_amount.py
 test/test_amount.py
 test/test_amount_due.py
 test/test_api_error.py
+test/test_api_profile.py
 test/test_async_task_status.py
 test/test_base_amount.py
 test/test_bounding_box_schema.py
@@ -362,7 +363,6 @@ test/test_error_level.py
 test/test_error_source.py
 test/test_extraction_info.py
 test/test_factur_x_invoice.py
-test/test_factur_x_profile.py
 test/test_factur_xpdf_info.py
 test/test_facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials.py
 test/test_facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py

@@ -74,7 +74,7 @@ class InvoiceProcessingApi:
         :param invoice_data: Invoice data in JSON format.              Two formats accepted:             1. **Classic format**: Complete FactureFacturX structure (all fields)             2. **Simplified format** (🆕 P0.1): Minimal structure with auto-enrichment              Format is detected automatically!              (required)
         :type invoice_data: str
         :param profile: Factur-X profile: MINIMUM, BASIC, EN16931 or EXTENDED.
-        :type profile: FacturXProfile
+        :type profile: APIProfile
         :param output_format: Output format: 'xml' (XML only) or 'pdf' (Factur-X PDF with embedded XML).
         :type output_format: OutputFormat
         :param auto_enrich: 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only)
@@ -159,7 +159,7 @@ class InvoiceProcessingApi:
         :param invoice_data: Invoice data in JSON format.              Two formats accepted:             1. **Classic format**: Complete FactureFacturX structure (all fields)             2. **Simplified format** (🆕 P0.1): Minimal structure with auto-enrichment              Format is detected automatically!              (required)
         :type invoice_data: str
         :param profile: Factur-X profile: MINIMUM, BASIC, EN16931 or EXTENDED.
-        :type profile: FacturXProfile
+        :type profile: APIProfile
         :param output_format: Output format: 'xml' (XML only) or 'pdf' (Factur-X PDF with embedded XML).
         :type output_format: OutputFormat
         :param auto_enrich: 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only)
@@ -244,7 +244,7 @@ class InvoiceProcessingApi:
         :param invoice_data: Invoice data in JSON format.              Two formats accepted:             1. **Classic format**: Complete FactureFacturX structure (all fields)             2. **Simplified format** (🆕 P0.1): Minimal structure with auto-enrichment              Format is detected automatically!              (required)
         :type invoice_data: str
         :param profile: Factur-X profile: MINIMUM, BASIC, EN16931 or EXTENDED.
-        :type profile: FacturXProfile
+        :type profile: APIProfile
         :param output_format: Output format: 'xml' (XML only) or 'pdf' (Factur-X PDF with embedded XML).
         :type output_format: OutputFormat
         :param auto_enrich: 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only)
@@ -2268,7 +2268,7 @@ class InvoiceProcessingApi:
         :param pdf_file: Factur-X PDF file to validate (.pdf format). (required)
         :type pdf_file: bytearray
         :param profile:
-        :type profile: FacturXProfile
+        :type profile: APIProfile
         :param use_verapdf: Enable strict PDF/A validation with VeraPDF (recommended for production). If False, uses basic metadata validation.
         :type use_verapdf: bool
         :param _request_timeout: timeout setting for this request. If one
@@ -2345,7 +2345,7 @@ class InvoiceProcessingApi:
         :param pdf_file: Factur-X PDF file to validate (.pdf format). (required)
         :type pdf_file: bytearray
         :param profile:
-        :type profile: FacturXProfile
+        :type profile: APIProfile
         :param use_verapdf: Enable strict PDF/A validation with VeraPDF (recommended for production). If False, uses basic metadata validation.
         :type use_verapdf: bool
         :param _request_timeout: timeout setting for this request. If one
@@ -2422,7 +2422,7 @@ class InvoiceProcessingApi:
         :param pdf_file: Factur-X PDF file to validate (.pdf format). (required)
         :type pdf_file: bytearray
         :param profile:
-        :type profile: FacturXProfile
+        :type profile: APIProfile
         :param use_verapdf: Enable strict PDF/A validation with VeraPDF (recommended for production). If False, uses basic metadata validation.
         :type use_verapdf: bool
         :param _request_timeout: timeout setting for this request. If one
@@ -2578,7 +2578,7 @@ class InvoiceProcessingApi:
         :param pdf_file: Factur-X PDF file to validate (.pdf format). (required)
         :type pdf_file: bytearray
         :param profile:
-        :type profile: FacturXProfile
+        :type profile: APIProfile
         :param use_verapdf: Enable strict PDF/A validation with VeraPDF (recommended for production). May take several seconds.
         :type use_verapdf: bool
         :param _request_timeout: timeout setting for this request. If one
@@ -2655,7 +2655,7 @@ class InvoiceProcessingApi:
         :param pdf_file: Factur-X PDF file to validate (.pdf format). (required)
         :type pdf_file: bytearray
         :param profile:
-        :type profile: FacturXProfile
+        :type profile: APIProfile
         :param use_verapdf: Enable strict PDF/A validation with VeraPDF (recommended for production). May take several seconds.
         :type use_verapdf: bool
         :param _request_timeout: timeout setting for this request. If one
@@ -2732,7 +2732,7 @@ class InvoiceProcessingApi:
         :param pdf_file: Factur-X PDF file to validate (.pdf format). (required)
         :type pdf_file: bytearray
         :param profile:
-        :type profile: FacturXProfile
+        :type profile: APIProfile
         :param use_verapdf: Enable strict PDF/A validation with VeraPDF (recommended for production). May take several seconds.
         :type use_verapdf: bool
         :param _request_timeout: timeout setting for this request. If one
@@ -3167,7 +3167,7 @@ class InvoiceProcessingApi:
         :param xml_file: Factur-X XML file to validate (.xml format). (required)
         :type xml_file: bytearray
         :param profile: Validation profile (MINIMUM, BASIC, EN16931, EXTENDED).
-        :type profile: FacturXProfile
+        :type profile: APIProfile
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3240,7 +3240,7 @@ class InvoiceProcessingApi:
         :param xml_file: Factur-X XML file to validate (.xml format). (required)
         :type xml_file: bytearray
         :param profile: Validation profile (MINIMUM, BASIC, EN16931, EXTENDED).
-        :type profile: FacturXProfile
+        :type profile: APIProfile
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3313,7 +3313,7 @@ class InvoiceProcessingApi:
         :param xml_file: Factur-X XML file to validate (.xml format). (required)
         :type xml_file: bytearray
         :param profile: Validation profile (MINIMUM, BASIC, EN16931, EXTENDED).
-        :type profile: FacturXProfile
+        :type profile: APIProfile
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of

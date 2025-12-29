@@ -165,7 +165,7 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.InvoiceProcessingApi(api_client)
     invoice_data = 'invoice_data_example' # str | Invoice data in JSON format.              Two formats accepted:             1. **Classic format**: Complete FactureFacturX structure (all fields)             2. **Simplified format** (🆕 P0.1): Minimal structure with auto-enrichment              Format is detected automatically!             
-    profile = factpulse.FacturXProfile() # FacturXProfile | Factur-X profile: MINIMUM, BASIC, EN16931 or EXTENDED. (optional)
+    profile = factpulse.APIProfile() # APIProfile | Factur-X profile: MINIMUM, BASIC, EN16931 or EXTENDED. (optional)
     output_format = factpulse.OutputFormat() # OutputFormat | Output format: 'xml' (XML only) or 'pdf' (Factur-X PDF with embedded XML). (optional)
     auto_enrich = True # bool | 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only) (optional) (default to True)
     source_pdf = None # bytearray |  (optional)
@@ -187,7 +187,7 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **invoice_data** | **str**| Invoice data in JSON format.              Two formats accepted:             1. **Classic format**: Complete FactureFacturX structure (all fields)             2. **Simplified format** (🆕 P0.1): Minimal structure with auto-enrichment              Format is detected automatically!              | 
- **profile** | [**FacturXProfile**](FacturXProfile.md)| Factur-X profile: MINIMUM, BASIC, EN16931 or EXTENDED. | [optional] 
+ **profile** | [**APIProfile**](APIProfile.md)| Factur-X profile: MINIMUM, BASIC, EN16931 or EXTENDED. | [optional] 
  **output_format** | [**OutputFormat**](OutputFormat.md)| Output format: &#39;xml&#39; (XML only) or &#39;pdf&#39; (Factur-X PDF with embedded XML). | [optional] 
  **auto_enrich** | **bool**| 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only) | [optional] [default to True]
  **source_pdf** | **bytearray**|  | [optional] 
@@ -1063,7 +1063,7 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.InvoiceProcessingApi(api_client)
     pdf_file = None # bytearray | Factur-X PDF file to validate (.pdf format).
-    profile = factpulse.FacturXProfile() # FacturXProfile |  (optional)
+    profile = factpulse.APIProfile() # APIProfile |  (optional)
     use_verapdf = False # bool | Enable strict PDF/A validation with VeraPDF (recommended for production). If False, uses basic metadata validation. (optional) (default to False)
 
     try:
@@ -1083,7 +1083,7 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **pdf_file** | **bytearray**| Factur-X PDF file to validate (.pdf format). | 
- **profile** | [**FacturXProfile**](FacturXProfile.md)|  | [optional] 
+ **profile** | [**APIProfile**](APIProfile.md)|  | [optional] 
  **use_verapdf** | **bool**| Enable strict PDF/A validation with VeraPDF (recommended for production). If False, uses basic metadata validation. | [optional] [default to False]
 
 ### Return type
@@ -1235,7 +1235,7 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.InvoiceProcessingApi(api_client)
     pdf_file = None # bytearray | Factur-X PDF file to validate (.pdf format).
-    profile = factpulse.FacturXProfile() # FacturXProfile |  (optional)
+    profile = factpulse.APIProfile() # APIProfile |  (optional)
     use_verapdf = False # bool | Enable strict PDF/A validation with VeraPDF (recommended for production). May take several seconds. (optional) (default to False)
 
     try:
@@ -1255,7 +1255,7 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **pdf_file** | **bytearray**| Factur-X PDF file to validate (.pdf format). | 
- **profile** | [**FacturXProfile**](FacturXProfile.md)|  | [optional] 
+ **profile** | [**APIProfile**](APIProfile.md)|  | [optional] 
  **use_verapdf** | **bool**| Enable strict PDF/A validation with VeraPDF (recommended for production). May take several seconds. | [optional] [default to False]
 
 ### Return type
@@ -1519,7 +1519,7 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.InvoiceProcessingApi(api_client)
     xml_file = None # bytearray | Factur-X XML file to validate (.xml format).
-    profile = factpulse.FacturXProfile() # FacturXProfile | Validation profile (MINIMUM, BASIC, EN16931, EXTENDED). (optional)
+    profile = factpulse.APIProfile() # APIProfile | Validation profile (MINIMUM, BASIC, EN16931, EXTENDED). (optional)
 
     try:
         # Validate an existing Factur-X XML
@@ -1538,7 +1538,7 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **xml_file** | **bytearray**| Factur-X XML file to validate (.xml format). | 
- **profile** | [**FacturXProfile**](FacturXProfile.md)| Validation profile (MINIMUM, BASIC, EN16931, EXTENDED). | [optional] 
+ **profile** | [**APIProfile**](APIProfile.md)| Validation profile (MINIMUM, BASIC, EN16931, EXTENDED). | [optional] 
 
 ### Return type
 

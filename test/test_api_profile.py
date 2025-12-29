@@ -12,28 +12,22 @@
 """  # noqa: E501
 
 
-from __future__ import annotations
-import json
-from enum import Enum
-from typing_extensions import Self
+import unittest
 
+from factpulse.models.api_profile import APIProfile
 
-class FacturXProfile(str, Enum):
-    """
-    Profil Factur-X pour la reponse API.  Note: Simplifie par rapport a utils/facturx.FacturXProfile qui contient aussi les configurations XSLT. Celui-ci est pour l'API.
-    """
+class TestAPIProfile(unittest.TestCase):
+    """APIProfile unit test stubs"""
 
-    """
-    allowed enum values
-    """
-    MINIMUM = 'MINIMUM'
-    BASIC = 'BASIC'
-    EN16931 = 'EN16931'
-    EXTENDED = 'EXTENDED'
+    def setUp(self):
+        pass
 
-    @classmethod
-    def from_json(cls, json_str: str) -> Self:
-        """Create an instance of FacturXProfile from a JSON string"""
-        return cls(json.loads(json_str))
+    def tearDown(self):
+        pass
 
+    def testAPIProfile(self):
+        """Test APIProfile"""
+        # inst = APIProfile()
 
+if __name__ == '__main__':
+    unittest.main()

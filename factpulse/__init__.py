@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "3.0.8"
+__version__ = "3.0.9"
 
 # Define package exports
 __all__ = [
@@ -41,6 +41,7 @@ __all__ = [
     "AFNORHealthCheckResponse",
     "AFNORResult",
     "APIError",
+    "APIProfile",
     "AcknowledgmentStatus",
     "AdditionalDocument",
     "AllowanceCharge",
@@ -72,7 +73,6 @@ __all__ = [
     "ExtractionInfo",
     "FacturXInvoice",
     "FacturXPDFInfo",
-    "FacturXProfile",
     "FactureElectroniqueRestApiSchemasChorusProChorusProCredentials",
     "FactureElectroniqueRestApiSchemasProcessingChorusProCredentials",
     "FieldStatus",
@@ -208,6 +208,7 @@ from factpulse.models.afnor_destination import AFNORDestination as AFNORDestinat
 from factpulse.models.afnor_health_check_response import AFNORHealthCheckResponse as AFNORHealthCheckResponse
 from factpulse.models.afnor_result import AFNORResult as AFNORResult
 from factpulse.models.api_error import APIError as APIError
+from factpulse.models.api_profile import APIProfile as APIProfile
 from factpulse.models.acknowledgment_status import AcknowledgmentStatus as AcknowledgmentStatus
 from factpulse.models.additional_document import AdditionalDocument as AdditionalDocument
 from factpulse.models.allowance_charge import AllowanceCharge as AllowanceCharge
@@ -239,7 +240,6 @@ from factpulse.models.error_source import ErrorSource as ErrorSource
 from factpulse.models.extraction_info import ExtractionInfo as ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
-from factpulse.models.factur_x_profile import FacturXProfile as FacturXProfile
 from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials as FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
 from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials as FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
 from factpulse.models.field_status import FieldStatus as FieldStatus

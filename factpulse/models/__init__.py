@@ -18,6 +18,7 @@ from factpulse.models.afnor_destination import AFNORDestination
 from factpulse.models.afnor_health_check_response import AFNORHealthCheckResponse
 from factpulse.models.afnor_result import AFNORResult
 from factpulse.models.api_error import APIError
+from factpulse.models.api_profile import APIProfile
 from factpulse.models.acknowledgment_status import AcknowledgmentStatus
 from factpulse.models.additional_document import AdditionalDocument
 from factpulse.models.allowance_charge import AllowanceCharge
@@ -49,7 +50,6 @@ from factpulse.models.error_source import ErrorSource
 from factpulse.models.extraction_info import ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo
-from factpulse.models.factur_x_profile import FacturXProfile
 from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
 from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
 from factpulse.models.field_status import FieldStatus
