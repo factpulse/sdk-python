@@ -6,25 +6,25 @@ Identification scheme codes (Electronic Address Scheme - EAS), mainly for electr
 
 * `FR_SIREN` (value: `'0225'`)
 
-* `GLN` (value: `'0009'`)
+* `FR_SIRET` (value: `'0009'`)
 
-* `DUNS` (value: `'0002'`)
+* `FR_SIREN_OLD` (value: `'0002'`)
 
-* `FR_TVA_INTRA` (value: `'0088'`)
+* `GLN` (value: `'0088'`)
 
-* `GLEIF` (value: `'0060'`)
+* `DUNS` (value: `'0060'`)
 
-* `&#39;9957&#39;` (value: `'9957'`)
+* `FR_VAT_INTRA` (value: `'9957'`)
 
-* `&#39;0199&#39;` (value: `'0199'`)
+* `GLEIF` (value: `'0199'`)
 
-* `&#39;0231&#39;` (value: `'0231'`)
+* `DT_DIRECTORY_ID` (value: `'0231'`)
 
-* `&#39;EM&#39;` (value: `'EM'`)
+* `EMAIL` (value: `'EM'`)
 
-* `&#39;0177&#39;` (value: `'0177'`)
+* `ODETTE` (value: `'0177'`)
 
-* `&#39;0224&#39;` (value: `'0224'`)
+* `FR_CHORUS_PRO_ROUTING` (value: `'0224'`)
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

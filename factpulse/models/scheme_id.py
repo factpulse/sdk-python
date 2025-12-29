@@ -27,16 +27,16 @@ class SchemeID(str, Enum):
     allowed enum values
     """
     FR_SIREN = '0225'
-    GLN = '0009'
-    DUNS = '0002'
-    FR_TVA_INTRA = '0088'
-    GLEIF = '0060'
-    '9957' = '9957'
-    '0199' = '0199'
-    '0231' = '0231'
-    'EM' = 'EM'
-    '0177' = '0177'
-    '0224' = '0224'
+    FR_SIRET = '0009'
+    FR_SIREN_OLD = '0002'
+    GLN = '0088'
+    DUNS = '0060'
+    FR_VAT_INTRA = '9957'
+    GLEIF = '0199'
+    DT_DIRECTORY_ID = '0231'
+    EMAIL = 'EM'
+    ODETTE = '0177'
+    FR_CHORUS_PRO_ROUTING = '0224'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
