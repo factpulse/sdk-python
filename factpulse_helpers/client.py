@@ -962,7 +962,8 @@ class FactPulseClient:
                     raise FactPulseValidationError(error_msg, errors)
 
                 result = response.json()
-                task_id = result.get("task_id")
+                # API returns camelCase: taskId (or snake_case for backwards compat)
+                task_id = result.get("taskId") or result.get("task_id")
 
                 if not task_id:
                     raise FactPulseValidationError("No task ID in response")
