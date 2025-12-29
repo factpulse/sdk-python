@@ -20,6 +20,7 @@ from pydantic import Field, StrictBytes, StrictStr
 from typing import Any, Dict, Optional, Tuple, Union
 from typing_extensions import Annotated
 from factpulse.models.convert_resume_request import ConvertResumeRequest
+from factpulse.models.convert_success_response import ConvertSuccessResponse
 
 from factpulse.api_client import ApiClient, RequestSerialized
 from factpulse.api_response import ApiResponse

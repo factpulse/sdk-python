@@ -40,6 +40,7 @@ Convertit un document (PDF, DOCX, XLSX, image) en Factur-X conforme.
 
 ```python
 import factpulse
+from factpulse.models.convert_success_response import ConvertSuccessResponse
 from factpulse.rest import ApiException
 from pprint import pprint
 
@@ -104,7 +105,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Conversion réussie |  -  |
+**200** | Successful Response |  -  |
 **202** | Données manquantes |  -  |
 **422** | Validation échouée |  -  |
 **400** | Fichier invalide |  -  |
@@ -389,6 +390,7 @@ puis une nouvelle validation Schematron est effectuée.
 ```python
 import factpulse
 from factpulse.models.convert_resume_request import ConvertResumeRequest
+from factpulse.models.convert_success_response import ConvertSuccessResponse
 from factpulse.rest import ApiException
 from pprint import pprint
 
@@ -451,7 +453,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Conversion réussie |  -  |
+**200** | Successful Response |  -  |
 **404** | Conversion non trouvée ou expirée |  -  |
 **422** | Validation toujours en échec |  -  |
 
