@@ -19,10 +19,18 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from factpulse.models.additional_document import AdditionalDocument
+from factpulse.models.allowance_charge import AllowanceCharge
 from factpulse.models.allowance_reason_code import AllowanceReasonCode
+from factpulse.models.gross_unit_price import GrossUnitPrice
 from factpulse.models.invoice_line_allowance_amount import InvoiceLineAllowanceAmount
+from factpulse.models.invoice_note import InvoiceNote
 from factpulse.models.line_net_amount import LineNetAmount
 from factpulse.models.manual_vat_rate import ManualVatRate
+from factpulse.models.price_allowance_amount import PriceAllowanceAmount
+from factpulse.models.price_basis_quantity import PriceBasisQuantity
+from factpulse.models.product_characteristic import ProductCharacteristic
+from factpulse.models.product_classification import ProductClassification
 from factpulse.models.quantity import Quantity
 from factpulse.models.unit_net_price import UnitNetPrice
 from factpulse.models.unit_of_measure import UnitOfMeasure
@@ -32,24 +40,41 @@ from typing_extensions import Self
 
 class InvoiceLine(BaseModel):
     """
-    Represents a line item in an invoice.
+    Represents an invoice line item (BG-25).
     """ # noqa: E501
-    line_number: StrictInt
+    line_number: StrictInt = Field(description="Invoice line identifier (BT-126).")
+    line_note: Optional[StrictStr] = None
     reference: Optional[StrictStr] = None
-    item_name: StrictStr
+    buyer_assigned_id: Optional[StrictStr] = None
+    product_global_id: Optional[StrictStr] = None
+    product_global_id_scheme: Optional[StrictStr] = None
+    item_name: StrictStr = Field(description="Item name (BT-153).")
+    item_description: Optional[StrictStr] = None
+    origin_country: Optional[StrictStr] = None
+    characteristics: Optional[List[ProductCharacteristic]] = None
+    classifications: Optional[List[ProductClassification]] = None
     quantity: Quantity
-    unit: UnitOfMeasure
+    unit: UnitOfMeasure = Field(description="Invoiced quantity unit of measure code (BT-130).")
+    gross_unit_price: Optional[GrossUnitPrice] = None
     unit_net_price: UnitNetPrice
-    allowance_amount: Optional[InvoiceLineAllowanceAmount] = Field(default=None, alias="allowanceAmount")
+    price_basis_quantity: Optional[PriceBasisQuantity] = None
+    price_basis_unit: Optional[StrictStr] = None
+    price_allowance_amount: Optional[PriceAllowanceAmount] = None
     line_net_amount: Optional[LineNetAmount] = Field(default=None, alias="lineNetAmount")
+    allowance_amount: Optional[InvoiceLineAllowanceAmount] = Field(default=None, alias="allowanceAmount")
+    allowance_reason_code: Optional[AllowanceReasonCode] = Field(default=None, alias="allowanceReasonCode")
+    allowance_reason: Optional[StrictStr] = Field(default=None, alias="allowanceReason")
+    allowances_charges: Optional[List[AllowanceCharge]] = None
     vat_rate: Optional[StrictStr] = None
     manual_vat_rate: Optional[ManualVatRate] = None
     vat_category: Optional[VATCategory] = None
-    period_start_date: Optional[StrictStr] = Field(default=None, alias="periodStartDate")
-    period_end_date: Optional[StrictStr] = Field(default=None, alias="periodEndDate")
-    allowance_reason_code: Optional[AllowanceReasonCode] = Field(default=None, alias="allowanceReasonCode")
-    allowance_reason: Optional[StrictStr] = Field(default=None, alias="allowanceReason")
-    __properties: ClassVar[List[str]] = ["line_number", "reference", "item_name", "quantity", "unit", "unit_net_price", "allowanceAmount", "lineNetAmount", "vat_rate", "manual_vat_rate", "vat_category", "periodStartDate", "periodEndDate", "allowanceReasonCode", "allowanceReason"]
+    period_start_date: Optional[StrictStr] = None
+    period_end_date: Optional[StrictStr] = None
+    purchase_order_line_ref: Optional[StrictStr] = None
+    accounting_account: Optional[StrictStr] = None
+    additional_documents: Optional[List[AdditionalDocument]] = None
+    line_notes: Optional[List[InvoiceNote]] = None
+    __properties: ClassVar[List[str]] = ["line_number", "line_note", "reference", "buyer_assigned_id", "product_global_id", "product_global_id_scheme", "item_name", "item_description", "origin_country", "characteristics", "classifications", "quantity", "unit", "gross_unit_price", "unit_net_price", "price_basis_quantity", "price_basis_unit", "price_allowance_amount", "lineNetAmount", "allowanceAmount", "allowanceReasonCode", "allowanceReason", "allowances_charges", "vat_rate", "manual_vat_rate", "vat_category", "period_start_date", "period_end_date", "purchase_order_line_ref", "accounting_account", "additional_documents", "line_notes"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -90,30 +115,154 @@ class InvoiceLine(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in characteristics (list)
+        _items = []
+        if self.characteristics:
+            for _item_characteristics in self.characteristics:
+                if _item_characteristics:
+                    _items.append(_item_characteristics.to_dict())
+            _dict['characteristics'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in classifications (list)
+        _items = []
+        if self.classifications:
+            for _item_classifications in self.classifications:
+                if _item_classifications:
+                    _items.append(_item_classifications.to_dict())
+            _dict['classifications'] = _items
         # override the default output from pydantic by calling `to_dict()` of quantity
         if self.quantity:
             _dict['quantity'] = self.quantity.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of gross_unit_price
+        if self.gross_unit_price:
+            _dict['gross_unit_price'] = self.gross_unit_price.to_dict()
         # override the default output from pydantic by calling `to_dict()` of unit_net_price
         if self.unit_net_price:
             _dict['unit_net_price'] = self.unit_net_price.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of allowance_amount
-        if self.allowance_amount:
-            _dict['allowanceAmount'] = self.allowance_amount.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of price_basis_quantity
+        if self.price_basis_quantity:
+            _dict['price_basis_quantity'] = self.price_basis_quantity.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of price_allowance_amount
+        if self.price_allowance_amount:
+            _dict['price_allowance_amount'] = self.price_allowance_amount.to_dict()
         # override the default output from pydantic by calling `to_dict()` of line_net_amount
         if self.line_net_amount:
             _dict['lineNetAmount'] = self.line_net_amount.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of allowance_amount
+        if self.allowance_amount:
+            _dict['allowanceAmount'] = self.allowance_amount.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in allowances_charges (list)
+        _items = []
+        if self.allowances_charges:
+            for _item_allowances_charges in self.allowances_charges:
+                if _item_allowances_charges:
+                    _items.append(_item_allowances_charges.to_dict())
+            _dict['allowances_charges'] = _items
         # override the default output from pydantic by calling `to_dict()` of manual_vat_rate
         if self.manual_vat_rate:
             _dict['manual_vat_rate'] = self.manual_vat_rate.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in additional_documents (list)
+        _items = []
+        if self.additional_documents:
+            for _item_additional_documents in self.additional_documents:
+                if _item_additional_documents:
+                    _items.append(_item_additional_documents.to_dict())
+            _dict['additional_documents'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in line_notes (list)
+        _items = []
+        if self.line_notes:
+            for _item_line_notes in self.line_notes:
+                if _item_line_notes:
+                    _items.append(_item_line_notes.to_dict())
+            _dict['line_notes'] = _items
+        # set to None if line_note (nullable) is None
+        # and model_fields_set contains the field
+        if self.line_note is None and "line_note" in self.model_fields_set:
+            _dict['line_note'] = None
+
         # set to None if reference (nullable) is None
         # and model_fields_set contains the field
         if self.reference is None and "reference" in self.model_fields_set:
             _dict['reference'] = None
 
+        # set to None if buyer_assigned_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.buyer_assigned_id is None and "buyer_assigned_id" in self.model_fields_set:
+            _dict['buyer_assigned_id'] = None
+
+        # set to None if product_global_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.product_global_id is None and "product_global_id" in self.model_fields_set:
+            _dict['product_global_id'] = None
+
+        # set to None if product_global_id_scheme (nullable) is None
+        # and model_fields_set contains the field
+        if self.product_global_id_scheme is None and "product_global_id_scheme" in self.model_fields_set:
+            _dict['product_global_id_scheme'] = None
+
+        # set to None if item_description (nullable) is None
+        # and model_fields_set contains the field
+        if self.item_description is None and "item_description" in self.model_fields_set:
+            _dict['item_description'] = None
+
+        # set to None if origin_country (nullable) is None
+        # and model_fields_set contains the field
+        if self.origin_country is None and "origin_country" in self.model_fields_set:
+            _dict['origin_country'] = None
+
+        # set to None if characteristics (nullable) is None
+        # and model_fields_set contains the field
+        if self.characteristics is None and "characteristics" in self.model_fields_set:
+            _dict['characteristics'] = None
+
+        # set to None if classifications (nullable) is None
+        # and model_fields_set contains the field
+        if self.classifications is None and "classifications" in self.model_fields_set:
+            _dict['classifications'] = None
+
+        # set to None if gross_unit_price (nullable) is None
+        # and model_fields_set contains the field
+        if self.gross_unit_price is None and "gross_unit_price" in self.model_fields_set:
+            _dict['gross_unit_price'] = None
+
+        # set to None if price_basis_quantity (nullable) is None
+        # and model_fields_set contains the field
+        if self.price_basis_quantity is None and "price_basis_quantity" in self.model_fields_set:
+            _dict['price_basis_quantity'] = None
+
+        # set to None if price_basis_unit (nullable) is None
+        # and model_fields_set contains the field
+        if self.price_basis_unit is None and "price_basis_unit" in self.model_fields_set:
+            _dict['price_basis_unit'] = None
+
+        # set to None if price_allowance_amount (nullable) is None
+        # and model_fields_set contains the field
+        if self.price_allowance_amount is None and "price_allowance_amount" in self.model_fields_set:
+            _dict['price_allowance_amount'] = None
+
+        # set to None if line_net_amount (nullable) is None
+        # and model_fields_set contains the field
+        if self.line_net_amount is None and "line_net_amount" in self.model_fields_set:
+            _dict['lineNetAmount'] = None
+
         # set to None if allowance_amount (nullable) is None
         # and model_fields_set contains the field
         if self.allowance_amount is None and "allowance_amount" in self.model_fields_set:
             _dict['allowanceAmount'] = None
+
+        # set to None if allowance_reason_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.allowance_reason_code is None and "allowance_reason_code" in self.model_fields_set:
+            _dict['allowanceReasonCode'] = None
+
+        # set to None if allowance_reason (nullable) is None
+        # and model_fields_set contains the field
+        if self.allowance_reason is None and "allowance_reason" in self.model_fields_set:
+            _dict['allowanceReason'] = None
+
+        # set to None if allowances_charges (nullable) is None
+        # and model_fields_set contains the field
+        if self.allowances_charges is None and "allowances_charges" in self.model_fields_set:
+            _dict['allowances_charges'] = None
 
         # set to None if vat_rate (nullable) is None
         # and model_fields_set contains the field
@@ -128,22 +277,32 @@ class InvoiceLine(BaseModel):
         # set to None if period_start_date (nullable) is None
         # and model_fields_set contains the field
         if self.period_start_date is None and "period_start_date" in self.model_fields_set:
-            _dict['periodStartDate'] = None
+            _dict['period_start_date'] = None
 
         # set to None if period_end_date (nullable) is None
         # and model_fields_set contains the field
         if self.period_end_date is None and "period_end_date" in self.model_fields_set:
-            _dict['periodEndDate'] = None
+            _dict['period_end_date'] = None
 
-        # set to None if allowance_reason_code (nullable) is None
+        # set to None if purchase_order_line_ref (nullable) is None
         # and model_fields_set contains the field
-        if self.allowance_reason_code is None and "allowance_reason_code" in self.model_fields_set:
-            _dict['allowanceReasonCode'] = None
+        if self.purchase_order_line_ref is None and "purchase_order_line_ref" in self.model_fields_set:
+            _dict['purchase_order_line_ref'] = None
 
-        # set to None if allowance_reason (nullable) is None
+        # set to None if accounting_account (nullable) is None
         # and model_fields_set contains the field
-        if self.allowance_reason is None and "allowance_reason" in self.model_fields_set:
-            _dict['allowanceReason'] = None
+        if self.accounting_account is None and "accounting_account" in self.model_fields_set:
+            _dict['accounting_account'] = None
+
+        # set to None if additional_documents (nullable) is None
+        # and model_fields_set contains the field
+        if self.additional_documents is None and "additional_documents" in self.model_fields_set:
+            _dict['additional_documents'] = None
+
+        # set to None if line_notes (nullable) is None
+        # and model_fields_set contains the field
+        if self.line_notes is None and "line_notes" in self.model_fields_set:
+            _dict['line_notes'] = None
 
         return _dict
 
@@ -158,20 +317,37 @@ class InvoiceLine(BaseModel):
 
         _obj = cls.model_validate({
             "line_number": obj.get("line_number"),
+            "line_note": obj.get("line_note"),
             "reference": obj.get("reference"),
+            "buyer_assigned_id": obj.get("buyer_assigned_id"),
+            "product_global_id": obj.get("product_global_id"),
+            "product_global_id_scheme": obj.get("product_global_id_scheme"),
             "item_name": obj.get("item_name"),
+            "item_description": obj.get("item_description"),
+            "origin_country": obj.get("origin_country"),
+            "characteristics": [ProductCharacteristic.from_dict(_item) for _item in obj["characteristics"]] if obj.get("characteristics") is not None else None,
+            "classifications": [ProductClassification.from_dict(_item) for _item in obj["classifications"]] if obj.get("classifications") is not None else None,
             "quantity": Quantity.from_dict(obj["quantity"]) if obj.get("quantity") is not None else None,
             "unit": obj.get("unit"),
+            "gross_unit_price": GrossUnitPrice.from_dict(obj["gross_unit_price"]) if obj.get("gross_unit_price") is not None else None,
             "unit_net_price": UnitNetPrice.from_dict(obj["unit_net_price"]) if obj.get("unit_net_price") is not None else None,
-            "allowanceAmount": InvoiceLineAllowanceAmount.from_dict(obj["allowanceAmount"]) if obj.get("allowanceAmount") is not None else None,
+            "price_basis_quantity": PriceBasisQuantity.from_dict(obj["price_basis_quantity"]) if obj.get("price_basis_quantity") is not None else None,
+            "price_basis_unit": obj.get("price_basis_unit"),
+            "price_allowance_amount": PriceAllowanceAmount.from_dict(obj["price_allowance_amount"]) if obj.get("price_allowance_amount") is not None else None,
             "lineNetAmount": LineNetAmount.from_dict(obj["lineNetAmount"]) if obj.get("lineNetAmount") is not None else None,
+            "allowanceAmount": InvoiceLineAllowanceAmount.from_dict(obj["allowanceAmount"]) if obj.get("allowanceAmount") is not None else None,
+            "allowanceReasonCode": obj.get("allowanceReasonCode"),
+            "allowanceReason": obj.get("allowanceReason"),
+            "allowances_charges": [AllowanceCharge.from_dict(_item) for _item in obj["allowances_charges"]] if obj.get("allowances_charges") is not None else None,
             "vat_rate": obj.get("vat_rate"),
             "manual_vat_rate": ManualVatRate.from_dict(obj["manual_vat_rate"]) if obj.get("manual_vat_rate") is not None else None,
             "vat_category": obj.get("vat_category"),
-            "periodStartDate": obj.get("periodStartDate"),
-            "periodEndDate": obj.get("periodEndDate"),
-            "allowanceReasonCode": obj.get("allowanceReasonCode"),
-            "allowanceReason": obj.get("allowanceReason")
+            "period_start_date": obj.get("period_start_date"),
+            "period_end_date": obj.get("period_end_date"),
+            "purchase_order_line_ref": obj.get("purchase_order_line_ref"),
+            "accounting_account": obj.get("accounting_account"),
+            "additional_documents": [AdditionalDocument.from_dict(_item) for _item in obj["additional_documents"]] if obj.get("additional_documents") is not None else None,
+            "line_notes": [InvoiceNote.from_dict(_item) for _item in obj["line_notes"]] if obj.get("line_notes") is not None else None
         })
         return _obj
 

@@ -36,13 +36,19 @@ class TestPayee(unittest.TestCase):
         if include_optional:
             return Payee(
                 nom = '0',
+                payee_id = '',
                 siret = '04807288800152',
                 siren = '048072888',
                 electronic_address = factpulse.models.electronic_address.ElectronicAddress(
                     identifier = '', 
                     scheme_id = null, ),
                 iban = '',
-                bic = ''
+                bic = '',
+                global_ids = [
+                    factpulse.models.electronic_address.ElectronicAddress(
+                        identifier = '', 
+                        scheme_id = null, )
+                    ]
             )
         else:
             return Payee(

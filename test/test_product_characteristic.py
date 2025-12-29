@@ -14,10 +14,10 @@
 
 import unittest
 
-from factpulse.models.document_type import DocumentType
+from factpulse.models.product_characteristic import ProductCharacteristic
 
-class TestDocumentType(unittest.TestCase):
-    """DocumentType unit test stubs"""
+class TestProductCharacteristic(unittest.TestCase):
+    """ProductCharacteristic unit test stubs"""
 
     def setUp(self):
         pass
@@ -25,9 +25,30 @@ class TestDocumentType(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testDocumentType(self):
-        """Test DocumentType"""
-        # inst = DocumentType()
+    def make_instance(self, include_optional) -> ProductCharacteristic:
+        """Test ProductCharacteristic
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `ProductCharacteristic`
+        """
+        model = ProductCharacteristic()
+        if include_optional:
+            return ProductCharacteristic(
+                name = '',
+                value = ''
+            )
+        else:
+            return ProductCharacteristic(
+                name = '',
+                value = '',
+        )
+        """
+
+    def testProductCharacteristic(self):
+        """Test ProductCharacteristic"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
 
 if __name__ == '__main__':
     unittest.main()

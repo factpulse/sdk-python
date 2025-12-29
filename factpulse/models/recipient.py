@@ -19,6 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from factpulse.models.contact import Contact
 from factpulse.models.electronic_address import ElectronicAddress
 from factpulse.models.postal_address import PostalAddress
 from typing import Optional, Set
@@ -26,15 +27,18 @@ from typing_extensions import Self
 
 class Recipient(BaseModel):
     """
-    Information about the invoice recipient (the customer).
+    Information about the invoice recipient / buyer (BG-7).
     """ # noqa: E501
     electronic_address: Optional[ElectronicAddress]
     executing_service_code: Optional[StrictStr] = None
     name: Optional[StrictStr] = None
     siren: Optional[StrictStr] = None
     siret: Optional[StrictStr] = None
+    vat_number: Optional[StrictStr] = None
     postal_address: Optional[PostalAddress] = None
-    __properties: ClassVar[List[str]] = ["electronic_address", "executing_service_code", "name", "siren", "siret", "postal_address"]
+    contact: Optional[Contact] = None
+    global_ids: Optional[List[ElectronicAddress]] = None
+    __properties: ClassVar[List[str]] = ["electronic_address", "executing_service_code", "name", "siren", "siret", "vat_number", "postal_address", "contact", "global_ids"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -81,6 +85,16 @@ class Recipient(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of postal_address
         if self.postal_address:
             _dict['postal_address'] = self.postal_address.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of contact
+        if self.contact:
+            _dict['contact'] = self.contact.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in global_ids (list)
+        _items = []
+        if self.global_ids:
+            for _item_global_ids in self.global_ids:
+                if _item_global_ids:
+                    _items.append(_item_global_ids.to_dict())
+            _dict['global_ids'] = _items
         # set to None if electronic_address (nullable) is None
         # and model_fields_set contains the field
         if self.electronic_address is None and "electronic_address" in self.model_fields_set:
@@ -106,10 +120,25 @@ class Recipient(BaseModel):
         if self.siret is None and "siret" in self.model_fields_set:
             _dict['siret'] = None
 
+        # set to None if vat_number (nullable) is None
+        # and model_fields_set contains the field
+        if self.vat_number is None and "vat_number" in self.model_fields_set:
+            _dict['vat_number'] = None
+
         # set to None if postal_address (nullable) is None
         # and model_fields_set contains the field
         if self.postal_address is None and "postal_address" in self.model_fields_set:
             _dict['postal_address'] = None
+
+        # set to None if contact (nullable) is None
+        # and model_fields_set contains the field
+        if self.contact is None and "contact" in self.model_fields_set:
+            _dict['contact'] = None
+
+        # set to None if global_ids (nullable) is None
+        # and model_fields_set contains the field
+        if self.global_ids is None and "global_ids" in self.model_fields_set:
+            _dict['global_ids'] = None
 
         return _dict
 
@@ -128,7 +157,10 @@ class Recipient(BaseModel):
             "name": obj.get("name"),
             "siren": obj.get("siren"),
             "siret": obj.get("siret"),
-            "postal_address": PostalAddress.from_dict(obj["postal_address"]) if obj.get("postal_address") is not None else None
+            "vat_number": obj.get("vat_number"),
+            "postal_address": PostalAddress.from_dict(obj["postal_address"]) if obj.get("postal_address") is not None else None,
+            "contact": Contact.from_dict(obj["contact"]) if obj.get("contact") is not None else None,
+            "global_ids": [ElectronicAddress.from_dict(_item) for _item in obj["global_ids"]] if obj.get("global_ids") is not None else None
         })
         return _obj
 

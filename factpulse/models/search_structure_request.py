@@ -28,11 +28,11 @@ class SearchStructureRequest(BaseModel):
     Search structures by criteria.
     """ # noqa: E501
     credentials: Optional[FactureElectroniqueRestApiSchemasChorusProChorusProCredentials] = None
-    structure_identifier: Optional[StrictStr] = None
-    structure_identifier_type: Optional[StrictStr] = None
-    company_name: Optional[StrictStr] = None
-    restrict_private_structures: Optional[StrictBool] = Field(default=False, description="Limit search to private structures only")
-    __properties: ClassVar[List[str]] = ["credentials", "structure_identifier", "structure_identifier_type", "company_name", "restrict_private_structures"]
+    structure_identifier: Optional[StrictStr] = Field(default=None, alias="structureIdentifier")
+    structure_identifier_type: Optional[StrictStr] = Field(default=None, alias="structureIdentifierType")
+    company_name: Optional[StrictStr] = Field(default=None, alias="companyName")
+    restrict_private_structures: Optional[StrictBool] = Field(default=False, description="Limit search to private structures only", alias="restrictPrivateStructures")
+    __properties: ClassVar[List[str]] = ["credentials", "structureIdentifier", "structureIdentifierType", "companyName", "restrictPrivateStructures"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,17 +84,17 @@ class SearchStructureRequest(BaseModel):
         # set to None if structure_identifier (nullable) is None
         # and model_fields_set contains the field
         if self.structure_identifier is None and "structure_identifier" in self.model_fields_set:
-            _dict['structure_identifier'] = None
+            _dict['structureIdentifier'] = None
 
         # set to None if structure_identifier_type (nullable) is None
         # and model_fields_set contains the field
         if self.structure_identifier_type is None and "structure_identifier_type" in self.model_fields_set:
-            _dict['structure_identifier_type'] = None
+            _dict['structureIdentifierType'] = None
 
         # set to None if company_name (nullable) is None
         # and model_fields_set contains the field
         if self.company_name is None and "company_name" in self.model_fields_set:
-            _dict['company_name'] = None
+            _dict['companyName'] = None
 
         return _dict
 
@@ -109,10 +109,10 @@ class SearchStructureRequest(BaseModel):
 
         _obj = cls.model_validate({
             "credentials": FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None,
-            "structure_identifier": obj.get("structure_identifier"),
-            "structure_identifier_type": obj.get("structure_identifier_type"),
-            "company_name": obj.get("company_name"),
-            "restrict_private_structures": obj.get("restrict_private_structures") if obj.get("restrict_private_structures") is not None else False
+            "structureIdentifier": obj.get("structureIdentifier"),
+            "structureIdentifierType": obj.get("structureIdentifierType"),
+            "companyName": obj.get("companyName"),
+            "restrictPrivateStructures": obj.get("restrictPrivateStructures") if obj.get("restrictPrivateStructures") is not None else False
         })
         return _obj
 

@@ -28,7 +28,7 @@ UNITNETPRICE_ANY_OF_SCHEMAS = ["float", "str"]
 
 class UnitNetPrice(BaseModel):
     """
-    Unit net price (before tax).
+    Item net price after line discount (BT-146).
     """
 
     # data type: float

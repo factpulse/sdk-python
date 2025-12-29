@@ -1,6 +1,6 @@
 # PostalAddress
 
-Represents a postal address.
+Represents a postal address (BG-5, BG-8, BG-12, BG-15).
 
 ## Properties
 
@@ -9,8 +9,10 @@ Name | Type | Description | Notes
 **postal_code** | **str** |  | [optional] 
 **line_one** | **str** |  | [optional] 
 **line_two** | **str** |  | [optional] 
+**line_three** | **str** |  | [optional] 
 **city** | **str** |  | [optional] 
 **country_code** | **str** |  | [optional] 
+**country_subdivision** | **str** |  | [optional] 
 
 ## Example
 

@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "3.0.5"
+__version__ = "3.0.6"
 
 # Define package exports
 __all__ = [
@@ -22,6 +22,7 @@ __all__ = [
     "AFNORPDPPADirectoryServiceApi",
     "AFNORPDPPAFlowServiceApi",
     "ChorusProApi",
+    "DocumentConversionApi",
     "HealthApi",
     "InvoiceProcessingApi",
     "PDFXMLVerificationApi",
@@ -40,27 +41,43 @@ __all__ = [
     "AFNORHealthCheckResponse",
     "AFNORResult",
     "APIError",
-    "APIProfile",
     "AcknowledgmentStatus",
+    "AdditionalDocument",
+    "AllowanceCharge",
     "AllowanceReasonCode",
+    "AllowanceTotalAmount",
+    "Amount",
     "AmountDue",
     "AsyncTaskStatus",
+    "BaseAmount",
     "BoundingBoxSchema",
     "CeleryStatus",
     "CertificateInfoResponse",
+    "ChargeTotalAmount",
     "ChorusProDestination",
     "ChorusProResult",
+    "Contact",
+    "ConvertErrorResponse",
+    "ConvertPendingInputResponse",
+    "ConvertResumeRequest",
+    "ConvertSuccessResponse",
+    "ConvertValidationFailedResponse",
+    "DeliveryParty",
     "Destination",
-    "DocumentType",
+    "DocumentTypeInfo",
     "ElectronicAddress",
     "EnrichedInvoiceInfo",
     "ErrorLevel",
     "ErrorSource",
+    "ExtractionInfo",
     "FacturXInvoice",
     "FacturXPDFInfo",
+    "FacturXProfile",
     "FactureElectroniqueRestApiSchemasChorusProChorusProCredentials",
     "FactureElectroniqueRestApiSchemasProcessingChorusProCredentials",
     "FieldStatus",
+    "FileInfo",
+    "FilesInfo",
     "FlowDirection",
     "FlowProfile",
     "FlowSummary",
@@ -75,6 +92,7 @@ __all__ = [
     "GetStructureRequest",
     "GetStructureResponse",
     "GlobalAllowanceAmount",
+    "GrossUnitPrice",
     "HTTPValidationError",
     "IncomingInvoice",
     "IncomingSupplier",
@@ -90,20 +108,29 @@ __all__ = [
     "InvoicingFramework",
     "InvoicingFrameworkCode",
     "LineNetAmount",
+    "LineTotalAmount",
     "MandatoryNoteSchema",
     "ManualRate",
     "ManualVatRate",
+    "MissingField",
     "OperationNature",
     "OutputFormat",
     "PDFValidationResultAPI",
     "PDPCredentials",
     "PageDimensionsSchema",
     "Payee",
+    "PaymentCard",
     "PaymentMeans",
+    "Percentage",
     "PostalAddress",
+    "PriceAllowanceAmount",
+    "PriceBasisQuantity",
     "ProcessingOptions",
+    "ProductCharacteristic",
+    "ProductClassification",
     "Quantity",
     "Recipient",
+    "RoundingAmount",
     "SchemeID",
     "SearchFlowRequest",
     "SearchFlowResponse",
@@ -130,6 +157,7 @@ __all__ = [
     "SupplementaryAttachment",
     "Supplier",
     "TaskResponse",
+    "TaxRepresentative",
     "TaxableAmount",
     "TotalGrossAmount",
     "TotalNetAmount",
@@ -140,11 +168,14 @@ __all__ = [
     "VATAmount",
     "VATCategory",
     "VATLine",
+    "VATPointDateCode",
     "ValidationError",
     "ValidationErrorDetail",
     "ValidationErrorLocInner",
     "ValidationErrorResponse",
+    "ValidationInfo",
     "ValidationSuccessResponse",
+    "VatRate",
     "VerificationSuccessResponse",
     "VerifiedFieldSchema",
 ]
@@ -154,6 +185,7 @@ from factpulse.api.afnorpdppa_api import AFNORPDPPAApi as AFNORPDPPAApi
 from factpulse.api.afnorpdppa_directory_service_api import AFNORPDPPADirectoryServiceApi as AFNORPDPPADirectoryServiceApi
 from factpulse.api.afnorpdppa_flow_service_api import AFNORPDPPAFlowServiceApi as AFNORPDPPAFlowServiceApi
 from factpulse.api.chorus_pro_api import ChorusProApi as ChorusProApi
+from factpulse.api.document_conversion_api import DocumentConversionApi as DocumentConversionApi
 from factpulse.api.health_api import HealthApi as HealthApi
 from factpulse.api.invoice_processing_api import InvoiceProcessingApi as InvoiceProcessingApi
 from factpulse.api.pdfxml_verification_api import PDFXMLVerificationApi as PDFXMLVerificationApi
@@ -176,27 +208,43 @@ from factpulse.models.afnor_destination import AFNORDestination as AFNORDestinat
 from factpulse.models.afnor_health_check_response import AFNORHealthCheckResponse as AFNORHealthCheckResponse
 from factpulse.models.afnor_result import AFNORResult as AFNORResult
 from factpulse.models.api_error import APIError as APIError
-from factpulse.models.api_profile import APIProfile as APIProfile
 from factpulse.models.acknowledgment_status import AcknowledgmentStatus as AcknowledgmentStatus
+from factpulse.models.additional_document import AdditionalDocument as AdditionalDocument
+from factpulse.models.allowance_charge import AllowanceCharge as AllowanceCharge
 from factpulse.models.allowance_reason_code import AllowanceReasonCode as AllowanceReasonCode
+from factpulse.models.allowance_total_amount import AllowanceTotalAmount as AllowanceTotalAmount
+from factpulse.models.amount import Amount as Amount
 from factpulse.models.amount_due import AmountDue as AmountDue
 from factpulse.models.async_task_status import AsyncTaskStatus as AsyncTaskStatus
+from factpulse.models.base_amount import BaseAmount as BaseAmount
 from factpulse.models.bounding_box_schema import BoundingBoxSchema as BoundingBoxSchema
 from factpulse.models.celery_status import CeleryStatus as CeleryStatus
 from factpulse.models.certificate_info_response import CertificateInfoResponse as CertificateInfoResponse
+from factpulse.models.charge_total_amount import ChargeTotalAmount as ChargeTotalAmount
 from factpulse.models.chorus_pro_destination import ChorusProDestination as ChorusProDestination
 from factpulse.models.chorus_pro_result import ChorusProResult as ChorusProResult
+from factpulse.models.contact import Contact as Contact
+from factpulse.models.convert_error_response import ConvertErrorResponse as ConvertErrorResponse
+from factpulse.models.convert_pending_input_response import ConvertPendingInputResponse as ConvertPendingInputResponse
+from factpulse.models.convert_resume_request import ConvertResumeRequest as ConvertResumeRequest
+from factpulse.models.convert_success_response import ConvertSuccessResponse as ConvertSuccessResponse
+from factpulse.models.convert_validation_failed_response import ConvertValidationFailedResponse as ConvertValidationFailedResponse
+from factpulse.models.delivery_party import DeliveryParty as DeliveryParty
 from factpulse.models.destination import Destination as Destination
-from factpulse.models.document_type import DocumentType as DocumentType
+from factpulse.models.document_type_info import DocumentTypeInfo as DocumentTypeInfo
 from factpulse.models.electronic_address import ElectronicAddress as ElectronicAddress
 from factpulse.models.enriched_invoice_info import EnrichedInvoiceInfo as EnrichedInvoiceInfo
 from factpulse.models.error_level import ErrorLevel as ErrorLevel
 from factpulse.models.error_source import ErrorSource as ErrorSource
+from factpulse.models.extraction_info import ExtractionInfo as ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
+from factpulse.models.factur_x_profile import FacturXProfile as FacturXProfile
 from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials as FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
 from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials as FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
 from factpulse.models.field_status import FieldStatus as FieldStatus
+from factpulse.models.file_info import FileInfo as FileInfo
+from factpulse.models.files_info import FilesInfo as FilesInfo
 from factpulse.models.flow_direction import FlowDirection as FlowDirection
 from factpulse.models.flow_profile import FlowProfile as FlowProfile
 from factpulse.models.flow_summary import FlowSummary as FlowSummary
@@ -211,6 +259,7 @@ from factpulse.models.get_invoice_response import GetInvoiceResponse as GetInvoi
 from factpulse.models.get_structure_request import GetStructureRequest as GetStructureRequest
 from factpulse.models.get_structure_response import GetStructureResponse as GetStructureResponse
 from factpulse.models.global_allowance_amount import GlobalAllowanceAmount as GlobalAllowanceAmount
+from factpulse.models.gross_unit_price import GrossUnitPrice as GrossUnitPrice
 from factpulse.models.http_validation_error import HTTPValidationError as HTTPValidationError
 from factpulse.models.incoming_invoice import IncomingInvoice as IncomingInvoice
 from factpulse.models.incoming_supplier import IncomingSupplier as IncomingSupplier
@@ -226,20 +275,29 @@ from factpulse.models.invoice_type_code import InvoiceTypeCode as InvoiceTypeCod
 from factpulse.models.invoicing_framework import InvoicingFramework as InvoicingFramework
 from factpulse.models.invoicing_framework_code import InvoicingFrameworkCode as InvoicingFrameworkCode
 from factpulse.models.line_net_amount import LineNetAmount as LineNetAmount
+from factpulse.models.line_total_amount import LineTotalAmount as LineTotalAmount
 from factpulse.models.mandatory_note_schema import MandatoryNoteSchema as MandatoryNoteSchema
 from factpulse.models.manual_rate import ManualRate as ManualRate
 from factpulse.models.manual_vat_rate import ManualVatRate as ManualVatRate
+from factpulse.models.missing_field import MissingField as MissingField
 from factpulse.models.operation_nature import OperationNature as OperationNature
 from factpulse.models.output_format import OutputFormat as OutputFormat
 from factpulse.models.pdf_validation_result_api import PDFValidationResultAPI as PDFValidationResultAPI
 from factpulse.models.pdp_credentials import PDPCredentials as PDPCredentials
 from factpulse.models.page_dimensions_schema import PageDimensionsSchema as PageDimensionsSchema
 from factpulse.models.payee import Payee as Payee
+from factpulse.models.payment_card import PaymentCard as PaymentCard
 from factpulse.models.payment_means import PaymentMeans as PaymentMeans
+from factpulse.models.percentage import Percentage as Percentage
 from factpulse.models.postal_address import PostalAddress as PostalAddress
+from factpulse.models.price_allowance_amount import PriceAllowanceAmount as PriceAllowanceAmount
+from factpulse.models.price_basis_quantity import PriceBasisQuantity as PriceBasisQuantity
 from factpulse.models.processing_options import ProcessingOptions as ProcessingOptions
+from factpulse.models.product_characteristic import ProductCharacteristic as ProductCharacteristic
+from factpulse.models.product_classification import ProductClassification as ProductClassification
 from factpulse.models.quantity import Quantity as Quantity
 from factpulse.models.recipient import Recipient as Recipient
+from factpulse.models.rounding_amount import RoundingAmount as RoundingAmount
 from factpulse.models.scheme_id import SchemeID as SchemeID
 from factpulse.models.search_flow_request import SearchFlowRequest as SearchFlowRequest
 from factpulse.models.search_flow_response import SearchFlowResponse as SearchFlowResponse
@@ -266,6 +324,7 @@ from factpulse.models.submit_vat_amount import SubmitVatAmount as SubmitVatAmoun
 from factpulse.models.supplementary_attachment import SupplementaryAttachment as SupplementaryAttachment
 from factpulse.models.supplier import Supplier as Supplier
 from factpulse.models.task_response import TaskResponse as TaskResponse
+from factpulse.models.tax_representative import TaxRepresentative as TaxRepresentative
 from factpulse.models.taxable_amount import TaxableAmount as TaxableAmount
 from factpulse.models.total_gross_amount import TotalGrossAmount as TotalGrossAmount
 from factpulse.models.total_net_amount import TotalNetAmount as TotalNetAmount
@@ -276,11 +335,14 @@ from factpulse.models.vat_accounting_code import VATAccountingCode as VATAccount
 from factpulse.models.vat_amount import VATAmount as VATAmount
 from factpulse.models.vat_category import VATCategory as VATCategory
 from factpulse.models.vat_line import VATLine as VATLine
+from factpulse.models.vat_point_date_code import VATPointDateCode as VATPointDateCode
 from factpulse.models.validation_error import ValidationError as ValidationError
 from factpulse.models.validation_error_detail import ValidationErrorDetail as ValidationErrorDetail
 from factpulse.models.validation_error_loc_inner import ValidationErrorLocInner as ValidationErrorLocInner
 from factpulse.models.validation_error_response import ValidationErrorResponse as ValidationErrorResponse
+from factpulse.models.validation_info import ValidationInfo as ValidationInfo
 from factpulse.models.validation_success_response import ValidationSuccessResponse as ValidationSuccessResponse
+from factpulse.models.vat_rate import VatRate as VatRate
 from factpulse.models.verification_success_response import VerificationSuccessResponse as VerificationSuccessResponse
 from factpulse.models.verified_field_schema import VerifiedFieldSchema as VerifiedFieldSchema
 

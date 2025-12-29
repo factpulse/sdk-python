@@ -28,7 +28,7 @@ INVOICELINEALLOWANCEAMOUNT_ANY_OF_SCHEMAS = ["float", "str"]
 
 class InvoiceLineAllowanceAmount(BaseModel):
     """
-    Allowance amount before tax. (Accepte number, string ou integer)
+    Simple line allowance amount (BT-136). (Accepte number, string ou integer)
     """
 
     # data type: float

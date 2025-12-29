@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **flow_id** | **str** |  | [optional] 
 **source_format** | [**InvoiceFormat**](InvoiceFormat.md) | Invoice source format | 
 **supplier_reference** | **str** | Invoice number issued by the supplier (BT-1) | 
-**document_type** | [**DocumentType**](DocumentType.md) | Document type (BT-3) | [optional] 
+**document_type** | [**InvoiceTypeCode**](InvoiceTypeCode.md) | Document type (BT-3) | [optional] 
 **supplier** | [**IncomingSupplier**](IncomingSupplier.md) | Invoice issuer (SellerTradeParty) | 
 **billing_site_name** | **str** | Recipient name / your company (BT-44) | 
 **billing_site_siret** | **str** |  | [optional] 

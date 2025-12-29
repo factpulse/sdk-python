@@ -38,8 +38,10 @@ class TestPostalAddress(unittest.TestCase):
                 postal_code = '',
                 line_one = '',
                 line_two = '',
+                line_three = '',
                 city = '',
-                country_code = ''
+                country_code = '',
+                country_subdivision = ''
             )
         else:
             return PostalAddress(

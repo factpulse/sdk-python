@@ -29,13 +29,13 @@ class SubmitFlowRequest(BaseModel):
     """
     Request to submit an invoice to a PDP/PA via AFNOR.
     """ # noqa: E501
-    flow_name: StrictStr = Field(description="Flow name (e.g., 'Invoice 2025-001')")
-    flow_syntax: Optional[FlowSyntax] = Field(default=None, description="Flow syntax (CII for Factur-X)")
-    flow_profile: Optional[FlowProfile] = None
-    tracking_id: Optional[StrictStr] = None
-    request_id: Optional[StrictStr] = None
-    pdp_credentials: Optional[PDPCredentials] = None
-    __properties: ClassVar[List[str]] = ["flow_name", "flow_syntax", "flow_profile", "tracking_id", "request_id", "pdp_credentials"]
+    flow_name: StrictStr = Field(description="Flow name (e.g., 'Invoice 2025-001')", alias="flowName")
+    flow_syntax: Optional[FlowSyntax] = Field(default=None, description="Flow syntax (CII for Factur-X)", alias="flowSyntax")
+    flow_profile: Optional[FlowProfile] = Field(default=None, alias="flowProfile")
+    tracking_id: Optional[StrictStr] = Field(default=None, alias="trackingId")
+    request_id: Optional[StrictStr] = Field(default=None, alias="requestId")
+    pdp_credentials: Optional[PDPCredentials] = Field(default=None, alias="pdpCredentials")
+    __properties: ClassVar[List[str]] = ["flowName", "flowSyntax", "flowProfile", "trackingId", "requestId", "pdpCredentials"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -78,26 +78,26 @@ class SubmitFlowRequest(BaseModel):
         )
         # override the default output from pydantic by calling `to_dict()` of pdp_credentials
         if self.pdp_credentials:
-            _dict['pdp_credentials'] = self.pdp_credentials.to_dict()
+            _dict['pdpCredentials'] = self.pdp_credentials.to_dict()
         # set to None if flow_profile (nullable) is None
         # and model_fields_set contains the field
         if self.flow_profile is None and "flow_profile" in self.model_fields_set:
-            _dict['flow_profile'] = None
+            _dict['flowProfile'] = None
 
         # set to None if tracking_id (nullable) is None
         # and model_fields_set contains the field
         if self.tracking_id is None and "tracking_id" in self.model_fields_set:
-            _dict['tracking_id'] = None
+            _dict['trackingId'] = None
 
         # set to None if request_id (nullable) is None
         # and model_fields_set contains the field
         if self.request_id is None and "request_id" in self.model_fields_set:
-            _dict['request_id'] = None
+            _dict['requestId'] = None
 
         # set to None if pdp_credentials (nullable) is None
         # and model_fields_set contains the field
         if self.pdp_credentials is None and "pdp_credentials" in self.model_fields_set:
-            _dict['pdp_credentials'] = None
+            _dict['pdpCredentials'] = None
 
         return _dict
 
@@ -111,12 +111,12 @@ class SubmitFlowRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "flow_name": obj.get("flow_name"),
-            "flow_syntax": obj.get("flow_syntax"),
-            "flow_profile": obj.get("flow_profile"),
-            "tracking_id": obj.get("tracking_id"),
-            "request_id": obj.get("request_id"),
-            "pdp_credentials": PDPCredentials.from_dict(obj["pdp_credentials"]) if obj.get("pdp_credentials") is not None else None
+            "flowName": obj.get("flowName"),
+            "flowSyntax": obj.get("flowSyntax"),
+            "flowProfile": obj.get("flowProfile"),
+            "trackingId": obj.get("trackingId"),
+            "requestId": obj.get("requestId"),
+            "pdpCredentials": PDPCredentials.from_dict(obj["pdpCredentials"]) if obj.get("pdpCredentials") is not None else None
         })
         return _obj
 

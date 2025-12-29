@@ -17,7 +17,7 @@ from inspect import getfullargspec
 import json
 import pprint
 import re  # noqa: F401
-from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, ValidationError, field_validator
 from typing import Optional, Union
 from typing_extensions import Annotated
 from typing import Union, Any, List, Set, TYPE_CHECKING, Optional, Dict
@@ -28,11 +28,11 @@ LINENETAMOUNT_ANY_OF_SCHEMAS = ["float", "str"]
 
 class LineNetAmount(BaseModel):
     """
-    Line net amount (quantity × unit price - allowance). (Accepte number, string ou integer)
+    Invoice line net amount (BT-131). Can be negative for correction invoices.
     """
 
     # data type: float
-    anyof_schema_1_validator: Optional[Union[Annotated[float, Field(strict=True, ge=0.0)], Annotated[int, Field(strict=True, ge=0)]]] = None
+    anyof_schema_1_validator: Optional[Union[StrictFloat, StrictInt]] = None
     # data type: str
     anyof_schema_2_validator: Optional[Annotated[str, Field(strict=True)]] = None
     if TYPE_CHECKING:
@@ -58,6 +58,9 @@ class LineNetAmount(BaseModel):
 
     @field_validator('actual_instance')
     def actual_instance_must_validate_anyof(cls, v):
+        if v is None:
+            return v
+
         instance = LineNetAmount.model_construct()
         error_messages = []
         # validate data type: float
@@ -86,6 +89,9 @@ class LineNetAmount(BaseModel):
     def from_json(cls, json_str: str) -> Self:
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
+        if json_str is None:
+            return instance
+
         error_messages = []
         # deserialize data into float
         try:

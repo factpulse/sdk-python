@@ -28,8 +28,8 @@ class GetInvoiceRequest(BaseModel):
     Get an invoice.
     """ # noqa: E501
     credentials: Optional[FactureElectroniqueRestApiSchemasChorusProChorusProCredentials] = None
-    chorus_invoice_id: StrictInt = Field(description="Chorus Pro invoice ID")
-    __properties: ClassVar[List[str]] = ["credentials", "chorus_invoice_id"]
+    chorus_invoice_id: StrictInt = Field(description="Chorus Pro invoice ID", alias="chorusInvoiceId")
+    __properties: ClassVar[List[str]] = ["credentials", "chorusInvoiceId"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,7 +91,7 @@ class GetInvoiceRequest(BaseModel):
 
         _obj = cls.model_validate({
             "credentials": FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None,
-            "chorus_invoice_id": obj.get("chorus_invoice_id")
+            "chorusInvoiceId": obj.get("chorusInvoiceId")
         })
         return _obj
 

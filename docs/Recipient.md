@@ -1,6 +1,6 @@
 # Recipient
 
-Information about the invoice recipient (the customer).
+Information about the invoice recipient / buyer (BG-7).
 
 ## Properties
 
@@ -11,7 +11,10 @@ Name | Type | Description | Notes
 **name** | **str** |  | [optional] 
 **siren** | **str** |  | [optional] 
 **siret** | **str** |  | [optional] 
+**vat_number** | **str** |  | [optional] 
 **postal_address** | [**PostalAddress**](PostalAddress.md) |  | [optional] 
+**contact** | [**Contact**](Contact.md) |  | [optional] 
+**global_ids** | [**List[ElectronicAddress]**](ElectronicAddress.md) |  | [optional] 
 
 ## Example
 

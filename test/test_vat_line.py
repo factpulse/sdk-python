@@ -40,6 +40,7 @@ class TestVATLine(unittest.TestCase):
                 rate = '',
                 manual_rate = None,
                 category = 'S',
+                due_date_type_code = '5',
                 exemption_reason = '',
                 vatex_code = ''
             )

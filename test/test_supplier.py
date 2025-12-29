@@ -39,19 +39,37 @@ class TestSupplier(unittest.TestCase):
                     identifier = '', 
                     scheme_id = null, ),
                 supplier_id = 56,
+                private_id = '',
                 supplier_bank_account_code = 56,
                 supplier_service_id = 56,
                 name = '',
+                trading_business_name = '',
+                legal_description = '',
                 siren = '',
                 siret = '',
                 vat_number = '',
                 iban = '',
+                bic = '',
+                bank_account_name = '',
+                proprietary_id = '',
                 postal_address = factpulse.models.postal_address.PostalAddress(
                     postal_code = '', 
                     line_one = '', 
                     line_two = '', 
+                    line_three = '', 
                     city = '', 
-                    country_code = '', )
+                    country_code = '', 
+                    country_subdivision = '', ),
+                contact = factpulse.models.contact.Contact(
+                    name = '', 
+                    department_name = '', 
+                    phone = '', 
+                    email = '', ),
+                global_ids = [
+                    factpulse.models.electronic_address.ElectronicAddress(
+                        identifier = '', 
+                        scheme_id = null, )
+                    ]
             )
         else:
             return Supplier(

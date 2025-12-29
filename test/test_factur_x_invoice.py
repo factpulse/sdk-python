@@ -45,57 +45,137 @@ class TestFacturXInvoice(unittest.TestCase):
                     name = '', 
                     siren = '', 
                     siret = '', 
-                    postal_address = null, ),
+                    vat_number = '', 
+                    postal_address = null, 
+                    contact = null, 
+                    global_ids = [
+                        factpulse.models.electronic_address.ElectronicAddress(
+                            identifier = '', 
+                            scheme_id = null, )
+                        ], ),
                 supplier = factpulse.models.supplier.Supplier(
                     electronic_address = null, 
                     supplier_id = 56, 
+                    private_id = '', 
                     supplier_bank_account_code = 56, 
                     supplier_service_id = 56, 
                     name = '', 
+                    trading_business_name = '', 
+                    legal_description = '', 
                     siren = '', 
                     siret = '', 
                     vat_number = '', 
                     iban = '', 
-                    postal_address = null, ),
+                    bic = '', 
+                    bank_account_name = '', 
+                    proprietary_id = '', 
+                    postal_address = null, 
+                    contact = null, 
+                    global_ids = [
+                        factpulse.models.electronic_address.ElectronicAddress(
+                            identifier = '', 
+                            scheme_id = null, )
+                        ], ),
                 invoicing_framework = factpulse.models.invoicing_framework.InvoicingFramework(
                     invoicing_framework_code = 'A1_FACTURE_FOURNISSEUR', 
                     operation_nature = null, 
                     approver_service_code = '', 
                     approver_structure_code = '', ),
                 references = factpulse.models.invoice_references.InvoiceReferences(
+                    business_process_id = '', 
                     invoice_currency = 'EUR', 
-                    payment_means = 'CHEQUE', 
+                    payment_means = null, 
+                    payment_means_text = '', 
                     invoice_type = '380', 
-                    vat_accounting_code = 'TVA_SUR_DEBIT', 
+                    vat_accounting_code = null, 
+                    buyer_reference = '', 
                     contract_reference = '', 
-                    vat_exemption_reason = '', 
                     purchase_order_reference = '', 
-                    preceding_invoice_reference = '', ),
+                    seller_order_reference = '', 
+                    receiving_advice_reference = '', 
+                    despatch_advice_reference = '', 
+                    tender_reference = '', 
+                    preceding_invoice_reference = '', 
+                    preceding_invoice_date = '', 
+                    project_reference = '', 
+                    project_name = '', 
+                    vat_exemption_reason = '', ),
                 totals = factpulse.models.invoice_totals.InvoiceTotals(
+                    line_total_amount = null, 
+                    allowance_total_amount = null, 
+                    charge_total_amount = null, 
                     total_net_amount = null, 
                     vat_amount = null, 
                     total_gross_amount = null, 
-                    amount_due = null, 
                     prepayment = null, 
+                    rounding_amount = null, 
+                    amount_due = null, 
                     global_allowance_amount = null, 
                     global_allowance_reason = '', ),
                 invoice_lines = [
                     factpulse.models.invoice_line.InvoiceLine(
                         line_number = 56, 
+                        line_note = '', 
                         reference = '', 
+                        buyer_assigned_id = '', 
+                        product_global_id = '', 
+                        product_global_id_scheme = '', 
                         item_name = '', 
+                        item_description = '', 
+                        origin_country = '', 
+                        characteristics = [
+                            factpulse.models.product_characteristic.ProductCharacteristic(
+                                name = '', 
+                                value = '', )
+                            ], 
+                        classifications = [
+                            factpulse.models.product_classification.ProductClassification(
+                                class_code = '', 
+                                list_id = '', 
+                                list_version_id = '', )
+                            ], 
                         quantity = null, 
-                        unit = 'PIECE', 
+                        unit = null, 
+                        gross_unit_price = null, 
                         unit_net_price = null, 
-                        allowance_amount = null, 
+                        price_basis_quantity = null, 
+                        price_basis_unit = '', 
+                        price_allowance_amount = null, 
                         line_net_amount = null, 
+                        allowance_amount = null, 
+                        allowance_reason_code = null, 
+                        allowance_reason = '', 
+                        allowances_charges = [
+                            factpulse.models.allowance_charge.AllowanceCharge(
+                                is_charge = True, 
+                                amount = null, 
+                                base_amount = null, 
+                                percentage = null, 
+                                reason = '', 
+                                reason_code = '', 
+                                vat_category = '', 
+                                vat_rate = null, )
+                            ], 
                         vat_rate = '', 
                         manual_vat_rate = null, 
                         vat_category = null, 
                         period_start_date = '', 
                         period_end_date = '', 
-                        allowance_reason_code = null, 
-                        allowance_reason = '', )
+                        purchase_order_line_ref = '', 
+                        accounting_account = '', 
+                        additional_documents = [
+                            factpulse.models.additional_document.AdditionalDocument(
+                                id = '', 
+                                type_code = '', 
+                                name = '', 
+                                uri = '', 
+                                reference_type_code = '', )
+                            ], 
+                        line_notes = [
+                            factpulse.models.invoice_note.InvoiceNote(
+                                subject_code = '', 
+                                content = '', )
+                            ], )
                     ],
                 vat_lines = [
                     factpulse.models.vat_line.VATLine(
@@ -104,6 +184,7 @@ class TestFacturXInvoice(unittest.TestCase):
                         rate = '', 
                         manual_rate = null, 
                         category = null, 
+                        due_date_type_code = null, 
                         exemption_reason = '', 
                         vatex_code = '', )
                     ],
@@ -124,11 +205,57 @@ class TestFacturXInvoice(unittest.TestCase):
                     ],
                 payee = factpulse.models.payee.Payee(
                     nom = '0', 
+                    payee_id = '', 
                     siret = '04807288800152', 
                     siren = '048072888', 
                     electronic_address = null, 
                     iban = '', 
-                    bic = '', )
+                    bic = '', 
+                    global_ids = [
+                        factpulse.models.electronic_address.ElectronicAddress(
+                            identifier = '', 
+                            scheme_id = null, )
+                        ], ),
+                delivery_party = factpulse.models.delivery_party.DeliveryParty(
+                    id = '', 
+                    global_id = null, 
+                    name = '', 
+                    postal_address = null, ),
+                tax_representative = factpulse.models.tax_representative.TaxRepresentative(
+                    name = '', 
+                    vat_number = '', 
+                    postal_address = null, ),
+                delivery_date = '',
+                billing_period_start = '',
+                billing_period_end = '',
+                payment_reference = '',
+                creditor_reference_id = '',
+                direct_debit_mandate_id = '',
+                debtor_iban = '',
+                payment_terms = '',
+                allowances_charges = [
+                    factpulse.models.allowance_charge.AllowanceCharge(
+                        is_charge = True, 
+                        amount = null, 
+                        base_amount = null, 
+                        percentage = null, 
+                        reason = '', 
+                        reason_code = '', 
+                        vat_category = '', 
+                        vat_rate = null, )
+                    ],
+                additional_documents = [
+                    factpulse.models.additional_document.AdditionalDocument(
+                        id = '', 
+                        type_code = '', 
+                        name = '', 
+                        uri = '', 
+                        reference_type_code = '', )
+                    ],
+                buyer_accounting_reference = '',
+                payment_card = factpulse.models.payment_card.PaymentCard(
+                    card_id = '', 
+                    cardholder_name = '', )
             )
         else:
             return FacturXInvoice(
@@ -141,38 +268,71 @@ class TestFacturXInvoice(unittest.TestCase):
                     name = '', 
                     siren = '', 
                     siret = '', 
-                    postal_address = null, ),
+                    vat_number = '', 
+                    postal_address = null, 
+                    contact = null, 
+                    global_ids = [
+                        factpulse.models.electronic_address.ElectronicAddress(
+                            identifier = '', 
+                            scheme_id = null, )
+                        ], ),
                 supplier = factpulse.models.supplier.Supplier(
                     electronic_address = null, 
                     supplier_id = 56, 
+                    private_id = '', 
                     supplier_bank_account_code = 56, 
                     supplier_service_id = 56, 
                     name = '', 
+                    trading_business_name = '', 
+                    legal_description = '', 
                     siren = '', 
                     siret = '', 
                     vat_number = '', 
                     iban = '', 
-                    postal_address = null, ),
+                    bic = '', 
+                    bank_account_name = '', 
+                    proprietary_id = '', 
+                    postal_address = null, 
+                    contact = null, 
+                    global_ids = [
+                        factpulse.models.electronic_address.ElectronicAddress(
+                            identifier = '', 
+                            scheme_id = null, )
+                        ], ),
                 invoicing_framework = factpulse.models.invoicing_framework.InvoicingFramework(
                     invoicing_framework_code = 'A1_FACTURE_FOURNISSEUR', 
                     operation_nature = null, 
                     approver_service_code = '', 
                     approver_structure_code = '', ),
                 references = factpulse.models.invoice_references.InvoiceReferences(
+                    business_process_id = '', 
                     invoice_currency = 'EUR', 
-                    payment_means = 'CHEQUE', 
+                    payment_means = null, 
+                    payment_means_text = '', 
                     invoice_type = '380', 
-                    vat_accounting_code = 'TVA_SUR_DEBIT', 
+                    vat_accounting_code = null, 
+                    buyer_reference = '', 
                     contract_reference = '', 
-                    vat_exemption_reason = '', 
                     purchase_order_reference = '', 
-                    preceding_invoice_reference = '', ),
+                    seller_order_reference = '', 
+                    receiving_advice_reference = '', 
+                    despatch_advice_reference = '', 
+                    tender_reference = '', 
+                    preceding_invoice_reference = '', 
+                    preceding_invoice_date = '', 
+                    project_reference = '', 
+                    project_name = '', 
+                    vat_exemption_reason = '', ),
                 totals = factpulse.models.invoice_totals.InvoiceTotals(
+                    line_total_amount = null, 
+                    allowance_total_amount = null, 
+                    charge_total_amount = null, 
                     total_net_amount = null, 
                     vat_amount = null, 
                     total_gross_amount = null, 
-                    amount_due = null, 
                     prepayment = null, 
+                    rounding_amount = null, 
+                    amount_due = null, 
                     global_allowance_amount = null, 
                     global_allowance_reason = '', ),
         )

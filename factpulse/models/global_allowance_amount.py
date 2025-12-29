@@ -28,7 +28,7 @@ GLOBALALLOWANCEAMOUNT_ANY_OF_SCHEMAS = ["float", "str"]
 
 class GlobalAllowanceAmount(BaseModel):
     """
-    Global allowance amount (including tax). (Accepte number, string ou integer)
+    Global allowance amount (legacy - use allowance_total_amount). (Accepte number, string ou integer)
     """
 
     # data type: float

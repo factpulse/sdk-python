@@ -19,16 +19,21 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from factpulse.models.additional_document import AdditionalDocument
+from factpulse.models.allowance_charge import AllowanceCharge
+from factpulse.models.delivery_party import DeliveryParty
 from factpulse.models.invoice_line import InvoiceLine
 from factpulse.models.invoice_note import InvoiceNote
 from factpulse.models.invoice_references import InvoiceReferences
 from factpulse.models.invoice_totals import InvoiceTotals
 from factpulse.models.invoicing_framework import InvoicingFramework
 from factpulse.models.payee import Payee
+from factpulse.models.payment_card import PaymentCard
 from factpulse.models.recipient import Recipient
 from factpulse.models.submission_mode import SubmissionMode
 from factpulse.models.supplementary_attachment import SupplementaryAttachment
 from factpulse.models.supplier import Supplier
+from factpulse.models.tax_representative import TaxRepresentative
 from factpulse.models.vat_line import VATLine
 from typing import Optional, Set
 from typing_extensions import Self
@@ -53,7 +58,21 @@ class FacturXInvoice(BaseModel):
     current_user_id: Optional[StrictInt] = None
     supplementary_attachments: Optional[List[SupplementaryAttachment]] = None
     payee: Optional[Payee] = None
-    __properties: ClassVar[List[str]] = ["invoice_number", "payment_due_date", "invoice_date", "submission_mode", "recipient", "supplier", "invoicing_framework", "references", "totals", "invoice_lines", "vat_lines", "notes", "comment", "current_user_id", "supplementary_attachments", "payee"]
+    delivery_party: Optional[DeliveryParty] = None
+    tax_representative: Optional[TaxRepresentative] = None
+    delivery_date: Optional[StrictStr] = None
+    billing_period_start: Optional[StrictStr] = None
+    billing_period_end: Optional[StrictStr] = None
+    payment_reference: Optional[StrictStr] = None
+    creditor_reference_id: Optional[StrictStr] = None
+    direct_debit_mandate_id: Optional[StrictStr] = None
+    debtor_iban: Optional[StrictStr] = None
+    payment_terms: Optional[StrictStr] = None
+    allowances_charges: Optional[List[AllowanceCharge]] = None
+    additional_documents: Optional[List[AdditionalDocument]] = None
+    buyer_accounting_reference: Optional[StrictStr] = None
+    payment_card: Optional[PaymentCard] = None
+    __properties: ClassVar[List[str]] = ["invoice_number", "payment_due_date", "invoice_date", "submission_mode", "recipient", "supplier", "invoicing_framework", "references", "totals", "invoice_lines", "vat_lines", "notes", "comment", "current_user_id", "supplementary_attachments", "payee", "delivery_party", "tax_representative", "delivery_date", "billing_period_start", "billing_period_end", "payment_reference", "creditor_reference_id", "direct_debit_mandate_id", "debtor_iban", "payment_terms", "allowances_charges", "additional_documents", "buyer_accounting_reference", "payment_card"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -140,6 +159,29 @@ class FacturXInvoice(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of payee
         if self.payee:
             _dict['payee'] = self.payee.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of delivery_party
+        if self.delivery_party:
+            _dict['delivery_party'] = self.delivery_party.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of tax_representative
+        if self.tax_representative:
+            _dict['tax_representative'] = self.tax_representative.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in allowances_charges (list)
+        _items = []
+        if self.allowances_charges:
+            for _item_allowances_charges in self.allowances_charges:
+                if _item_allowances_charges:
+                    _items.append(_item_allowances_charges.to_dict())
+            _dict['allowances_charges'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in additional_documents (list)
+        _items = []
+        if self.additional_documents:
+            for _item_additional_documents in self.additional_documents:
+                if _item_additional_documents:
+                    _items.append(_item_additional_documents.to_dict())
+            _dict['additional_documents'] = _items
+        # override the default output from pydantic by calling `to_dict()` of payment_card
+        if self.payment_card:
+            _dict['payment_card'] = self.payment_card.to_dict()
         # set to None if comment (nullable) is None
         # and model_fields_set contains the field
         if self.comment is None and "comment" in self.model_fields_set:
@@ -159,6 +201,76 @@ class FacturXInvoice(BaseModel):
         # and model_fields_set contains the field
         if self.payee is None and "payee" in self.model_fields_set:
             _dict['payee'] = None
+
+        # set to None if delivery_party (nullable) is None
+        # and model_fields_set contains the field
+        if self.delivery_party is None and "delivery_party" in self.model_fields_set:
+            _dict['delivery_party'] = None
+
+        # set to None if tax_representative (nullable) is None
+        # and model_fields_set contains the field
+        if self.tax_representative is None and "tax_representative" in self.model_fields_set:
+            _dict['tax_representative'] = None
+
+        # set to None if delivery_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.delivery_date is None and "delivery_date" in self.model_fields_set:
+            _dict['delivery_date'] = None
+
+        # set to None if billing_period_start (nullable) is None
+        # and model_fields_set contains the field
+        if self.billing_period_start is None and "billing_period_start" in self.model_fields_set:
+            _dict['billing_period_start'] = None
+
+        # set to None if billing_period_end (nullable) is None
+        # and model_fields_set contains the field
+        if self.billing_period_end is None and "billing_period_end" in self.model_fields_set:
+            _dict['billing_period_end'] = None
+
+        # set to None if payment_reference (nullable) is None
+        # and model_fields_set contains the field
+        if self.payment_reference is None and "payment_reference" in self.model_fields_set:
+            _dict['payment_reference'] = None
+
+        # set to None if creditor_reference_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.creditor_reference_id is None and "creditor_reference_id" in self.model_fields_set:
+            _dict['creditor_reference_id'] = None
+
+        # set to None if direct_debit_mandate_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.direct_debit_mandate_id is None and "direct_debit_mandate_id" in self.model_fields_set:
+            _dict['direct_debit_mandate_id'] = None
+
+        # set to None if debtor_iban (nullable) is None
+        # and model_fields_set contains the field
+        if self.debtor_iban is None and "debtor_iban" in self.model_fields_set:
+            _dict['debtor_iban'] = None
+
+        # set to None if payment_terms (nullable) is None
+        # and model_fields_set contains the field
+        if self.payment_terms is None and "payment_terms" in self.model_fields_set:
+            _dict['payment_terms'] = None
+
+        # set to None if allowances_charges (nullable) is None
+        # and model_fields_set contains the field
+        if self.allowances_charges is None and "allowances_charges" in self.model_fields_set:
+            _dict['allowances_charges'] = None
+
+        # set to None if additional_documents (nullable) is None
+        # and model_fields_set contains the field
+        if self.additional_documents is None and "additional_documents" in self.model_fields_set:
+            _dict['additional_documents'] = None
+
+        # set to None if buyer_accounting_reference (nullable) is None
+        # and model_fields_set contains the field
+        if self.buyer_accounting_reference is None and "buyer_accounting_reference" in self.model_fields_set:
+            _dict['buyer_accounting_reference'] = None
+
+        # set to None if payment_card (nullable) is None
+        # and model_fields_set contains the field
+        if self.payment_card is None and "payment_card" in self.model_fields_set:
+            _dict['payment_card'] = None
 
         return _dict
 
@@ -187,7 +299,21 @@ class FacturXInvoice(BaseModel):
             "comment": obj.get("comment"),
             "current_user_id": obj.get("current_user_id"),
             "supplementary_attachments": [SupplementaryAttachment.from_dict(_item) for _item in obj["supplementary_attachments"]] if obj.get("supplementary_attachments") is not None else None,
-            "payee": Payee.from_dict(obj["payee"]) if obj.get("payee") is not None else None
+            "payee": Payee.from_dict(obj["payee"]) if obj.get("payee") is not None else None,
+            "delivery_party": DeliveryParty.from_dict(obj["delivery_party"]) if obj.get("delivery_party") is not None else None,
+            "tax_representative": TaxRepresentative.from_dict(obj["tax_representative"]) if obj.get("tax_representative") is not None else None,
+            "delivery_date": obj.get("delivery_date"),
+            "billing_period_start": obj.get("billing_period_start"),
+            "billing_period_end": obj.get("billing_period_end"),
+            "payment_reference": obj.get("payment_reference"),
+            "creditor_reference_id": obj.get("creditor_reference_id"),
+            "direct_debit_mandate_id": obj.get("direct_debit_mandate_id"),
+            "debtor_iban": obj.get("debtor_iban"),
+            "payment_terms": obj.get("payment_terms"),
+            "allowances_charges": [AllowanceCharge.from_dict(_item) for _item in obj["allowances_charges"]] if obj.get("allowances_charges") is not None else None,
+            "additional_documents": [AdditionalDocument.from_dict(_item) for _item in obj["additional_documents"]] if obj.get("additional_documents") is not None else None,
+            "buyer_accounting_reference": obj.get("buyer_accounting_reference"),
+            "payment_card": PaymentCard.from_dict(obj["payment_card"]) if obj.get("payment_card") is not None else None
         })
         return _obj
 

@@ -14,10 +14,10 @@
 
 import unittest
 
-from factpulse.models.api_profile import APIProfile
+from factpulse.models.contact import Contact
 
-class TestAPIProfile(unittest.TestCase):
-    """APIProfile unit test stubs"""
+class TestContact(unittest.TestCase):
+    """Contact unit test stubs"""
 
     def setUp(self):
         pass
@@ -25,9 +25,30 @@ class TestAPIProfile(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testAPIProfile(self):
-        """Test APIProfile"""
-        # inst = APIProfile()
+    def make_instance(self, include_optional) -> Contact:
+        """Test Contact
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `Contact`
+        """
+        model = Contact()
+        if include_optional:
+            return Contact(
+                name = '',
+                department_name = '',
+                phone = '',
+                email = ''
+            )
+        else:
+            return Contact(
+        )
+        """
+
+    def testContact(self):
+        """Test Contact"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
 
 if __name__ == '__main__':
     unittest.main()

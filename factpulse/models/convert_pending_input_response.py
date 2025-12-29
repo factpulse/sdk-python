@@ -13,28 +13,102 @@
 
 
 from __future__ import annotations
+import pprint
+import re  # noqa: F401
 import json
-from enum import Enum
+
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from factpulse.models.extraction_info import ExtractionInfo
+from factpulse.models.missing_field import MissingField
+from typing import Optional, Set
 from typing_extensions import Self
 
+class ConvertPendingInputResponse(BaseModel):
+    """
+    Reponse donnees manquantes.
+    """ # noqa: E501
+    status: Optional[StrictStr] = 'pending_input'
+    conversion_id: StrictStr
+    message: Optional[StrictStr] = 'Donnees manquantes requises pour la conformite'
+    extraction: ExtractionInfo
+    extracted_data: Dict[str, Any] = Field(description="Donnees extraites par OCR au format FacturXInvoice")
+    missing_fields: List[MissingField]
+    resume_url: StrictStr
+    expires_at: datetime
+    __properties: ClassVar[List[str]] = ["status", "conversion_id", "message", "extraction", "extracted_data", "missing_fields", "resume_url", "expires_at"]
 
-class DocumentType(str, Enum):
-    """
-    Commercial document types (UNTDID 1001).  | Code | Name | Description | |------|------|-------------| | 380 | INVOICE | Commercial invoice | | 381 | CREDIT_NOTE | Credit note | | 384 | CORRECTED_INVOICE | Corrected invoice | | 386 | PREPAYMENT | Prepayment invoice | | 389 | SELF_BILLED | Self-billed invoice |
-    """
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
-    """
-    allowed enum values
-    """
-    INVOICE = '380'
-    CREDIT_NOTE = '381'
-    CORRECTED_INVOICE = '384'
-    PREPAYMENT = '386'
-    SELF_BILLED = '389'
+
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.model_dump(by_alias=True))
+
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
+        return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
-        """Create an instance of DocumentType from a JSON string"""
-        return cls(json.loads(json_str))
+    def from_json(cls, json_str: str) -> Optional[Self]:
+        """Create an instance of ConvertPendingInputResponse from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
+        # override the default output from pydantic by calling `to_dict()` of extraction
+        if self.extraction:
+            _dict['extraction'] = self.extraction.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in missing_fields (list)
+        _items = []
+        if self.missing_fields:
+            for _item_missing_fields in self.missing_fields:
+                if _item_missing_fields:
+                    _items.append(_item_missing_fields.to_dict())
+            _dict['missing_fields'] = _items
+        return _dict
+
+    @classmethod
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+        """Create an instance of ConvertPendingInputResponse from a dict"""
+        if obj is None:
+            return None
+
+        if not isinstance(obj, dict):
+            return cls.model_validate(obj)
+
+        _obj = cls.model_validate({
+            "status": obj.get("status") if obj.get("status") is not None else 'pending_input',
+            "conversion_id": obj.get("conversion_id"),
+            "message": obj.get("message") if obj.get("message") is not None else 'Donnees manquantes requises pour la conformite',
+            "extraction": ExtractionInfo.from_dict(obj["extraction"]) if obj.get("extraction") is not None else None,
+            "extracted_data": obj.get("extracted_data"),
+            "missing_fields": [MissingField.from_dict(_item) for _item in obj["missing_fields"]] if obj.get("missing_fields") is not None else None,
+            "resume_url": obj.get("resume_url"),
+            "expires_at": obj.get("expires_at")
+        })
+        return _obj
 
 

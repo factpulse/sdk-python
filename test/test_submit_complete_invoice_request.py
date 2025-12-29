@@ -59,7 +59,7 @@ class TestSubmitCompleteInvoiceRequest(unittest.TestCase):
                     field_name = 'FactPulseSignature', 
                     use_pades_lt = True, 
                     use_timestamp = True, ),
-                options = {autoEnrich=true, facturxProfile=EN16931, validate=true, verifyDestinationParameters=true}
+                options = {autoEnrich=true, facturxProfile=EN16931, validateXml=true, verifyDestinationParameters=true}
             )
         else:
             return SubmitCompleteInvoiceRequest(

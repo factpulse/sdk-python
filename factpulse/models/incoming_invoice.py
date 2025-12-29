@@ -20,9 +20,9 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from factpulse.models.document_type import DocumentType
 from factpulse.models.incoming_supplier import IncomingSupplier
 from factpulse.models.invoice_format import InvoiceFormat
+from factpulse.models.invoice_type_code import InvoiceTypeCode
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,7 +33,7 @@ class IncomingInvoice(BaseModel):
     flow_id: Optional[StrictStr] = Field(default=None, alias="flowId")
     source_format: InvoiceFormat = Field(description="Invoice source format", alias="sourceFormat")
     supplier_reference: StrictStr = Field(description="Invoice number issued by the supplier (BT-1)", alias="supplierReference")
-    document_type: Optional[DocumentType] = Field(default=None, description="Document type (BT-3)", alias="documentType")
+    document_type: Optional[InvoiceTypeCode] = Field(default=None, description="Document type (BT-3)", alias="documentType")
     supplier: IncomingSupplier = Field(description="Invoice issuer (SellerTradeParty)")
     billing_site_name: StrictStr = Field(description="Recipient name / your company (BT-44)", alias="billingSiteName")
     billing_site_siret: Optional[StrictStr] = Field(default=None, alias="billingSiteSiret")

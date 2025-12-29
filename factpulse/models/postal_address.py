@@ -24,14 +24,16 @@ from typing_extensions import Self
 
 class PostalAddress(BaseModel):
     """
-    Represents a postal address.
+    Represents a postal address (BG-5, BG-8, BG-12, BG-15).
     """ # noqa: E501
     postal_code: Optional[StrictStr] = Field(default=None, alias="postalCode")
     line_one: Optional[StrictStr] = Field(default=None, alias="lineOne")
     line_two: Optional[StrictStr] = Field(default=None, alias="lineTwo")
+    line_three: Optional[StrictStr] = Field(default=None, alias="lineThree")
     city: Optional[StrictStr] = None
     country_code: Optional[StrictStr] = Field(default=None, alias="countryCode")
-    __properties: ClassVar[List[str]] = ["postalCode", "lineOne", "lineTwo", "city", "countryCode"]
+    country_subdivision: Optional[StrictStr] = Field(default=None, alias="countrySubdivision")
+    __properties: ClassVar[List[str]] = ["postalCode", "lineOne", "lineTwo", "lineThree", "city", "countryCode", "countrySubdivision"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -87,6 +89,11 @@ class PostalAddress(BaseModel):
         if self.line_two is None and "line_two" in self.model_fields_set:
             _dict['lineTwo'] = None
 
+        # set to None if line_three (nullable) is None
+        # and model_fields_set contains the field
+        if self.line_three is None and "line_three" in self.model_fields_set:
+            _dict['lineThree'] = None
+
         # set to None if city (nullable) is None
         # and model_fields_set contains the field
         if self.city is None and "city" in self.model_fields_set:
@@ -96,6 +103,11 @@ class PostalAddress(BaseModel):
         # and model_fields_set contains the field
         if self.country_code is None and "country_code" in self.model_fields_set:
             _dict['countryCode'] = None
+
+        # set to None if country_subdivision (nullable) is None
+        # and model_fields_set contains the field
+        if self.country_subdivision is None and "country_subdivision" in self.model_fields_set:
+            _dict['countrySubdivision'] = None
 
         return _dict
 
@@ -112,8 +124,10 @@ class PostalAddress(BaseModel):
             "postalCode": obj.get("postalCode"),
             "lineOne": obj.get("lineOne"),
             "lineTwo": obj.get("lineTwo"),
+            "lineThree": obj.get("lineThree"),
             "city": obj.get("city"),
-            "countryCode": obj.get("countryCode")
+            "countryCode": obj.get("countryCode"),
+            "countrySubdivision": obj.get("countrySubdivision")
         })
         return _obj
 

@@ -28,7 +28,7 @@ MANUALRATE_ANY_OF_SCHEMAS = ["float", "str"]
 
 class ManualRate(BaseModel):
     """
-    Manual VAT rate value. (Accepte number, string ou integer)
+    VAT category rate (BT-119). (Accepte number, string ou integer)
     """
 
     # data type: float

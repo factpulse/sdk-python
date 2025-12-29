@@ -35,11 +35,15 @@ class TestInvoiceTotals(unittest.TestCase):
         model = InvoiceTotals()
         if include_optional:
             return InvoiceTotals(
+                line_total_amount = None,
+                allowance_total_amount = None,
+                charge_total_amount = None,
                 total_net_amount = None,
                 vat_amount = None,
                 total_gross_amount = None,
-                amount_due = None,
                 prepayment = None,
+                rounding_amount = None,
+                amount_due = None,
                 global_allowance_amount = None,
                 global_allowance_reason = ''
             )

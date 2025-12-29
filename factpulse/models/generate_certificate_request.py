@@ -33,12 +33,12 @@ class GenerateCertificateRequest(BaseModel):
     city: Optional[StrictStr] = Field(default='Paris', description="City (L)")
     state: Optional[StrictStr] = Field(default='Ile-de-France', description="State/Province (ST)")
     email: Optional[StrictStr] = None
-    validity_days: Optional[Annotated[int, Field(le=3650, strict=True, ge=1)]] = Field(default=365, description="Validity duration in days")
-    key_size: Optional[StrictInt] = Field(default=2048, description="RSA key size in bits")
-    key_passphrase: Optional[StrictStr] = None
-    generate_p12: Optional[StrictBool] = Field(default=False, description="Also generate a PKCS#12 (.p12) file")
-    p12_passphrase: Optional[StrictStr] = Field(default='changeme', description="Passphrase for PKCS#12 file")
-    __properties: ClassVar[List[str]] = ["cn", "organization", "country", "city", "state", "email", "validity_days", "key_size", "key_passphrase", "generate_p12", "p12_passphrase"]
+    validity_days: Optional[Annotated[int, Field(le=3650, strict=True, ge=1)]] = Field(default=365, description="Validity duration in days", alias="validityDays")
+    key_size: Optional[StrictInt] = Field(default=2048, description="RSA key size in bits", alias="keySize")
+    key_passphrase: Optional[StrictStr] = Field(default=None, alias="keyPassphrase")
+    generate_p12: Optional[StrictBool] = Field(default=False, description="Also generate a PKCS#12 (.p12) file", alias="generateP12")
+    p12_passphrase: Optional[StrictStr] = Field(default='changeme', description="Passphrase for PKCS#12 file", alias="p12Passphrase")
+    __properties: ClassVar[List[str]] = ["cn", "organization", "country", "city", "state", "email", "validityDays", "keySize", "keyPassphrase", "generateP12", "p12Passphrase"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -87,7 +87,7 @@ class GenerateCertificateRequest(BaseModel):
         # set to None if key_passphrase (nullable) is None
         # and model_fields_set contains the field
         if self.key_passphrase is None and "key_passphrase" in self.model_fields_set:
-            _dict['key_passphrase'] = None
+            _dict['keyPassphrase'] = None
 
         return _dict
 
@@ -107,11 +107,11 @@ class GenerateCertificateRequest(BaseModel):
             "city": obj.get("city") if obj.get("city") is not None else 'Paris',
             "state": obj.get("state") if obj.get("state") is not None else 'Ile-de-France',
             "email": obj.get("email"),
-            "validity_days": obj.get("validity_days") if obj.get("validity_days") is not None else 365,
-            "key_size": obj.get("key_size") if obj.get("key_size") is not None else 2048,
-            "key_passphrase": obj.get("key_passphrase"),
-            "generate_p12": obj.get("generate_p12") if obj.get("generate_p12") is not None else False,
-            "p12_passphrase": obj.get("p12_passphrase") if obj.get("p12_passphrase") is not None else 'changeme'
+            "validityDays": obj.get("validityDays") if obj.get("validityDays") is not None else 365,
+            "keySize": obj.get("keySize") if obj.get("keySize") is not None else 2048,
+            "keyPassphrase": obj.get("keyPassphrase"),
+            "generateP12": obj.get("generateP12") if obj.get("generateP12") is not None else False,
+            "p12Passphrase": obj.get("p12Passphrase") if obj.get("p12Passphrase") is not None else 'changeme'
         })
         return _obj
 

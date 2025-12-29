@@ -22,6 +22,20 @@ Name | Type | Description | Notes
 **current_user_id** | **int** |  | [optional] 
 **supplementary_attachments** | [**List[SupplementaryAttachment]**](SupplementaryAttachment.md) |  | [optional] 
 **payee** | [**Payee**](Payee.md) |  | [optional] 
+**delivery_party** | [**DeliveryParty**](DeliveryParty.md) |  | [optional] 
+**tax_representative** | [**TaxRepresentative**](TaxRepresentative.md) |  | [optional] 
+**delivery_date** | **str** |  | [optional] 
+**billing_period_start** | **str** |  | [optional] 
+**billing_period_end** | **str** |  | [optional] 
+**payment_reference** | **str** |  | [optional] 
+**creditor_reference_id** | **str** |  | [optional] 
+**direct_debit_mandate_id** | **str** |  | [optional] 
+**debtor_iban** | **str** |  | [optional] 
+**payment_terms** | **str** |  | [optional] 
+**allowances_charges** | [**List[AllowanceCharge]**](AllowanceCharge.md) |  | [optional] 
+**additional_documents** | [**List[AdditionalDocument]**](AdditionalDocument.md) |  | [optional] 
+**buyer_accounting_reference** | **str** |  | [optional] 
+**payment_card** | [**PaymentCard**](PaymentCard.md) |  | [optional] 
 
 ## Example
 

@@ -37,7 +37,7 @@ class TestProcessingOptions(unittest.TestCase):
             return ProcessingOptions(
                 facturx_profile = 'MINIMUM',
                 auto_enrich = True,
-                validate = True,
+                validate_xml = True,
                 verify_destination_parameters = True
             )
         else:

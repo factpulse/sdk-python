@@ -17,8 +17,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from factpulse.models.contact import Contact
 from factpulse.models.electronic_address import ElectronicAddress
 from factpulse.models.postal_address import PostalAddress
 from typing import Optional, Set
@@ -26,19 +27,27 @@ from typing_extensions import Self
 
 class Supplier(BaseModel):
     """
-    Information about the supplier who issues the invoice.
+    Information about the supplier / seller (BG-4).
     """ # noqa: E501
     electronic_address: Optional[ElectronicAddress]
     supplier_id: StrictInt
+    private_id: Optional[StrictStr] = None
     supplier_bank_account_code: Optional[StrictInt] = None
     supplier_service_id: Optional[StrictInt] = None
     name: Optional[StrictStr] = None
+    trading_business_name: Optional[StrictStr] = None
+    legal_description: Optional[StrictStr] = None
     siren: Optional[StrictStr] = None
     siret: Optional[StrictStr] = None
     vat_number: Optional[StrictStr] = None
     iban: Optional[StrictStr] = None
+    bic: Optional[StrictStr] = None
+    bank_account_name: Optional[StrictStr] = None
+    proprietary_id: Optional[StrictStr] = Field(default=None, alias="proprietaryId")
     postal_address: Optional[PostalAddress] = None
-    __properties: ClassVar[List[str]] = ["electronic_address", "supplier_id", "supplier_bank_account_code", "supplier_service_id", "name", "siren", "siret", "vat_number", "iban", "postal_address"]
+    contact: Optional[Contact] = None
+    global_ids: Optional[List[ElectronicAddress]] = None
+    __properties: ClassVar[List[str]] = ["electronic_address", "supplier_id", "private_id", "supplier_bank_account_code", "supplier_service_id", "name", "trading_business_name", "legal_description", "siren", "siret", "vat_number", "iban", "bic", "bank_account_name", "proprietaryId", "postal_address", "contact", "global_ids"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -85,10 +94,25 @@ class Supplier(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of postal_address
         if self.postal_address:
             _dict['postal_address'] = self.postal_address.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of contact
+        if self.contact:
+            _dict['contact'] = self.contact.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in global_ids (list)
+        _items = []
+        if self.global_ids:
+            for _item_global_ids in self.global_ids:
+                if _item_global_ids:
+                    _items.append(_item_global_ids.to_dict())
+            _dict['global_ids'] = _items
         # set to None if electronic_address (nullable) is None
         # and model_fields_set contains the field
         if self.electronic_address is None and "electronic_address" in self.model_fields_set:
             _dict['electronic_address'] = None
+
+        # set to None if private_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.private_id is None and "private_id" in self.model_fields_set:
+            _dict['private_id'] = None
 
         # set to None if supplier_bank_account_code (nullable) is None
         # and model_fields_set contains the field
@@ -104,6 +128,16 @@ class Supplier(BaseModel):
         # and model_fields_set contains the field
         if self.name is None and "name" in self.model_fields_set:
             _dict['name'] = None
+
+        # set to None if trading_business_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.trading_business_name is None and "trading_business_name" in self.model_fields_set:
+            _dict['trading_business_name'] = None
+
+        # set to None if legal_description (nullable) is None
+        # and model_fields_set contains the field
+        if self.legal_description is None and "legal_description" in self.model_fields_set:
+            _dict['legal_description'] = None
 
         # set to None if siren (nullable) is None
         # and model_fields_set contains the field
@@ -125,10 +159,35 @@ class Supplier(BaseModel):
         if self.iban is None and "iban" in self.model_fields_set:
             _dict['iban'] = None
 
+        # set to None if bic (nullable) is None
+        # and model_fields_set contains the field
+        if self.bic is None and "bic" in self.model_fields_set:
+            _dict['bic'] = None
+
+        # set to None if bank_account_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.bank_account_name is None and "bank_account_name" in self.model_fields_set:
+            _dict['bank_account_name'] = None
+
+        # set to None if proprietary_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.proprietary_id is None and "proprietary_id" in self.model_fields_set:
+            _dict['proprietaryId'] = None
+
         # set to None if postal_address (nullable) is None
         # and model_fields_set contains the field
         if self.postal_address is None and "postal_address" in self.model_fields_set:
             _dict['postal_address'] = None
+
+        # set to None if contact (nullable) is None
+        # and model_fields_set contains the field
+        if self.contact is None and "contact" in self.model_fields_set:
+            _dict['contact'] = None
+
+        # set to None if global_ids (nullable) is None
+        # and model_fields_set contains the field
+        if self.global_ids is None and "global_ids" in self.model_fields_set:
+            _dict['global_ids'] = None
 
         return _dict
 
@@ -144,14 +203,22 @@ class Supplier(BaseModel):
         _obj = cls.model_validate({
             "electronic_address": ElectronicAddress.from_dict(obj["electronic_address"]) if obj.get("electronic_address") is not None else None,
             "supplier_id": obj.get("supplier_id"),
+            "private_id": obj.get("private_id"),
             "supplier_bank_account_code": obj.get("supplier_bank_account_code"),
             "supplier_service_id": obj.get("supplier_service_id"),
             "name": obj.get("name"),
+            "trading_business_name": obj.get("trading_business_name"),
+            "legal_description": obj.get("legal_description"),
             "siren": obj.get("siren"),
             "siret": obj.get("siret"),
             "vat_number": obj.get("vat_number"),
             "iban": obj.get("iban"),
-            "postal_address": PostalAddress.from_dict(obj["postal_address"]) if obj.get("postal_address") is not None else None
+            "bic": obj.get("bic"),
+            "bank_account_name": obj.get("bank_account_name"),
+            "proprietaryId": obj.get("proprietaryId"),
+            "postal_address": PostalAddress.from_dict(obj["postal_address"]) if obj.get("postal_address") is not None else None,
+            "contact": Contact.from_dict(obj["contact"]) if obj.get("contact") is not None else None,
+            "global_ids": [ElectronicAddress.from_dict(_item) for _item in obj["global_ids"]] if obj.get("global_ids") is not None else None
         })
         return _obj
 

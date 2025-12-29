@@ -19,7 +19,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.api_profile import APIProfile
+from factpulse.models.factur_x_profile import FacturXProfile
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -27,11 +27,11 @@ class ProcessingOptions(BaseModel):
     """
     Processing options for generation and submission.
     """ # noqa: E501
-    facturx_profile: Optional[APIProfile] = Field(default=None, description="Factur-X profile to use", alias="facturxProfile")
+    facturx_profile: Optional[FacturXProfile] = Field(default=None, description="Factur-X profile to use", alias="facturxProfile")
     auto_enrich: Optional[StrictBool] = Field(default=True, description="Auto-enrich data (Company APIs, Chorus Pro, etc.)", alias="autoEnrich")
-    validate: Optional[StrictBool] = Field(default=True, description="Validate Factur-X XML with Schematron")
+    validate_xml: Optional[StrictBool] = Field(default=True, description="Validate Factur-X XML with Schematron", alias="validateXml")
     verify_destination_parameters: Optional[StrictBool] = Field(default=True, description="Verify required parameters for destination (e.g., service_code for Chorus)", alias="verifyDestinationParameters")
-    __properties: ClassVar[List[str]] = ["facturxProfile", "autoEnrich", "validate", "verifyDestinationParameters"]
+    __properties: ClassVar[List[str]] = ["facturxProfile", "autoEnrich", "validateXml", "verifyDestinationParameters"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -86,7 +86,7 @@ class ProcessingOptions(BaseModel):
         _obj = cls.model_validate({
             "facturxProfile": obj.get("facturxProfile"),
             "autoEnrich": obj.get("autoEnrich") if obj.get("autoEnrich") is not None else True,
-            "validate": obj.get("validate") if obj.get("validate") is not None else True,
+            "validateXml": obj.get("validateXml") if obj.get("validateXml") is not None else True,
             "verifyDestinationParameters": obj.get("verifyDestinationParameters") if obj.get("verifyDestinationParameters") is not None else True
         })
         return _obj

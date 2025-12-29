@@ -31,21 +31,21 @@ class SubmitInvoiceRequest(BaseModel):
     Submit an invoice to Chorus Pro.
     """ # noqa: E501
     credentials: Optional[FactureElectroniqueRestApiSchemasChorusProChorusProCredentials] = None
-    invoice_number: StrictStr = Field(description="Invoice number")
-    invoice_date: StrictStr = Field(description="Invoice date (ISO format: YYYY-MM-DD)")
-    payment_due_date: Optional[StrictStr] = None
-    structure_id: StrictInt = Field(description="Chorus Pro recipient structure ID")
-    service_code: Optional[StrictStr] = None
-    engagement_number: Optional[StrictStr] = None
-    total_net_amount: SubmitNetAmount
-    vat_amount: SubmitVatAmount
-    total_gross_amount: SubmitGrossAmount
-    main_attachment_id: Optional[StrictInt] = None
-    main_attachment_label: Optional[StrictStr] = None
+    invoice_number: StrictStr = Field(description="Invoice number", alias="invoiceNumber")
+    invoice_date: StrictStr = Field(description="Invoice date (ISO format: YYYY-MM-DD)", alias="invoiceDate")
+    payment_due_date: Optional[StrictStr] = Field(default=None, alias="paymentDueDate")
+    structure_id: StrictInt = Field(description="Chorus Pro recipient structure ID", alias="structureId")
+    service_code: Optional[StrictStr] = Field(default=None, alias="serviceCode")
+    engagement_number: Optional[StrictStr] = Field(default=None, alias="engagementNumber")
+    total_net_amount: SubmitNetAmount = Field(alias="totalNetAmount")
+    vat_amount: SubmitVatAmount = Field(alias="vatAmount")
+    total_gross_amount: SubmitGrossAmount = Field(alias="totalGrossAmount")
+    main_attachment_id: Optional[StrictInt] = Field(default=None, alias="mainAttachmentId")
+    main_attachment_label: Optional[StrictStr] = Field(default=None, alias="mainAttachmentLabel")
     comment: Optional[StrictStr] = None
-    purchase_order_reference: Optional[StrictStr] = None
-    contract_reference: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["credentials", "invoice_number", "invoice_date", "payment_due_date", "structure_id", "service_code", "engagement_number", "total_net_amount", "vat_amount", "total_gross_amount", "main_attachment_id", "main_attachment_label", "comment", "purchase_order_reference", "contract_reference"]
+    purchase_order_reference: Optional[StrictStr] = Field(default=None, alias="purchaseOrderReference")
+    contract_reference: Optional[StrictStr] = Field(default=None, alias="contractReference")
+    __properties: ClassVar[List[str]] = ["credentials", "invoiceNumber", "invoiceDate", "paymentDueDate", "structureId", "serviceCode", "engagementNumber", "totalNetAmount", "vatAmount", "totalGrossAmount", "mainAttachmentId", "mainAttachmentLabel", "comment", "purchaseOrderReference", "contractReference"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,13 +91,13 @@ class SubmitInvoiceRequest(BaseModel):
             _dict['credentials'] = self.credentials.to_dict()
         # override the default output from pydantic by calling `to_dict()` of total_net_amount
         if self.total_net_amount:
-            _dict['total_net_amount'] = self.total_net_amount.to_dict()
+            _dict['totalNetAmount'] = self.total_net_amount.to_dict()
         # override the default output from pydantic by calling `to_dict()` of vat_amount
         if self.vat_amount:
-            _dict['vat_amount'] = self.vat_amount.to_dict()
+            _dict['vatAmount'] = self.vat_amount.to_dict()
         # override the default output from pydantic by calling `to_dict()` of total_gross_amount
         if self.total_gross_amount:
-            _dict['total_gross_amount'] = self.total_gross_amount.to_dict()
+            _dict['totalGrossAmount'] = self.total_gross_amount.to_dict()
         # set to None if credentials (nullable) is None
         # and model_fields_set contains the field
         if self.credentials is None and "credentials" in self.model_fields_set:
@@ -106,27 +106,27 @@ class SubmitInvoiceRequest(BaseModel):
         # set to None if payment_due_date (nullable) is None
         # and model_fields_set contains the field
         if self.payment_due_date is None and "payment_due_date" in self.model_fields_set:
-            _dict['payment_due_date'] = None
+            _dict['paymentDueDate'] = None
 
         # set to None if service_code (nullable) is None
         # and model_fields_set contains the field
         if self.service_code is None and "service_code" in self.model_fields_set:
-            _dict['service_code'] = None
+            _dict['serviceCode'] = None
 
         # set to None if engagement_number (nullable) is None
         # and model_fields_set contains the field
         if self.engagement_number is None and "engagement_number" in self.model_fields_set:
-            _dict['engagement_number'] = None
+            _dict['engagementNumber'] = None
 
         # set to None if main_attachment_id (nullable) is None
         # and model_fields_set contains the field
         if self.main_attachment_id is None and "main_attachment_id" in self.model_fields_set:
-            _dict['main_attachment_id'] = None
+            _dict['mainAttachmentId'] = None
 
         # set to None if main_attachment_label (nullable) is None
         # and model_fields_set contains the field
         if self.main_attachment_label is None and "main_attachment_label" in self.model_fields_set:
-            _dict['main_attachment_label'] = None
+            _dict['mainAttachmentLabel'] = None
 
         # set to None if comment (nullable) is None
         # and model_fields_set contains the field
@@ -136,12 +136,12 @@ class SubmitInvoiceRequest(BaseModel):
         # set to None if purchase_order_reference (nullable) is None
         # and model_fields_set contains the field
         if self.purchase_order_reference is None and "purchase_order_reference" in self.model_fields_set:
-            _dict['purchase_order_reference'] = None
+            _dict['purchaseOrderReference'] = None
 
         # set to None if contract_reference (nullable) is None
         # and model_fields_set contains the field
         if self.contract_reference is None and "contract_reference" in self.model_fields_set:
-            _dict['contract_reference'] = None
+            _dict['contractReference'] = None
 
         return _dict
 
@@ -156,20 +156,20 @@ class SubmitInvoiceRequest(BaseModel):
 
         _obj = cls.model_validate({
             "credentials": FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None,
-            "invoice_number": obj.get("invoice_number"),
-            "invoice_date": obj.get("invoice_date"),
-            "payment_due_date": obj.get("payment_due_date"),
-            "structure_id": obj.get("structure_id"),
-            "service_code": obj.get("service_code"),
-            "engagement_number": obj.get("engagement_number"),
-            "total_net_amount": SubmitNetAmount.from_dict(obj["total_net_amount"]) if obj.get("total_net_amount") is not None else None,
-            "vat_amount": SubmitVatAmount.from_dict(obj["vat_amount"]) if obj.get("vat_amount") is not None else None,
-            "total_gross_amount": SubmitGrossAmount.from_dict(obj["total_gross_amount"]) if obj.get("total_gross_amount") is not None else None,
-            "main_attachment_id": obj.get("main_attachment_id"),
-            "main_attachment_label": obj.get("main_attachment_label"),
+            "invoiceNumber": obj.get("invoiceNumber"),
+            "invoiceDate": obj.get("invoiceDate"),
+            "paymentDueDate": obj.get("paymentDueDate"),
+            "structureId": obj.get("structureId"),
+            "serviceCode": obj.get("serviceCode"),
+            "engagementNumber": obj.get("engagementNumber"),
+            "totalNetAmount": SubmitNetAmount.from_dict(obj["totalNetAmount"]) if obj.get("totalNetAmount") is not None else None,
+            "vatAmount": SubmitVatAmount.from_dict(obj["vatAmount"]) if obj.get("vatAmount") is not None else None,
+            "totalGrossAmount": SubmitGrossAmount.from_dict(obj["totalGrossAmount"]) if obj.get("totalGrossAmount") is not None else None,
+            "mainAttachmentId": obj.get("mainAttachmentId"),
+            "mainAttachmentLabel": obj.get("mainAttachmentLabel"),
             "comment": obj.get("comment"),
-            "purchase_order_reference": obj.get("purchase_order_reference"),
-            "contract_reference": obj.get("contract_reference")
+            "purchaseOrderReference": obj.get("purchaseOrderReference"),
+            "contractReference": obj.get("contractReference")
         })
         return _obj
 

@@ -31,16 +31,16 @@ class SearchFlowRequest(BaseModel):
     """
     Request to search submitted flows.
     """ # noqa: E501
-    updated_after: Optional[datetime] = None
-    updated_before: Optional[datetime] = None
-    flow_types: Optional[List[FlowType]] = None
-    flow_directions: Optional[List[FlowDirection]] = None
-    tracking_id: Optional[StrictStr] = None
-    flow_id: Optional[StrictStr] = None
-    acknowledgment_status: Optional[AcknowledgmentStatus] = None
+    updated_after: Optional[datetime] = Field(default=None, alias="updatedAfter")
+    updated_before: Optional[datetime] = Field(default=None, alias="updatedBefore")
+    flow_types: Optional[List[FlowType]] = Field(default=None, alias="flowTypes")
+    flow_directions: Optional[List[FlowDirection]] = Field(default=None, alias="flowDirections")
+    tracking_id: Optional[StrictStr] = Field(default=None, alias="trackingId")
+    flow_id: Optional[StrictStr] = Field(default=None, alias="flowId")
+    acknowledgment_status: Optional[AcknowledgmentStatus] = Field(default=None, alias="acknowledgmentStatus")
     offset: Optional[Annotated[int, Field(strict=True, ge=0)]] = Field(default=0, description="Offset for pagination")
     limit: Optional[Annotated[int, Field(le=100, strict=True, ge=1)]] = Field(default=25, description="Maximum number of results (max 100)")
-    __properties: ClassVar[List[str]] = ["updated_after", "updated_before", "flow_types", "flow_directions", "tracking_id", "flow_id", "acknowledgment_status", "offset", "limit"]
+    __properties: ClassVar[List[str]] = ["updatedAfter", "updatedBefore", "flowTypes", "flowDirections", "trackingId", "flowId", "acknowledgmentStatus", "offset", "limit"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,37 +84,37 @@ class SearchFlowRequest(BaseModel):
         # set to None if updated_after (nullable) is None
         # and model_fields_set contains the field
         if self.updated_after is None and "updated_after" in self.model_fields_set:
-            _dict['updated_after'] = None
+            _dict['updatedAfter'] = None
 
         # set to None if updated_before (nullable) is None
         # and model_fields_set contains the field
         if self.updated_before is None and "updated_before" in self.model_fields_set:
-            _dict['updated_before'] = None
+            _dict['updatedBefore'] = None
 
         # set to None if flow_types (nullable) is None
         # and model_fields_set contains the field
         if self.flow_types is None and "flow_types" in self.model_fields_set:
-            _dict['flow_types'] = None
+            _dict['flowTypes'] = None
 
         # set to None if flow_directions (nullable) is None
         # and model_fields_set contains the field
         if self.flow_directions is None and "flow_directions" in self.model_fields_set:
-            _dict['flow_directions'] = None
+            _dict['flowDirections'] = None
 
         # set to None if tracking_id (nullable) is None
         # and model_fields_set contains the field
         if self.tracking_id is None and "tracking_id" in self.model_fields_set:
-            _dict['tracking_id'] = None
+            _dict['trackingId'] = None
 
         # set to None if flow_id (nullable) is None
         # and model_fields_set contains the field
         if self.flow_id is None and "flow_id" in self.model_fields_set:
-            _dict['flow_id'] = None
+            _dict['flowId'] = None
 
         # set to None if acknowledgment_status (nullable) is None
         # and model_fields_set contains the field
         if self.acknowledgment_status is None and "acknowledgment_status" in self.model_fields_set:
-            _dict['acknowledgment_status'] = None
+            _dict['acknowledgmentStatus'] = None
 
         return _dict
 
@@ -128,13 +128,13 @@ class SearchFlowRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "updated_after": obj.get("updated_after"),
-            "updated_before": obj.get("updated_before"),
-            "flow_types": obj.get("flow_types"),
-            "flow_directions": obj.get("flow_directions"),
-            "tracking_id": obj.get("tracking_id"),
-            "flow_id": obj.get("flow_id"),
-            "acknowledgment_status": obj.get("acknowledgment_status"),
+            "updatedAfter": obj.get("updatedAfter"),
+            "updatedBefore": obj.get("updatedBefore"),
+            "flowTypes": obj.get("flowTypes"),
+            "flowDirections": obj.get("flowDirections"),
+            "trackingId": obj.get("trackingId"),
+            "flowId": obj.get("flowId"),
+            "acknowledgmentStatus": obj.get("acknowledgmentStatus"),
             "offset": obj.get("offset") if obj.get("offset") is not None else 0,
             "limit": obj.get("limit") if obj.get("limit") is not None else 25
         })

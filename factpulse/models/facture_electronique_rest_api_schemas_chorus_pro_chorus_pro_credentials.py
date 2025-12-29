@@ -26,12 +26,12 @@ class FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(BaseModel):
     """
     Chorus Pro credentials for Zero-Trust mode.  **Zero-Trust Mode**: Credentials are passed in each request and are NEVER stored.  **Security**: - Credentials are never persisted in the database - They are used only for the duration of the request - Secure transmission via HTTPS  **Use cases**: - High-security environments (banks, administrations) - Strict GDPR compliance - Tests with temporary credentials - Users who don't want to store their credentials
     """ # noqa: E501
-    piste_client_id: StrictStr = Field(description="PISTE Client ID (government API portal)")
-    piste_client_secret: StrictStr = Field(description="PISTE Client Secret")
-    chorus_pro_login: StrictStr = Field(description="Chorus Pro login")
-    chorus_pro_password: StrictStr = Field(description="Chorus Pro password")
+    piste_client_id: StrictStr = Field(description="PISTE Client ID (government API portal)", alias="pisteClientId")
+    piste_client_secret: StrictStr = Field(description="PISTE Client Secret", alias="pisteClientSecret")
+    chorus_pro_login: StrictStr = Field(description="Chorus Pro login", alias="chorusProLogin")
+    chorus_pro_password: StrictStr = Field(description="Chorus Pro password", alias="chorusProPassword")
     sandbox: Optional[StrictBool] = Field(default=True, description="Use sandbox environment (true) or production (false)")
-    __properties: ClassVar[List[str]] = ["piste_client_id", "piste_client_secret", "chorus_pro_login", "chorus_pro_password", "sandbox"]
+    __properties: ClassVar[List[str]] = ["pisteClientId", "pisteClientSecret", "chorusProLogin", "chorusProPassword", "sandbox"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -84,10 +84,10 @@ class FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "piste_client_id": obj.get("piste_client_id"),
-            "piste_client_secret": obj.get("piste_client_secret"),
-            "chorus_pro_login": obj.get("chorus_pro_login"),
-            "chorus_pro_password": obj.get("chorus_pro_password"),
+            "pisteClientId": obj.get("pisteClientId"),
+            "pisteClientSecret": obj.get("pisteClientSecret"),
+            "chorusProLogin": obj.get("chorusProLogin"),
+            "chorusProPassword": obj.get("chorusProPassword"),
             "sandbox": obj.get("sandbox") if obj.get("sandbox") is not None else True
         })
         return _obj

@@ -42,12 +42,25 @@ class TestRecipient(unittest.TestCase):
                 name = '',
                 siren = '',
                 siret = '',
+                vat_number = '',
                 postal_address = factpulse.models.postal_address.PostalAddress(
                     postal_code = '', 
                     line_one = '', 
                     line_two = '', 
+                    line_three = '', 
                     city = '', 
-                    country_code = '', )
+                    country_code = '', 
+                    country_subdivision = '', ),
+                contact = factpulse.models.contact.Contact(
+                    name = '', 
+                    department_name = '', 
+                    phone = '', 
+                    email = '', ),
+                global_ids = [
+                    factpulse.models.electronic_address.ElectronicAddress(
+                        identifier = '', 
+                        scheme_id = null, )
+                    ]
             )
         else:
             return Recipient(

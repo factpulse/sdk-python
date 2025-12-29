@@ -29,12 +29,14 @@ class Payee(BaseModel):
     Information about the payment beneficiary (BG-10 / PayeeTradeParty).  The payee is the party receiving payment. This block is used only if the payee is different from the seller (supplier).  **Main use case**: Factoring When an invoice is factored, the factor (factoring company) becomes the payment beneficiary instead of the supplier.  **Business Terms (EN16931)**: - BT-59: Payee name (mandatory) - BT-60: Payee identifier (SIRET with schemeID 0009) - BT-61: Payee legal identifier (SIREN with schemeID 0002)  **Reference**: docs/guide_affacturage.md
     """ # noqa: E501
     nom: Annotated[str, Field(min_length=1, strict=True)] = Field(description="Payee name (BT-59). Mandatory.")
+    payee_id: Optional[StrictStr] = Field(default=None, alias="payeeId")
     siret: Optional[Annotated[str, Field(strict=True)]] = None
     siren: Optional[Annotated[str, Field(strict=True)]] = None
     electronic_address: Optional[ElectronicAddress] = Field(default=None, alias="electronicAddress")
     iban: Optional[StrictStr] = None
     bic: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["nom", "siret", "siren", "electronicAddress", "iban", "bic"]
+    global_ids: Optional[List[ElectronicAddress]] = None
+    __properties: ClassVar[List[str]] = ["nom", "payeeId", "siret", "siren", "electronicAddress", "iban", "bic", "global_ids"]
 
     @field_validator('siret')
     def siret_validate_regular_expression(cls, value):
@@ -98,6 +100,18 @@ class Payee(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of electronic_address
         if self.electronic_address:
             _dict['electronicAddress'] = self.electronic_address.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in global_ids (list)
+        _items = []
+        if self.global_ids:
+            for _item_global_ids in self.global_ids:
+                if _item_global_ids:
+                    _items.append(_item_global_ids.to_dict())
+            _dict['global_ids'] = _items
+        # set to None if payee_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.payee_id is None and "payee_id" in self.model_fields_set:
+            _dict['payeeId'] = None
+
         # set to None if siret (nullable) is None
         # and model_fields_set contains the field
         if self.siret is None and "siret" in self.model_fields_set:
@@ -123,6 +137,11 @@ class Payee(BaseModel):
         if self.bic is None and "bic" in self.model_fields_set:
             _dict['bic'] = None
 
+        # set to None if global_ids (nullable) is None
+        # and model_fields_set contains the field
+        if self.global_ids is None and "global_ids" in self.model_fields_set:
+            _dict['global_ids'] = None
+
         return _dict
 
     @classmethod
@@ -136,11 +155,13 @@ class Payee(BaseModel):
 
         _obj = cls.model_validate({
             "nom": obj.get("nom"),
+            "payeeId": obj.get("payeeId"),
             "siret": obj.get("siret"),
             "siren": obj.get("siren"),
             "electronicAddress": ElectronicAddress.from_dict(obj["electronicAddress"]) if obj.get("electronicAddress") is not None else None,
             "iban": obj.get("iban"),
-            "bic": obj.get("bic")
+            "bic": obj.get("bic"),
+            "global_ids": [ElectronicAddress.from_dict(_item) for _item in obj["global_ids"]] if obj.get("global_ids") is not None else None
         })
         return _obj
 

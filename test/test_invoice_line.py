@@ -36,20 +36,67 @@ class TestInvoiceLine(unittest.TestCase):
         if include_optional:
             return InvoiceLine(
                 line_number = 56,
+                line_note = '',
                 reference = '',
+                buyer_assigned_id = '',
+                product_global_id = '',
+                product_global_id_scheme = '',
                 item_name = '',
+                item_description = '',
+                origin_country = '',
+                characteristics = [
+                    factpulse.models.product_characteristic.ProductCharacteristic(
+                        name = '', 
+                        value = '', )
+                    ],
+                classifications = [
+                    factpulse.models.product_classification.ProductClassification(
+                        class_code = '', 
+                        list_id = '', 
+                        list_version_id = '', )
+                    ],
                 quantity = None,
                 unit = 'PIECE',
+                gross_unit_price = None,
                 unit_net_price = None,
-                allowance_amount = None,
+                price_basis_quantity = None,
+                price_basis_unit = '',
+                price_allowance_amount = None,
                 line_net_amount = None,
+                allowance_amount = None,
+                allowance_reason_code = 'AA',
+                allowance_reason = '',
+                allowances_charges = [
+                    factpulse.models.allowance_charge.AllowanceCharge(
+                        is_charge = True, 
+                        amount = null, 
+                        base_amount = null, 
+                        percentage = null, 
+                        reason = '', 
+                        reason_code = '', 
+                        vat_category = '', 
+                        vat_rate = null, )
+                    ],
                 vat_rate = '',
                 manual_vat_rate = None,
                 vat_category = 'S',
                 period_start_date = '',
                 period_end_date = '',
-                allowance_reason_code = 'AA',
-                allowance_reason = ''
+                purchase_order_line_ref = '',
+                accounting_account = '',
+                additional_documents = [
+                    factpulse.models.additional_document.AdditionalDocument(
+                        id = '', 
+                        type_code = '', 
+                        name = '', 
+                        uri = '', 
+                        reference_type_code = '', )
+                    ],
+                line_notes = [
+                    factpulse.models.invoice_note.InvoiceNote(
+                        subject_code = '', 
+                        content = '', )
+                    ]
             )
         else:
             return InvoiceLine(

@@ -19,9 +19,13 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from factpulse.models.allowance_total_amount import AllowanceTotalAmount
 from factpulse.models.amount_due import AmountDue
+from factpulse.models.charge_total_amount import ChargeTotalAmount
 from factpulse.models.global_allowance_amount import GlobalAllowanceAmount
 from factpulse.models.invoice_totals_prepayment import InvoiceTotalsPrepayment
+from factpulse.models.line_total_amount import LineTotalAmount
+from factpulse.models.rounding_amount import RoundingAmount
 from factpulse.models.total_gross_amount import TotalGrossAmount
 from factpulse.models.total_net_amount import TotalNetAmount
 from factpulse.models.total_vat_amount import TotalVATAmount
@@ -30,16 +34,20 @@ from typing_extensions import Self
 
 class InvoiceTotals(BaseModel):
     """
-    Contains all invoice total amounts.
+    Contains all invoice total amounts (BG-22).
     """ # noqa: E501
+    line_total_amount: Optional[LineTotalAmount] = None
+    allowance_total_amount: Optional[AllowanceTotalAmount] = None
+    charge_total_amount: Optional[ChargeTotalAmount] = None
     total_net_amount: TotalNetAmount
     vat_amount: TotalVATAmount
     total_gross_amount: TotalGrossAmount
-    amount_due: AmountDue
     prepayment: Optional[InvoiceTotalsPrepayment] = None
+    rounding_amount: Optional[RoundingAmount] = None
+    amount_due: AmountDue
     global_allowance_amount: Optional[GlobalAllowanceAmount] = Field(default=None, alias="globalAllowanceAmount")
     global_allowance_reason: Optional[StrictStr] = Field(default=None, alias="globalAllowanceReason")
-    __properties: ClassVar[List[str]] = ["total_net_amount", "vat_amount", "total_gross_amount", "amount_due", "prepayment", "globalAllowanceAmount", "globalAllowanceReason"]
+    __properties: ClassVar[List[str]] = ["line_total_amount", "allowance_total_amount", "charge_total_amount", "total_net_amount", "vat_amount", "total_gross_amount", "prepayment", "rounding_amount", "amount_due", "globalAllowanceAmount", "globalAllowanceReason"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -80,6 +88,15 @@ class InvoiceTotals(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of line_total_amount
+        if self.line_total_amount:
+            _dict['line_total_amount'] = self.line_total_amount.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of allowance_total_amount
+        if self.allowance_total_amount:
+            _dict['allowance_total_amount'] = self.allowance_total_amount.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of charge_total_amount
+        if self.charge_total_amount:
+            _dict['charge_total_amount'] = self.charge_total_amount.to_dict()
         # override the default output from pydantic by calling `to_dict()` of total_net_amount
         if self.total_net_amount:
             _dict['total_net_amount'] = self.total_net_amount.to_dict()
@@ -89,19 +106,42 @@ class InvoiceTotals(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of total_gross_amount
         if self.total_gross_amount:
             _dict['total_gross_amount'] = self.total_gross_amount.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of amount_due
-        if self.amount_due:
-            _dict['amount_due'] = self.amount_due.to_dict()
         # override the default output from pydantic by calling `to_dict()` of prepayment
         if self.prepayment:
             _dict['prepayment'] = self.prepayment.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of rounding_amount
+        if self.rounding_amount:
+            _dict['rounding_amount'] = self.rounding_amount.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of amount_due
+        if self.amount_due:
+            _dict['amount_due'] = self.amount_due.to_dict()
         # override the default output from pydantic by calling `to_dict()` of global_allowance_amount
         if self.global_allowance_amount:
             _dict['globalAllowanceAmount'] = self.global_allowance_amount.to_dict()
+        # set to None if line_total_amount (nullable) is None
+        # and model_fields_set contains the field
+        if self.line_total_amount is None and "line_total_amount" in self.model_fields_set:
+            _dict['line_total_amount'] = None
+
+        # set to None if allowance_total_amount (nullable) is None
+        # and model_fields_set contains the field
+        if self.allowance_total_amount is None and "allowance_total_amount" in self.model_fields_set:
+            _dict['allowance_total_amount'] = None
+
+        # set to None if charge_total_amount (nullable) is None
+        # and model_fields_set contains the field
+        if self.charge_total_amount is None and "charge_total_amount" in self.model_fields_set:
+            _dict['charge_total_amount'] = None
+
         # set to None if prepayment (nullable) is None
         # and model_fields_set contains the field
         if self.prepayment is None and "prepayment" in self.model_fields_set:
             _dict['prepayment'] = None
+
+        # set to None if rounding_amount (nullable) is None
+        # and model_fields_set contains the field
+        if self.rounding_amount is None and "rounding_amount" in self.model_fields_set:
+            _dict['rounding_amount'] = None
 
         # set to None if global_allowance_reason (nullable) is None
         # and model_fields_set contains the field
@@ -120,11 +160,15 @@ class InvoiceTotals(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "line_total_amount": LineTotalAmount.from_dict(obj["line_total_amount"]) if obj.get("line_total_amount") is not None else None,
+            "allowance_total_amount": AllowanceTotalAmount.from_dict(obj["allowance_total_amount"]) if obj.get("allowance_total_amount") is not None else None,
+            "charge_total_amount": ChargeTotalAmount.from_dict(obj["charge_total_amount"]) if obj.get("charge_total_amount") is not None else None,
             "total_net_amount": TotalNetAmount.from_dict(obj["total_net_amount"]) if obj.get("total_net_amount") is not None else None,
             "vat_amount": TotalVATAmount.from_dict(obj["vat_amount"]) if obj.get("vat_amount") is not None else None,
             "total_gross_amount": TotalGrossAmount.from_dict(obj["total_gross_amount"]) if obj.get("total_gross_amount") is not None else None,
-            "amount_due": AmountDue.from_dict(obj["amount_due"]) if obj.get("amount_due") is not None else None,
             "prepayment": InvoiceTotalsPrepayment.from_dict(obj["prepayment"]) if obj.get("prepayment") is not None else None,
+            "rounding_amount": RoundingAmount.from_dict(obj["rounding_amount"]) if obj.get("rounding_amount") is not None else None,
+            "amount_due": AmountDue.from_dict(obj["amount_due"]) if obj.get("amount_due") is not None else None,
             "globalAllowanceAmount": GlobalAllowanceAmount.from_dict(obj["globalAllowanceAmount"]) if obj.get("globalAllowanceAmount") is not None else None,
             "globalAllowanceReason": obj.get("globalAllowanceReason")
         })

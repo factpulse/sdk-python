@@ -28,7 +28,7 @@ QUANTITY_ANY_OF_SCHEMAS = ["float", "str"]
 
 class Quantity(BaseModel):
     """
-    Invoiced quantity for this line.
+    Invoiced quantity (BT-129). Can be negative for correction invoices.
     """
 
     # data type: float

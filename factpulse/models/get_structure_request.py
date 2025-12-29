@@ -28,9 +28,9 @@ class GetStructureRequest(BaseModel):
     Get structure details.
     """ # noqa: E501
     credentials: Optional[FactureElectroniqueRestApiSchemasChorusProChorusProCredentials] = None
-    structure_id: StrictInt = Field(description="Chorus Pro structure ID")
-    language_code: Optional[StrictStr] = Field(default='fr', description="Language code (fr, en)")
-    __properties: ClassVar[List[str]] = ["credentials", "structure_id", "language_code"]
+    structure_id: StrictInt = Field(description="Chorus Pro structure ID", alias="structureId")
+    language_code: Optional[StrictStr] = Field(default='fr', description="Language code (fr, en)", alias="languageCode")
+    __properties: ClassVar[List[str]] = ["credentials", "structureId", "languageCode"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -92,8 +92,8 @@ class GetStructureRequest(BaseModel):
 
         _obj = cls.model_validate({
             "credentials": FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None,
-            "structure_id": obj.get("structure_id"),
-            "language_code": obj.get("language_code") if obj.get("language_code") is not None else 'fr'
+            "structureId": obj.get("structureId"),
+            "languageCode": obj.get("languageCode") if obj.get("languageCode") is not None else 'fr'
         })
         return _obj
 

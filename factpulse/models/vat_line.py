@@ -23,21 +23,23 @@ from factpulse.models.manual_rate import ManualRate
 from factpulse.models.taxable_amount import TaxableAmount
 from factpulse.models.vat_amount import VATAmount
 from factpulse.models.vat_category import VATCategory
+from factpulse.models.vat_point_date_code import VATPointDateCode
 from typing import Optional, Set
 from typing_extensions import Self
 
 class VATLine(BaseModel):
     """
-    Represents a VAT breakdown line by rate.  For exemptions (categories E, AE, K, G, O), the fields `exemption_reason` and `vatex_code` are required per EN16931.
+    Represents a VAT breakdown line by rate (BG-23).  For exemptions (categories E, AE, K, G, O), the fields `exemption_reason` and `vatex_code` are required per EN16931.
     """ # noqa: E501
     taxable_amount: TaxableAmount
     vat_amount: VATAmount
     rate: Optional[StrictStr] = None
     manual_rate: Optional[ManualRate] = None
     category: Optional[VATCategory] = None
+    due_date_type_code: Optional[VATPointDateCode] = None
     exemption_reason: Optional[StrictStr] = None
     vatex_code: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["taxable_amount", "vat_amount", "rate", "manual_rate", "category", "exemption_reason", "vatex_code"]
+    __properties: ClassVar[List[str]] = ["taxable_amount", "vat_amount", "rate", "manual_rate", "category", "due_date_type_code", "exemption_reason", "vatex_code"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -97,6 +99,11 @@ class VATLine(BaseModel):
         if self.category is None and "category" in self.model_fields_set:
             _dict['category'] = None
 
+        # set to None if due_date_type_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.due_date_type_code is None and "due_date_type_code" in self.model_fields_set:
+            _dict['due_date_type_code'] = None
+
         # set to None if exemption_reason (nullable) is None
         # and model_fields_set contains the field
         if self.exemption_reason is None and "exemption_reason" in self.model_fields_set:
@@ -124,6 +131,7 @@ class VATLine(BaseModel):
             "rate": obj.get("rate"),
             "manual_rate": ManualRate.from_dict(obj["manual_rate"]) if obj.get("manual_rate") is not None else None,
             "category": obj.get("category"),
+            "due_date_type_code": obj.get("due_date_type_code"),
             "exemption_reason": obj.get("exemption_reason"),
             "vatex_code": obj.get("vatex_code")
         })

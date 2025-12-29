@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.invoice_type_code import InvoiceTypeCode
 from factpulse.models.payment_means import PaymentMeans
@@ -29,15 +29,25 @@ class InvoiceReferences(BaseModel):
     """
     Contains various invoice references (currency, type, etc.).
     """ # noqa: E501
-    invoice_currency: Optional[StrictStr] = 'EUR'
-    payment_means: PaymentMeans
+    business_process_id: Optional[StrictStr] = None
+    invoice_currency: Optional[StrictStr] = Field(default='EUR', description="Invoice currency code (BT-5). ISO 4217.")
+    payment_means: PaymentMeans = Field(description="Payment means type code (BT-81).")
+    payment_means_text: Optional[StrictStr] = None
     invoice_type: InvoiceTypeCode
-    vat_accounting_code: VATAccountingCode
+    vat_accounting_code: VATAccountingCode = Field(description="VAT accounting code.")
+    buyer_reference: Optional[StrictStr] = None
     contract_reference: Optional[StrictStr] = None
-    vat_exemption_reason: Optional[StrictStr] = None
     purchase_order_reference: Optional[StrictStr] = None
+    seller_order_reference: Optional[StrictStr] = None
+    receiving_advice_reference: Optional[StrictStr] = None
+    despatch_advice_reference: Optional[StrictStr] = None
+    tender_reference: Optional[StrictStr] = None
     preceding_invoice_reference: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["invoice_currency", "payment_means", "invoice_type", "vat_accounting_code", "contract_reference", "vat_exemption_reason", "purchase_order_reference", "preceding_invoice_reference"]
+    preceding_invoice_date: Optional[StrictStr] = None
+    project_reference: Optional[StrictStr] = None
+    project_name: Optional[StrictStr] = None
+    vat_exemption_reason: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["business_process_id", "invoice_currency", "payment_means", "payment_means_text", "invoice_type", "vat_accounting_code", "buyer_reference", "contract_reference", "purchase_order_reference", "seller_order_reference", "receiving_advice_reference", "despatch_advice_reference", "tender_reference", "preceding_invoice_reference", "preceding_invoice_date", "project_reference", "project_name", "vat_exemption_reason"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -78,25 +88,75 @@ class InvoiceReferences(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if business_process_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.business_process_id is None and "business_process_id" in self.model_fields_set:
+            _dict['business_process_id'] = None
+
+        # set to None if payment_means_text (nullable) is None
+        # and model_fields_set contains the field
+        if self.payment_means_text is None and "payment_means_text" in self.model_fields_set:
+            _dict['payment_means_text'] = None
+
+        # set to None if buyer_reference (nullable) is None
+        # and model_fields_set contains the field
+        if self.buyer_reference is None and "buyer_reference" in self.model_fields_set:
+            _dict['buyer_reference'] = None
+
         # set to None if contract_reference (nullable) is None
         # and model_fields_set contains the field
         if self.contract_reference is None and "contract_reference" in self.model_fields_set:
             _dict['contract_reference'] = None
-
-        # set to None if vat_exemption_reason (nullable) is None
-        # and model_fields_set contains the field
-        if self.vat_exemption_reason is None and "vat_exemption_reason" in self.model_fields_set:
-            _dict['vat_exemption_reason'] = None
 
         # set to None if purchase_order_reference (nullable) is None
         # and model_fields_set contains the field
         if self.purchase_order_reference is None and "purchase_order_reference" in self.model_fields_set:
             _dict['purchase_order_reference'] = None
 
+        # set to None if seller_order_reference (nullable) is None
+        # and model_fields_set contains the field
+        if self.seller_order_reference is None and "seller_order_reference" in self.model_fields_set:
+            _dict['seller_order_reference'] = None
+
+        # set to None if receiving_advice_reference (nullable) is None
+        # and model_fields_set contains the field
+        if self.receiving_advice_reference is None and "receiving_advice_reference" in self.model_fields_set:
+            _dict['receiving_advice_reference'] = None
+
+        # set to None if despatch_advice_reference (nullable) is None
+        # and model_fields_set contains the field
+        if self.despatch_advice_reference is None and "despatch_advice_reference" in self.model_fields_set:
+            _dict['despatch_advice_reference'] = None
+
+        # set to None if tender_reference (nullable) is None
+        # and model_fields_set contains the field
+        if self.tender_reference is None and "tender_reference" in self.model_fields_set:
+            _dict['tender_reference'] = None
+
         # set to None if preceding_invoice_reference (nullable) is None
         # and model_fields_set contains the field
         if self.preceding_invoice_reference is None and "preceding_invoice_reference" in self.model_fields_set:
             _dict['preceding_invoice_reference'] = None
+
+        # set to None if preceding_invoice_date (nullable) is None
+        # and model_fields_set contains the field
+        if self.preceding_invoice_date is None and "preceding_invoice_date" in self.model_fields_set:
+            _dict['preceding_invoice_date'] = None
+
+        # set to None if project_reference (nullable) is None
+        # and model_fields_set contains the field
+        if self.project_reference is None and "project_reference" in self.model_fields_set:
+            _dict['project_reference'] = None
+
+        # set to None if project_name (nullable) is None
+        # and model_fields_set contains the field
+        if self.project_name is None and "project_name" in self.model_fields_set:
+            _dict['project_name'] = None
+
+        # set to None if vat_exemption_reason (nullable) is None
+        # and model_fields_set contains the field
+        if self.vat_exemption_reason is None and "vat_exemption_reason" in self.model_fields_set:
+            _dict['vat_exemption_reason'] = None
 
         return _dict
 
@@ -110,14 +170,24 @@ class InvoiceReferences(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "business_process_id": obj.get("business_process_id"),
             "invoice_currency": obj.get("invoice_currency") if obj.get("invoice_currency") is not None else 'EUR',
             "payment_means": obj.get("payment_means"),
+            "payment_means_text": obj.get("payment_means_text"),
             "invoice_type": obj.get("invoice_type"),
             "vat_accounting_code": obj.get("vat_accounting_code"),
+            "buyer_reference": obj.get("buyer_reference"),
             "contract_reference": obj.get("contract_reference"),
-            "vat_exemption_reason": obj.get("vat_exemption_reason"),
             "purchase_order_reference": obj.get("purchase_order_reference"),
-            "preceding_invoice_reference": obj.get("preceding_invoice_reference")
+            "seller_order_reference": obj.get("seller_order_reference"),
+            "receiving_advice_reference": obj.get("receiving_advice_reference"),
+            "despatch_advice_reference": obj.get("despatch_advice_reference"),
+            "tender_reference": obj.get("tender_reference"),
+            "preceding_invoice_reference": obj.get("preceding_invoice_reference"),
+            "preceding_invoice_date": obj.get("preceding_invoice_date"),
+            "project_reference": obj.get("project_reference"),
+            "project_name": obj.get("project_name"),
+            "vat_exemption_reason": obj.get("vat_exemption_reason")
         })
         return _obj
 

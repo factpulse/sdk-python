@@ -29,8 +29,8 @@ class GetChorusProIdRequest(BaseModel):
     """ # noqa: E501
     credentials: Optional[FactureElectroniqueRestApiSchemasChorusProChorusProCredentials] = None
     siret: StrictStr = Field(description="Structure SIRET (14 digits)")
-    identifier_type: Optional[StrictStr] = Field(default='SIRET', description="Identifier type (SIRET, SIREN, UE_HORS_FRANCE, etc.)")
-    __properties: ClassVar[List[str]] = ["credentials", "siret", "identifier_type"]
+    identifier_type: Optional[StrictStr] = Field(default='SIRET', description="Identifier type (SIRET, SIREN, UE_HORS_FRANCE, etc.)", alias="identifierType")
+    __properties: ClassVar[List[str]] = ["credentials", "siret", "identifierType"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,7 +93,7 @@ class GetChorusProIdRequest(BaseModel):
         _obj = cls.model_validate({
             "credentials": FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None,
             "siret": obj.get("siret"),
-            "identifier_type": obj.get("identifier_type") if obj.get("identifier_type") is not None else 'SIRET'
+            "identifierType": obj.get("identifierType") if obj.get("identifierType") is not None else 'SIRET'
         })
         return _obj
 

@@ -43,8 +43,10 @@ class TestIncomingSupplier(unittest.TestCase):
                     postal_code = '', 
                     line_one = '', 
                     line_two = '', 
+                    line_three = '', 
                     city = '', 
-                    country_code = '', ),
+                    country_code = '', 
+                    country_subdivision = '', ),
                 electronic_address = factpulse.models.electronic_address.ElectronicAddress(
                     identifier = '', 
                     scheme_id = null, ),

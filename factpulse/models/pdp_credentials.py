@@ -26,12 +26,12 @@ class PDPCredentials(BaseModel):
     """
     PDP credentials for zero-storage strategy (Strategy B).  Allows providing PDP credentials directly in the request instead of storing them in Django.  Useful for: - Ad-hoc tests without persisting credentials - Temporary integrations - Development environments
     """ # noqa: E501
-    flow_service_url: StrictStr = Field(description="Base URL of the AFNOR Flow Service")
-    directory_service_url: Optional[StrictStr] = None
-    token_url: StrictStr = Field(description="OAuth2 server URL")
-    client_id: StrictStr = Field(description="OAuth2 Client ID")
-    client_secret: StrictStr = Field(description="OAuth2 Client Secret (sensitive)")
-    __properties: ClassVar[List[str]] = ["flow_service_url", "directory_service_url", "token_url", "client_id", "client_secret"]
+    flow_service_url: StrictStr = Field(description="Base URL of the AFNOR Flow Service", alias="flowServiceUrl")
+    directory_service_url: Optional[StrictStr] = Field(default=None, alias="directoryServiceUrl")
+    token_url: StrictStr = Field(description="OAuth2 server URL", alias="tokenUrl")
+    client_id: StrictStr = Field(description="OAuth2 Client ID", alias="clientId")
+    client_secret: StrictStr = Field(description="OAuth2 Client Secret (sensitive)", alias="clientSecret")
+    __properties: ClassVar[List[str]] = ["flowServiceUrl", "directoryServiceUrl", "tokenUrl", "clientId", "clientSecret"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -75,7 +75,7 @@ class PDPCredentials(BaseModel):
         # set to None if directory_service_url (nullable) is None
         # and model_fields_set contains the field
         if self.directory_service_url is None and "directory_service_url" in self.model_fields_set:
-            _dict['directory_service_url'] = None
+            _dict['directoryServiceUrl'] = None
 
         return _dict
 
@@ -89,11 +89,11 @@ class PDPCredentials(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "flow_service_url": obj.get("flow_service_url"),
-            "directory_service_url": obj.get("directory_service_url"),
-            "token_url": obj.get("token_url"),
-            "client_id": obj.get("client_id"),
-            "client_secret": obj.get("client_secret")
+            "flowServiceUrl": obj.get("flowServiceUrl"),
+            "directoryServiceUrl": obj.get("directoryServiceUrl"),
+            "tokenUrl": obj.get("tokenUrl"),
+            "clientId": obj.get("clientId"),
+            "clientSecret": obj.get("clientSecret")
         })
         return _obj
 

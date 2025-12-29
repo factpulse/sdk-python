@@ -35,14 +35,24 @@ class TestInvoiceReferences(unittest.TestCase):
         model = InvoiceReferences()
         if include_optional:
             return InvoiceReferences(
+                business_process_id = '',
                 invoice_currency = 'EUR',
                 payment_means = 'CHEQUE',
+                payment_means_text = '',
                 invoice_type = '380',
                 vat_accounting_code = 'TVA_SUR_DEBIT',
+                buyer_reference = '',
                 contract_reference = '',
-                vat_exemption_reason = '',
                 purchase_order_reference = '',
-                preceding_invoice_reference = ''
+                seller_order_reference = '',
+                receiving_advice_reference = '',
+                despatch_advice_reference = '',
+                tender_reference = '',
+                preceding_invoice_reference = '',
+                preceding_invoice_date = '',
+                project_reference = '',
+                project_name = '',
+                vat_exemption_reason = ''
             )
         else:
             return InvoiceReferences(

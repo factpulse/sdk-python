@@ -7,11 +7,13 @@ Information about the payment beneficiary (BG-10 / PayeeTradeParty).  The payee 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **nom** | **str** | Payee name (BT-59). Mandatory. | 
+**payee_id** | **str** |  | [optional] 
 **siret** | **str** |  | [optional] 
 **siren** | **str** |  | [optional] 
 **electronic_address** | [**ElectronicAddress**](ElectronicAddress.md) |  | [optional] 
 **iban** | **str** |  | [optional] 
 **bic** | **str** |  | [optional] 
+**global_ids** | [**List[ElectronicAddress]**](ElectronicAddress.md) |  | [optional] 
 
 ## Example
 
