@@ -64,11 +64,14 @@ class TestConvertValidationFailedResponse(unittest.TestCase):
                     xml_embedded = True, 
                     errors = [
                         factpulse.models.validation_error.ValidationError(
-                            loc = [
-                                null
-                                ], 
-                            msg = '', 
-                            type = '', )
+                            rule = '', 
+                            bt_code = '', 
+                            severity = '', 
+                            message = '', 
+                            suggested_value = '', 
+                            suggested_field = '', 
+                            explanation = '', 
+                            confidence = 0.0, )
                         ], ),
                 resume_url = '',
                 expires_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f')
@@ -90,11 +93,14 @@ class TestConvertValidationFailedResponse(unittest.TestCase):
                     xml_embedded = True, 
                     errors = [
                         factpulse.models.validation_error.ValidationError(
-                            loc = [
-                                null
-                                ], 
-                            msg = '', 
-                            type = '', )
+                            rule = '', 
+                            bt_code = '', 
+                            severity = '', 
+                            message = '', 
+                            suggested_value = '', 
+                            suggested_field = '', 
+                            explanation = '', 
+                            confidence = 0.0, )
                         ], ),
                 resume_url = '',
                 expires_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
