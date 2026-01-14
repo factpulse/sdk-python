@@ -182,7 +182,7 @@ __all__ = [
     "FacturXPDFInfo",
     "FactureElectroniqueModelsInvoiceTypeCode",
     "FactureElectroniqueRestApiSchemasChorusProChorusProCredentials",
-    "FactureElectroniqueRestApiSchemasConvertValidationError",
+    "FactureElectroniqueRestApiSchemasEreportingValidationError",
     "FieldStatus",
     "FileInfo",
     "FilesInfo",
@@ -486,7 +486,7 @@ from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
 from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode as FactureElectroniqueModelsInvoiceTypeCode
 from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials as FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
-from factpulse.models.facture_electronique_rest_api_schemas_convert_validation_error import FactureElectroniqueRestApiSchemasConvertValidationError as FactureElectroniqueRestApiSchemasConvertValidationError
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_validation_error import FactureElectroniqueRestApiSchemasEreportingValidationError as FactureElectroniqueRestApiSchemasEreportingValidationError
 from factpulse.models.field_status import FieldStatus as FieldStatus
 from factpulse.models.file_info import FileInfo as FileInfo
 from factpulse.models.files_info import FilesInfo as FilesInfo
