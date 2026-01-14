@@ -24,7 +24,7 @@ The `factpulse_helpers` module provides a simplified API with automatic authenti
 from factpulse_helpers import (
     FactPulseClient,
     amount,
-    total_amount,
+    invoice_totals,
     invoice_line,
     vat_line,
     supplier,
@@ -39,8 +39,10 @@ client = FactPulseClient(
 
 # Build the invoice with helpers
 invoice_data = {
-    "number": "INV-2025-001",
-    "date": "2025-01-15",
+    "invoiceNumber": "INV-2025-001",
+    "issueDate": "2025-01-15",
+    "dueDate": "2025-02-15",
+    "currencyCode": "EUR",
     "supplier": supplier(
         name="My Company SAS",
         siret="12345678901234",
@@ -55,26 +57,25 @@ invoice_data = {
         postal_code="69001",
         city="Lyon",
     ),
-    "totalAmount": total_amount(
-        excluding_tax=1000.00,
-        vat=200.00,
-        including_tax=1200.00,
-        due=1200.00,
+    "totals": invoice_totals(
+        total_excl_tax=1000.00,
+        total_vat=200.00,
+        total_incl_tax=1200.00,
+        amount_due=1200.00,
     ),
     "lines": [
         invoice_line(
-            number=1,
+            line_number=1,
             description="Consulting services",
             quantity=10,
-            unit_price=100.00,
-            line_total=1000.00,
+            unit_price_excl_tax=100.00,
+            line_total_excl_tax=1000.00,
         )
     ],
     "vatLines": [
         vat_line(
-            base_amount=1000.00,
+            base_amount_excl_tax=1000.00,
             vat_amount=200.00,
-            rate="20.00",
         )
     ],
 }
@@ -108,25 +109,25 @@ amount("1234.56")   # "1234.56"
 amount(None)        # "0.00"
 ```
 
-### total_amount(excluding_tax, vat, including_tax, due, ...)
+### invoice_totals(total_excl_tax, total_vat, total_incl_tax, amount_due, ...)
 
-Creates a complete TotalAmount object.
+Creates a complete invoice totals object.
 
 ```python
-from factpulse_helpers import total_amount
+from factpulse_helpers import invoice_totals
 
-total = total_amount(
-    excluding_tax=1000.00,
-    vat=200.00,
-    including_tax=1200.00,
-    due=1200.00,
-    discount_including_tax=50.00,  # Optional
-    discount_reason="Loyalty",      # Optional
-    prepayment=100.00,              # Optional
+totals = invoice_totals(
+    total_excl_tax=1000.00,
+    total_vat=200.00,
+    total_incl_tax=1200.00,
+    amount_due=1200.00,
+    discount_incl_tax=50.00,   # Optional
+    discount_reason="Loyalty", # Optional
+    prepayment=100.00,         # Optional
 )
 ```
 
-### invoice_line(number, description, quantity, unit_price, line_total, ...)
+### invoice_line(line_number, description, quantity, unit_price_excl_tax, line_total_excl_tax, ...)
 
 Creates an invoice line.
 
@@ -134,19 +135,19 @@ Creates an invoice line.
 from factpulse_helpers import invoice_line
 
 line = invoice_line(
-    number=1,
+    line_number=1,
     description="Consulting services",
     quantity=5,
-    unit_price=200.00,
-    line_total=1000.00,      # Required
-    vat_rate="VAT20",        # Or manual_vat_rate="20.00"
-    vat_category="S",        # S, Z, E, AE, K
-    unit="HOUR",             # PACKAGE, PIECE, HOUR, DAY...
-    reference="REF-001",     # Optional
+    unit_price_excl_tax=200.00,
+    line_total_excl_tax=1000.00,
+    vat_rate_code="TVA20",       # Or vat_rate_value="20.00"
+    vat_category="S",            # S, Z, E, AE, K
+    unit="HOUR",                 # FORFAIT, PIECE, HOUR, DAY...
+    reference="REF-001",         # Optional
 )
 ```
 
-### vat_line(base_amount, vat_amount, ...)
+### vat_line(base_amount_excl_tax, vat_amount, ...)
 
 Creates a VAT breakdown line.
 
@@ -154,10 +155,10 @@ Creates a VAT breakdown line.
 from factpulse_helpers import vat_line
 
 vat = vat_line(
-    base_amount=1000.00,
+    base_amount_excl_tax=1000.00,
     vat_amount=200.00,
-    rate="VAT20",        # Or manual_rate="20.00"
-    category="S",        # S, Z, E, AE, K
+    rate_code="TVA20",       # Or rate_value="20.00"
+    category="S",            # S, Z, E, AE, K
 )
 ```
 
