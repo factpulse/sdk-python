@@ -15,10 +15,10 @@
 
 import unittest
 
-from factpulse.models.facture_electronique_rest_api_schemas_convert_validation_error import FactureElectroniqueRestApiSchemasConvertValidationError
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_validation_error import FactureElectroniqueRestApiSchemasEreportingValidationError
 
-class TestFactureElectroniqueRestApiSchemasConvertValidationError(unittest.TestCase):
-    """FactureElectroniqueRestApiSchemasConvertValidationError unit test stubs"""
+class TestFactureElectroniqueRestApiSchemasEreportingValidationError(unittest.TestCase):
+    """FactureElectroniqueRestApiSchemasEreportingValidationError unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,35 +26,29 @@ class TestFactureElectroniqueRestApiSchemasConvertValidationError(unittest.TestC
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> FactureElectroniqueRestApiSchemasConvertValidationError:
-        """Test FactureElectroniqueRestApiSchemasConvertValidationError
+    def make_instance(self, include_optional) -> FactureElectroniqueRestApiSchemasEreportingValidationError:
+        """Test FactureElectroniqueRestApiSchemasEreportingValidationError
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `FactureElectroniqueRestApiSchemasConvertValidationError`
+        # uncomment below to create an instance of `FactureElectroniqueRestApiSchemasEreportingValidationError`
         """
-        model = FactureElectroniqueRestApiSchemasConvertValidationError()
+        model = FactureElectroniqueRestApiSchemasEreportingValidationError()
         if include_optional:
-            return FactureElectroniqueRestApiSchemasConvertValidationError(
-                rule = '',
-                bt_code = '',
-                severity = '',
+            return FactureElectroniqueRestApiSchemasEreportingValidationError(
+                var_field = '',
                 message = '',
-                suggested_value = '',
-                suggested_field = '',
-                explanation = '',
-                confidence = 0.0
+                code = ''
             )
         else:
-            return FactureElectroniqueRestApiSchemasConvertValidationError(
-                rule = '',
-                severity = '',
+            return FactureElectroniqueRestApiSchemasEreportingValidationError(
+                var_field = '',
                 message = '',
         )
         """
 
-    def testFactureElectroniqueRestApiSchemasConvertValidationError(self):
-        """Test FactureElectroniqueRestApiSchemasConvertValidationError"""
+    def testFactureElectroniqueRestApiSchemasEreportingValidationError(self):
+        """Test FactureElectroniqueRestApiSchemasEreportingValidationError"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

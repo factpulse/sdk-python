@@ -43,14 +43,11 @@ class TestValidationInfo(unittest.TestCase):
                 xml_embedded = True,
                 errors = [
                     factpulse.models.validation_error.ValidationError(
-                        rule = '', 
-                        bt_code = '', 
-                        severity = '', 
-                        message = '', 
-                        suggested_value = '', 
-                        suggested_field = '', 
-                        explanation = '', 
-                        confidence = 0.0, )
+                        loc = [
+                            null
+                            ], 
+                        msg = '', 
+                        type = '', )
                     ]
             )
         else:
