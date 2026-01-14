@@ -14,28 +14,115 @@
 
 
 from __future__ import annotations
+import pprint
+import re  # noqa: F401
 import json
-from enum import Enum
+
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
+from typing import Optional, Set
 from typing_extensions import Self
 
+class FactureElectroniqueRestApiSchemasConvertValidationError(BaseModel):
+    """
+    Erreur de validation Schematron avec suggestion de correction.
+    """ # noqa: E501
+    rule: StrictStr = Field(description="Code de la regle (BR-XX, BR-FR-XX)")
+    bt_code: Optional[StrictStr] = None
+    severity: StrictStr = Field(description="Gravite: error, warning")
+    message: StrictStr = Field(description="Message d'erreur")
+    suggested_value: Optional[StrictStr] = None
+    suggested_field: Optional[StrictStr] = None
+    explanation: Optional[StrictStr] = None
+    confidence: Optional[Union[Annotated[float, Field(le=1.0, strict=True, ge=0.0)], Annotated[int, Field(le=1, strict=True, ge=0)]]] = None
+    __properties: ClassVar[List[str]] = ["rule", "bt_code", "severity", "message", "suggested_value", "suggested_field", "explanation", "confidence"]
 
-class FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode(str, Enum):
-    """
-    Invoice type codes (UNTDID 1001).
-    """
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
-    """
-    allowed enum values
-    """
-    ENUM_380 = '380'
-    ENUM_381 = '381'
-    ENUM_384 = '384'
-    ENUM_389 = '389'
-    ENUM_386 = '386'
+
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.model_dump(by_alias=True))
+
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
+        return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
-        """Create an instance of FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode from a JSON string"""
-        return cls(json.loads(json_str))
+    def from_json(cls, json_str: str) -> Optional[Self]:
+        """Create an instance of FactureElectroniqueRestApiSchemasConvertValidationError from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
+        # set to None if bt_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.bt_code is None and "bt_code" in self.model_fields_set:
+            _dict['bt_code'] = None
+
+        # set to None if suggested_value (nullable) is None
+        # and model_fields_set contains the field
+        if self.suggested_value is None and "suggested_value" in self.model_fields_set:
+            _dict['suggested_value'] = None
+
+        # set to None if suggested_field (nullable) is None
+        # and model_fields_set contains the field
+        if self.suggested_field is None and "suggested_field" in self.model_fields_set:
+            _dict['suggested_field'] = None
+
+        # set to None if explanation (nullable) is None
+        # and model_fields_set contains the field
+        if self.explanation is None and "explanation" in self.model_fields_set:
+            _dict['explanation'] = None
+
+        # set to None if confidence (nullable) is None
+        # and model_fields_set contains the field
+        if self.confidence is None and "confidence" in self.model_fields_set:
+            _dict['confidence'] = None
+
+        return _dict
+
+    @classmethod
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+        """Create an instance of FactureElectroniqueRestApiSchemasConvertValidationError from a dict"""
+        if obj is None:
+            return None
+
+        if not isinstance(obj, dict):
+            return cls.model_validate(obj)
+
+        _obj = cls.model_validate({
+            "rule": obj.get("rule"),
+            "bt_code": obj.get("bt_code"),
+            "severity": obj.get("severity"),
+            "message": obj.get("message"),
+            "suggested_value": obj.get("suggested_value"),
+            "suggested_field": obj.get("suggested_field"),
+            "explanation": obj.get("explanation"),
+            "confidence": obj.get("confidence")
+        })
+        return _obj
 
 

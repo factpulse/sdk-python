@@ -13,85 +13,22 @@
 """  # noqa: E501
 
 
-from __future__ import annotations
-import pprint
-import re  # noqa: F401
-import json
+import unittest
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing import Optional, Set
-from typing_extensions import Self
+from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode
 
-class FactureElectroniqueRestApiSchemasEreportingValidationError(BaseModel):
-    """
-    Validation error detail.
-    """ # noqa: E501
-    var_field: StrictStr = Field(description="Field path with error", alias="field")
-    message: StrictStr = Field(description="Error message")
-    code: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["field", "message", "code"]
+class TestFactureElectroniqueModelsInvoiceTypeCode(unittest.TestCase):
+    """FactureElectroniqueModelsInvoiceTypeCode unit test stubs"""
 
-    model_config = ConfigDict(
-        populate_by_name=True,
-        validate_assignment=True,
-        protected_namespaces=(),
-    )
+    def setUp(self):
+        pass
 
+    def tearDown(self):
+        pass
 
-    def to_str(self) -> str:
-        """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.model_dump(by_alias=True))
+    def testFactureElectroniqueModelsInvoiceTypeCode(self):
+        """Test FactureElectroniqueModelsInvoiceTypeCode"""
+        # inst = FactureElectroniqueModelsInvoiceTypeCode()
 
-    def to_json(self) -> str:
-        """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
-
-    @classmethod
-    def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FactureElectroniqueRestApiSchemasEreportingValidationError from a JSON string"""
-        return cls.from_dict(json.loads(json_str))
-
-    def to_dict(self) -> Dict[str, Any]:
-        """Return the dictionary representation of the model using alias.
-
-        This has the following differences from calling pydantic's
-        `self.model_dump(by_alias=True)`:
-
-        * `None` is only added to the output dict for nullable fields that
-          were set at model initialization. Other fields with value `None`
-          are ignored.
-        """
-        excluded_fields: Set[str] = set([
-        ])
-
-        _dict = self.model_dump(
-            by_alias=True,
-            exclude=excluded_fields,
-            exclude_none=True,
-        )
-        # set to None if code (nullable) is None
-        # and model_fields_set contains the field
-        if self.code is None and "code" in self.model_fields_set:
-            _dict['code'] = None
-
-        return _dict
-
-    @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FactureElectroniqueRestApiSchemasEreportingValidationError from a dict"""
-        if obj is None:
-            return None
-
-        if not isinstance(obj, dict):
-            return cls.model_validate(obj)
-
-        _obj = cls.model_validate({
-            "field": obj.get("field"),
-            "message": obj.get("message"),
-            "code": obj.get("code")
-        })
-        return _obj
-
-
+if __name__ == '__main__':
+    unittest.main()

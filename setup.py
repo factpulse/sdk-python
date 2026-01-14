@@ -21,7 +21,7 @@ from setuptools import setup, find_packages  # noqa: H301
 #
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
-NAME = "factpulse"
+NAME = "factpulse-sdk"
 VERSION = "1.0.0"
 PYTHON_REQUIRES = ">= 3.9"
 REQUIRES = [
@@ -37,7 +37,7 @@ setup(
     description="FactPulse REST API",
     author="FactPulse",
     author_email="contact@factpulse.fr",
-    url="",
+    url="https://github.com/factpulse/sdk-python",
     keywords=["OpenAPI", "OpenAPI-Generator", "FactPulse REST API"],
     install_requires=REQUIRES,
     packages=find_packages(exclude=["test", "tests"]),

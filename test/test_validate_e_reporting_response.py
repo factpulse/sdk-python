@@ -41,15 +41,19 @@ class TestValidateEReportingResponse(unittest.TestCase):
                 flow_type = '',
                 errors = [
                     factpulse.models.validation_error.ValidationError(
-                        field = '', 
-                        message = '', 
-                        code = '', )
+                        loc = [
+                            null
+                            ], 
+                        msg = '', 
+                        type = '', )
                     ],
                 warnings = [
                     factpulse.models.validation_error.ValidationError(
-                        field = '', 
-                        message = '', 
-                        code = '', )
+                        loc = [
+                            null
+                            ], 
+                        msg = '', 
+                        type = '', )
                     ],
                 message = ''
             )
