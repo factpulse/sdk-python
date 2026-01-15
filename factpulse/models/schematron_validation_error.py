@@ -19,18 +19,24 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
 
-class FactureElectroniqueRestApiSchemasEreportingValidationError(BaseModel):
+class SchematronValidationError(BaseModel):
     """
-    Validation error detail.
+    Erreur de validation Schematron avec suggestion de correction.
     """ # noqa: E501
-    var_field: StrictStr = Field(description="Field path with error", alias="field")
-    message: StrictStr = Field(description="Error message")
-    code: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["field", "message", "code"]
+    rule: StrictStr = Field(description="Code de la regle (BR-XX, BR-FR-XX)")
+    bt_code: Optional[StrictStr] = None
+    severity: StrictStr = Field(description="Gravite: error, warning")
+    message: StrictStr = Field(description="Message d'erreur")
+    suggested_value: Optional[StrictStr] = None
+    suggested_field: Optional[StrictStr] = None
+    explanation: Optional[StrictStr] = None
+    confidence: Optional[Union[Annotated[float, Field(le=1.0, strict=True, ge=0.0)], Annotated[int, Field(le=1, strict=True, ge=0)]]] = None
+    __properties: ClassVar[List[str]] = ["rule", "bt_code", "severity", "message", "suggested_value", "suggested_field", "explanation", "confidence"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -50,7 +56,7 @@ class FactureElectroniqueRestApiSchemasEreportingValidationError(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FactureElectroniqueRestApiSchemasEreportingValidationError from a JSON string"""
+        """Create an instance of SchematronValidationError from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -71,16 +77,36 @@ class FactureElectroniqueRestApiSchemasEreportingValidationError(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # set to None if code (nullable) is None
+        # set to None if bt_code (nullable) is None
         # and model_fields_set contains the field
-        if self.code is None and "code" in self.model_fields_set:
-            _dict['code'] = None
+        if self.bt_code is None and "bt_code" in self.model_fields_set:
+            _dict['bt_code'] = None
+
+        # set to None if suggested_value (nullable) is None
+        # and model_fields_set contains the field
+        if self.suggested_value is None and "suggested_value" in self.model_fields_set:
+            _dict['suggested_value'] = None
+
+        # set to None if suggested_field (nullable) is None
+        # and model_fields_set contains the field
+        if self.suggested_field is None and "suggested_field" in self.model_fields_set:
+            _dict['suggested_field'] = None
+
+        # set to None if explanation (nullable) is None
+        # and model_fields_set contains the field
+        if self.explanation is None and "explanation" in self.model_fields_set:
+            _dict['explanation'] = None
+
+        # set to None if confidence (nullable) is None
+        # and model_fields_set contains the field
+        if self.confidence is None and "confidence" in self.model_fields_set:
+            _dict['confidence'] = None
 
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FactureElectroniqueRestApiSchemasEreportingValidationError from a dict"""
+        """Create an instance of SchematronValidationError from a dict"""
         if obj is None:
             return None
 
@@ -88,9 +114,14 @@ class FactureElectroniqueRestApiSchemasEreportingValidationError(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "field": obj.get("field"),
+            "rule": obj.get("rule"),
+            "bt_code": obj.get("bt_code"),
+            "severity": obj.get("severity"),
             "message": obj.get("message"),
-            "code": obj.get("code")
+            "suggested_value": obj.get("suggested_value"),
+            "suggested_field": obj.get("suggested_field"),
+            "explanation": obj.get("explanation"),
+            "confidence": obj.get("confidence")
         })
         return _obj
 

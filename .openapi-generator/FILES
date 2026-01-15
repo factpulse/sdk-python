@@ -145,6 +145,7 @@ docs/DocumentTypeInfo.md
 docs/DownloadsApi.md
 docs/EReportingApi.md
 docs/EReportingFlowType.md
+docs/EReportingValidationError.md
 docs/ElectronicAddress.md
 docs/EnrichedInvoiceInfo.md
 docs/ErrorLevel.md
@@ -152,8 +153,7 @@ docs/ErrorSource.md
 docs/ExtractionInfo.md
 docs/FacturXInvoice.md
 docs/FacturXPDFInfo.md
-docs/FactureElectroniqueModelsInvoiceTypeCode.md
-docs/FactureElectroniqueRestApiSchemasEreportingValidationError.md
+docs/FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode.md
 docs/FactureElectroniqueRestApiSchemasProcessingChorusProCredentials.md
 docs/FieldStatus.md
 docs/FileInfo.md
@@ -228,6 +228,7 @@ docs/ReportPeriod.md
 docs/ReportSender.md
 docs/RoundingAmount.md
 docs/RoutingCodeInclude.md
+docs/SchematronValidationError.md
 docs/SchemeID.md
 docs/SearchFlowRequest.md
 docs/SearchFlowResponse.md
@@ -444,6 +445,7 @@ factpulse/models/directory_line_include.py
 factpulse/models/doc_type.py
 factpulse/models/document_type_info.py
 factpulse/models/e_reporting_flow_type.py
+factpulse/models/e_reporting_validation_error.py
 factpulse/models/electronic_address.py
 factpulse/models/enriched_invoice_info.py
 factpulse/models/error_level.py
@@ -451,8 +453,7 @@ factpulse/models/error_source.py
 factpulse/models/extraction_info.py
 factpulse/models/factur_x_invoice.py
 factpulse/models/factur_xpdf_info.py
-factpulse/models/facture_electronique_models_invoice_type_code.py
-factpulse/models/facture_electronique_rest_api_schemas_ereporting_validation_error.py
+factpulse/models/facture_electronique_rest_api_schemas_ereporting_invoice_type_code.py
 factpulse/models/facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
 factpulse/models/field_status.py
 factpulse/models/file_info.py
@@ -524,6 +525,7 @@ factpulse/models/report_period.py
 factpulse/models/report_sender.py
 factpulse/models/rounding_amount.py
 factpulse/models/routing_code_include.py
+factpulse/models/schematron_validation_error.py
 factpulse/models/scheme_id.py
 factpulse/models/search_flow_request.py
 factpulse/models/search_flow_response.py
@@ -737,6 +739,7 @@ test/test_document_type_info.py
 test/test_downloads_api.py
 test/test_e_reporting_api.py
 test/test_e_reporting_flow_type.py
+test/test_e_reporting_validation_error.py
 test/test_electronic_address.py
 test/test_enriched_invoice_info.py
 test/test_error_level.py
@@ -744,8 +747,7 @@ test/test_error_source.py
 test/test_extraction_info.py
 test/test_factur_x_invoice.py
 test/test_factur_xpdf_info.py
-test/test_facture_electronique_models_invoice_type_code.py
-test/test_facture_electronique_rest_api_schemas_ereporting_validation_error.py
+test/test_facture_electronique_rest_api_schemas_ereporting_invoice_type_code.py
 test/test_facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
 test/test_field_status.py
 test/test_file_info.py
@@ -820,6 +822,7 @@ test/test_report_period.py
 test/test_report_sender.py
 test/test_rounding_amount.py
 test/test_routing_code_include.py
+test/test_schematron_validation_error.py
 test/test_scheme_id.py
 test/test_search_flow_request.py
 test/test_search_flow_response.py

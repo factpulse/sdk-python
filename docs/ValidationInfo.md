@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **schematron_rules_total** | **int** | Total regles | 
 **pdfa_compliant** | **bool** | PDF/A-3 conforme | [optional] [default to True]
 **xml_embedded** | **bool** | XML embarque dans PDF | [optional] [default to True]
-**errors** | [**List[ValidationError]**](ValidationError.md) |  | [optional] 
+**errors** | [**List[SchematronValidationError]**](SchematronValidationError.md) |  | [optional] 
 
 ## Example
 

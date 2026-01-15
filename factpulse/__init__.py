@@ -173,6 +173,7 @@ __all__ = [
     "DocType",
     "DocumentTypeInfo",
     "EReportingFlowType",
+    "EReportingValidationError",
     "ElectronicAddress",
     "EnrichedInvoiceInfo",
     "ErrorLevel",
@@ -180,8 +181,7 @@ __all__ = [
     "ExtractionInfo",
     "FacturXInvoice",
     "FacturXPDFInfo",
-    "FactureElectroniqueModelsInvoiceTypeCode",
-    "FactureElectroniqueRestApiSchemasEreportingValidationError",
+    "FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode",
     "FactureElectroniqueRestApiSchemasProcessingChorusProCredentials",
     "FieldStatus",
     "FileInfo",
@@ -253,6 +253,7 @@ __all__ = [
     "ReportSender",
     "RoundingAmount",
     "RoutingCodeInclude",
+    "SchematronValidationError",
     "SchemeID",
     "SearchFlowRequest",
     "SearchFlowResponse",
@@ -477,6 +478,7 @@ from factpulse.models.directory_line_include import DirectoryLineInclude as Dire
 from factpulse.models.doc_type import DocType as DocType
 from factpulse.models.document_type_info import DocumentTypeInfo as DocumentTypeInfo
 from factpulse.models.e_reporting_flow_type import EReportingFlowType as EReportingFlowType
+from factpulse.models.e_reporting_validation_error import EReportingValidationError as EReportingValidationError
 from factpulse.models.electronic_address import ElectronicAddress as ElectronicAddress
 from factpulse.models.enriched_invoice_info import EnrichedInvoiceInfo as EnrichedInvoiceInfo
 from factpulse.models.error_level import ErrorLevel as ErrorLevel
@@ -484,8 +486,7 @@ from factpulse.models.error_source import ErrorSource as ErrorSource
 from factpulse.models.extraction_info import ExtractionInfo as ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
-from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode as FactureElectroniqueModelsInvoiceTypeCode
-from factpulse.models.facture_electronique_rest_api_schemas_ereporting_validation_error import FactureElectroniqueRestApiSchemasEreportingValidationError as FactureElectroniqueRestApiSchemasEreportingValidationError
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode as FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
 from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials as FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
 from factpulse.models.field_status import FieldStatus as FieldStatus
 from factpulse.models.file_info import FileInfo as FileInfo
@@ -557,6 +558,7 @@ from factpulse.models.report_period import ReportPeriod as ReportPeriod
 from factpulse.models.report_sender import ReportSender as ReportSender
 from factpulse.models.rounding_amount import RoundingAmount as RoundingAmount
 from factpulse.models.routing_code_include import RoutingCodeInclude as RoutingCodeInclude
+from factpulse.models.schematron_validation_error import SchematronValidationError as SchematronValidationError
 from factpulse.models.scheme_id import SchemeID as SchemeID
 from factpulse.models.search_flow_request import SearchFlowRequest as SearchFlowRequest
 from factpulse.models.search_flow_response import SearchFlowResponse as SearchFlowResponse

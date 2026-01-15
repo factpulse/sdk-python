@@ -148,6 +148,7 @@ from factpulse.models.directory_line_include import DirectoryLineInclude
 from factpulse.models.doc_type import DocType
 from factpulse.models.document_type_info import DocumentTypeInfo
 from factpulse.models.e_reporting_flow_type import EReportingFlowType
+from factpulse.models.e_reporting_validation_error import EReportingValidationError
 from factpulse.models.electronic_address import ElectronicAddress
 from factpulse.models.enriched_invoice_info import EnrichedInvoiceInfo
 from factpulse.models.error_level import ErrorLevel
@@ -155,8 +156,7 @@ from factpulse.models.error_source import ErrorSource
 from factpulse.models.extraction_info import ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo
-from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode
-from factpulse.models.facture_electronique_rest_api_schemas_ereporting_validation_error import FactureElectroniqueRestApiSchemasEreportingValidationError
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
 from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
 from factpulse.models.field_status import FieldStatus
 from factpulse.models.file_info import FileInfo
@@ -228,6 +228,7 @@ from factpulse.models.report_period import ReportPeriod
 from factpulse.models.report_sender import ReportSender
 from factpulse.models.rounding_amount import RoundingAmount
 from factpulse.models.routing_code_include import RoutingCodeInclude
+from factpulse.models.schematron_validation_error import SchematronValidationError
 from factpulse.models.scheme_id import SchemeID
 from factpulse.models.search_flow_request import SearchFlowRequest
 from factpulse.models.search_flow_response import SearchFlowResponse

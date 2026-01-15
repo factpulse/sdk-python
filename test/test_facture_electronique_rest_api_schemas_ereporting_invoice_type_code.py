@@ -15,10 +15,10 @@
 
 import unittest
 
-from factpulse.models.validation_info import ValidationInfo
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
 
-class TestValidationInfo(unittest.TestCase):
-    """ValidationInfo unit test stubs"""
+class TestFactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode(unittest.TestCase):
+    """FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,45 +26,9 @@ class TestValidationInfo(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> ValidationInfo:
-        """Test ValidationInfo
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        # uncomment below to create an instance of `ValidationInfo`
-        """
-        model = ValidationInfo()
-        if include_optional:
-            return ValidationInfo(
-                profile = '',
-                schematron_rules_passed = 56,
-                schematron_rules_total = 56,
-                pdfa_compliant = True,
-                xml_embedded = True,
-                errors = [
-                    factpulse.models.schematron_validation_error.SchematronValidationError(
-                        rule = '', 
-                        bt_code = '', 
-                        severity = '', 
-                        message = '', 
-                        suggested_value = '', 
-                        suggested_field = '', 
-                        explanation = '', 
-                        confidence = 0.0, )
-                    ]
-            )
-        else:
-            return ValidationInfo(
-                profile = '',
-                schematron_rules_passed = 56,
-                schematron_rules_total = 56,
-        )
-        """
-
-    def testValidationInfo(self):
-        """Test ValidationInfo"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+    def testFactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode(self):
+        """Test FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode"""
+        # inst = FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode()
 
 if __name__ == '__main__':
     unittest.main()

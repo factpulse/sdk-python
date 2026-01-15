@@ -15,10 +15,10 @@
 
 import unittest
 
-from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode
+from factpulse.models.schematron_validation_error import SchematronValidationError
 
-class TestFactureElectroniqueModelsInvoiceTypeCode(unittest.TestCase):
-    """FactureElectroniqueModelsInvoiceTypeCode unit test stubs"""
+class TestSchematronValidationError(unittest.TestCase):
+    """SchematronValidationError unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,9 +26,37 @@ class TestFactureElectroniqueModelsInvoiceTypeCode(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testFactureElectroniqueModelsInvoiceTypeCode(self):
-        """Test FactureElectroniqueModelsInvoiceTypeCode"""
-        # inst = FactureElectroniqueModelsInvoiceTypeCode()
+    def make_instance(self, include_optional) -> SchematronValidationError:
+        """Test SchematronValidationError
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `SchematronValidationError`
+        """
+        model = SchematronValidationError()
+        if include_optional:
+            return SchematronValidationError(
+                rule = '',
+                bt_code = '',
+                severity = '',
+                message = '',
+                suggested_value = '',
+                suggested_field = '',
+                explanation = '',
+                confidence = 0.0
+            )
+        else:
+            return SchematronValidationError(
+                rule = '',
+                severity = '',
+                message = '',
+        )
+        """
+
+    def testSchematronValidationError(self):
+        """Test SchematronValidationError"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
 
 if __name__ == '__main__':
     unittest.main()

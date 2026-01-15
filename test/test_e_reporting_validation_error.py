@@ -15,10 +15,10 @@
 
 import unittest
 
-from factpulse.models.validation_info import ValidationInfo
+from factpulse.models.e_reporting_validation_error import EReportingValidationError
 
-class TestValidationInfo(unittest.TestCase):
-    """ValidationInfo unit test stubs"""
+class TestEReportingValidationError(unittest.TestCase):
+    """EReportingValidationError unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,43 +26,29 @@ class TestValidationInfo(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> ValidationInfo:
-        """Test ValidationInfo
+    def make_instance(self, include_optional) -> EReportingValidationError:
+        """Test EReportingValidationError
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `ValidationInfo`
+        # uncomment below to create an instance of `EReportingValidationError`
         """
-        model = ValidationInfo()
+        model = EReportingValidationError()
         if include_optional:
-            return ValidationInfo(
-                profile = '',
-                schematron_rules_passed = 56,
-                schematron_rules_total = 56,
-                pdfa_compliant = True,
-                xml_embedded = True,
-                errors = [
-                    factpulse.models.schematron_validation_error.SchematronValidationError(
-                        rule = '', 
-                        bt_code = '', 
-                        severity = '', 
-                        message = '', 
-                        suggested_value = '', 
-                        suggested_field = '', 
-                        explanation = '', 
-                        confidence = 0.0, )
-                    ]
+            return EReportingValidationError(
+                var_field = '',
+                message = '',
+                code = ''
             )
         else:
-            return ValidationInfo(
-                profile = '',
-                schematron_rules_passed = 56,
-                schematron_rules_total = 56,
+            return EReportingValidationError(
+                var_field = '',
+                message = '',
         )
         """
 
-    def testValidationInfo(self):
-        """Test ValidationInfo"""
+    def testEReportingValidationError(self):
+        """Test EReportingValidationError"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

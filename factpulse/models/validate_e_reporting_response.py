@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.facture_electronique_rest_api_schemas_ereporting_validation_error import FactureElectroniqueRestApiSchemasEreportingValidationError
+from factpulse.models.e_reporting_validation_error import EReportingValidationError
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -31,8 +31,8 @@ class ValidateEReportingResponse(BaseModel):
     valid: StrictBool = Field(description="Whether the data is valid")
     report_id: StrictStr = Field(description="Report identifier", alias="reportId")
     flow_type: StrictStr = Field(description="Flux type", alias="flowType")
-    errors: Optional[List[FactureElectroniqueRestApiSchemasEreportingValidationError]] = Field(default=None, description="List of validation errors (if any)")
-    warnings: Optional[List[FactureElectroniqueRestApiSchemasEreportingValidationError]] = Field(default=None, description="List of validation warnings (if any)")
+    errors: Optional[List[EReportingValidationError]] = Field(default=None, description="List of validation errors (if any)")
+    warnings: Optional[List[EReportingValidationError]] = Field(default=None, description="List of validation warnings (if any)")
     message: StrictStr = Field(description="Status message")
     __properties: ClassVar[List[str]] = ["valid", "reportId", "flowType", "errors", "warnings", "message"]
 
@@ -104,8 +104,8 @@ class ValidateEReportingResponse(BaseModel):
             "valid": obj.get("valid"),
             "reportId": obj.get("reportId"),
             "flowType": obj.get("flowType"),
-            "errors": [FactureElectroniqueRestApiSchemasEreportingValidationError.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None,
-            "warnings": [FactureElectroniqueRestApiSchemasEreportingValidationError.from_dict(_item) for _item in obj["warnings"]] if obj.get("warnings") is not None else None,
+            "errors": [EReportingValidationError.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None,
+            "warnings": [EReportingValidationError.from_dict(_item) for _item in obj["warnings"]] if obj.get("warnings") is not None else None,
             "message": obj.get("message")
         })
         return _obj

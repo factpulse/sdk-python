@@ -9,8 +9,8 @@ Name | Type | Description | Notes
 **valid** | **bool** | Whether the data is valid | 
 **report_id** | **str** | Report identifier | 
 **flow_type** | **str** | Flux type | 
-**errors** | [**List[FactureElectroniqueRestApiSchemasEreportingValidationError]**](FactureElectroniqueRestApiSchemasEreportingValidationError.md) | List of validation errors (if any) | [optional] 
-**warnings** | [**List[FactureElectroniqueRestApiSchemasEreportingValidationError]**](FactureElectroniqueRestApiSchemasEreportingValidationError.md) | List of validation warnings (if any) | [optional] 
+**errors** | [**List[EReportingValidationError]**](EReportingValidationError.md) | List of validation errors (if any) | [optional] 
+**warnings** | [**List[EReportingValidationError]**](EReportingValidationError.md) | List of validation warnings (if any) | [optional] 
 **message** | **str** | Status message | 
 
 ## Example

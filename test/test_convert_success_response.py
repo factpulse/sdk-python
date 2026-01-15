@@ -55,12 +55,15 @@ class TestConvertSuccessResponse(unittest.TestCase):
                     pdfa_compliant = True, 
                     xml_embedded = True, 
                     errors = [
-                        factpulse.models.validation_error.ValidationError(
-                            loc = [
-                                null
-                                ], 
-                            msg = '', 
-                            type = '', )
+                        factpulse.models.schematron_validation_error.SchematronValidationError(
+                            rule = '', 
+                            bt_code = '', 
+                            severity = '', 
+                            message = '', 
+                            suggested_value = '', 
+                            suggested_field = '', 
+                            explanation = '', 
+                            confidence = 0.0, )
                         ], ),
                 files = factpulse.models.files_info.FilesInfo(
                     facturx_pdf = null, 
@@ -89,12 +92,15 @@ class TestConvertSuccessResponse(unittest.TestCase):
                     pdfa_compliant = True, 
                     xml_embedded = True, 
                     errors = [
-                        factpulse.models.validation_error.ValidationError(
-                            loc = [
-                                null
-                                ], 
-                            msg = '', 
-                            type = '', )
+                        factpulse.models.schematron_validation_error.SchematronValidationError(
+                            rule = '', 
+                            bt_code = '', 
+                            severity = '', 
+                            message = '', 
+                            suggested_value = '', 
+                            suggested_field = '', 
+                            explanation = '', 
+                            confidence = 0.0, )
                         ], ),
                 files = factpulse.models.files_info.FilesInfo(
                     facturx_pdf = null, 

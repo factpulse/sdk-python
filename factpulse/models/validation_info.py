@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.validation_error import ValidationError
+from factpulse.models.schematron_validation_error import SchematronValidationError
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -33,7 +33,7 @@ class ValidationInfo(BaseModel):
     schematron_rules_total: StrictInt = Field(description="Total regles")
     pdfa_compliant: Optional[StrictBool] = Field(default=True, description="PDF/A-3 conforme")
     xml_embedded: Optional[StrictBool] = Field(default=True, description="XML embarque dans PDF")
-    errors: Optional[List[ValidationError]] = None
+    errors: Optional[List[SchematronValidationError]] = None
     __properties: ClassVar[List[str]] = ["profile", "schematron_rules_passed", "schematron_rules_total", "pdfa_compliant", "xml_embedded", "errors"]
 
     model_config = ConfigDict(
@@ -99,7 +99,7 @@ class ValidationInfo(BaseModel):
             "schematron_rules_total": obj.get("schematron_rules_total"),
             "pdfa_compliant": obj.get("pdfa_compliant") if obj.get("pdfa_compliant") is not None else True,
             "xml_embedded": obj.get("xml_embedded") if obj.get("xml_embedded") is not None else True,
-            "errors": [ValidationError.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
+            "errors": [SchematronValidationError.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None
         })
         return _obj
 
