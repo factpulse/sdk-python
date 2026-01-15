@@ -7,7 +7,7 @@ Specific configuration for Chorus Pro destination.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **type** | **str** |  | [optional] [default to 'chorus_pro']
-**credentials** | [**FactureElectroniqueRestApiSchemasProcessingChorusProCredentials**](FactureElectroniqueRestApiSchemasProcessingChorusProCredentials.md) |  | [optional] 
+**credentials** | [**ChorusProCredentials**](ChorusProCredentials.md) |  | [optional] 
 
 ## Example
 
