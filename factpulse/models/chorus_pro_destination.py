@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.chorus_pro_credentials import ChorusProCredentials
+from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,7 +29,7 @@ class ChorusProDestination(BaseModel):
     Specific configuration for Chorus Pro destination.
     """ # noqa: E501
     type: Optional[StrictStr] = 'chorus_pro'
-    credentials: Optional[ChorusProCredentials] = None
+    credentials: Optional[FactureElectroniqueRestApiSchemasProcessingChorusProCredentials] = None
     __properties: ClassVar[List[str]] = ["type", "credentials"]
 
     @field_validator('type')
@@ -102,7 +102,7 @@ class ChorusProDestination(BaseModel):
 
         _obj = cls.model_validate({
             "type": obj.get("type") if obj.get("type") is not None else 'chorus_pro',
-            "credentials": ChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None
+            "credentials": FactureElectroniqueRestApiSchemasProcessingChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None
         })
         return _obj
 
