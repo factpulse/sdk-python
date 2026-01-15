@@ -23,16 +23,16 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(BaseModel):
+class FactureElectroniqueRestApiSchemasProcessingChorusProCredentials(BaseModel):
     """
-    Chorus Pro credentials for Zero-Trust mode.  **Zero-Trust Mode**: Credentials are passed in each request and are NEVER stored.  **Security**: - Credentials are never persisted in the database - They are used only for the duration of the request - Secure transmission via HTTPS  **Use cases**: - High-security environments (banks, administrations) - Strict GDPR compliance - Tests with temporary credentials - Users who don't want to store their credentials
+    Optional Chorus Pro credentials.  **MODE 1 - JWT retrieval (recommended):** Do not provide this `credentials` field in the payload. Credentials will be automatically retrieved via client_uid from JWT (0-trust).  **MODE 2 - Credentials in payload:** Provide all required fields below. Useful for tests or third-party integrations.
     """ # noqa: E501
-    piste_client_id: StrictStr = Field(description="PISTE Client ID (government API portal)", alias="pisteClientId")
-    piste_client_secret: StrictStr = Field(description="PISTE Client Secret", alias="pisteClientSecret")
-    chorus_pro_login: StrictStr = Field(description="Chorus Pro login", alias="chorusProLogin")
-    chorus_pro_password: StrictStr = Field(description="Chorus Pro password", alias="chorusProPassword")
-    sandbox: Optional[StrictBool] = Field(default=True, description="Use sandbox environment (true) or production (false)")
-    __properties: ClassVar[List[str]] = ["pisteClientId", "pisteClientSecret", "chorusProLogin", "chorusProPassword", "sandbox"]
+    piste_client_id: Optional[StrictStr] = Field(default=None, alias="pisteClientId")
+    piste_client_secret: Optional[StrictStr] = Field(default=None, alias="pisteClientSecret")
+    chorus_login: Optional[StrictStr] = Field(default=None, alias="chorusLogin")
+    chorus_password: Optional[StrictStr] = Field(default=None, alias="chorusPassword")
+    sandbox_mode: Optional[StrictBool] = Field(default=True, description="[MODE 2] Use sandbox mode (default: True)", alias="sandboxMode")
+    __properties: ClassVar[List[str]] = ["pisteClientId", "pisteClientSecret", "chorusLogin", "chorusPassword", "sandboxMode"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +52,7 @@ class FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FactureElectroniqueRestApiSchemasChorusProChorusProCredentials from a JSON string"""
+        """Create an instance of FactureElectroniqueRestApiSchemasProcessingChorusProCredentials from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,11 +73,31 @@ class FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if piste_client_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.piste_client_id is None and "piste_client_id" in self.model_fields_set:
+            _dict['pisteClientId'] = None
+
+        # set to None if piste_client_secret (nullable) is None
+        # and model_fields_set contains the field
+        if self.piste_client_secret is None and "piste_client_secret" in self.model_fields_set:
+            _dict['pisteClientSecret'] = None
+
+        # set to None if chorus_login (nullable) is None
+        # and model_fields_set contains the field
+        if self.chorus_login is None and "chorus_login" in self.model_fields_set:
+            _dict['chorusLogin'] = None
+
+        # set to None if chorus_password (nullable) is None
+        # and model_fields_set contains the field
+        if self.chorus_password is None and "chorus_password" in self.model_fields_set:
+            _dict['chorusPassword'] = None
+
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FactureElectroniqueRestApiSchemasChorusProChorusProCredentials from a dict"""
+        """Create an instance of FactureElectroniqueRestApiSchemasProcessingChorusProCredentials from a dict"""
         if obj is None:
             return None
 
@@ -87,9 +107,9 @@ class FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(BaseModel):
         _obj = cls.model_validate({
             "pisteClientId": obj.get("pisteClientId"),
             "pisteClientSecret": obj.get("pisteClientSecret"),
-            "chorusProLogin": obj.get("chorusProLogin"),
-            "chorusProPassword": obj.get("chorusProPassword"),
-            "sandbox": obj.get("sandbox") if obj.get("sandbox") is not None else True
+            "chorusLogin": obj.get("chorusLogin"),
+            "chorusPassword": obj.get("chorusPassword"),
+            "sandboxMode": obj.get("sandboxMode") if obj.get("sandboxMode") is not None else True
         })
         return _obj
 
