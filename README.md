@@ -21,15 +21,7 @@ pip install factpulse
 The `factpulse_helpers` module provides a simplified API with automatic authentication and polling:
 
 ```python
-from factpulse_helpers import (
-    FactPulseClient,
-    amount,
-    invoice_totals,
-    invoice_line,
-    vat_line,
-    supplier,
-    recipient,
-)
+from factpulse_helpers import FactPulseClient
 
 # Create the client
 client = FactPulseClient(
@@ -37,58 +29,32 @@ client = FactPulseClient(
     password="your_password"
 )
 
-# Build the invoice with helpers
+# Build the invoice using simplified format (auto-calculates totals)
 invoice_data = {
-    "invoiceNumber": "INV-2025-001",
-    "issueDate": "2025-01-15",
-    "dueDate": "2025-02-15",
-    "currencyCode": "EUR",
-    "supplier": supplier(
-        name="My Company SAS",
-        siret="12345678901234",
-        address_line1="123 Example Street",
-        postal_code="75001",
-        city="Paris",
-    ),
-    "recipient": recipient(
-        name="Client SARL",
-        siret="98765432109876",
-        address_line1="456 Test Avenue",
-        postal_code="69001",
-        city="Lyon",
-    ),
-    "totals": invoice_totals(
-        total_excl_tax=1000.00,
-        total_vat=200.00,
-        total_incl_tax=1200.00,
-        amount_due=1200.00,
-    ),
+    "number": "INV-2025-001",
+    "supplier": {
+        "name": "My Company SAS",
+        "siret": "12345678901234",
+        "iban": "FR7630001007941234567890185",
+    },
+    "recipient": {
+        "name": "Client SARL",
+        "siret": "98765432109876",
+    },
     "lines": [
-        invoice_line(
-            line_number=1,
-            description="Consulting services",
-            quantity=10,
-            unit_price_excl_tax=100.00,
-            line_total_excl_tax=1000.00,
-        )
-    ],
-    "vatLines": [
-        vat_line(
-            base_amount_excl_tax=1000.00,
-            vat_amount=200.00,
-        )
+        {
+            "description": "Consulting services",
+            "quantity": 10,
+            "unitPrice": 100.0,
+            "vatRate": 20,
+        }
     ],
 }
 
 # Generate the Factur-X PDF
-with open("source_invoice.pdf", "rb") as f:
-    pdf_source = f.read()
-
 pdf_bytes = client.generate_facturx(
     invoice_data=invoice_data,
-    pdf_source=pdf_source,
-    profile="EN16931",
-    sync=True,
+    pdf_source="source_invoice.pdf",
 )
 
 with open("facturx_invoice.pdf", "wb") as f:
