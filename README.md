@@ -8,7 +8,7 @@ Official Python client for the FactPulse API - French electronic invoicing.
 - **Chorus Pro**: Integration with the French public invoicing platform
 - **AFNOR PDP/PA**: Submission of flows compliant with XP Z12-013 standard
 - **Electronic signature**: PDF signing (PAdES-B-B, PAdES-B-T, PAdES-B-LT)
-- **Simplified client**: JWT authentication and polling integrated
+- **Simplified client**: JWT authentication and polling integrated via `factpulse_helpers`
 
 ## Installation
 
@@ -18,14 +18,17 @@ pip install factpulse
 
 ## Quick Start
 
+The `factpulse_helpers` module provides a simplified API with automatic authentication and polling:
+
 ```python
-from factpulse import (
+from factpulse_helpers import (
     FactPulseClient,
+    amount,
+    invoice_totals,
+    invoice_line,
+    vat_line,
     supplier,
     recipient,
-    invoice_line,
-    invoice_totals,
-    vat_line,
 )
 
 # Create the client
@@ -34,10 +37,12 @@ client = FactPulseClient(
     password="your_password"
 )
 
-# Build the invoice
+# Build the invoice with helpers
 invoice_data = {
-    "number": "INV-2025-001",
-    "date": "2025-01-15",
+    "invoiceNumber": "INV-2025-001",
+    "issueDate": "2025-01-15",
+    "dueDate": "2025-02-15",
+    "currencyCode": "EUR",
     "supplier": supplier(
         name="My Company SAS",
         siret="12345678901234",
@@ -68,7 +73,10 @@ invoice_data = {
         )
     ],
     "vatLines": [
-        vat_line(base_amount_excl_tax=1000.00, vat_amount=200.00, rate_value="20.00")
+        vat_line(
+            base_amount_excl_tax=1000.00,
+            vat_amount=200.00,
+        )
     ],
 }
 
@@ -87,18 +95,179 @@ with open("facturx_invoice.pdf", "wb") as f:
     f.write(pdf_bytes)
 ```
 
-## Alternative Import (backward compatible)
+## Available Helpers
 
-You can also import from `factpulse_helpers` directly:
+### amount(value)
+
+Converts a value to a formatted string for monetary amounts.
 
 ```python
-from factpulse_helpers import FactPulseClient, supplier, recipient
+from factpulse_helpers import amount
+
+amount(1234.5)      # "1234.50"
+amount("1234.56")   # "1234.56"
+amount(None)        # "0.00"
 ```
 
-## API Reference
+### invoice_totals(total_excl_tax, total_vat, total_incl_tax, amount_due, ...)
 
-See [FactPulse API Documentation](https://factpulse.fr/docs)
+Creates a complete invoice totals object.
+
+```python
+from factpulse_helpers import invoice_totals
+
+totals = invoice_totals(
+    total_excl_tax=1000.00,
+    total_vat=200.00,
+    total_incl_tax=1200.00,
+    amount_due=1200.00,
+    discount_incl_tax=50.00,   # Optional
+    discount_reason="Loyalty", # Optional
+    prepayment=100.00,         # Optional
+)
+```
+
+### invoice_line(line_number, description, quantity, unit_price_excl_tax, line_total_excl_tax, ...)
+
+Creates an invoice line.
+
+```python
+from factpulse_helpers import invoice_line
+
+line = invoice_line(
+    line_number=1,
+    description="Consulting services",
+    quantity=5,
+    unit_price_excl_tax=200.00,
+    line_total_excl_tax=1000.00,
+    vat_rate_code="TVA20",       # Or vat_rate_value="20.00"
+    vat_category="S",            # S, Z, E, AE, K
+    unit="HOUR",                 # FORFAIT, PIECE, HOUR, DAY...
+    reference="REF-001",         # Optional
+)
+```
+
+### vat_line(base_amount_excl_tax, vat_amount, ...)
+
+Creates a VAT breakdown line.
+
+```python
+from factpulse_helpers import vat_line
+
+vat = vat_line(
+    base_amount_excl_tax=1000.00,
+    vat_amount=200.00,
+    rate_code="TVA20",       # Or rate_value="20.00"
+    category="S",            # S, Z, E, AE, K
+)
+```
+
+### postal_address(line1, postal_code, city, ...)
+
+Creates a structured postal address.
+
+```python
+from factpulse_helpers import postal_address
+
+address = postal_address(
+    line1="123 Republic Street",
+    postal_code="75001",
+    city="Paris",
+    country="FR",        # Default: "FR"
+    line2="Building A",  # Optional
+)
+```
+
+### electronic_address(identifier, scheme_id)
+
+Creates an electronic address (digital identifier).
+
+```python
+from factpulse_helpers import electronic_address
+
+# SIRET (scheme_id="0225")
+address = electronic_address("12345678901234", "0225")
+
+# SIREN (scheme_id="0009")
+address = electronic_address("123456789", "0009")
+```
+
+### supplier(name, siret, address_line1, postal_code, city, ...)
+
+Creates a complete supplier with automatic SIREN and intra-EU VAT calculation.
+
+```python
+from factpulse_helpers import supplier
+
+s = supplier(
+    name="My Company SAS",
+    siret="12345678901234",
+    address_line1="123 Example Street",
+    postal_code="75001",
+    city="Paris",
+    iban="FR7630006000011234567890189",  # Optional
+)
+# SIREN and intra-EU VAT number calculated automatically
+```
+
+### recipient(name, siret, address_line1, postal_code, city, ...)
+
+Creates a recipient (customer) with automatic SIREN calculation.
+
+```python
+from factpulse_helpers import recipient
+
+r = recipient(
+    name="Client SARL",
+    siret="98765432109876",
+    address_line1="456 Test Avenue",
+    postal_code="69001",
+    city="Lyon",
+)
+```
+
+## Zero-Trust Mode (Chorus Pro / AFNOR)
+
+To pass your own credentials without server-side storage:
+
+```python
+from factpulse_helpers import (
+    FactPulseClient,
+    ChorusProCredentials,
+    AFNORCredentials,
+)
+
+# Chorus Pro
+chorus_creds = ChorusProCredentials(
+    piste_client_id="your_client_id",
+    piste_client_secret="your_client_secret",
+    chorus_pro_login="your_login",
+    chorus_pro_password="your_password",
+    sandbox=True,
+)
+
+# AFNOR PDP
+afnor_creds = AFNORCredentials(
+    flow_service_url="https://api.pdp.fr/flow/v1",
+    token_url="https://auth.pdp.fr/oauth/token",
+    client_id="your_client_id",
+    client_secret="your_client_secret",
+)
+
+client = FactPulseClient(
+    email="your_email@example.com",
+    password="your_password",
+    chorus_credentials=chorus_creds,
+    afnor_credentials=afnor_creds,
+)
+```
+
+## Resources
+
+- **API Documentation**: https://factpulse.fr/api/facturation/documentation
+- **Complete Example**: See `complete_example_python.py` in this package
+- **Support**: contact@factpulse.fr
 
 ## License
 
-MIT
+MIT License - Copyright (c) 2025 FactPulse

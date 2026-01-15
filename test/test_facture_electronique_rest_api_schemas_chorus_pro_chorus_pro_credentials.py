@@ -15,10 +15,10 @@
 
 import unittest
 
-from factpulse.models.facture_electronique_rest_api_schemas_convert_validation_error import FactureElectroniqueRestApiSchemasConvertValidationError
+from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
 
-class TestFactureElectroniqueRestApiSchemasConvertValidationError(unittest.TestCase):
-    """FactureElectroniqueRestApiSchemasConvertValidationError unit test stubs"""
+class TestFactureElectroniqueRestApiSchemasChorusProChorusProCredentials(unittest.TestCase):
+    """FactureElectroniqueRestApiSchemasChorusProChorusProCredentials unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,35 +26,33 @@ class TestFactureElectroniqueRestApiSchemasConvertValidationError(unittest.TestC
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> FactureElectroniqueRestApiSchemasConvertValidationError:
-        """Test FactureElectroniqueRestApiSchemasConvertValidationError
+    def make_instance(self, include_optional) -> FactureElectroniqueRestApiSchemasChorusProChorusProCredentials:
+        """Test FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `FactureElectroniqueRestApiSchemasConvertValidationError`
+        # uncomment below to create an instance of `FactureElectroniqueRestApiSchemasChorusProChorusProCredentials`
         """
-        model = FactureElectroniqueRestApiSchemasConvertValidationError()
+        model = FactureElectroniqueRestApiSchemasChorusProChorusProCredentials()
         if include_optional:
-            return FactureElectroniqueRestApiSchemasConvertValidationError(
-                rule = '',
-                bt_code = '',
-                severity = '',
-                message = '',
-                suggested_value = '',
-                suggested_field = '',
-                explanation = '',
-                confidence = 0.0
+            return FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(
+                piste_client_id = '',
+                piste_client_secret = '',
+                chorus_pro_login = '',
+                chorus_pro_password = '',
+                sandbox = True
             )
         else:
-            return FactureElectroniqueRestApiSchemasConvertValidationError(
-                rule = '',
-                severity = '',
-                message = '',
+            return FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(
+                piste_client_id = '',
+                piste_client_secret = '',
+                chorus_pro_login = '',
+                chorus_pro_password = '',
         )
         """
 
-    def testFactureElectroniqueRestApiSchemasConvertValidationError(self):
-        """Test FactureElectroniqueRestApiSchemasConvertValidationError"""
+    def testFactureElectroniqueRestApiSchemasChorusProChorusProCredentials(self):
+        """Test FactureElectroniqueRestApiSchemasChorusProChorusProCredentials"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

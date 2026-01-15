@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "3.0.19"
+__version__ = "1.0.0"
 
 # Define package exports
 __all__ = [
@@ -181,8 +181,8 @@ __all__ = [
     "FacturXInvoice",
     "FacturXPDFInfo",
     "FactureElectroniqueModelsInvoiceTypeCode",
-    "FactureElectroniqueRestApiSchemasConvertValidationError",
-    "FactureElectroniqueRestApiSchemasProcessingChorusProCredentials",
+    "FactureElectroniqueRestApiSchemasChorusProChorusProCredentials",
+    "FactureElectroniqueRestApiSchemasEreportingValidationError",
     "FieldStatus",
     "FileInfo",
     "FilesInfo",
@@ -485,8 +485,8 @@ from factpulse.models.extraction_info import ExtractionInfo as ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
 from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode as FactureElectroniqueModelsInvoiceTypeCode
-from factpulse.models.facture_electronique_rest_api_schemas_convert_validation_error import FactureElectroniqueRestApiSchemasConvertValidationError as FactureElectroniqueRestApiSchemasConvertValidationError
-from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials as FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
+from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials as FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_validation_error import FactureElectroniqueRestApiSchemasEreportingValidationError as FactureElectroniqueRestApiSchemasEreportingValidationError
 from factpulse.models.field_status import FieldStatus as FieldStatus
 from factpulse.models.file_info import FileInfo as FileInfo
 from factpulse.models.files_info import FilesInfo as FilesInfo
@@ -621,40 +621,3 @@ from factpulse.models.vat_rate import VatRate as VatRate
 from factpulse.models.verification_success_response import VerificationSuccessResponse as VerificationSuccessResponse
 from factpulse.models.verified_field_schema import VerifiedFieldSchema as VerifiedFieldSchema
 
-
-# =============================================================================
-# Re-export helpers for simplified imports
-# Usage: from factpulse import FactPulseClient, supplier, recipient
-# =============================================================================
-from factpulse_helpers import (
-    # Main client
-    FactPulseClient,
-    # Credentials
-    ChorusProCredentials,
-    AFNORCredentials,
-    # Amount and line helpers
-    amount,
-    invoice_totals,
-    invoice_line,
-    vat_line,
-    # Party helpers
-    postal_address,
-    electronic_address,
-    supplier,
-    recipient,
-    payee,
-    # JSON utilities
-    DecimalEncoder,
-    json_dumps_safe,
-    # Exceptions
-    FactPulseError,
-    FactPulseAuthError,
-    FactPulsePollingTimeout,
-    FactPulseValidationError,
-    FactPulseNotFoundError,
-    FactPulseServiceUnavailableError,
-    FactPulseAPIError,
-    ValidationErrorDetail,
-    parse_api_error,
-    api_exception_to_validation_error,
-)

@@ -39,7 +39,6 @@ from .client import (
     electronic_address,
     supplier,
     recipient,
-    payee,
     # JSON utilities
     DecimalEncoder,
     json_dumps_safe,
@@ -68,12 +67,11 @@ __all__ = [
     "invoice_totals",
     "invoice_line",
     "vat_line",
-    # Party helpers (supplier/recipient/payee)
+    # Party helpers (supplier/recipient)
     "postal_address",
     "electronic_address",
     "supplier",
     "recipient",
-    "payee",
     # JSON utilities (Decimal, datetime handling, etc.)
     "DecimalEncoder",
     "json_dumps_safe",

@@ -1,3 +1,4 @@
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -18,10 +19,25 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-.env
-.venv
+
+# Virtual environments
 venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
 .pytest_cache/
 .coverage
 htmlcov/
-.ruff_cache/
+.tox/
+
+# OS
+.DS_Store
+Thumbs.db
