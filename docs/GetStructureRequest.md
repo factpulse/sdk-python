@@ -6,7 +6,7 @@ Get structure details.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**credentials** | [**FactureElectroniqueRestApiSchemasChorusProChorusProCredentials**](FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.md) |  | [optional] 
+**credentials** | [**ChorusProCredentials**](ChorusProCredentials.md) |  | [optional] 
 **structure_id** | **int** | Chorus Pro structure ID | 
 **language_code** | **str** | Language code (fr, en) | [optional] [default to 'fr']
 

@@ -13,84 +13,22 @@
 """  # noqa: E501
 
 
-from __future__ import annotations
-import pprint
-import re  # noqa: F401
-import json
+import unittest
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from typing import Optional, Set
-from typing_extensions import Self
+from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode
 
-class FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(BaseModel):
-    """
-    Chorus Pro credentials for Zero-Trust mode.  **Zero-Trust Mode**: Credentials are passed in each request and are NEVER stored.  **Security**: - Credentials are never persisted in the database - They are used only for the duration of the request - Secure transmission via HTTPS  **Use cases**: - High-security environments (banks, administrations) - Strict GDPR compliance - Tests with temporary credentials - Users who don't want to store their credentials
-    """ # noqa: E501
-    piste_client_id: StrictStr = Field(description="PISTE Client ID (government API portal)", alias="pisteClientId")
-    piste_client_secret: StrictStr = Field(description="PISTE Client Secret", alias="pisteClientSecret")
-    chorus_pro_login: StrictStr = Field(description="Chorus Pro login", alias="chorusProLogin")
-    chorus_pro_password: StrictStr = Field(description="Chorus Pro password", alias="chorusProPassword")
-    sandbox: Optional[StrictBool] = Field(default=True, description="Use sandbox environment (true) or production (false)")
-    __properties: ClassVar[List[str]] = ["pisteClientId", "pisteClientSecret", "chorusProLogin", "chorusProPassword", "sandbox"]
+class TestFactureElectroniqueModelsInvoiceTypeCode(unittest.TestCase):
+    """FactureElectroniqueModelsInvoiceTypeCode unit test stubs"""
 
-    model_config = ConfigDict(
-        populate_by_name=True,
-        validate_assignment=True,
-        protected_namespaces=(),
-    )
+    def setUp(self):
+        pass
 
+    def tearDown(self):
+        pass
 
-    def to_str(self) -> str:
-        """Returns the string representation of the model using alias"""
-        return pprint.pformat(self.model_dump(by_alias=True))
+    def testFactureElectroniqueModelsInvoiceTypeCode(self):
+        """Test FactureElectroniqueModelsInvoiceTypeCode"""
+        # inst = FactureElectroniqueModelsInvoiceTypeCode()
 
-    def to_json(self) -> str:
-        """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
-
-    @classmethod
-    def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FactureElectroniqueRestApiSchemasChorusProChorusProCredentials from a JSON string"""
-        return cls.from_dict(json.loads(json_str))
-
-    def to_dict(self) -> Dict[str, Any]:
-        """Return the dictionary representation of the model using alias.
-
-        This has the following differences from calling pydantic's
-        `self.model_dump(by_alias=True)`:
-
-        * `None` is only added to the output dict for nullable fields that
-          were set at model initialization. Other fields with value `None`
-          are ignored.
-        """
-        excluded_fields: Set[str] = set([
-        ])
-
-        _dict = self.model_dump(
-            by_alias=True,
-            exclude=excluded_fields,
-            exclude_none=True,
-        )
-        return _dict
-
-    @classmethod
-    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FactureElectroniqueRestApiSchemasChorusProChorusProCredentials from a dict"""
-        if obj is None:
-            return None
-
-        if not isinstance(obj, dict):
-            return cls.model_validate(obj)
-
-        _obj = cls.model_validate({
-            "pisteClientId": obj.get("pisteClientId"),
-            "pisteClientSecret": obj.get("pisteClientSecret"),
-            "chorusProLogin": obj.get("chorusProLogin"),
-            "chorusProPassword": obj.get("chorusProPassword"),
-            "sandbox": obj.get("sandbox") if obj.get("sandbox") is not None else True
-        })
-        return _obj
-
-
+if __name__ == '__main__':
+    unittest.main()

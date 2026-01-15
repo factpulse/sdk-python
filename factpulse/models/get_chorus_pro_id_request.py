@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
+from factpulse.models.chorus_pro_credentials import ChorusProCredentials
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class GetChorusProIdRequest(BaseModel):
     """
     Get Chorus Pro ID from SIRET.
     """ # noqa: E501
-    credentials: Optional[FactureElectroniqueRestApiSchemasChorusProChorusProCredentials] = None
+    credentials: Optional[ChorusProCredentials] = None
     siret: StrictStr = Field(description="Structure SIRET (14 digits)")
     identifier_type: Optional[StrictStr] = Field(default='SIRET', description="Identifier type (SIRET, SIREN, UE_HORS_FRANCE, etc.)", alias="identifierType")
     __properties: ClassVar[List[str]] = ["credentials", "siret", "identifierType"]
@@ -92,7 +92,7 @@ class GetChorusProIdRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "credentials": FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None,
+            "credentials": ChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None,
             "siret": obj.get("siret"),
             "identifierType": obj.get("identifierType") if obj.get("identifierType") is not None else 'SIRET'
         })
