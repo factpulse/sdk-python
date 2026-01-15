@@ -1731,56 +1731,113 @@ class FactPulseClient:
 
     # ==================== AFNOR Directory ====================
 
-    def search_siret_afnor(self, siret: str) -> Dict[str, Any]:
-        """Search a company by SIRET in the AFNOR directory.
+    def get_siret_afnor(self, siret: str) -> Dict[str, Any]:
+        """Get a facility by SIRET in the AFNOR directory.
 
         Args:
             siret: SIRET number (14 digits)
 
         Returns:
-            Dict with company info: company_name, address, etc.
+            Dict with facility info
 
         Example:
-            >>> result = client.search_siret_afnor("12345678901234")
-            >>> print(f"Company: {result['raison_sociale']}")
+            >>> result = client.get_siret_afnor("12345678901234")
+            >>> print(f"Facility: {result}")
         """
-        response = self._make_afnor_request("GET", f"/directory/siret/{siret}")
+        response = self._make_afnor_request("GET", f"/directory/v1/siret/code-insee:{siret}")
         return response.json()
 
 
-    def search_siren_afnor(self, siren: str) -> Dict[str, Any]:
-        """Search a company by SIREN in the AFNOR directory.
+    def get_siren_afnor(self, siren: str) -> Dict[str, Any]:
+        """Get a legal unit by SIREN in the AFNOR directory.
 
         Args:
             siren: SIREN number (9 digits)
 
         Returns:
-            Dict with company info and list of establishments
+            Dict with legal unit info
 
         Example:
-            >>> result = client.search_siren_afnor("123456789")
-            >>> for estab in result.get('etablissements', []):
-            ...     print(f"SIRET: {estab['siret']}")
+            >>> result = client.get_siren_afnor("123456789")
+            >>> print(f"Legal unit: {result}")
         """
-        response = self._make_afnor_request("GET", f"/directory/siren/{siren}")
+        response = self._make_afnor_request("GET", f"/directory/v1/siren/code-insee:{siren}")
         return response.json()
 
 
-    def list_routing_codes_afnor(self, siren: str) -> List[Dict[str, Any]]:
-        """List available routing codes for a SIREN.
+    def search_siren_afnor(
+        self,
+        filters: Optional[Dict[str, Any]] = None,
+        limit: int = 25,
+    ) -> Dict[str, Any]:
+        """Search for legal units (SIREN) in the AFNOR directory.
 
         Args:
-            siren: SIREN number (9 digits)
+            filters: Search filters
+            limit: Maximum number of results (default: 25)
 
         Returns:
-            List of routing codes with their parameters
+            Dict with search results
 
         Example:
-            >>> codes = client.list_routing_codes_afnor("123456789")
-            >>> for code in codes:
-            ...     print(f"Code: {code['code_routage']}")
+            >>> result = client.search_siren_afnor(filters={"name": "ACME"})
+            >>> for company in result.get('data', []):
+            ...     print(f"SIREN: {company['siren']}")
         """
-        response = self._make_afnor_request("GET", f"/directory/siren/{siren}/routing-codes")
+        search_body = {"limit": limit, "filters": filters or {}}
+        response = self._make_afnor_request(
+            "POST", "/directory/v1/siren/search", json_data=search_body
+        )
+        return response.json()
+
+
+    def search_routing_codes_afnor(
+        self,
+        filters: Optional[Dict[str, Any]] = None,
+        limit: int = 25,
+    ) -> Dict[str, Any]:
+        """Search for routing codes in the AFNOR directory.
+
+        Args:
+            filters: Search filters (siret, routingIdentifier, etc.)
+            limit: Maximum number of results (default: 25)
+
+        Returns:
+            Dict with routing code search results
+
+        Example:
+            >>> result = client.search_routing_codes_afnor(
+            ...     filters={"siret": "12345678901234"}
+            ... )
+            >>> for code in result.get('data', []):
+            ...     print(f"Routing code: {code['routingIdentifier']}")
+        """
+        search_body = {"limit": limit, "filters": filters or {}}
+        response = self._make_afnor_request(
+            "POST", "/directory/v1/routing-code/search", json_data=search_body
+        )
+        return response.json()
+
+
+    def get_routing_code_afnor(
+        self, siret: str, routing_identifier: str
+    ) -> Dict[str, Any]:
+        """Get a routing code by SIRET and routing identifier.
+
+        Args:
+            siret: SIRET number (14 digits)
+            routing_identifier: Routing code identifier
+
+        Returns:
+            Dict with routing code info
+
+        Example:
+            >>> result = client.get_routing_code_afnor("12345678901234", "RC001")
+            >>> print(f"Routing code: {result}")
+        """
+        response = self._make_afnor_request(
+            "GET", f"/directory/v1/routing-code/siret:{siret}/code:{routing_identifier}"
+        )
         return response.json()
 
 

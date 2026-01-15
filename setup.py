@@ -22,7 +22,7 @@ from setuptools import setup, find_packages  # noqa: H301
 # prerequisite: setuptools
 # http://pypi.python.org/pypi/setuptools
 NAME = "factpulse-sdk"
-VERSION = "3.0.23"
+VERSION = "3.0.24"
 PYTHON_REQUIRES = ">= 3.9"
 REQUIRES = [
     "requests>=2.25.0",
