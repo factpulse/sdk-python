@@ -18,7 +18,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 from typing_extensions import Annotated
 from factpulse.models.afnor_directory_line_payload_history_legal_unit_facility_routing_code import AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCode
 from factpulse.models.afnor_directory_line_post201_response import AFNORDirectoryLinePost201Response
@@ -30,9 +30,6 @@ from factpulse.models.afnor_routing_code_post201_response import AFNORRoutingCod
 from factpulse.models.afnor_routing_code_search_post200_response import AFNORRoutingCodeSearchPost200Response
 from factpulse.models.afnor_siren_search_post200_response import AFNORSirenSearchPost200Response
 from factpulse.models.afnor_siret_search_post200_response import AFNORSiretSearchPost200Response
-from factpulse.models.directory_line_include import DirectoryLineInclude
-from factpulse.models.routing_code_include import RoutingCodeInclude
-from factpulse.models.siret_include import SiretInclude
 
 from factpulse.api_client import ApiClient, RequestSerialized
 from factpulse.api_response import ApiResponse
@@ -55,7 +52,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def create_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_post(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -73,8 +69,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Creation of a new directory line for a SIREN, a SIRET or a ROUTING CODE.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -98,7 +92,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._create_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -133,7 +126,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def create_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_post_with_http_info(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -151,8 +143,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Creation of a new directory line for a SIREN, a SIRET or a ROUTING CODE.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -176,7 +166,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._create_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -211,7 +200,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def create_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_post_without_preload_content(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -229,8 +217,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Creation of a new directory line for a SIREN, a SIRET or a ROUTING CODE.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -254,7 +240,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._create_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -284,7 +269,6 @@ class AFNORPDPPADirectoryServiceApi:
 
     def _create_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_post_serialize(
         self,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -308,8 +292,6 @@ class AFNORPDPPADirectoryServiceApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -325,7 +307,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -349,7 +330,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def create_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_post(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -367,8 +347,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Creating a routing code.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -392,7 +370,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._create_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -427,7 +404,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def create_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_post_with_http_info(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -445,8 +421,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Creating a routing code.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -470,7 +444,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._create_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -505,7 +478,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def create_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_post_without_preload_content(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -523,8 +495,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Creating a routing code.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -548,7 +518,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._create_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -578,7 +547,6 @@ class AFNORPDPPADirectoryServiceApi:
 
     def _create_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_post_serialize(
         self,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -602,8 +570,6 @@ class AFNORPDPPADirectoryServiceApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -619,7 +585,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -644,7 +609,6 @@ class AFNORPDPPADirectoryServiceApi:
     def delete_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_delete(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -664,8 +628,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -690,7 +652,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._delete_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_delete_serialize(
             id_instance=id_instance,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -726,7 +687,6 @@ class AFNORPDPPADirectoryServiceApi:
     def delete_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_delete_with_http_info(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -746,8 +706,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -772,7 +730,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._delete_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_delete_serialize(
             id_instance=id_instance,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -808,7 +765,6 @@ class AFNORPDPPADirectoryServiceApi:
     def delete_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_delete_without_preload_content(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -828,8 +784,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -854,7 +808,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._delete_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_delete_serialize(
             id_instance=id_instance,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -885,7 +838,6 @@ class AFNORPDPPADirectoryServiceApi:
     def _delete_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_delete_serialize(
         self,
         id_instance,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -911,8 +863,6 @@ class AFNORPDPPADirectoryServiceApi:
             _path_params['id_instance'] = id_instance
         # process the query parameters
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -928,7 +878,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -1204,9 +1153,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_directory_line_by_code_proxy_api_v1_afnor_directory_v1_directory_line_code_addressing_identifier_get(
         self,
         addressing_identifier: Annotated[StrictStr, Field(description="Addressing identifier (SIREN, SIRET or routing code)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the Directory Line resource.")] = None,
-        include: Annotated[Optional[List[DirectoryLineInclude]], Field(description="Relations to include in the response.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1226,12 +1172,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param addressing_identifier: Addressing identifier (SIREN, SIRET or routing code) (required)
         :type addressing_identifier: str
-        :param fields: Fields of the Directory Line resource.
-        :type fields: List[str]
-        :param include: Relations to include in the response.
-        :type include: List[DirectoryLineInclude]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1256,9 +1196,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_directory_line_by_code_proxy_api_v1_afnor_directory_v1_directory_line_code_addressing_identifier_get_serialize(
             addressing_identifier=addressing_identifier,
-            fields=fields,
-            include=include,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1293,9 +1230,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_directory_line_by_code_proxy_api_v1_afnor_directory_v1_directory_line_code_addressing_identifier_get_with_http_info(
         self,
         addressing_identifier: Annotated[StrictStr, Field(description="Addressing identifier (SIREN, SIRET or routing code)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the Directory Line resource.")] = None,
-        include: Annotated[Optional[List[DirectoryLineInclude]], Field(description="Relations to include in the response.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1315,12 +1249,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param addressing_identifier: Addressing identifier (SIREN, SIRET or routing code) (required)
         :type addressing_identifier: str
-        :param fields: Fields of the Directory Line resource.
-        :type fields: List[str]
-        :param include: Relations to include in the response.
-        :type include: List[DirectoryLineInclude]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1345,9 +1273,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_directory_line_by_code_proxy_api_v1_afnor_directory_v1_directory_line_code_addressing_identifier_get_serialize(
             addressing_identifier=addressing_identifier,
-            fields=fields,
-            include=include,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1382,9 +1307,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_directory_line_by_code_proxy_api_v1_afnor_directory_v1_directory_line_code_addressing_identifier_get_without_preload_content(
         self,
         addressing_identifier: Annotated[StrictStr, Field(description="Addressing identifier (SIREN, SIRET or routing code)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the Directory Line resource.")] = None,
-        include: Annotated[Optional[List[DirectoryLineInclude]], Field(description="Relations to include in the response.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1404,12 +1326,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param addressing_identifier: Addressing identifier (SIREN, SIRET or routing code) (required)
         :type addressing_identifier: str
-        :param fields: Fields of the Directory Line resource.
-        :type fields: List[str]
-        :param include: Relations to include in the response.
-        :type include: List[DirectoryLineInclude]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1434,9 +1350,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_directory_line_by_code_proxy_api_v1_afnor_directory_v1_directory_line_code_addressing_identifier_get_serialize(
             addressing_identifier=addressing_identifier,
-            fields=fields,
-            include=include,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1466,9 +1379,6 @@ class AFNORPDPPADirectoryServiceApi:
     def _get_directory_line_by_code_proxy_api_v1_afnor_directory_v1_directory_line_code_addressing_identifier_get_serialize(
         self,
         addressing_identifier,
-        fields,
-        include,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -1478,8 +1388,6 @@ class AFNORPDPPADirectoryServiceApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'fields': 'multi',
-            'include': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -1495,17 +1403,7 @@ class AFNORPDPPADirectoryServiceApi:
         if addressing_identifier is not None:
             _path_params['addressing_identifier'] = addressing_identifier
         # process the query parameters
-        if fields is not None:
-            
-            _query_params.append(('fields', fields))
-            
-        if include is not None:
-            
-            _query_params.append(('include', include))
-            
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -1521,7 +1419,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -1546,8 +1443,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_directory_line_by_id_instance_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_get(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the Directory Line resource.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1567,10 +1462,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param fields: Fields of the Directory Line resource.
-        :type fields: List[str]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1595,8 +1486,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_directory_line_by_id_instance_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_get_serialize(
             id_instance=id_instance,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1631,8 +1520,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_directory_line_by_id_instance_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_get_with_http_info(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the Directory Line resource.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1652,10 +1539,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param fields: Fields of the Directory Line resource.
-        :type fields: List[str]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1680,8 +1563,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_directory_line_by_id_instance_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_get_serialize(
             id_instance=id_instance,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1716,8 +1597,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_directory_line_by_id_instance_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_get_without_preload_content(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the Directory Line resource.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1737,10 +1616,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param fields: Fields of the Directory Line resource.
-        :type fields: List[str]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1765,8 +1640,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_directory_line_by_id_instance_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_get_serialize(
             id_instance=id_instance,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1796,8 +1669,6 @@ class AFNORPDPPADirectoryServiceApi:
     def _get_directory_line_by_id_instance_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_get_serialize(
         self,
         id_instance,
-        fields,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -1807,7 +1678,6 @@ class AFNORPDPPADirectoryServiceApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'fields': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -1823,13 +1693,7 @@ class AFNORPDPPADirectoryServiceApi:
         if id_instance is not None:
             _path_params['id_instance'] = id_instance
         # process the query parameters
-        if fields is not None:
-            
-            _query_params.append(('fields', fields))
-            
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -1845,7 +1709,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -1870,8 +1733,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_routing_code_by_id_instance_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_get(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the Routing Code resource")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1891,10 +1752,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param fields: Fields of the Routing Code resource
-        :type fields: List[str]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1919,8 +1776,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_routing_code_by_id_instance_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_get_serialize(
             id_instance=id_instance,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1955,8 +1810,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_routing_code_by_id_instance_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_get_with_http_info(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the Routing Code resource")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1976,10 +1829,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param fields: Fields of the Routing Code resource
-        :type fields: List[str]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2004,8 +1853,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_routing_code_by_id_instance_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_get_serialize(
             id_instance=id_instance,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2040,8 +1887,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_routing_code_by_id_instance_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_get_without_preload_content(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the Routing Code resource")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2061,10 +1906,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param fields: Fields of the Routing Code resource
-        :type fields: List[str]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2089,8 +1930,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_routing_code_by_id_instance_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_get_serialize(
             id_instance=id_instance,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2120,8 +1959,6 @@ class AFNORPDPPADirectoryServiceApi:
     def _get_routing_code_by_id_instance_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_get_serialize(
         self,
         id_instance,
-        fields,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -2131,7 +1968,6 @@ class AFNORPDPPADirectoryServiceApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'fields': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -2147,13 +1983,7 @@ class AFNORPDPPADirectoryServiceApi:
         if id_instance is not None:
             _path_params['id_instance'] = id_instance
         # process the query parameters
-        if fields is not None:
-            
-            _query_params.append(('fields', fields))
-            
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -2169,7 +1999,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -2195,9 +2024,6 @@ class AFNORPDPPADirectoryServiceApi:
         self,
         siret: Annotated[StrictStr, Field(description="14-digit SIRET number (INSEE establishment identifier)")],
         routing_identifier: Annotated[StrictStr, Field(description="Routing code identifier")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the Routing Code resource")] = None,
-        include: Annotated[Optional[List[RoutingCodeInclude]], Field(description="Relations to include in the response.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2219,12 +2045,6 @@ class AFNORPDPPADirectoryServiceApi:
         :type siret: str
         :param routing_identifier: Routing code identifier (required)
         :type routing_identifier: str
-        :param fields: Fields of the Routing Code resource
-        :type fields: List[str]
-        :param include: Relations to include in the response.
-        :type include: List[RoutingCodeInclude]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2250,9 +2070,6 @@ class AFNORPDPPADirectoryServiceApi:
         _param = self._get_routing_code_by_siret_and_code_proxy_api_v1_afnor_directory_v1_routing_code_siret_siret_code_routing_identifier_get_serialize(
             siret=siret,
             routing_identifier=routing_identifier,
-            fields=fields,
-            include=include,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2288,9 +2105,6 @@ class AFNORPDPPADirectoryServiceApi:
         self,
         siret: Annotated[StrictStr, Field(description="14-digit SIRET number (INSEE establishment identifier)")],
         routing_identifier: Annotated[StrictStr, Field(description="Routing code identifier")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the Routing Code resource")] = None,
-        include: Annotated[Optional[List[RoutingCodeInclude]], Field(description="Relations to include in the response.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2312,12 +2126,6 @@ class AFNORPDPPADirectoryServiceApi:
         :type siret: str
         :param routing_identifier: Routing code identifier (required)
         :type routing_identifier: str
-        :param fields: Fields of the Routing Code resource
-        :type fields: List[str]
-        :param include: Relations to include in the response.
-        :type include: List[RoutingCodeInclude]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2343,9 +2151,6 @@ class AFNORPDPPADirectoryServiceApi:
         _param = self._get_routing_code_by_siret_and_code_proxy_api_v1_afnor_directory_v1_routing_code_siret_siret_code_routing_identifier_get_serialize(
             siret=siret,
             routing_identifier=routing_identifier,
-            fields=fields,
-            include=include,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2381,9 +2186,6 @@ class AFNORPDPPADirectoryServiceApi:
         self,
         siret: Annotated[StrictStr, Field(description="14-digit SIRET number (INSEE establishment identifier)")],
         routing_identifier: Annotated[StrictStr, Field(description="Routing code identifier")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the Routing Code resource")] = None,
-        include: Annotated[Optional[List[RoutingCodeInclude]], Field(description="Relations to include in the response.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2405,12 +2207,6 @@ class AFNORPDPPADirectoryServiceApi:
         :type siret: str
         :param routing_identifier: Routing code identifier (required)
         :type routing_identifier: str
-        :param fields: Fields of the Routing Code resource
-        :type fields: List[str]
-        :param include: Relations to include in the response.
-        :type include: List[RoutingCodeInclude]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2436,9 +2232,6 @@ class AFNORPDPPADirectoryServiceApi:
         _param = self._get_routing_code_by_siret_and_code_proxy_api_v1_afnor_directory_v1_routing_code_siret_siret_code_routing_identifier_get_serialize(
             siret=siret,
             routing_identifier=routing_identifier,
-            fields=fields,
-            include=include,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2469,9 +2262,6 @@ class AFNORPDPPADirectoryServiceApi:
         self,
         siret,
         routing_identifier,
-        fields,
-        include,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -2481,8 +2271,6 @@ class AFNORPDPPADirectoryServiceApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'fields': 'multi',
-            'include': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -2500,17 +2288,7 @@ class AFNORPDPPADirectoryServiceApi:
         if routing_identifier is not None:
             _path_params['routing_identifier'] = routing_identifier
         # process the query parameters
-        if fields is not None:
-            
-            _query_params.append(('fields', fields))
-            
-        if include is not None:
-            
-            _query_params.append(('include', include))
-            
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -2526,7 +2304,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -2551,8 +2328,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_siren_by_code_insee_proxy_api_v1_afnor_directory_v1_siren_code_insee_siren_get(
         self,
         siren: Annotated[StrictStr, Field(description="9-digit SIREN number (INSEE company identifier)")],
-        fields: Annotated[Optional[List[Optional[StrictStr]]], Field(description="Fields of the SIREN resource")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2572,10 +2347,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param siren: 9-digit SIREN number (INSEE company identifier) (required)
         :type siren: str
-        :param fields: Fields of the SIREN resource
-        :type fields: List[Optional[str]]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2600,8 +2371,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_siren_by_code_insee_proxy_api_v1_afnor_directory_v1_siren_code_insee_siren_get_serialize(
             siren=siren,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2636,8 +2405,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_siren_by_code_insee_proxy_api_v1_afnor_directory_v1_siren_code_insee_siren_get_with_http_info(
         self,
         siren: Annotated[StrictStr, Field(description="9-digit SIREN number (INSEE company identifier)")],
-        fields: Annotated[Optional[List[Optional[StrictStr]]], Field(description="Fields of the SIREN resource")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2657,10 +2424,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param siren: 9-digit SIREN number (INSEE company identifier) (required)
         :type siren: str
-        :param fields: Fields of the SIREN resource
-        :type fields: List[Optional[str]]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2685,8 +2448,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_siren_by_code_insee_proxy_api_v1_afnor_directory_v1_siren_code_insee_siren_get_serialize(
             siren=siren,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2721,8 +2482,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_siren_by_code_insee_proxy_api_v1_afnor_directory_v1_siren_code_insee_siren_get_without_preload_content(
         self,
         siren: Annotated[StrictStr, Field(description="9-digit SIREN number (INSEE company identifier)")],
-        fields: Annotated[Optional[List[Optional[StrictStr]]], Field(description="Fields of the SIREN resource")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2742,10 +2501,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param siren: 9-digit SIREN number (INSEE company identifier) (required)
         :type siren: str
-        :param fields: Fields of the SIREN resource
-        :type fields: List[Optional[str]]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2770,8 +2525,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_siren_by_code_insee_proxy_api_v1_afnor_directory_v1_siren_code_insee_siren_get_serialize(
             siren=siren,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2801,8 +2554,6 @@ class AFNORPDPPADirectoryServiceApi:
     def _get_siren_by_code_insee_proxy_api_v1_afnor_directory_v1_siren_code_insee_siren_get_serialize(
         self,
         siren,
-        fields,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -2812,7 +2563,6 @@ class AFNORPDPPADirectoryServiceApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'fields': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -2828,13 +2578,7 @@ class AFNORPDPPADirectoryServiceApi:
         if siren is not None:
             _path_params['siren'] = siren
         # process the query parameters
-        if fields is not None:
-            
-            _query_params.append(('fields', fields))
-            
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -2850,7 +2594,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -2875,8 +2618,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_siren_by_id_instance_proxy_api_v1_afnor_directory_v1_siren_id_instance_id_instance_get(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the SIREN resource")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2896,10 +2637,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param fields: Fields of the SIREN resource
-        :type fields: List[str]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2924,8 +2661,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_siren_by_id_instance_proxy_api_v1_afnor_directory_v1_siren_id_instance_id_instance_get_serialize(
             id_instance=id_instance,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2960,8 +2695,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_siren_by_id_instance_proxy_api_v1_afnor_directory_v1_siren_id_instance_id_instance_get_with_http_info(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the SIREN resource")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2981,10 +2714,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param fields: Fields of the SIREN resource
-        :type fields: List[str]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3009,8 +2738,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_siren_by_id_instance_proxy_api_v1_afnor_directory_v1_siren_id_instance_id_instance_get_serialize(
             id_instance=id_instance,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3045,8 +2772,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_siren_by_id_instance_proxy_api_v1_afnor_directory_v1_siren_id_instance_id_instance_get_without_preload_content(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of the SIREN resource")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3066,10 +2791,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param fields: Fields of the SIREN resource
-        :type fields: List[str]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3094,8 +2815,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_siren_by_id_instance_proxy_api_v1_afnor_directory_v1_siren_id_instance_id_instance_get_serialize(
             id_instance=id_instance,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3125,8 +2844,6 @@ class AFNORPDPPADirectoryServiceApi:
     def _get_siren_by_id_instance_proxy_api_v1_afnor_directory_v1_siren_id_instance_id_instance_get_serialize(
         self,
         id_instance,
-        fields,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -3136,7 +2853,6 @@ class AFNORPDPPADirectoryServiceApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'fields': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -3152,13 +2868,7 @@ class AFNORPDPPADirectoryServiceApi:
         if id_instance is not None:
             _path_params['id_instance'] = id_instance
         # process the query parameters
-        if fields is not None:
-            
-            _query_params.append(('fields', fields))
-            
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -3174,7 +2884,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -3199,9 +2908,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_siret_by_code_insee_proxy_api_v1_afnor_directory_v1_siret_code_insee_siret_get(
         self,
         siret: Annotated[StrictStr, Field(description="14-digit SIRET number (INSEE establishment identifier)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of a SIRET resource.")] = None,
-        include: Annotated[Optional[List[SiretInclude]], Field(description="Relations to include in the response.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3221,12 +2927,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param siret: 14-digit SIRET number (INSEE establishment identifier) (required)
         :type siret: str
-        :param fields: Fields of a SIRET resource.
-        :type fields: List[str]
-        :param include: Relations to include in the response.
-        :type include: List[SiretInclude]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3251,9 +2951,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_siret_by_code_insee_proxy_api_v1_afnor_directory_v1_siret_code_insee_siret_get_serialize(
             siret=siret,
-            fields=fields,
-            include=include,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3288,9 +2985,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_siret_by_code_insee_proxy_api_v1_afnor_directory_v1_siret_code_insee_siret_get_with_http_info(
         self,
         siret: Annotated[StrictStr, Field(description="14-digit SIRET number (INSEE establishment identifier)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of a SIRET resource.")] = None,
-        include: Annotated[Optional[List[SiretInclude]], Field(description="Relations to include in the response.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3310,12 +3004,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param siret: 14-digit SIRET number (INSEE establishment identifier) (required)
         :type siret: str
-        :param fields: Fields of a SIRET resource.
-        :type fields: List[str]
-        :param include: Relations to include in the response.
-        :type include: List[SiretInclude]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3340,9 +3028,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_siret_by_code_insee_proxy_api_v1_afnor_directory_v1_siret_code_insee_siret_get_serialize(
             siret=siret,
-            fields=fields,
-            include=include,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3377,9 +3062,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_siret_by_code_insee_proxy_api_v1_afnor_directory_v1_siret_code_insee_siret_get_without_preload_content(
         self,
         siret: Annotated[StrictStr, Field(description="14-digit SIRET number (INSEE establishment identifier)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of a SIRET resource.")] = None,
-        include: Annotated[Optional[List[SiretInclude]], Field(description="Relations to include in the response.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3399,12 +3081,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param siret: 14-digit SIRET number (INSEE establishment identifier) (required)
         :type siret: str
-        :param fields: Fields of a SIRET resource.
-        :type fields: List[str]
-        :param include: Relations to include in the response.
-        :type include: List[SiretInclude]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3429,9 +3105,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_siret_by_code_insee_proxy_api_v1_afnor_directory_v1_siret_code_insee_siret_get_serialize(
             siret=siret,
-            fields=fields,
-            include=include,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3461,9 +3134,6 @@ class AFNORPDPPADirectoryServiceApi:
     def _get_siret_by_code_insee_proxy_api_v1_afnor_directory_v1_siret_code_insee_siret_get_serialize(
         self,
         siret,
-        fields,
-        include,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -3473,8 +3143,6 @@ class AFNORPDPPADirectoryServiceApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'fields': 'multi',
-            'include': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -3490,17 +3158,7 @@ class AFNORPDPPADirectoryServiceApi:
         if siret is not None:
             _path_params['siret'] = siret
         # process the query parameters
-        if fields is not None:
-            
-            _query_params.append(('fields', fields))
-            
-        if include is not None:
-            
-            _query_params.append(('include', include))
-            
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -3516,7 +3174,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -3541,8 +3198,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_siret_by_id_instance_proxy_api_v1_afnor_directory_v1_siret_id_instance_id_instance_get(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of a SIRET resource.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3562,10 +3217,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param fields: Fields of a SIRET resource.
-        :type fields: List[str]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3590,8 +3241,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_siret_by_id_instance_proxy_api_v1_afnor_directory_v1_siret_id_instance_id_instance_get_serialize(
             id_instance=id_instance,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3626,8 +3275,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_siret_by_id_instance_proxy_api_v1_afnor_directory_v1_siret_id_instance_id_instance_get_with_http_info(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of a SIRET resource.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3647,10 +3294,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param fields: Fields of a SIRET resource.
-        :type fields: List[str]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3675,8 +3318,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_siret_by_id_instance_proxy_api_v1_afnor_directory_v1_siret_id_instance_id_instance_get_serialize(
             id_instance=id_instance,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3711,8 +3352,6 @@ class AFNORPDPPADirectoryServiceApi:
     def get_siret_by_id_instance_proxy_api_v1_afnor_directory_v1_siret_id_instance_id_instance_get_without_preload_content(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        fields: Annotated[Optional[List[StrictStr]], Field(description="Fields of a SIRET resource.")] = None,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3732,10 +3371,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param fields: Fields of a SIRET resource.
-        :type fields: List[str]
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3760,8 +3395,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._get_siret_by_id_instance_proxy_api_v1_afnor_directory_v1_siret_id_instance_id_instance_get_serialize(
             id_instance=id_instance,
-            fields=fields,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3791,8 +3424,6 @@ class AFNORPDPPADirectoryServiceApi:
     def _get_siret_by_id_instance_proxy_api_v1_afnor_directory_v1_siret_id_instance_id_instance_get_serialize(
         self,
         id_instance,
-        fields,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -3802,7 +3433,6 @@ class AFNORPDPPADirectoryServiceApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'fields': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -3818,13 +3448,7 @@ class AFNORPDPPADirectoryServiceApi:
         if id_instance is not None:
             _path_params['id_instance'] = id_instance
         # process the query parameters
-        if fields is not None:
-            
-            _query_params.append(('fields', fields))
-            
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -3840,7 +3464,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -3865,7 +3488,6 @@ class AFNORPDPPADirectoryServiceApi:
     def patch_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_patch(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3885,8 +3507,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3911,7 +3531,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._patch_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_patch_serialize(
             id_instance=id_instance,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3946,7 +3565,6 @@ class AFNORPDPPADirectoryServiceApi:
     def patch_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_patch_with_http_info(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3966,8 +3584,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3992,7 +3608,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._patch_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_patch_serialize(
             id_instance=id_instance,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4027,7 +3642,6 @@ class AFNORPDPPADirectoryServiceApi:
     def patch_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_patch_without_preload_content(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4047,8 +3661,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4073,7 +3685,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._patch_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_patch_serialize(
             id_instance=id_instance,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4103,7 +3714,6 @@ class AFNORPDPPADirectoryServiceApi:
     def _patch_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_patch_serialize(
         self,
         id_instance,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -4129,8 +3739,6 @@ class AFNORPDPPADirectoryServiceApi:
             _path_params['id_instance'] = id_instance
         # process the query parameters
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -4146,7 +3754,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -4171,7 +3778,6 @@ class AFNORPDPPADirectoryServiceApi:
     def patch_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_patch(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4191,8 +3797,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4217,7 +3821,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._patch_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_patch_serialize(
             id_instance=id_instance,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4253,7 +3856,6 @@ class AFNORPDPPADirectoryServiceApi:
     def patch_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_patch_with_http_info(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4273,8 +3875,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4299,7 +3899,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._patch_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_patch_serialize(
             id_instance=id_instance,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4335,7 +3934,6 @@ class AFNORPDPPADirectoryServiceApi:
     def patch_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_patch_without_preload_content(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4355,8 +3953,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4381,7 +3977,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._patch_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_patch_serialize(
             id_instance=id_instance,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4412,7 +4007,6 @@ class AFNORPDPPADirectoryServiceApi:
     def _patch_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_patch_serialize(
         self,
         id_instance,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -4438,8 +4032,6 @@ class AFNORPDPPADirectoryServiceApi:
             _path_params['id_instance'] = id_instance
         # process the query parameters
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -4455,7 +4047,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -4480,7 +4071,6 @@ class AFNORPDPPADirectoryServiceApi:
     def put_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_put(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4500,8 +4090,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4526,7 +4114,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._put_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_put_serialize(
             id_instance=id_instance,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4562,7 +4149,6 @@ class AFNORPDPPADirectoryServiceApi:
     def put_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_put_with_http_info(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4582,8 +4168,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4608,7 +4192,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._put_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_put_serialize(
             id_instance=id_instance,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4644,7 +4227,6 @@ class AFNORPDPPADirectoryServiceApi:
     def put_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_put_without_preload_content(
         self,
         id_instance: Annotated[StrictStr, Field(description="AFNOR instance ID (UUID)")],
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4664,8 +4246,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         :param id_instance: AFNOR instance ID (UUID) (required)
         :type id_instance: str
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4690,7 +4270,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _param = self._put_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_put_serialize(
             id_instance=id_instance,
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4721,7 +4300,6 @@ class AFNORPDPPADirectoryServiceApi:
     def _put_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_put_serialize(
         self,
         id_instance,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -4747,8 +4325,6 @@ class AFNORPDPPADirectoryServiceApi:
             _path_params['id_instance'] = id_instance
         # process the query parameters
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -4764,7 +4340,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -4788,7 +4363,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def search_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_search_post(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4806,8 +4380,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Search for directory lines that meet all the criteria passed as parameters and return the results in the desired format.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4831,7 +4403,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._search_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_search_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4866,7 +4437,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def search_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_search_post_with_http_info(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4884,8 +4454,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Search for directory lines that meet all the criteria passed as parameters and return the results in the desired format.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4909,7 +4477,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._search_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_search_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4944,7 +4511,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def search_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_search_post_without_preload_content(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4962,8 +4528,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Search for directory lines that meet all the criteria passed as parameters and return the results in the desired format.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4987,7 +4551,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._search_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_search_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5017,7 +4580,6 @@ class AFNORPDPPADirectoryServiceApi:
 
     def _search_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_search_post_serialize(
         self,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -5041,8 +4603,6 @@ class AFNORPDPPADirectoryServiceApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -5058,7 +4618,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -5082,7 +4641,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def search_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_search_post(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5100,8 +4658,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Search for routing codes that meet all the criteria passed as parameters and return the routing codes in the desired format.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5125,7 +4681,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._search_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_search_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5160,7 +4715,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def search_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_search_post_with_http_info(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5178,8 +4732,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Search for routing codes that meet all the criteria passed as parameters and return the routing codes in the desired format.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5203,7 +4755,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._search_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_search_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5238,7 +4789,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def search_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_search_post_without_preload_content(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5256,8 +4806,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Search for routing codes that meet all the criteria passed as parameters and return the routing codes in the desired format.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5281,7 +4829,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._search_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_search_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5311,7 +4858,6 @@ class AFNORPDPPADirectoryServiceApi:
 
     def _search_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_search_post_serialize(
         self,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -5335,8 +4881,6 @@ class AFNORPDPPADirectoryServiceApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -5352,7 +4896,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -5376,7 +4919,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def search_siren_proxy_api_v1_afnor_directory_v1_siren_search_post(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5394,8 +4936,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Multi-criteria company search.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5419,7 +4959,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._search_siren_proxy_api_v1_afnor_directory_v1_siren_search_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5454,7 +4993,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def search_siren_proxy_api_v1_afnor_directory_v1_siren_search_post_with_http_info(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5472,8 +5010,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Multi-criteria company search.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5497,7 +5033,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._search_siren_proxy_api_v1_afnor_directory_v1_siren_search_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5532,7 +5067,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def search_siren_proxy_api_v1_afnor_directory_v1_siren_search_post_without_preload_content(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5550,8 +5084,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Multi-criteria company search.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5575,7 +5107,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._search_siren_proxy_api_v1_afnor_directory_v1_siren_search_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5605,7 +5136,6 @@ class AFNORPDPPADirectoryServiceApi:
 
     def _search_siren_proxy_api_v1_afnor_directory_v1_siren_search_post_serialize(
         self,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -5629,8 +5159,6 @@ class AFNORPDPPADirectoryServiceApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -5646,7 +5174,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(
@@ -5670,7 +5197,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def search_siret_proxy_api_v1_afnor_directory_v1_siret_search_post(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5688,8 +5214,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Multi-criteria search for facilities.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5713,7 +5237,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._search_siret_proxy_api_v1_afnor_directory_v1_siret_search_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5748,7 +5271,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def search_siret_proxy_api_v1_afnor_directory_v1_siret_search_post_with_http_info(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5766,8 +5288,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Multi-criteria search for facilities.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5791,7 +5311,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._search_siret_proxy_api_v1_afnor_directory_v1_siret_search_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5826,7 +5345,6 @@ class AFNORPDPPADirectoryServiceApi:
     @validate_call
     def search_siret_proxy_api_v1_afnor_directory_v1_siret_search_post_without_preload_content(
         self,
-        accept_language: Annotated[Optional[Any], Field(description="Specifies the language in which the resource is requested.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5844,8 +5362,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         Multi-criteria search for facilities.
 
-        :param accept_language: Specifies the language in which the resource is requested.
-        :type accept_language: AcceptLanguage
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5869,7 +5385,6 @@ class AFNORPDPPADirectoryServiceApi:
         """ # noqa: E501
 
         _param = self._search_siret_proxy_api_v1_afnor_directory_v1_siret_search_post_serialize(
-            accept_language=accept_language,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5899,7 +5414,6 @@ class AFNORPDPPADirectoryServiceApi:
 
     def _search_siret_proxy_api_v1_afnor_directory_v1_siret_search_post_serialize(
         self,
-        accept_language,
         _request_auth,
         _content_type,
         _headers,
@@ -5923,8 +5437,6 @@ class AFNORPDPPADirectoryServiceApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
-        if accept_language is not None:
-            _header_params['Accept-Language'] = accept_language
         # process the form parameters
         # process the body parameter
 
@@ -5940,7 +5452,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         # authentication setting
         _auth_settings: List[str] = [
-            'HTTPBearer'
         ]
 
         return self.api_client.param_serialize(

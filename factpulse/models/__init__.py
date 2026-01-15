@@ -111,7 +111,6 @@ from factpulse.models.afnor_update_put_routing_code_body import AFNORUpdatePutRo
 from factpulse.models.afnor_webhook_callback_content import AFNORWebhookCallbackContent
 from factpulse.models.api_error import APIError
 from factpulse.models.api_profile import APIProfile
-from factpulse.models.accept_language import AcceptLanguage
 from factpulse.models.acknowledgment_status import AcknowledgmentStatus
 from factpulse.models.additional_document import AdditionalDocument
 from factpulse.models.aggregated_payment_input import AggregatedPaymentInput
@@ -144,7 +143,6 @@ from factpulse.models.currency import Currency
 from factpulse.models.currency_code import CurrencyCode
 from factpulse.models.delivery_party import DeliveryParty
 from factpulse.models.destination import Destination
-from factpulse.models.directory_line_include import DirectoryLineInclude
 from factpulse.models.doc_type import DocType
 from factpulse.models.document_type_info import DocumentTypeInfo
 from factpulse.models.e_reporting_flow_type import EReportingFlowType
@@ -156,8 +154,8 @@ from factpulse.models.error_source import ErrorSource
 from factpulse.models.extraction_info import ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo
+from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
 from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
-from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
 from factpulse.models.field_status import FieldStatus
 from factpulse.models.file_info import FileInfo
 from factpulse.models.files_info import FilesInfo
@@ -227,7 +225,6 @@ from factpulse.models.recipient import Recipient
 from factpulse.models.report_period import ReportPeriod
 from factpulse.models.report_sender import ReportSender
 from factpulse.models.rounding_amount import RoundingAmount
-from factpulse.models.routing_code_include import RoutingCodeInclude
 from factpulse.models.schematron_validation_error import SchematronValidationError
 from factpulse.models.scheme_id import SchemeID
 from factpulse.models.search_flow_request import SearchFlowRequest
@@ -240,7 +237,6 @@ from factpulse.models.signature_info import SignatureInfo
 from factpulse.models.signature_info_api import SignatureInfoAPI
 from factpulse.models.signature_parameters import SignatureParameters
 from factpulse.models.simplified_invoice_data import SimplifiedInvoiceData
-from factpulse.models.siret_include import SiretInclude
 from factpulse.models.structure_info import StructureInfo
 from factpulse.models.structure_parameters import StructureParameters
 from factpulse.models.structure_service import StructureService

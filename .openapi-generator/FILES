@@ -104,7 +104,6 @@ docs/AFNORUpdatePutRoutingCodeBody.md
 docs/AFNORWebhookCallbackContent.md
 docs/APIError.md
 docs/APIProfile.md
-docs/AcceptLanguage.md
 docs/AcknowledgmentStatus.md
 docs/AdditionalDocument.md
 docs/AggregatedPaymentInput.md
@@ -138,7 +137,6 @@ docs/Currency.md
 docs/CurrencyCode.md
 docs/DeliveryParty.md
 docs/Destination.md
-docs/DirectoryLineInclude.md
 docs/DocType.md
 docs/DocumentConversionApi.md
 docs/DocumentTypeInfo.md
@@ -153,8 +151,8 @@ docs/ErrorSource.md
 docs/ExtractionInfo.md
 docs/FacturXInvoice.md
 docs/FacturXPDFInfo.md
+docs/FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.md
 docs/FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode.md
-docs/FactureElectroniqueRestApiSchemasProcessingChorusProCredentials.md
 docs/FieldStatus.md
 docs/FileInfo.md
 docs/FilesInfo.md
@@ -227,7 +225,6 @@ docs/Recipient.md
 docs/ReportPeriod.md
 docs/ReportSender.md
 docs/RoundingAmount.md
-docs/RoutingCodeInclude.md
 docs/SchematronValidationError.md
 docs/SchemeID.md
 docs/SearchFlowRequest.md
@@ -240,7 +237,6 @@ docs/SignatureInfo.md
 docs/SignatureInfoAPI.md
 docs/SignatureParameters.md
 docs/SimplifiedInvoiceData.md
-docs/SiretInclude.md
 docs/StructureInfo.md
 docs/StructureParameters.md
 docs/StructureService.md
@@ -311,7 +307,6 @@ factpulse/api_response.py
 factpulse/configuration.py
 factpulse/exceptions.py
 factpulse/models/__init__.py
-factpulse/models/accept_language.py
 factpulse/models/acknowledgment_status.py
 factpulse/models/additional_document.py
 factpulse/models/afnor_acknowledgement.py
@@ -441,7 +436,6 @@ factpulse/models/currency.py
 factpulse/models/currency_code.py
 factpulse/models/delivery_party.py
 factpulse/models/destination.py
-factpulse/models/directory_line_include.py
 factpulse/models/doc_type.py
 factpulse/models/document_type_info.py
 factpulse/models/e_reporting_flow_type.py
@@ -453,8 +447,8 @@ factpulse/models/error_source.py
 factpulse/models/extraction_info.py
 factpulse/models/factur_x_invoice.py
 factpulse/models/factur_xpdf_info.py
+factpulse/models/facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials.py
 factpulse/models/facture_electronique_rest_api_schemas_ereporting_invoice_type_code.py
-factpulse/models/facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
 factpulse/models/field_status.py
 factpulse/models/file_info.py
 factpulse/models/files_info.py
@@ -524,7 +518,6 @@ factpulse/models/recipient.py
 factpulse/models/report_period.py
 factpulse/models/report_sender.py
 factpulse/models/rounding_amount.py
-factpulse/models/routing_code_include.py
 factpulse/models/schematron_validation_error.py
 factpulse/models/scheme_id.py
 factpulse/models/search_flow_request.py
@@ -537,7 +530,6 @@ factpulse/models/signature_info.py
 factpulse/models/signature_info_api.py
 factpulse/models/signature_parameters.py
 factpulse/models/simplified_invoice_data.py
-factpulse/models/siret_include.py
 factpulse/models/structure_info.py
 factpulse/models/structure_parameters.py
 factpulse/models/structure_service.py
@@ -598,7 +590,6 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
-test/test_accept_language.py
 test/test_acknowledgment_status.py
 test/test_additional_document.py
 test/test_afnor_acknowledgement.py
@@ -732,7 +723,6 @@ test/test_currency.py
 test/test_currency_code.py
 test/test_delivery_party.py
 test/test_destination.py
-test/test_directory_line_include.py
 test/test_doc_type.py
 test/test_document_conversion_api.py
 test/test_document_type_info.py
@@ -747,8 +737,8 @@ test/test_error_source.py
 test/test_extraction_info.py
 test/test_factur_x_invoice.py
 test/test_factur_xpdf_info.py
+test/test_facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials.py
 test/test_facture_electronique_rest_api_schemas_ereporting_invoice_type_code.py
-test/test_facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
 test/test_field_status.py
 test/test_file_info.py
 test/test_files_info.py
@@ -821,7 +811,6 @@ test/test_recipient.py
 test/test_report_period.py
 test/test_report_sender.py
 test/test_rounding_amount.py
-test/test_routing_code_include.py
 test/test_schematron_validation_error.py
 test/test_scheme_id.py
 test/test_search_flow_request.py
@@ -834,7 +823,6 @@ test/test_signature_info.py
 test/test_signature_info_api.py
 test/test_signature_parameters.py
 test/test_simplified_invoice_data.py
-test/test_siret_include.py
 test/test_structure_info.py
 test/test_structure_parameters.py
 test/test_structure_service.py
