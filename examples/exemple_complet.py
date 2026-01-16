@@ -12,7 +12,7 @@ Ce script démontre toutes les fonctionnalités du SDK avec les bonnes pratiques
 - Workflow complet de facturation
 
 Auteur: FactPulse
-Version: 3.0.30
+Version: 3.0.31
 """
 
 import logging
@@ -202,7 +202,7 @@ def exemple_helpers_construction_facture():
     print(
         "                           line_total_excl_tax, vat_rate_code=None, vat_rate_value='20.00',"
     )
-    print("                           vat_category='S', unit='LUMP_SUM', reference=None, ...)")
+    print("                           vat_category='S', unit='FORFAIT', reference=None, ...)")
 
     # Basic example with vat_rate_value (default 20%)
     line1 = invoice_line(
@@ -211,7 +211,7 @@ def exemple_helpers_construction_facture():
         quantity=5,
         unit_price_excl_tax=200.00,
         line_total_excl_tax=1000.00,  # 5 x 200
-        unit="HOUR",
+        unit="HEURE",
         reference="REF-001",
     )
     print(f"  Line 1 (VAT 20% default): {line1}")
@@ -224,7 +224,7 @@ def exemple_helpers_construction_facture():
         unit_price_excl_tax=500.00,
         line_total_excl_tax=500.00,
         vat_rate_code="VAT10",  # Code TVA au lieu de valeur
-        unit="LUMP_SUM",
+        unit="FORFAIT",
     )
     print(f"  Line 2 (with VAT10 code): {line2}")
 
@@ -451,7 +451,12 @@ def build_complete_invoice():
         "invoiceNumber": f"FAC-{date.today().year}-001",
         "invoiceDate": invoice_date,
         "paymentDueDate": due_date,
-        "depositMode": "DEPOT_PDF_API",
+        "submissionMode": "DEPOT_PDF_API",
+        # Invoicing framework (required for Factur-X)
+        "invoicingFramework": {
+            "invoicingFrameworkCode": "A1_FACTURE_FOURNISSEUR",
+            "operationNature": "S1",  # Services
+        },
         # Supplier with helper (auto-generates addresses and VAT)
         "supplier": supplier(
             name="Ma Société SAS",
@@ -471,13 +476,13 @@ def build_complete_invoice():
         ),
         # References
         "references": {
-            "invoiceType": "INVOICE",
-            "vatType": "VAT_ON_DEBIT",
-            "paymentMethod": "TRANSFER",
+            "invoiceType": "380",  # Standard invoice (UNTDID 1001)
+            "vatAccountingCode": "TVA_SUR_DEBIT",
+            "paymentMeans": "VIREMENT",
             "invoiceCurrency": "EUR",
-            "purchaseOrderNumber": "CMD-2025-042",
+            "purchaseOrderReference": "CMD-2025-042",
         },
-        # Lignes de poste avec helper
+        # Invoice lines with helper
         "invoiceLines": [
             invoice_line(
                 line_number=1,
@@ -486,7 +491,7 @@ def build_complete_invoice():
                 unit_price_excl_tax=200.00,
                 line_total_excl_tax=1000.00,
                 vat_rate_value="20.00",
-                unit="HOUR",
+                unit="HEURE",
                 reference="REF-CONSEIL-001",
             ),
             invoice_line(
@@ -496,11 +501,11 @@ def build_complete_invoice():
                 unit_price_excl_tax=500.00,
                 line_total_excl_tax=1500.00,
                 vat_rate_value="20.00",
-                unit="DAY",
+                unit="JOUR",
                 reference="REF-FORM-002",
             ),
         ],
-        # Lignes de TVA avec helper
+        # VAT lines with helper
         "vatLines": [
             vat_line(
                 base_amount_excl_tax=2500.00,
@@ -509,8 +514,8 @@ def build_complete_invoice():
                 category="S",
             ),
         ],
-        # Montant total avec helper
-        "invoiceTotals": invoice_totals(
+        # Invoice totals with helper
+        "totals": invoice_totals(
             total_excl_tax=2500.00,
             total_vat=500.00,
             total_incl_tax=3000.00,
@@ -539,7 +544,12 @@ def build_factored_invoice():
         "invoiceNumber": f"FAC-{date.today().year}-001-AFF",
         "invoiceDate": invoice_date,
         "paymentDueDate": due_date,
-        "depositMode": "DEPOT_PDF_API",
+        "submissionMode": "DEPOT_PDF_API",
+        # Invoicing framework (required for Factur-X)
+        "invoicingFramework": {
+            "invoicingFrameworkCode": "A1_FACTURE_FOURNISSEUR",
+            "operationNature": "S1",  # Services
+        },
         # Supplier (invoice issuer)
         "supplier": supplier(
             name="Ma Société SAS",
@@ -568,10 +578,10 @@ def build_factored_invoice():
         # References - FACTORED TYPE
         "references": {
             "invoiceType": "393",  # 393 = Facture affacturée (voir BR-FR-04)
-            "vatType": "VAT_ON_DEBIT",
-            "paymentMethod": "TRANSFER",
+            "vatAccountingCode": "TVA_SUR_DEBIT",
+            "paymentMeans": "VIREMENT",
             "invoiceCurrency": "EUR",
-            "purchaseOrderNumber": "CMD-2025-042",
+            "purchaseOrderReference": "CMD-2025-042",
         },
         # Notes obligatoires incluant ACC (subrogation)
         "notes": [
@@ -595,7 +605,7 @@ def build_factored_invoice():
                 "subjectCode": "ACC",  # Clause de subrogation factoring
             },
         ],
-        # Lignes de poste
+        # Invoice lines
         "invoiceLines": [
             invoice_line(
                 line_number=1,
@@ -604,10 +614,10 @@ def build_factored_invoice():
                 unit_price_excl_tax=200.00,
                 line_total_excl_tax=1000.00,
                 vat_rate_value="20.00",
-                unit="HOUR",
+                unit="HEURE",
             ),
         ],
-        # Lignes de TVA
+        # VAT lines
         "vatLines": [
             vat_line(
                 base_amount_excl_tax=1000.00,
@@ -616,8 +626,8 @@ def build_factored_invoice():
                 category="S",
             ),
         ],
-        # Montant total
-        "invoiceTotals": invoice_totals(
+        # Invoice totals
+        "totals": invoice_totals(
             total_excl_tax=1000.00,
             total_vat=200.00,
             total_incl_tax=1200.00,
@@ -1244,7 +1254,7 @@ def main():
     print("=" * 60)
     print("COMPREHENSIVE FACTPULSE PYTHON SDK EXAMPLE")
     print("=" * 60)
-    print("SDK Version: 3.0.30")
+    print("SDK Version: 3.0.31")
     print(f"API URL: {API_URL}")
 
     # Check credentials
