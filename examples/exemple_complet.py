@@ -12,7 +12,7 @@ Ce script démontre toutes les fonctionnalités du SDK avec les bonnes pratiques
 - Workflow complet de facturation
 
 Auteur: FactPulse
-Version: 3.0.31
+Version: 3.0.32
 """
 
 import logging
@@ -482,6 +482,21 @@ def build_complete_invoice():
             "invoiceCurrency": "EUR",
             "purchaseOrderReference": "CMD-2025-042",
         },
+        # Mandatory notes for BR-FR-05 compliance
+        "notes": [
+            {
+                "content": "Indemnité forfaitaire pour frais de recouvrement : 40 €",
+                "subjectCode": "PMT",
+            },
+            {
+                "content": "Taux de pénalités de retard : 3 fois le taux d'intérêt légal",
+                "subjectCode": "PMD",
+            },
+            {
+                "content": "Pas d'escompte pour paiement anticipé",
+                "subjectCode": "AAB",
+            },
+        ],
         # Invoice lines with helper
         "invoiceLines": [
             invoice_line(
@@ -1254,7 +1269,7 @@ def main():
     print("=" * 60)
     print("COMPREHENSIVE FACTPULSE PYTHON SDK EXAMPLE")
     print("=" * 60)
-    print("SDK Version: 3.0.31")
+    print("SDK Version: 3.0.32")
     print(f"API URL: {API_URL}")
 
     # Check credentials

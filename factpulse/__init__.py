@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "3.0.31"
+__version__ = "3.0.32"
 
 # Define package exports
 __all__ = [
@@ -179,7 +179,7 @@ __all__ = [
     "ExtractionInfo",
     "FacturXInvoice",
     "FacturXPDFInfo",
-    "FactureElectroniqueModelsInvoiceTypeCode",
+    "FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode",
     "FactureElectroniqueRestApiSchemasProcessingChorusProCredentials",
     "FieldStatus",
     "FileInfo",
@@ -480,7 +480,7 @@ from factpulse.models.error_source import ErrorSource as ErrorSource
 from factpulse.models.extraction_info import ExtractionInfo as ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
-from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode as FactureElectroniqueModelsInvoiceTypeCode
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode as FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
 from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials as FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
 from factpulse.models.field_status import FieldStatus as FieldStatus
 from factpulse.models.file_info import FileInfo as FileInfo
