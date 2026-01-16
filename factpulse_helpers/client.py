@@ -1899,6 +1899,33 @@ class FactPulseClient:
         response = self._request("POST", "/processing/validate-facturx-pdf", files=files, data=data)
         return response.json()
 
+    def validate_facturx_xml(
+        self,
+        xml_content: str,
+        profile: str = "EN16931",
+    ) -> Dict[str, Any]:
+        """Validate a Factur-X XML against Schematron business rules.
+
+        Args:
+            xml_content: XML content as string
+            profile: Factur-X profile for validation (MINIMUM, BASIC, EN16931, EXTENDED).
+                Default: EN16931
+
+        Returns:
+            Dict with:
+                - message (str): Validation result message
+                - errors (list): List of validation errors (if any)
+
+        Example:
+            >>> xml_content = open("factur-x.xml").read()
+            >>> result = client.validate_facturx_xml(xml_content, profile="EN16931")
+            >>> if "errors" not in result:
+            ...     print("XML is valid!")
+        """
+        files = {"xml_file": ("facture.xml", xml_content.encode("utf-8"), "application/xml")}
+        data = {"profile": profile}
+        response = self._request("POST", "/processing/validate-xml", files=files, data=data)
+        return response.json()
 
     def validate_pdf_signature(
         self,

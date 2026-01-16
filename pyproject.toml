@@ -1,6 +1,6 @@
 [project]
 name = "factpulse"
-version = "3.0.29"
+version = "3.0.30"
 description = "FactPulse REST API"
 authors = [
   {name = "FactPulse",email = "contact@factpulse.fr"},
