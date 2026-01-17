@@ -3384,7 +3384,7 @@ class InvoiceProcessingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ValidationSuccessResponse",
-            '400': "ValidationErrorResponse",
+            '400': "FactureElectroniqueRestApiSchemasValidationValidationErrorResponse",
             '422': "HTTPValidationError",
             '401': "APIError",
         }
@@ -3462,7 +3462,7 @@ class InvoiceProcessingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ValidationSuccessResponse",
-            '400': "ValidationErrorResponse",
+            '400': "FactureElectroniqueRestApiSchemasValidationValidationErrorResponse",
             '422': "HTTPValidationError",
             '401': "APIError",
         }
@@ -3540,7 +3540,7 @@ class InvoiceProcessingApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ValidationSuccessResponse",
-            '400': "ValidationErrorResponse",
+            '400': "FactureElectroniqueRestApiSchemasValidationValidationErrorResponse",
             '422': "HTTPValidationError",
             '401': "APIError",
         }

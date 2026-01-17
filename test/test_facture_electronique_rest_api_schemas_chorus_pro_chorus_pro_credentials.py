@@ -15,10 +15,10 @@
 
 import unittest
 
-from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
+from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
 
-class TestFactureElectroniqueRestApiSchemasProcessingChorusProCredentials(unittest.TestCase):
-    """FactureElectroniqueRestApiSchemasProcessingChorusProCredentials unit test stubs"""
+class TestFactureElectroniqueRestApiSchemasChorusProChorusProCredentials(unittest.TestCase):
+    """FactureElectroniqueRestApiSchemasChorusProChorusProCredentials unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,29 +26,33 @@ class TestFactureElectroniqueRestApiSchemasProcessingChorusProCredentials(unitte
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> FactureElectroniqueRestApiSchemasProcessingChorusProCredentials:
-        """Test FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
+    def make_instance(self, include_optional) -> FactureElectroniqueRestApiSchemasChorusProChorusProCredentials:
+        """Test FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `FactureElectroniqueRestApiSchemasProcessingChorusProCredentials`
+        # uncomment below to create an instance of `FactureElectroniqueRestApiSchemasChorusProChorusProCredentials`
         """
-        model = FactureElectroniqueRestApiSchemasProcessingChorusProCredentials()
+        model = FactureElectroniqueRestApiSchemasChorusProChorusProCredentials()
         if include_optional:
-            return FactureElectroniqueRestApiSchemasProcessingChorusProCredentials(
+            return FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(
                 piste_client_id = '',
                 piste_client_secret = '',
-                chorus_login = '',
-                chorus_password = '',
-                sandbox_mode = True
+                chorus_pro_login = '',
+                chorus_pro_password = '',
+                sandbox = True
             )
         else:
-            return FactureElectroniqueRestApiSchemasProcessingChorusProCredentials(
+            return FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(
+                piste_client_id = '',
+                piste_client_secret = '',
+                chorus_pro_login = '',
+                chorus_pro_password = '',
         )
         """
 
-    def testFactureElectroniqueRestApiSchemasProcessingChorusProCredentials(self):
-        """Test FactureElectroniqueRestApiSchemasProcessingChorusProCredentials"""
+    def testFactureElectroniqueRestApiSchemasChorusProChorusProCredentials(self):
+        """Test FactureElectroniqueRestApiSchemasChorusProChorusProCredentials"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 
