@@ -6,7 +6,7 @@ Submit an invoice to Chorus Pro.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**credentials** | [**FactureElectroniqueRestApiSchemasChorusProChorusProCredentials**](FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.md) |  | [optional] 
+**credentials** | [**ChorusProCredentials**](ChorusProCredentials.md) |  | [optional] 
 **invoice_number** | **str** | Invoice number | 
 **invoice_date** | **str** | Invoice date (ISO format: YYYY-MM-DD) | 
 **payment_due_date** | **str** |  | [optional] 
