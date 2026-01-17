@@ -12,14 +12,20 @@ Ce script démontre toutes les fonctionnalités du SDK avec les bonnes pratiques
 - Workflow complet de facturation
 
 Auteur: FactPulse
-Version: 3.0.32
 """
 
+import importlib.metadata
 import logging
 import os
 import sys
 from pathlib import Path
 from datetime import date, timedelta
+
+# Récupérer la version du SDK dynamiquement
+try:
+    SDK_VERSION = importlib.metadata.version("factpulse")
+except importlib.metadata.PackageNotFoundError:
+    SDK_VERSION = "unknown"
 
 # Import du SDK FactPulse - Client et Helpers
 from factpulse_helpers import (
@@ -1269,7 +1275,7 @@ def main():
     print("=" * 60)
     print("COMPREHENSIVE FACTPULSE PYTHON SDK EXAMPLE")
     print("=" * 60)
-    print("SDK Version: 3.0.32")
+    print(f"SDK Version: {SDK_VERSION}")
     print(f"API URL: {API_URL}")
 
     # Check credentials

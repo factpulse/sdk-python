@@ -1863,27 +1863,27 @@ class FactPulseClient:
 
         Returns:
             Dict with:
-                - is_compliant (bool): True if PDF is compliant
-                - xml_present (bool): True if Factur-X XML is embedded
-                - xml_compliant (bool): True if XML is valid according to Schematron
-                - detected_profile (str): Detected profile (MINIMUM, BASIC, EN16931, EXTENDED)
-                - xml_errors (list): XML validation errors
-                - pdfa_compliant (bool): True if PDF/A compliant
-                - pdfa_version (str): Detected PDF/A version (e.g., "PDF/A-3B")
-                - pdfa_validation_method (str): "metadata" or "verapdf"
-                - pdfa_errors (list): PDF/A compliance errors
+                - isCompliant (bool): True if PDF is compliant
+                - xmlPresent (bool): True if Factur-X XML is embedded
+                - xmlCompliant (bool): True if XML is valid according to Schematron
+                - detectedProfile (str): Detected profile (MINIMUM, BASIC, EN16931, EXTENDED)
+                - xmlErrors (list): XML validation errors
+                - pdfaCompliant (bool): True if PDF/A compliant
+                - pdfaVersion (str): Detected PDF/A version (e.g., "PDF/A-3B")
+                - pdfaValidationMethod (str): "metadata" or "verapdf"
+                - pdfaErrors (list): PDF/A compliance errors
 
         Example:
             >>> # Validation with auto-detected profile
             >>> result = client.validate_facturx_pdf("invoice.pdf")
-            >>> print(f"Detected profile: {result['detected_profile']}")
+            >>> print(f"Detected profile: {result['detectedProfile']}")
 
             >>> # Strict validation with VeraPDF (recommended in production)
             >>> result = client.validate_facturx_pdf("invoice.pdf", use_verapdf=True)
-            >>> if result['is_compliant']:
+            >>> if result['isCompliant']:
             ...     print("Valid Factur-X PDF!")
             >>> else:
-            ...     for err in result.get('pdfa_errors', []):
+            ...     for err in result.get('pdfaErrors', []):
             ...         print(f"PDF/A error: {err}")
         """
         if pdf_path:
@@ -2136,7 +2136,7 @@ class FactPulseClient:
             ...     submit_afnor=True,
             ...     output_path="final_invoice.pdf"
             ... )
-            >>> if result['validation']['is_compliant']:
+            >>> if result['validation']['isCompliant']:
             ...     print(f"Invoice submitted! Flow ID: {result['afnor']['flowId']}")
         """
         result: Dict[str, Any] = {}
@@ -2158,7 +2158,7 @@ class FactPulseClient:
         if validate:
             validation = self.validate_facturx_pdf(pdf_bytes=pdf_bytes, profile=profile)
             result["validation"] = validation
-            if not validation.get("est_conforme", False) and not validation.get("is_compliant", False):
+            if not validation.get("isCompliant", False):
                 # Return result with errors
                 if output_path:
                     with open(output_path, "wb") as f:

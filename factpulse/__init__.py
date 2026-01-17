@@ -15,13 +15,14 @@
 """  # noqa: E501
 
 
-__version__ = "3.0.32"
+__version__ = "3.0.33"
 
 # Define package exports
 __all__ = [
     "AFNORPDPPAApi",
     "AFNORPDPPADirectoryServiceApi",
     "AFNORPDPPAFlowServiceApi",
+    "CDARCycleDeVieApi",
     "ChorusProApi",
     "DocumentConversionApi",
     "DownloadsApi",
@@ -137,6 +138,8 @@ __all__ = [
     "APIError",
     "APIProfile",
     "AcknowledgmentStatus",
+    "ActionCodeInfo",
+    "ActionCodesResponse",
     "AdditionalDocument",
     "AggregatedPaymentInput",
     "AggregatedTransactionInput",
@@ -149,6 +152,8 @@ __all__ = [
     "AmountDue",
     "AsyncTaskStatus",
     "BaseAmount",
+    "BodySubmitCdarApiV1CdarSubmitPost",
+    "BodySubmitCdarXmlApiV1CdarSubmitXmlPost",
     "BoundingBoxSchema",
     "Buyercountry",
     "CeleryStatus",
@@ -163,6 +168,7 @@ __all__ = [
     "ConvertValidationFailedResponse",
     "CountryCode",
     "CreateAggregatedReportRequest",
+    "CreateCDARRequest",
     "CreateEReportingRequest",
     "Currency",
     "CurrencyCode",
@@ -173,14 +179,17 @@ __all__ = [
     "EReportingFlowType",
     "EReportingValidationError",
     "ElectronicAddress",
+    "Encaisseamount",
+    "Encaisseamount1",
     "EnrichedInvoiceInfo",
     "ErrorLevel",
     "ErrorSource",
     "ExtractionInfo",
     "FacturXInvoice",
     "FacturXPDFInfo",
+    "FactureElectroniqueRestApiSchemasChorusProChorusProCredentials",
     "FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode",
-    "FactureElectroniqueRestApiSchemasProcessingChorusProCredentials",
+    "FactureElectroniqueRestApiSchemasValidationValidationErrorResponse",
     "FieldStatus",
     "FileInfo",
     "FilesInfo",
@@ -190,6 +199,7 @@ __all__ = [
     "FlowSyntax",
     "FlowType",
     "GenerateAggregatedReportResponse",
+    "GenerateCDARResponse",
     "GenerateCertificateRequest",
     "GenerateCertificateResponse",
     "GenerateEReportingResponse",
@@ -246,7 +256,10 @@ __all__ = [
     "Quantity",
     "Rate",
     "Rate1",
+    "ReasonCodeInfo",
+    "ReasonCodesResponse",
     "Recipient",
+    "RecipientInput",
     "ReportPeriod",
     "ReportSender",
     "RoundingAmount",
@@ -262,11 +275,16 @@ __all__ = [
     "SignatureInfoAPI",
     "SignatureParameters",
     "SimplifiedInvoiceData",
+    "StatusCodeInfo",
+    "StatusCodesResponse",
     "StructureInfo",
     "StructureParameters",
     "StructureService",
     "SubmissionMode",
     "SubmitAggregatedReportRequest",
+    "SubmitCDARRequest",
+    "SubmitCDARResponse",
+    "SubmitCDARXMLRequest",
     "SubmitCompleteInvoiceRequest",
     "SubmitCompleteInvoiceResponse",
     "SubmitEReportingRequest",
@@ -303,6 +321,8 @@ __all__ = [
     "VATCategory",
     "VATLine",
     "VATPointDateCode",
+    "ValidateCDARRequest",
+    "ValidateCDARResponse",
     "ValidateEReportingRequest",
     "ValidateEReportingResponse",
     "ValidationError",
@@ -319,6 +339,7 @@ __all__ = [
 from factpulse.api.afnorpdppa_api import AFNORPDPPAApi as AFNORPDPPAApi
 from factpulse.api.afnorpdppa_directory_service_api import AFNORPDPPADirectoryServiceApi as AFNORPDPPADirectoryServiceApi
 from factpulse.api.afnorpdppa_flow_service_api import AFNORPDPPAFlowServiceApi as AFNORPDPPAFlowServiceApi
+from factpulse.api.cdar_cycle_de_vie_api import CDARCycleDeVieApi as CDARCycleDeVieApi
 from factpulse.api.chorus_pro_api import ChorusProApi as ChorusProApi
 from factpulse.api.document_conversion_api import DocumentConversionApi as DocumentConversionApi
 from factpulse.api.downloads_api import DownloadsApi as DownloadsApi
@@ -438,6 +459,8 @@ from factpulse.models.afnor_webhook_callback_content import AFNORWebhookCallback
 from factpulse.models.api_error import APIError as APIError
 from factpulse.models.api_profile import APIProfile as APIProfile
 from factpulse.models.acknowledgment_status import AcknowledgmentStatus as AcknowledgmentStatus
+from factpulse.models.action_code_info import ActionCodeInfo as ActionCodeInfo
+from factpulse.models.action_codes_response import ActionCodesResponse as ActionCodesResponse
 from factpulse.models.additional_document import AdditionalDocument as AdditionalDocument
 from factpulse.models.aggregated_payment_input import AggregatedPaymentInput as AggregatedPaymentInput
 from factpulse.models.aggregated_transaction_input import AggregatedTransactionInput as AggregatedTransactionInput
@@ -450,6 +473,8 @@ from factpulse.models.amount1 import Amount1 as Amount1
 from factpulse.models.amount_due import AmountDue as AmountDue
 from factpulse.models.async_task_status import AsyncTaskStatus as AsyncTaskStatus
 from factpulse.models.base_amount import BaseAmount as BaseAmount
+from factpulse.models.body_submit_cdar_api_v1_cdar_submit_post import BodySubmitCdarApiV1CdarSubmitPost as BodySubmitCdarApiV1CdarSubmitPost
+from factpulse.models.body_submit_cdar_xml_api_v1_cdar_submit_xml_post import BodySubmitCdarXmlApiV1CdarSubmitXmlPost as BodySubmitCdarXmlApiV1CdarSubmitXmlPost
 from factpulse.models.bounding_box_schema import BoundingBoxSchema as BoundingBoxSchema
 from factpulse.models.buyercountry import Buyercountry as Buyercountry
 from factpulse.models.celery_status import CeleryStatus as CeleryStatus
@@ -464,6 +489,7 @@ from factpulse.models.convert_success_response import ConvertSuccessResponse as 
 from factpulse.models.convert_validation_failed_response import ConvertValidationFailedResponse as ConvertValidationFailedResponse
 from factpulse.models.country_code import CountryCode as CountryCode
 from factpulse.models.create_aggregated_report_request import CreateAggregatedReportRequest as CreateAggregatedReportRequest
+from factpulse.models.create_cdar_request import CreateCDARRequest as CreateCDARRequest
 from factpulse.models.create_e_reporting_request import CreateEReportingRequest as CreateEReportingRequest
 from factpulse.models.currency import Currency as Currency
 from factpulse.models.currency_code import CurrencyCode as CurrencyCode
@@ -474,14 +500,17 @@ from factpulse.models.document_type_info import DocumentTypeInfo as DocumentType
 from factpulse.models.e_reporting_flow_type import EReportingFlowType as EReportingFlowType
 from factpulse.models.e_reporting_validation_error import EReportingValidationError as EReportingValidationError
 from factpulse.models.electronic_address import ElectronicAddress as ElectronicAddress
+from factpulse.models.encaisseamount import Encaisseamount as Encaisseamount
+from factpulse.models.encaisseamount1 import Encaisseamount1 as Encaisseamount1
 from factpulse.models.enriched_invoice_info import EnrichedInvoiceInfo as EnrichedInvoiceInfo
 from factpulse.models.error_level import ErrorLevel as ErrorLevel
 from factpulse.models.error_source import ErrorSource as ErrorSource
 from factpulse.models.extraction_info import ExtractionInfo as ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
+from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials as FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
 from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode as FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
-from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials as FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
+from factpulse.models.facture_electronique_rest_api_schemas_validation_validation_error_response import FactureElectroniqueRestApiSchemasValidationValidationErrorResponse as FactureElectroniqueRestApiSchemasValidationValidationErrorResponse
 from factpulse.models.field_status import FieldStatus as FieldStatus
 from factpulse.models.file_info import FileInfo as FileInfo
 from factpulse.models.files_info import FilesInfo as FilesInfo
@@ -491,6 +520,7 @@ from factpulse.models.flow_summary import FlowSummary as FlowSummary
 from factpulse.models.flow_syntax import FlowSyntax as FlowSyntax
 from factpulse.models.flow_type import FlowType as FlowType
 from factpulse.models.generate_aggregated_report_response import GenerateAggregatedReportResponse as GenerateAggregatedReportResponse
+from factpulse.models.generate_cdar_response import GenerateCDARResponse as GenerateCDARResponse
 from factpulse.models.generate_certificate_request import GenerateCertificateRequest as GenerateCertificateRequest
 from factpulse.models.generate_certificate_response import GenerateCertificateResponse as GenerateCertificateResponse
 from factpulse.models.generate_e_reporting_response import GenerateEReportingResponse as GenerateEReportingResponse
@@ -547,7 +577,10 @@ from factpulse.models.product_classification import ProductClassification as Pro
 from factpulse.models.quantity import Quantity as Quantity
 from factpulse.models.rate import Rate as Rate
 from factpulse.models.rate1 import Rate1 as Rate1
+from factpulse.models.reason_code_info import ReasonCodeInfo as ReasonCodeInfo
+from factpulse.models.reason_codes_response import ReasonCodesResponse as ReasonCodesResponse
 from factpulse.models.recipient import Recipient as Recipient
+from factpulse.models.recipient_input import RecipientInput as RecipientInput
 from factpulse.models.report_period import ReportPeriod as ReportPeriod
 from factpulse.models.report_sender import ReportSender as ReportSender
 from factpulse.models.rounding_amount import RoundingAmount as RoundingAmount
@@ -563,11 +596,16 @@ from factpulse.models.signature_info import SignatureInfo as SignatureInfo
 from factpulse.models.signature_info_api import SignatureInfoAPI as SignatureInfoAPI
 from factpulse.models.signature_parameters import SignatureParameters as SignatureParameters
 from factpulse.models.simplified_invoice_data import SimplifiedInvoiceData as SimplifiedInvoiceData
+from factpulse.models.status_code_info import StatusCodeInfo as StatusCodeInfo
+from factpulse.models.status_codes_response import StatusCodesResponse as StatusCodesResponse
 from factpulse.models.structure_info import StructureInfo as StructureInfo
 from factpulse.models.structure_parameters import StructureParameters as StructureParameters
 from factpulse.models.structure_service import StructureService as StructureService
 from factpulse.models.submission_mode import SubmissionMode as SubmissionMode
 from factpulse.models.submit_aggregated_report_request import SubmitAggregatedReportRequest as SubmitAggregatedReportRequest
+from factpulse.models.submit_cdar_request import SubmitCDARRequest as SubmitCDARRequest
+from factpulse.models.submit_cdar_response import SubmitCDARResponse as SubmitCDARResponse
+from factpulse.models.submit_cdarxml_request import SubmitCDARXMLRequest as SubmitCDARXMLRequest
 from factpulse.models.submit_complete_invoice_request import SubmitCompleteInvoiceRequest as SubmitCompleteInvoiceRequest
 from factpulse.models.submit_complete_invoice_response import SubmitCompleteInvoiceResponse as SubmitCompleteInvoiceResponse
 from factpulse.models.submit_e_reporting_request import SubmitEReportingRequest as SubmitEReportingRequest
@@ -604,6 +642,8 @@ from factpulse.models.vat_amount import VATAmount as VATAmount
 from factpulse.models.vat_category import VATCategory as VATCategory
 from factpulse.models.vat_line import VATLine as VATLine
 from factpulse.models.vat_point_date_code import VATPointDateCode as VATPointDateCode
+from factpulse.models.validate_cdar_request import ValidateCDARRequest as ValidateCDARRequest
+from factpulse.models.validate_cdar_response import ValidateCDARResponse as ValidateCDARResponse
 from factpulse.models.validate_e_reporting_request import ValidateEReportingRequest as ValidateEReportingRequest
 from factpulse.models.validate_e_reporting_response import ValidateEReportingResponse as ValidateEReportingResponse
 from factpulse.models.validation_error import ValidationError as ValidationError
