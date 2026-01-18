@@ -39,9 +39,9 @@ class SubmitCompleteInvoiceResponse(BaseModel):
     enriched_invoice: EnrichedInvoiceInfo = Field(description="Enriched invoice data", alias="enrichedInvoice")
     facturx_pdf: FacturXPDFInfo = Field(description="Generated PDF information", alias="facturxPdf")
     signature: Optional[SignatureInfo] = None
-    pdf_base64: StrictStr = Field(description="Generated Factur-X PDF (and signed if requested) base64-encoded", alias="pdfBase64")
+    content_b64: StrictStr = Field(description="Generated Factur-X PDF (and signed if requested) base64-encoded", alias="contentB64")
     message: StrictStr = Field(description="Return message")
-    __properties: ClassVar[List[str]] = ["success", "destinationType", "chorusResult", "afnorResult", "enrichedInvoice", "facturxPdf", "signature", "pdfBase64", "message"]
+    __properties: ClassVar[List[str]] = ["success", "destinationType", "chorusResult", "afnorResult", "enrichedInvoice", "facturxPdf", "signature", "contentB64", "message"]
 
     @field_validator('destination_type')
     def destination_type_validate_enum(cls, value):
@@ -138,7 +138,7 @@ class SubmitCompleteInvoiceResponse(BaseModel):
             "enrichedInvoice": EnrichedInvoiceInfo.from_dict(obj["enrichedInvoice"]) if obj.get("enrichedInvoice") is not None else None,
             "facturxPdf": FacturXPDFInfo.from_dict(obj["facturxPdf"]) if obj.get("facturxPdf") is not None else None,
             "signature": SignatureInfo.from_dict(obj["signature"]) if obj.get("signature") is not None else None,
-            "pdfBase64": obj.get("pdfBase64"),
+            "contentB64": obj.get("contentB64"),
             "message": obj.get("message")
         })
         return _obj

@@ -60,7 +60,7 @@ class TestSubmitCompleteInvoiceResponse(unittest.TestCase):
                     signed = True, 
                     cn = '', 
                     expiration = '', ),
-                pdf_base64 = '',
+                content_b64 = '',
                 message = ''
             )
         else:
@@ -72,7 +72,7 @@ class TestSubmitCompleteInvoiceResponse(unittest.TestCase):
                     size = 56, 
                     profile = '', 
                     signed = True, ),
-                pdf_base64 = '',
+                content_b64 = '',
                 message = '',
         )
         """

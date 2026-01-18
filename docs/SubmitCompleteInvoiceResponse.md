@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 **enriched_invoice** | [**EnrichedInvoiceInfo**](EnrichedInvoiceInfo.md) | Enriched invoice data | 
 **facturx_pdf** | [**FacturXPDFInfo**](FacturXPDFInfo.md) | Generated PDF information | 
 **signature** | [**SignatureInfo**](SignatureInfo.md) |  | [optional] 
-**pdf_base64** | **str** | Generated Factur-X PDF (and signed if requested) base64-encoded | 
+**content_b64** | **str** | Generated Factur-X PDF (and signed if requested) base64-encoded | 
 **message** | **str** | Return message | 
 
 ## Example

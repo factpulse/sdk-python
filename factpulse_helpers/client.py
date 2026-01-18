@@ -107,11 +107,17 @@ class FactPulseClient:
 
         data = self._parse_response(response)
 
-        if isinstance(data, dict) and "taskId" in data:
-            data = self._poll(data["taskId"])
+        # Auto-poll: support both taskId (camelCase) and task_id (snake_case)
+        if isinstance(data, dict):
+            task_id = data.get("taskId") or data.get("task_id")
+            if task_id:
+                data = self._poll(task_id)
 
-        if isinstance(data, dict) and "content_b64" in data:
-            data["content"] = base64.b64decode(data.pop("content_b64"))
+        # Auto-decode: support both content_b64 and contentB64
+        if isinstance(data, dict):
+            b64_content = data.pop("content_b64", None) or data.pop("contentB64", None)
+            if b64_content:
+                data["content"] = base64.b64decode(b64_content)
 
         return data
 
