@@ -8,7 +8,7 @@ Official Python client for the FactPulse API - French electronic invoicing.
 - **Chorus Pro**: Integration with the French public invoicing platform
 - **AFNOR PDP/PA**: Submission of flows compliant with XP Z12-013 standard
 - **Electronic signature**: PDF signing (PAdES-B-B, PAdES-B-T, PAdES-B-LT)
-- **Simplified client**: JWT authentication and polling integrated via `factpulse_helpers`
+- **Thin HTTP wrapper**: Generic `post()` and `get()` methods with automatic JWT auth and polling
 
 ## Installation
 
@@ -18,220 +18,183 @@ pip install factpulse
 
 ## Quick Start
 
-The `factpulse_helpers` module provides a simplified API with automatic authentication and polling:
-
 ```python
+import base64
 from factpulse_helpers import FactPulseClient
 
 # Create the client
 client = FactPulseClient(
     email="your_email@example.com",
-    password="your_password"
-)
-
-# Build the invoice using simplified format (auto-calculates totals)
-invoice_data = {
-    "number": "INV-2025-001",
-    "supplier": {
-        "name": "My Company SAS",
-        "siret": "12345678901234",
-        "iban": "FR7630001007941234567890185",
-    },
-    "recipient": {
-        "name": "Client SARL",
-        "siret": "98765432109876",
-    },
-    "lines": [
-        {
-            "description": "Consulting services",
-            "quantity": 10,
-            "unitPrice": 100.0,
-            "vatRate": 20,
-        }
-    ],
-}
-
-# Generate the Factur-X PDF
-pdf_bytes = client.generate_facturx(
-    invoice_data=invoice_data,
-    pdf_source="source_invoice.pdf",
-)
-
-with open("facturx_invoice.pdf", "wb") as f:
-    f.write(pdf_bytes)
-```
-
-## Available Helpers
-
-### amount(value)
-
-Converts a value to a formatted string for monetary amounts.
-
-```python
-from factpulse_helpers import amount
-
-amount(1234.5)      # "1234.50"
-amount("1234.56")   # "1234.56"
-amount(None)        # "0.00"
-```
-
-### invoice_totals(total_excl_tax, total_vat, total_incl_tax, amount_due, ...)
-
-Creates a complete invoice totals object.
-
-```python
-from factpulse_helpers import invoice_totals
-
-totals = invoice_totals(
-    total_excl_tax=1000.00,
-    total_vat=200.00,
-    total_incl_tax=1200.00,
-    amount_due=1200.00,
-    discount_incl_tax=50.00,   # Optional
-    discount_reason="Loyalty", # Optional
-    prepayment=100.00,         # Optional
-)
-```
-
-### invoice_line(line_number, description, quantity, unit_price_excl_tax, line_total_excl_tax, ...)
-
-Creates an invoice line.
-
-```python
-from factpulse_helpers import invoice_line
-
-line = invoice_line(
-    line_number=1,
-    description="Consulting services",
-    quantity=5,
-    unit_price_excl_tax=200.00,
-    line_total_excl_tax=1000.00,
-    vat_rate_code="TVA20",       # Or vat_rate_value="20.00"
-    vat_category="S",            # S, Z, E, AE, K
-    unit="HOUR",                 # FORFAIT, PIECE, HOUR, DAY...
-    reference="REF-001",         # Optional
-)
-```
-
-### vat_line(base_amount_excl_tax, vat_amount, ...)
-
-Creates a VAT breakdown line.
-
-```python
-from factpulse_helpers import vat_line
-
-vat = vat_line(
-    base_amount_excl_tax=1000.00,
-    vat_amount=200.00,
-    rate_code="TVA20",       # Or rate_value="20.00"
-    category="S",            # S, Z, E, AE, K
-)
-```
-
-### postal_address(line1, postal_code, city, ...)
-
-Creates a structured postal address.
-
-```python
-from factpulse_helpers import postal_address
-
-address = postal_address(
-    line1="123 Republic Street",
-    postal_code="75001",
-    city="Paris",
-    country="FR",        # Default: "FR"
-    line2="Building A",  # Optional
-)
-```
-
-### electronic_address(identifier, scheme_id)
-
-Creates an electronic address (digital identifier).
-
-```python
-from factpulse_helpers import electronic_address
-
-# SIRET (scheme_id="0225")
-address = electronic_address("12345678901234", "0225")
-
-# SIREN (scheme_id="0009")
-address = electronic_address("123456789", "0009")
-```
-
-### supplier(name, siret, address_line1, postal_code, city, ...)
-
-Creates a complete supplier with automatic SIREN and intra-EU VAT calculation.
-
-```python
-from factpulse_helpers import supplier
-
-s = supplier(
-    name="My Company SAS",
-    siret="12345678901234",
-    address_line1="123 Example Street",
-    postal_code="75001",
-    city="Paris",
-    iban="FR7630006000011234567890189",  # Optional
-)
-# SIREN and intra-EU VAT number calculated automatically
-```
-
-### recipient(name, siret, address_line1, postal_code, city, ...)
-
-Creates a recipient (customer) with automatic SIREN calculation.
-
-```python
-from factpulse_helpers import recipient
-
-r = recipient(
-    name="Client SARL",
-    siret="98765432109876",
-    address_line1="456 Test Avenue",
-    postal_code="69001",
-    city="Lyon",
-)
-```
-
-## Zero-Trust Mode (Chorus Pro / AFNOR)
-
-To pass your own credentials without server-side storage:
-
-```python
-from factpulse_helpers import (
-    FactPulseClient,
-    ChorusProCredentials,
-    AFNORCredentials,
-)
-
-# Chorus Pro
-chorus_creds = ChorusProCredentials(
-    piste_client_id="your_client_id",
-    piste_client_secret="your_client_secret",
-    chorus_pro_login="your_login",
-    chorus_pro_password="your_password",
-    sandbox=True,
-)
-
-# AFNOR PDP
-afnor_creds = AFNORCredentials(
-    flow_service_url="https://api.pdp.fr/flow/v1",
-    token_url="https://auth.pdp.fr/oauth/token",
-    client_id="your_client_id",
-    client_secret="your_client_secret",
-)
-
-client = FactPulseClient(
-    email="your_email@example.com",
     password="your_password",
-    chorus_credentials=chorus_creds,
-    afnor_credentials=afnor_creds,
+    client_uid="your-client-uuid",  # From dashboard: Configuration > Clients
 )
+
+# Read your source PDF
+with open("source_invoice.pdf", "rb") as f:
+    pdf_b64 = base64.b64encode(f.read()).decode()
+
+# Generate Factur-X and submit to PDP in one call
+result = client.post(
+    "processing/invoices/submit-complete-async",
+    invoiceData={
+        "number": "INV-2025-001",
+        "supplier": {
+            "siret": "12345678901234",
+            "iban": "FR7630001007941234567890185",
+            "routingAddress": "12345678901234",
+        },
+        "recipient": {
+            "siret": "98765432109876",
+            "routingAddress": "98765432109876",
+        },
+        "lines": [
+            {
+                "description": "Consulting services",
+                "quantity": 10,
+                "unitPrice": 100.0,
+                "vatRate": 20.0,
+            }
+        ],
+    },
+    sourcePdf=pdf_b64,
+    profile="EN16931",
+    destination={"type": "afnor"},
+)
+
+# PDF is in result["content"] (auto-polled, auto-decoded from base64)
+with open("facturx_invoice.pdf", "wb") as f:
+    f.write(result["content"])
+
+print(f"Flow ID: {result['afnorResult']['flowId']}")
+```
+
+## API Methods
+
+The SDK provides two generic methods that map directly to API endpoints:
+
+```python
+# POST /api/v1/{path}
+result = client.post("path/to/endpoint", key1=value1, key2=value2)
+
+# GET /api/v1/{path}
+result = client.get("path/to/endpoint", param1=value1)
+```
+
+### Common Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `processing/invoices/submit-complete-async` | POST | Generate Factur-X + submit to PDP |
+| `processing/generate-invoice` | POST | Generate Factur-X XML or PDF |
+| `processing/validate-xml` | POST | Validate Factur-X XML |
+| `processing/validate-facturx-pdf` | POST | Validate Factur-X PDF |
+| `processing/sign-pdf` | POST | Sign PDF with certificate |
+| `afnor/flow/v1/flows` | POST | Submit flow to AFNOR PDP |
+| `afnor/incoming-flows/{flow_id}` | GET | Get incoming invoice |
+| `chorus-pro/factures/soumettre` | POST | Submit to Chorus Pro |
+
+## Webhooks
+
+Instead of polling, you can receive results via webhook by adding `callbackUrl`:
+
+```python
+# Submit with webhook - returns immediately
+result = client.post(
+    "processing/invoices/submit-complete-async",
+    invoiceData=invoice_data,
+    sourcePdf=pdf_b64,
+    destination={"type": "afnor"},
+    callbackUrl="https://your-server.com/webhook/factpulse",
+    webhookMode="INLINE",  # or "DOWNLOAD_URL"
+)
+
+task_id = result["taskId"]
+# Result will be POSTed to your webhook URL
+```
+
+### Webhook Receiver Example (Flask)
+
+```python
+import hmac
+import hashlib
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+WEBHOOK_SECRET = "your-shared-secret"
+
+def verify_signature(payload: bytes, signature: str) -> bool:
+    if not signature.startswith("sha256="):
+        return False
+    expected = hmac.new(WEBHOOK_SECRET.encode(), payload, hashlib.sha256).hexdigest()
+    return hmac.compare_digest(signature[7:], expected)
+
+@app.route("/webhook/factpulse", methods=["POST"])
+def webhook_handler():
+    signature = request.headers.get("X-Webhook-Signature", "")
+    if not verify_signature(request.data, signature):
+        return jsonify({"error": "Invalid signature"}), 401
+
+    event = request.json
+    event_type = event["event_type"]
+    data = event["data"]
+
+    if event_type == "submission.completed":
+        flow_id = data.get("afnorResult", {}).get("flowId")
+        print(f"Invoice submitted: {flow_id}")
+    elif event_type == "submission.failed":
+        print(f"Submission failed: {data.get('error')}")
+
+    return jsonify({"status": "received"})
+```
+
+### Webhook Event Types
+
+| Event | Description |
+|-------|-------------|
+| `generation.completed` | Factur-X generated successfully |
+| `generation.failed` | Generation failed |
+| `validation.completed` | Validation passed |
+| `validation.failed` | Validation failed |
+| `signature.completed` | PDF signed |
+| `submission.completed` | Submitted to PDP/Chorus |
+| `submission.failed` | Submission failed |
+
+## Zero-Storage Mode
+
+Pass PDP credentials directly in the request (no server-side storage):
+
+```python
+result = client.post(
+    "processing/invoices/submit-complete-async",
+    invoiceData=invoice_data,
+    sourcePdf=pdf_b64,
+    destination={
+        "type": "afnor",
+        "flowServiceUrl": "https://api.pdp.example.com/flow/v1",
+        "tokenUrl": "https://auth.pdp.example.com/oauth/token",
+        "clientId": "your_pdp_client_id",
+        "clientSecret": "your_pdp_client_secret",
+    },
+)
+```
+
+## Error Handling
+
+```python
+from factpulse_helpers import FactPulseClient, FactPulseError
+
+try:
+    result = client.post("processing/validate-xml", xmlContent=xml_string)
+except FactPulseError as e:
+    print(f"Error: {e}")
+    print(f"Status code: {e.status_code}")
+    print(f"Details: {e.details}")  # Validation errors list
 ```
 
 ## Resources
 
 - **API Documentation**: https://factpulse.fr/api/facturation/documentation
-- **Complete Example**: See `complete_example_python.py` in this package
+- **Webhooks Guide**: https://factpulse.fr/docs/webhooks
 - **Support**: contact@factpulse.fr
 
 ## License

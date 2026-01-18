@@ -15,7 +15,7 @@ Name | Type | Description | Notes
 **comment** | **str** |  | [optional] 
 **purchase_order_reference** | **str** |  | [optional] 
 **contract_reference** | **str** |  | [optional] 
-**invoice_type** | [**InvoiceTypeCode**](InvoiceTypeCode.md) | Document type (UNTDID 1001). Default: 380 (Invoice). | [optional] 
+**invoice_type** | [**FactureElectroniqueModelsInvoiceTypeCode**](FactureElectroniqueModelsInvoiceTypeCode.md) | Document type (UNTDID 1001). Default: 380 (Invoice). | [optional] 
 **preceding_invoice_reference** | **str** |  | [optional] 
 **operation_nature** | [**OperationNature**](OperationNature.md) |  | [optional] 
 **invoicing_framework** | [**InvoicingFrameworkCode**](InvoicingFrameworkCode.md) |  | [optional] 
