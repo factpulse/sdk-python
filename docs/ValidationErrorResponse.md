@@ -1,12 +1,15 @@
 # ValidationErrorResponse
 
-Response for validation errors.
+Erreur de validation.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**detail** | **List[str]** | List of detected validation errors. | 
+**var_field** | **str** | Champ concerné | 
+**message** | **str** | Message d&#39;erreur | 
+**rule** | **str** |  | [optional] 
+**severity** | **str** | Sévérité (error/warning) | [optional] [default to 'error']
 
 ## Example
 

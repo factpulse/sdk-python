@@ -19,16 +19,19 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
 class ValidationErrorResponse(BaseModel):
     """
-    Response for validation errors.
+    Erreur de validation.
     """ # noqa: E501
-    detail: List[StrictStr] = Field(description="List of detected validation errors.")
-    __properties: ClassVar[List[str]] = ["detail"]
+    var_field: StrictStr = Field(description="Champ concerné", alias="field")
+    message: StrictStr = Field(description="Message d'erreur")
+    rule: Optional[StrictStr] = None
+    severity: Optional[StrictStr] = Field(default='error', description="Sévérité (error/warning)")
+    __properties: ClassVar[List[str]] = ["field", "message", "rule", "severity"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -69,6 +72,11 @@ class ValidationErrorResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if rule (nullable) is None
+        # and model_fields_set contains the field
+        if self.rule is None and "rule" in self.model_fields_set:
+            _dict['rule'] = None
+
         return _dict
 
     @classmethod
@@ -81,7 +89,10 @@ class ValidationErrorResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "detail": obj.get("detail")
+            "field": obj.get("field"),
+            "message": obj.get("message"),
+            "rule": obj.get("rule"),
+            "severity": obj.get("severity") if obj.get("severity") is not None else 'error'
         })
         return _obj
 

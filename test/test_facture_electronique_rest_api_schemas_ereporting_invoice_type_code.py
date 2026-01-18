@@ -15,10 +15,10 @@
 
 import unittest
 
-from factpulse.models.facture_electronique_rest_api_schemas_cdar_validation_error_response import FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
 
-class TestFactureElectroniqueRestApiSchemasCdarValidationErrorResponse(unittest.TestCase):
-    """FactureElectroniqueRestApiSchemasCdarValidationErrorResponse unit test stubs"""
+class TestFactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode(unittest.TestCase):
+    """FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,32 +26,9 @@ class TestFactureElectroniqueRestApiSchemasCdarValidationErrorResponse(unittest.
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> FactureElectroniqueRestApiSchemasCdarValidationErrorResponse:
-        """Test FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        # uncomment below to create an instance of `FactureElectroniqueRestApiSchemasCdarValidationErrorResponse`
-        """
-        model = FactureElectroniqueRestApiSchemasCdarValidationErrorResponse()
-        if include_optional:
-            return FactureElectroniqueRestApiSchemasCdarValidationErrorResponse(
-                var_field = '',
-                message = '',
-                rule = '',
-                severity = 'error'
-            )
-        else:
-            return FactureElectroniqueRestApiSchemasCdarValidationErrorResponse(
-                var_field = '',
-                message = '',
-        )
-        """
-
-    def testFactureElectroniqueRestApiSchemasCdarValidationErrorResponse(self):
-        """Test FactureElectroniqueRestApiSchemasCdarValidationErrorResponse"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+    def testFactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode(self):
+        """Test FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode"""
+        # inst = FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode()
 
 if __name__ == '__main__':
     unittest.main()
