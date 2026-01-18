@@ -30,7 +30,7 @@ class Supplier(BaseModel):
     """
     Information about the supplier / seller (BG-4).
     """ # noqa: E501
-    electronic_address: Optional[ElectronicAddress]
+    electronic_address: Optional[ElectronicAddress] = None
     supplier_id: StrictInt
     private_id: Optional[StrictStr] = None
     supplier_bank_account_code: Optional[StrictInt] = None

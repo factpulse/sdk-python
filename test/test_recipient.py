@@ -65,9 +65,6 @@ class TestRecipient(unittest.TestCase):
             )
         else:
             return Recipient(
-                electronic_address = factpulse.models.electronic_address.ElectronicAddress(
-                    identifier = '', 
-                    scheme_id = null, ),
         )
         """
 

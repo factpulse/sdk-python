@@ -30,7 +30,7 @@ class Recipient(BaseModel):
     """
     Information about the invoice recipient / buyer (BG-7).
     """ # noqa: E501
-    electronic_address: Optional[ElectronicAddress]
+    electronic_address: Optional[ElectronicAddress] = None
     executing_service_code: Optional[StrictStr] = None
     name: Optional[StrictStr] = None
     siren: Optional[StrictStr] = None

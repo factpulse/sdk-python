@@ -74,9 +74,6 @@ class TestSupplier(unittest.TestCase):
             )
         else:
             return Supplier(
-                electronic_address = factpulse.models.electronic_address.ElectronicAddress(
-                    identifier = '', 
-                    scheme_id = null, ),
                 supplier_id = 56,
         )
         """
