@@ -13,48 +13,40 @@
 """  # noqa: E501
 
 
-import unittest
+from __future__ import annotations
+import json
+from enum import Enum
+from typing_extensions import Self
 
-from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
 
-class TestFactureElectroniqueRestApiSchemasChorusProChorusProCredentials(unittest.TestCase):
-    """FactureElectroniqueRestApiSchemasChorusProChorusProCredentials unit test stubs"""
+class FactureElectroniqueModelsInvoiceTypeCode(str, Enum):
+    """
+    Document type according to BR-FR-04 (UNTDID 1001 codes).  | Code | Name | Description | |------|------|-------------| | 380 | INVOICE | Commercial invoice | | 389 | SELF_BILLED_INVOICE | Self-billed invoice | | 393 | FACTORED_INVOICE | Factored invoice | | 501 | SELF_BILLED_FACTORED_INVOICE | Self-billed factored invoice | | 386 | PREPAYMENT_INVOICE | Prepayment invoice | | 500 | SELF_BILLED_PREPAYMENT_INVOICE | Self-billed prepayment invoice | | 384 | CORRECTIVE_INVOICE | Corrective invoice | | 471 | SELF_BILLED_CORRECTIVE_INVOICE | Self-billed corrective invoice | | 472 | FACTORED_CORRECTIVE_INVOICE | Factored corrective invoice | | 473 | SELF_BILLED_FACTORED_CORRECTIVE_INVOICE | Self-billed factored corrective invoice | | 381 | CREDIT_NOTE | Credit note | | 261 | SELF_BILLED_CREDIT_NOTE | Self-billed credit note | | 262 | GLOBAL_ALLOWANCE_CREDIT_NOTE | Credit note for global allowance | | 396 | FACTORED_CREDIT_NOTE | Factored credit note | | 502 | SELF_BILLED_FACTORED_CREDIT_NOTE | Self-billed factored credit note | | 503 | PREPAYMENT_CREDIT_NOTE | Credit note for prepayment invoice |
+    """
 
-    def setUp(self):
-        pass
+    """
+    allowed enum values
+    """
+    INVOICE = '380'
+    SELF_BILLED_INVOICE = '389'
+    FACTORED_INVOICE = '393'
+    SELF_BILLED_FACTORED_INVOICE = '501'
+    PREPAYMENT_INVOICE = '386'
+    SELF_BILLED_PREPAYMENT_INVOICE = '500'
+    CORRECTIVE_INVOICE = '384'
+    SELF_BILLED_CORRECTIVE_INVOICE = '471'
+    FACTORED_CORRECTIVE_INVOICE = '472'
+    SELF_BILLED_FACTORED_CORRECTIVE_INVOICE = '473'
+    CREDIT_NOTE = '381'
+    SELF_BILLED_CREDIT_NOTE = '261'
+    GLOBAL_ALLOWANCE_CREDIT_NOTE = '262'
+    FACTORED_CREDIT_NOTE = '396'
+    SELF_BILLED_FACTORED_CREDIT_NOTE = '502'
+    PREPAYMENT_CREDIT_NOTE = '503'
 
-    def tearDown(self):
-        pass
+    @classmethod
+    def from_json(cls, json_str: str) -> Self:
+        """Create an instance of FactureElectroniqueModelsInvoiceTypeCode from a JSON string"""
+        return cls(json.loads(json_str))
 
-    def make_instance(self, include_optional) -> FactureElectroniqueRestApiSchemasChorusProChorusProCredentials:
-        """Test FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        # uncomment below to create an instance of `FactureElectroniqueRestApiSchemasChorusProChorusProCredentials`
-        """
-        model = FactureElectroniqueRestApiSchemasChorusProChorusProCredentials()
-        if include_optional:
-            return FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(
-                piste_client_id = '',
-                piste_client_secret = '',
-                chorus_pro_login = '',
-                chorus_pro_password = '',
-                sandbox = True
-            )
-        else:
-            return FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(
-                piste_client_id = '',
-                piste_client_secret = '',
-                chorus_pro_login = '',
-                chorus_pro_password = '',
-        )
-        """
 
-    def testFactureElectroniqueRestApiSchemasChorusProChorusProCredentials(self):
-        """Test FactureElectroniqueRestApiSchemasChorusProChorusProCredentials"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
-
-if __name__ == '__main__':
-    unittest.main()

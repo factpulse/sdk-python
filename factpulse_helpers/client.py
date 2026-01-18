@@ -4,16 +4,23 @@ FactPulse SDK - Thin HTTP wrapper with auto-polling.
 Usage:
     client = FactPulseClient("email", "password", "client_uid")
 
-    # POST /api/v1/processing/invoices/submit-complete-async
-    result = client.processing.invoices.submit_complete_async(
+    # Option 1: Explicit path (recommended)
+    result = client.post("processing/invoices/submit-complete-async",
         invoiceData={...},
         sourcePdf=base64.b64encode(pdf).decode(),
         destination={"type": "afnor"}
     )
     pdf_bytes = result["content"]  # auto-decoded, auto-polled
 
-    # GET /api/v1/chorus-pro/structures/123
-    structure = client.chorus_pro.structures["123"].get()
+    # Option 2: Dynamic endpoint builder
+    result = client.processing.invoices.submit_complete_async(
+        invoiceData={...},
+        sourcePdf=base64.b64encode(pdf).decode(),
+        destination={"type": "afnor"}
+    )
+
+    # GET request
+    structure = client.get("chorus-pro/structures/123")
 """
 import base64
 import threading
@@ -69,6 +76,14 @@ class FactPulseClient:
         if name.startswith("_"):
             raise AttributeError(name)
         return _Endpoint(self, name.replace("_", "-"))
+
+    def post(self, path: str, **data) -> Any:
+        """POST request to /api/v1/{path}"""
+        return self._do_request("POST", path, data, retry_auth=True)
+
+    def get(self, path: str, **params) -> Any:
+        """GET request to /api/v1/{path}"""
+        return self._do_request("GET", path, params, retry_auth=True)
 
     def _request(self, method: str, path: str, **kwargs) -> Any:
         return self._do_request(method, path, kwargs, retry_auth=True)

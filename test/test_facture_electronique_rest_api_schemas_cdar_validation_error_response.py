@@ -13,29 +13,45 @@
 """  # noqa: E501
 
 
-from __future__ import annotations
-import json
-from enum import Enum
-from typing_extensions import Self
+import unittest
 
+from factpulse.models.facture_electronique_rest_api_schemas_cdar_validation_error_response import FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
 
-class FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode(str, Enum):
-    """
-    Invoice type codes (UNTDID 1001).
-    """
+class TestFactureElectroniqueRestApiSchemasCdarValidationErrorResponse(unittest.TestCase):
+    """FactureElectroniqueRestApiSchemasCdarValidationErrorResponse unit test stubs"""
 
-    """
-    allowed enum values
-    """
-    ENUM_380 = '380'
-    ENUM_381 = '381'
-    ENUM_384 = '384'
-    ENUM_389 = '389'
-    ENUM_386 = '386'
+    def setUp(self):
+        pass
 
-    @classmethod
-    def from_json(cls, json_str: str) -> Self:
-        """Create an instance of FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode from a JSON string"""
-        return cls(json.loads(json_str))
+    def tearDown(self):
+        pass
 
+    def make_instance(self, include_optional) -> FactureElectroniqueRestApiSchemasCdarValidationErrorResponse:
+        """Test FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
+            include_optional is a boolean, when False only required
+            params are included, when True both required and
+            optional params are included """
+        # uncomment below to create an instance of `FactureElectroniqueRestApiSchemasCdarValidationErrorResponse`
+        """
+        model = FactureElectroniqueRestApiSchemasCdarValidationErrorResponse()
+        if include_optional:
+            return FactureElectroniqueRestApiSchemasCdarValidationErrorResponse(
+                var_field = '',
+                message = '',
+                rule = '',
+                severity = 'error'
+            )
+        else:
+            return FactureElectroniqueRestApiSchemasCdarValidationErrorResponse(
+                var_field = '',
+                message = '',
+        )
+        """
 
+    def testFactureElectroniqueRestApiSchemasCdarValidationErrorResponse(self):
+        """Test FactureElectroniqueRestApiSchemasCdarValidationErrorResponse"""
+        # inst_req_only = self.make_instance(include_optional=False)
+        # inst_req_and_optional = self.make_instance(include_optional=True)
+
+if __name__ == '__main__':
+    unittest.main()
