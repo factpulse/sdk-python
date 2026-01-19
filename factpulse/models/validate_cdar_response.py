@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.validation_error_response import ValidationErrorResponse
+from factpulse.models.facture_electronique_rest_api_schemas_cdar_validation_error_response import FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,8 +29,8 @@ class ValidateCDARResponse(BaseModel):
     Réponse de validation CDAR.
     """ # noqa: E501
     valid: StrictBool = Field(description="Résultat de validation")
-    errors: Optional[List[ValidationErrorResponse]] = Field(default=None, description="Liste des erreurs")
-    warnings: Optional[List[ValidationErrorResponse]] = Field(default=None, description="Liste des avertissements")
+    errors: Optional[List[FactureElectroniqueRestApiSchemasCdarValidationErrorResponse]] = Field(default=None, description="Liste des erreurs")
+    warnings: Optional[List[FactureElectroniqueRestApiSchemasCdarValidationErrorResponse]] = Field(default=None, description="Liste des avertissements")
     __properties: ClassVar[List[str]] = ["valid", "errors", "warnings"]
 
     model_config = ConfigDict(
@@ -99,8 +99,8 @@ class ValidateCDARResponse(BaseModel):
 
         _obj = cls.model_validate({
             "valid": obj.get("valid"),
-            "errors": [ValidationErrorResponse.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None,
-            "warnings": [ValidationErrorResponse.from_dict(_item) for _item in obj["warnings"]] if obj.get("warnings") is not None else None
+            "errors": [FactureElectroniqueRestApiSchemasCdarValidationErrorResponse.from_dict(_item) for _item in obj["errors"]] if obj.get("errors") is not None else None,
+            "warnings": [FactureElectroniqueRestApiSchemasCdarValidationErrorResponse.from_dict(_item) for _item in obj["warnings"]] if obj.get("warnings") is not None else None
         })
         return _obj
 

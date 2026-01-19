@@ -160,8 +160,8 @@ docs/ExtractionInfo.md
 docs/FacturXInvoice.md
 docs/FacturXPDFInfo.md
 docs/FactureElectroniqueModelsInvoiceTypeCode.md
+docs/FactureElectroniqueRestApiSchemasCdarValidationErrorResponse.md
 docs/FactureElectroniqueRestApiSchemasProcessingChorusProCredentials.md
-docs/FactureElectroniqueRestApiSchemasValidationValidationErrorResponse.md
 docs/FieldStatus.md
 docs/FileInfo.md
 docs/FilesInfo.md
@@ -476,8 +476,8 @@ factpulse/models/extraction_info.py
 factpulse/models/factur_x_invoice.py
 factpulse/models/factur_xpdf_info.py
 factpulse/models/facture_electronique_models_invoice_type_code.py
+factpulse/models/facture_electronique_rest_api_schemas_cdar_validation_error_response.py
 factpulse/models/facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
-factpulse/models/facture_electronique_rest_api_schemas_validation_validation_error_response.py
 factpulse/models/field_status.py
 factpulse/models/file_info.py
 factpulse/models/files_info.py
@@ -786,8 +786,8 @@ test/test_extraction_info.py
 test/test_factur_x_invoice.py
 test/test_factur_xpdf_info.py
 test/test_facture_electronique_models_invoice_type_code.py
+test/test_facture_electronique_rest_api_schemas_cdar_validation_error_response.py
 test/test_facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
-test/test_facture_electronique_rest_api_schemas_validation_validation_error_response.py
 test/test_field_status.py
 test/test_file_info.py
 test/test_files_info.py

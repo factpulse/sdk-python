@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "3.1.0"
+__version__ = "4.0.0"
 
 # Define package exports
 __all__ = [
@@ -188,8 +188,8 @@ __all__ = [
     "FacturXInvoice",
     "FacturXPDFInfo",
     "FactureElectroniqueModelsInvoiceTypeCode",
+    "FactureElectroniqueRestApiSchemasCdarValidationErrorResponse",
     "FactureElectroniqueRestApiSchemasProcessingChorusProCredentials",
-    "FactureElectroniqueRestApiSchemasValidationValidationErrorResponse",
     "FieldStatus",
     "FileInfo",
     "FilesInfo",
@@ -509,8 +509,8 @@ from factpulse.models.extraction_info import ExtractionInfo as ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
 from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode as FactureElectroniqueModelsInvoiceTypeCode
+from factpulse.models.facture_electronique_rest_api_schemas_cdar_validation_error_response import FactureElectroniqueRestApiSchemasCdarValidationErrorResponse as FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
 from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials as FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
-from factpulse.models.facture_electronique_rest_api_schemas_validation_validation_error_response import FactureElectroniqueRestApiSchemasValidationValidationErrorResponse as FactureElectroniqueRestApiSchemasValidationValidationErrorResponse
 from factpulse.models.field_status import FieldStatus as FieldStatus
 from factpulse.models.file_info import FileInfo as FileInfo
 from factpulse.models.files_info import FilesInfo as FilesInfo
