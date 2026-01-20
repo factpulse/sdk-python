@@ -24,7 +24,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from factpulse.models.buyercountry import Buyercountry
 from factpulse.models.currency import Currency
-from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
+from factpulse.models.invoice_type_code import InvoiceTypeCode
 from factpulse.models.sellercountry import Sellercountry
 from factpulse.models.tax_breakdown_input import TaxBreakdownInput
 from factpulse.models.taxamount1 import Taxamount1
@@ -38,7 +38,7 @@ class InvoiceInput(BaseModel):
     """ # noqa: E501
     invoice_id: StrictStr = Field(description="Invoice identifier", alias="invoiceId")
     issue_date: date = Field(description="Invoice issue date", alias="issueDate")
-    type_code: Optional[FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode] = Field(default=None, description="Invoice type code", alias="typeCode")
+    type_code: Optional[InvoiceTypeCode] = Field(default=None, description="Invoice type code", alias="typeCode")
     currency: Optional[Currency] = None
     due_date: Optional[date] = Field(default=None, alias="dueDate")
     seller_siren: StrictStr = Field(description="Seller SIREN/SIRET", alias="sellerSiren")
