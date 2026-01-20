@@ -15,10 +15,10 @@
 
 import unittest
 
-from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
 
-class TestFactureElectroniqueModelsInvoiceTypeCode(unittest.TestCase):
-    """FactureElectroniqueModelsInvoiceTypeCode unit test stubs"""
+class TestFactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode(unittest.TestCase):
+    """FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,9 +26,9 @@ class TestFactureElectroniqueModelsInvoiceTypeCode(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testFactureElectroniqueModelsInvoiceTypeCode(self):
-        """Test FactureElectroniqueModelsInvoiceTypeCode"""
-        # inst = FactureElectroniqueModelsInvoiceTypeCode()
+    def testFactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode(self):
+        """Test FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode"""
+        # inst = FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode()
 
 if __name__ == '__main__':
     unittest.main()

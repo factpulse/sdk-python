@@ -13,45 +13,29 @@
 """  # noqa: E501
 
 
-import unittest
+from __future__ import annotations
+import json
+from enum import Enum
+from typing_extensions import Self
 
-from factpulse.models.facture_electronique_rest_api_schemas_validation_validation_error_response import FactureElectroniqueRestApiSchemasValidationValidationErrorResponse
 
-class TestFactureElectroniqueRestApiSchemasValidationValidationErrorResponse(unittest.TestCase):
-    """FactureElectroniqueRestApiSchemasValidationValidationErrorResponse unit test stubs"""
+class FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode(str, Enum):
+    """
+    Invoice type codes (UNTDID 1001).
+    """
 
-    def setUp(self):
-        pass
+    """
+    allowed enum values
+    """
+    ENUM_380 = '380'
+    ENUM_381 = '381'
+    ENUM_384 = '384'
+    ENUM_389 = '389'
+    ENUM_386 = '386'
 
-    def tearDown(self):
-        pass
+    @classmethod
+    def from_json(cls, json_str: str) -> Self:
+        """Create an instance of FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode from a JSON string"""
+        return cls(json.loads(json_str))
 
-    def make_instance(self, include_optional) -> FactureElectroniqueRestApiSchemasValidationValidationErrorResponse:
-        """Test FactureElectroniqueRestApiSchemasValidationValidationErrorResponse
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        # uncomment below to create an instance of `FactureElectroniqueRestApiSchemasValidationValidationErrorResponse`
-        """
-        model = FactureElectroniqueRestApiSchemasValidationValidationErrorResponse()
-        if include_optional:
-            return FactureElectroniqueRestApiSchemasValidationValidationErrorResponse(
-                detail = [
-                    ''
-                    ]
-            )
-        else:
-            return FactureElectroniqueRestApiSchemasValidationValidationErrorResponse(
-                detail = [
-                    ''
-                    ],
-        )
-        """
 
-    def testFactureElectroniqueRestApiSchemasValidationValidationErrorResponse(self):
-        """Test FactureElectroniqueRestApiSchemasValidationValidationErrorResponse"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
-
-if __name__ == '__main__':
-    unittest.main()
