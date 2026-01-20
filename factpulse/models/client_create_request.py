@@ -14,39 +14,100 @@
 
 
 from __future__ import annotations
+import pprint
+import re  # noqa: F401
 import json
-from enum import Enum
+
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from typing_extensions import Annotated
+from typing import Optional, Set
 from typing_extensions import Self
 
+class ClientCreateRequest(BaseModel):
+    """
+    Client creation request.
+    """ # noqa: E501
+    name: Annotated[str, Field(min_length=1, strict=True, max_length=255)] = Field(description="Client name")
+    description: Optional[Annotated[str, Field(strict=True, max_length=1000)]] = None
+    siret: Optional[Annotated[str, Field(strict=True)]] = None
+    __properties: ClassVar[List[str]] = ["name", "description", "siret"]
 
-class FactureElectroniqueModelsInvoiceTypeCode(str, Enum):
-    """
-    Document type according to BR-FR-04 (UNTDID 1001 codes).  | Code | Name | Description | |------|------|-------------| | 380 | INVOICE | Commercial invoice | | 389 | SELF_BILLED_INVOICE | Self-billed invoice | | 393 | FACTORED_INVOICE | Factored invoice | | 501 | SELF_BILLED_FACTORED_INVOICE | Self-billed factored invoice | | 386 | PREPAYMENT_INVOICE | Prepayment invoice | | 500 | SELF_BILLED_PREPAYMENT_INVOICE | Self-billed prepayment invoice | | 384 | CORRECTIVE_INVOICE | Corrective invoice | | 471 | SELF_BILLED_CORRECTIVE_INVOICE | Self-billed corrective invoice | | 472 | FACTORED_CORRECTIVE_INVOICE | Factored corrective invoice | | 473 | SELF_BILLED_FACTORED_CORRECTIVE_INVOICE | Self-billed factored corrective invoice | | 381 | CREDIT_NOTE | Credit note | | 261 | SELF_BILLED_CREDIT_NOTE | Self-billed credit note | | 262 | GLOBAL_ALLOWANCE_CREDIT_NOTE | Credit note for global allowance | | 396 | FACTORED_CREDIT_NOTE | Factored credit note | | 502 | SELF_BILLED_FACTORED_CREDIT_NOTE | Self-billed factored credit note | | 503 | PREPAYMENT_CREDIT_NOTE | Credit note for prepayment invoice |
-    """
+    @field_validator('siret')
+    def siret_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
 
-    """
-    allowed enum values
-    """
-    INVOICE = '380'
-    SELF_BILLED_INVOICE = '389'
-    FACTORED_INVOICE = '393'
-    SELF_BILLED_FACTORED_INVOICE = '501'
-    PREPAYMENT_INVOICE = '386'
-    SELF_BILLED_PREPAYMENT_INVOICE = '500'
-    CORRECTIVE_INVOICE = '384'
-    SELF_BILLED_CORRECTIVE_INVOICE = '471'
-    FACTORED_CORRECTIVE_INVOICE = '472'
-    SELF_BILLED_FACTORED_CORRECTIVE_INVOICE = '473'
-    CREDIT_NOTE = '381'
-    SELF_BILLED_CREDIT_NOTE = '261'
-    GLOBAL_ALLOWANCE_CREDIT_NOTE = '262'
-    FACTORED_CREDIT_NOTE = '396'
-    SELF_BILLED_FACTORED_CREDIT_NOTE = '502'
-    PREPAYMENT_CREDIT_NOTE = '503'
+        if not re.match(r"^\d{14}$", value):
+            raise ValueError(r"must validate the regular expression /^\d{14}$/")
+        return value
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
+
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.model_dump(by_alias=True))
+
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
+        return json.dumps(self.to_dict())
 
     @classmethod
-    def from_json(cls, json_str: str) -> Self:
-        """Create an instance of FactureElectroniqueModelsInvoiceTypeCode from a JSON string"""
-        return cls(json.loads(json_str))
+    def from_json(cls, json_str: str) -> Optional[Self]:
+        """Create an instance of ClientCreateRequest from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
+        # set to None if description (nullable) is None
+        # and model_fields_set contains the field
+        if self.description is None and "description" in self.model_fields_set:
+            _dict['description'] = None
+
+        # set to None if siret (nullable) is None
+        # and model_fields_set contains the field
+        if self.siret is None and "siret" in self.model_fields_set:
+            _dict['siret'] = None
+
+        return _dict
+
+    @classmethod
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+        """Create an instance of ClientCreateRequest from a dict"""
+        if obj is None:
+            return None
+
+        if not isinstance(obj, dict):
+            return cls.model_validate(obj)
+
+        _obj = cls.model_validate({
+            "name": obj.get("name"),
+            "description": obj.get("description"),
+            "siret": obj.get("siret")
+        })
+        return _obj
 
 

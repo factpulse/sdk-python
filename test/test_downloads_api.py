@@ -34,22 +34,8 @@ class TestDownloadsApi(unittest.TestCase):
         """
         pass
 
-    def test_check_file_api_v1_download_download_id_head_0(self) -> None:
-        """Test case for check_file_api_v1_download_download_id_head_0
-
-        Check if a file exists
-        """
-        pass
-
     def test_download_file_api_v1_download_download_id_get(self) -> None:
         """Test case for download_file_api_v1_download_download_id_get
-
-        Download a temporary file
-        """
-        pass
-
-    def test_download_file_api_v1_download_download_id_get_0(self) -> None:
-        """Test case for download_file_api_v1_download_download_id_get_0
 
         Download a temporary file
         """

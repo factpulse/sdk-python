@@ -25,6 +25,10 @@ Name | Type | Description | Notes
 **action_code** | **str** |  | [optional] 
 **encaisse_amount** | [**Encaisseamount**](Encaisseamount.md) |  | [optional] 
 **flow_type** | **str** | Type de flux AFNOR (CustomerInvoiceLC, SupplierInvoiceLC, etc.) | [optional] [default to 'CustomerInvoiceLC']
+**pdp_flow_service_url** | **str** |  | [optional] 
+**pdp_token_url** | **str** |  | [optional] 
+**pdp_client_id** | **str** |  | [optional] 
+**pdp_client_secret** | **str** |  | [optional] 
 
 ## Example
 

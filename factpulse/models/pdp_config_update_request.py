@@ -13,48 +13,86 @@
 """  # noqa: E501
 
 
-import unittest
+from __future__ import annotations
+import pprint
+import re  # noqa: F401
+import json
 
-from factpulse.models.body_submit_cdar_xml_api_v1_cdar_submit_xml_post import BodySubmitCdarXmlApiV1CdarSubmitXmlPost
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Optional, Set
+from typing_extensions import Self
 
-class TestBodySubmitCdarXmlApiV1CdarSubmitXmlPost(unittest.TestCase):
-    """BodySubmitCdarXmlApiV1CdarSubmitXmlPost unit test stubs"""
+class PDPConfigUpdateRequest(BaseModel):
+    """
+    PDP configuration update request.
+    """ # noqa: E501
+    is_active: Optional[StrictBool] = Field(default=True, description="Whether config is active", alias="isActive")
+    mode_sandbox: Optional[StrictBool] = Field(default=False, description="Sandbox mode", alias="modeSandbox")
+    flow_service_url: StrictStr = Field(description="PDP Flow Service URL", alias="flowServiceUrl")
+    token_url: StrictStr = Field(description="PDP OAuth token URL", alias="tokenUrl")
+    oauth_client_id: StrictStr = Field(description="OAuth Client ID", alias="oauthClientId")
+    client_secret: StrictStr = Field(description="OAuth Client Secret (sent but never returned)", alias="clientSecret")
+    __properties: ClassVar[List[str]] = ["isActive", "modeSandbox", "flowServiceUrl", "tokenUrl", "oauthClientId", "clientSecret"]
 
-    def setUp(self):
-        pass
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
-    def tearDown(self):
-        pass
 
-    def make_instance(self, include_optional) -> BodySubmitCdarXmlApiV1CdarSubmitXmlPost:
-        """Test BodySubmitCdarXmlApiV1CdarSubmitXmlPost
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        # uncomment below to create an instance of `BodySubmitCdarXmlApiV1CdarSubmitXmlPost`
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.model_dump(by_alias=True))
+
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
+        return json.dumps(self.to_dict())
+
+    @classmethod
+    def from_json(cls, json_str: str) -> Optional[Self]:
+        """Create an instance of PDPConfigUpdateRequest from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
         """
-        model = BodySubmitCdarXmlApiV1CdarSubmitXmlPost()
-        if include_optional:
-            return BodySubmitCdarXmlApiV1CdarSubmitXmlPost(
-                request = factpulse.models.submit_cdarxml_request.SubmitCDARXMLRequest(
-                    xml = '', 
-                    flow_type = 'CustomerInvoiceLC', 
-                    filename = '', ),
-                pdp_credentials = {"clientId":"factpulse_prod_abc123","clientSecret":"secret_xyz789","directoryServiceUrl":"https://api.pdp-example.fr/directory/v1","flowServiceUrl":"https://api.pdp-example.fr/flow/v1","tokenUrl":"https://auth.pdp-example.fr/oauth/token"}
-            )
-        else:
-            return BodySubmitCdarXmlApiV1CdarSubmitXmlPost(
-                request = factpulse.models.submit_cdarxml_request.SubmitCDARXMLRequest(
-                    xml = '', 
-                    flow_type = 'CustomerInvoiceLC', 
-                    filename = '', ),
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
         )
-        """
+        return _dict
 
-    def testBodySubmitCdarXmlApiV1CdarSubmitXmlPost(self):
-        """Test BodySubmitCdarXmlApiV1CdarSubmitXmlPost"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+    @classmethod
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+        """Create an instance of PDPConfigUpdateRequest from a dict"""
+        if obj is None:
+            return None
 
-if __name__ == '__main__':
-    unittest.main()
+        if not isinstance(obj, dict):
+            return cls.model_validate(obj)
+
+        _obj = cls.model_validate({
+            "isActive": obj.get("isActive") if obj.get("isActive") is not None else True,
+            "modeSandbox": obj.get("modeSandbox") if obj.get("modeSandbox") is not None else False,
+            "flowServiceUrl": obj.get("flowServiceUrl"),
+            "tokenUrl": obj.get("tokenUrl"),
+            "oauthClientId": obj.get("oauthClientId"),
+            "clientSecret": obj.get("clientSecret")
+        })
+        return _obj
+
+

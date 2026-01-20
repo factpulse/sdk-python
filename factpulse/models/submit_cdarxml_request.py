@@ -30,7 +30,11 @@ class SubmitCDARXMLRequest(BaseModel):
     xml: StrictStr = Field(description="XML CDAR à soumettre")
     flow_type: Optional[StrictStr] = Field(default='CustomerInvoiceLC', description="Type de flux AFNOR", alias="flowType")
     filename: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["xml", "flowType", "filename"]
+    pdp_flow_service_url: Optional[StrictStr] = Field(default=None, alias="pdpFlowServiceUrl")
+    pdp_token_url: Optional[StrictStr] = Field(default=None, alias="pdpTokenUrl")
+    pdp_client_id: Optional[StrictStr] = Field(default=None, alias="pdpClientId")
+    pdp_client_secret: Optional[StrictStr] = Field(default=None, alias="pdpClientSecret")
+    __properties: ClassVar[List[str]] = ["xml", "flowType", "filename", "pdpFlowServiceUrl", "pdpTokenUrl", "pdpClientId", "pdpClientSecret"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -76,6 +80,26 @@ class SubmitCDARXMLRequest(BaseModel):
         if self.filename is None and "filename" in self.model_fields_set:
             _dict['filename'] = None
 
+        # set to None if pdp_flow_service_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.pdp_flow_service_url is None and "pdp_flow_service_url" in self.model_fields_set:
+            _dict['pdpFlowServiceUrl'] = None
+
+        # set to None if pdp_token_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.pdp_token_url is None and "pdp_token_url" in self.model_fields_set:
+            _dict['pdpTokenUrl'] = None
+
+        # set to None if pdp_client_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.pdp_client_id is None and "pdp_client_id" in self.model_fields_set:
+            _dict['pdpClientId'] = None
+
+        # set to None if pdp_client_secret (nullable) is None
+        # and model_fields_set contains the field
+        if self.pdp_client_secret is None and "pdp_client_secret" in self.model_fields_set:
+            _dict['pdpClientSecret'] = None
+
         return _dict
 
     @classmethod
@@ -90,7 +114,11 @@ class SubmitCDARXMLRequest(BaseModel):
         _obj = cls.model_validate({
             "xml": obj.get("xml"),
             "flowType": obj.get("flowType") if obj.get("flowType") is not None else 'CustomerInvoiceLC',
-            "filename": obj.get("filename")
+            "filename": obj.get("filename"),
+            "pdpFlowServiceUrl": obj.get("pdpFlowServiceUrl"),
+            "pdpTokenUrl": obj.get("pdpTokenUrl"),
+            "pdpClientId": obj.get("pdpClientId"),
+            "pdpClientSecret": obj.get("pdpClientSecret")
         })
         return _obj
 

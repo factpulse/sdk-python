@@ -17,16 +17,17 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import StrictInt, StrictStr
-from typing import Optional
 from factpulse.models.action_codes_response import ActionCodesResponse
-from factpulse.models.body_submit_cdar_api_v1_cdar_submit_post import BodySubmitCdarApiV1CdarSubmitPost
-from factpulse.models.body_submit_cdar_xml_api_v1_cdar_submit_xml_post import BodySubmitCdarXmlApiV1CdarSubmitXmlPost
 from factpulse.models.create_cdar_request import CreateCDARRequest
+from factpulse.models.encaissee_request import EncaisseeRequest
 from factpulse.models.generate_cdar_response import GenerateCDARResponse
 from factpulse.models.reason_codes_response import ReasonCodesResponse
+from factpulse.models.refusee_request import RefuseeRequest
+from factpulse.models.simplified_cdar_response import SimplifiedCDARResponse
 from factpulse.models.status_codes_response import StatusCodesResponse
+from factpulse.models.submit_cdar_request import SubmitCDARRequest
 from factpulse.models.submit_cdar_response import SubmitCDARResponse
+from factpulse.models.submit_cdarxml_request import SubmitCDARXMLRequest
 from factpulse.models.validate_cdar_request import ValidateCDARRequest
 from factpulse.models.validate_cdar_response import ValidateCDARResponse
 
@@ -1099,10 +1100,7 @@ class CDARCycleDeVieApi:
     @validate_call
     def submit_cdar_api_v1_cdar_submit_post(
         self,
-        user_id: StrictInt,
-        body_submit_cdar_api_v1_cdar_submit_post: BodySubmitCdarApiV1CdarSubmitPost,
-        jwt_token: Optional[StrictStr] = None,
-        client_uid: Optional[StrictStr] = None,
+        submit_cdar_request: SubmitCDARRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1118,16 +1116,10 @@ class CDARCycleDeVieApi:
     ) -> SubmitCDARResponse:
         """Générer et soumettre un message CDAR
 
-        Génère un message CDAR et le soumet à la plateforme PA/PDP.  Nécessite une authentification AFNOR valide.  **Types de flux (flowType):** - `CustomerInvoiceLC`: Cycle de vie côté client (acheteur) - `SupplierInvoiceLC`: Cycle de vie côté fournisseur (vendeur)
+        Génère un message CDAR et le soumet à la plateforme PA/PDP.  **Stratégies d'authentification:** 1. **JWT avec client_uid** (recommandé): credentials PDP récupérés du backend 2. **Zero-storage**: Fournir pdpFlowServiceUrl, pdpClientId, pdpClientSecret dans la requête  **Types de flux (flowType):** - `CustomerInvoiceLC`: Cycle de vie côté client (acheteur) - `SupplierInvoiceLC`: Cycle de vie côté fournisseur (vendeur)
 
-        :param user_id: (required)
-        :type user_id: int
-        :param body_submit_cdar_api_v1_cdar_submit_post: (required)
-        :type body_submit_cdar_api_v1_cdar_submit_post: BodySubmitCdarApiV1CdarSubmitPost
-        :param jwt_token:
-        :type jwt_token: str
-        :param client_uid:
-        :type client_uid: str
+        :param submit_cdar_request: (required)
+        :type submit_cdar_request: SubmitCDARRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1151,10 +1143,7 @@ class CDARCycleDeVieApi:
         """ # noqa: E501
 
         _param = self._submit_cdar_api_v1_cdar_submit_post_serialize(
-            user_id=user_id,
-            body_submit_cdar_api_v1_cdar_submit_post=body_submit_cdar_api_v1_cdar_submit_post,
-            jwt_token=jwt_token,
-            client_uid=client_uid,
+            submit_cdar_request=submit_cdar_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1182,10 +1171,7 @@ class CDARCycleDeVieApi:
     @validate_call
     def submit_cdar_api_v1_cdar_submit_post_with_http_info(
         self,
-        user_id: StrictInt,
-        body_submit_cdar_api_v1_cdar_submit_post: BodySubmitCdarApiV1CdarSubmitPost,
-        jwt_token: Optional[StrictStr] = None,
-        client_uid: Optional[StrictStr] = None,
+        submit_cdar_request: SubmitCDARRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1201,16 +1187,10 @@ class CDARCycleDeVieApi:
     ) -> ApiResponse[SubmitCDARResponse]:
         """Générer et soumettre un message CDAR
 
-        Génère un message CDAR et le soumet à la plateforme PA/PDP.  Nécessite une authentification AFNOR valide.  **Types de flux (flowType):** - `CustomerInvoiceLC`: Cycle de vie côté client (acheteur) - `SupplierInvoiceLC`: Cycle de vie côté fournisseur (vendeur)
+        Génère un message CDAR et le soumet à la plateforme PA/PDP.  **Stratégies d'authentification:** 1. **JWT avec client_uid** (recommandé): credentials PDP récupérés du backend 2. **Zero-storage**: Fournir pdpFlowServiceUrl, pdpClientId, pdpClientSecret dans la requête  **Types de flux (flowType):** - `CustomerInvoiceLC`: Cycle de vie côté client (acheteur) - `SupplierInvoiceLC`: Cycle de vie côté fournisseur (vendeur)
 
-        :param user_id: (required)
-        :type user_id: int
-        :param body_submit_cdar_api_v1_cdar_submit_post: (required)
-        :type body_submit_cdar_api_v1_cdar_submit_post: BodySubmitCdarApiV1CdarSubmitPost
-        :param jwt_token:
-        :type jwt_token: str
-        :param client_uid:
-        :type client_uid: str
+        :param submit_cdar_request: (required)
+        :type submit_cdar_request: SubmitCDARRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1234,10 +1214,7 @@ class CDARCycleDeVieApi:
         """ # noqa: E501
 
         _param = self._submit_cdar_api_v1_cdar_submit_post_serialize(
-            user_id=user_id,
-            body_submit_cdar_api_v1_cdar_submit_post=body_submit_cdar_api_v1_cdar_submit_post,
-            jwt_token=jwt_token,
-            client_uid=client_uid,
+            submit_cdar_request=submit_cdar_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1265,10 +1242,7 @@ class CDARCycleDeVieApi:
     @validate_call
     def submit_cdar_api_v1_cdar_submit_post_without_preload_content(
         self,
-        user_id: StrictInt,
-        body_submit_cdar_api_v1_cdar_submit_post: BodySubmitCdarApiV1CdarSubmitPost,
-        jwt_token: Optional[StrictStr] = None,
-        client_uid: Optional[StrictStr] = None,
+        submit_cdar_request: SubmitCDARRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1284,16 +1258,10 @@ class CDARCycleDeVieApi:
     ) -> RESTResponseType:
         """Générer et soumettre un message CDAR
 
-        Génère un message CDAR et le soumet à la plateforme PA/PDP.  Nécessite une authentification AFNOR valide.  **Types de flux (flowType):** - `CustomerInvoiceLC`: Cycle de vie côté client (acheteur) - `SupplierInvoiceLC`: Cycle de vie côté fournisseur (vendeur)
+        Génère un message CDAR et le soumet à la plateforme PA/PDP.  **Stratégies d'authentification:** 1. **JWT avec client_uid** (recommandé): credentials PDP récupérés du backend 2. **Zero-storage**: Fournir pdpFlowServiceUrl, pdpClientId, pdpClientSecret dans la requête  **Types de flux (flowType):** - `CustomerInvoiceLC`: Cycle de vie côté client (acheteur) - `SupplierInvoiceLC`: Cycle de vie côté fournisseur (vendeur)
 
-        :param user_id: (required)
-        :type user_id: int
-        :param body_submit_cdar_api_v1_cdar_submit_post: (required)
-        :type body_submit_cdar_api_v1_cdar_submit_post: BodySubmitCdarApiV1CdarSubmitPost
-        :param jwt_token:
-        :type jwt_token: str
-        :param client_uid:
-        :type client_uid: str
+        :param submit_cdar_request: (required)
+        :type submit_cdar_request: SubmitCDARRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1317,10 +1285,7 @@ class CDARCycleDeVieApi:
         """ # noqa: E501
 
         _param = self._submit_cdar_api_v1_cdar_submit_post_serialize(
-            user_id=user_id,
-            body_submit_cdar_api_v1_cdar_submit_post=body_submit_cdar_api_v1_cdar_submit_post,
-            jwt_token=jwt_token,
-            client_uid=client_uid,
+            submit_cdar_request=submit_cdar_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1343,10 +1308,7 @@ class CDARCycleDeVieApi:
 
     def _submit_cdar_api_v1_cdar_submit_post_serialize(
         self,
-        user_id,
-        body_submit_cdar_api_v1_cdar_submit_post,
-        jwt_token,
-        client_uid,
+        submit_cdar_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1369,23 +1331,11 @@ class CDARCycleDeVieApi:
 
         # process the path parameters
         # process the query parameters
-        if user_id is not None:
-            
-            _query_params.append(('user_id', user_id))
-            
-        if jwt_token is not None:
-            
-            _query_params.append(('jwt_token', jwt_token))
-            
-        if client_uid is not None:
-            
-            _query_params.append(('client_uid', client_uid))
-            
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body_submit_cdar_api_v1_cdar_submit_post is not None:
-            _body_params = body_submit_cdar_api_v1_cdar_submit_post
+        if submit_cdar_request is not None:
+            _body_params = submit_cdar_request
 
 
         # set the HTTP header `Accept`
@@ -1436,10 +1386,7 @@ class CDARCycleDeVieApi:
     @validate_call
     def submit_cdar_xml_api_v1_cdar_submit_xml_post(
         self,
-        user_id: StrictInt,
-        body_submit_cdar_xml_api_v1_cdar_submit_xml_post: BodySubmitCdarXmlApiV1CdarSubmitXmlPost,
-        jwt_token: Optional[StrictStr] = None,
-        client_uid: Optional[StrictStr] = None,
+        submit_cdarxml_request: SubmitCDARXMLRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1455,16 +1402,10 @@ class CDARCycleDeVieApi:
     ) -> SubmitCDARResponse:
         """Soumettre un XML CDAR pré-généré
 
-        Soumet un message XML CDAR pré-généré à la plateforme PA/PDP.  Utile pour soumettre des XML générés par d'autres systèmes.
+        Soumet un message XML CDAR pré-généré à la plateforme PA/PDP.  Utile pour soumettre des XML générés par d'autres systèmes.  **Stratégies d'authentification:** 1. **JWT avec client_uid** (recommandé): credentials PDP récupérés du backend 2. **Zero-storage**: Fournir pdpFlowServiceUrl, pdpClientId, pdpClientSecret dans la requête
 
-        :param user_id: (required)
-        :type user_id: int
-        :param body_submit_cdar_xml_api_v1_cdar_submit_xml_post: (required)
-        :type body_submit_cdar_xml_api_v1_cdar_submit_xml_post: BodySubmitCdarXmlApiV1CdarSubmitXmlPost
-        :param jwt_token:
-        :type jwt_token: str
-        :param client_uid:
-        :type client_uid: str
+        :param submit_cdarxml_request: (required)
+        :type submit_cdarxml_request: SubmitCDARXMLRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1488,10 +1429,7 @@ class CDARCycleDeVieApi:
         """ # noqa: E501
 
         _param = self._submit_cdar_xml_api_v1_cdar_submit_xml_post_serialize(
-            user_id=user_id,
-            body_submit_cdar_xml_api_v1_cdar_submit_xml_post=body_submit_cdar_xml_api_v1_cdar_submit_xml_post,
-            jwt_token=jwt_token,
-            client_uid=client_uid,
+            submit_cdarxml_request=submit_cdarxml_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1519,10 +1457,7 @@ class CDARCycleDeVieApi:
     @validate_call
     def submit_cdar_xml_api_v1_cdar_submit_xml_post_with_http_info(
         self,
-        user_id: StrictInt,
-        body_submit_cdar_xml_api_v1_cdar_submit_xml_post: BodySubmitCdarXmlApiV1CdarSubmitXmlPost,
-        jwt_token: Optional[StrictStr] = None,
-        client_uid: Optional[StrictStr] = None,
+        submit_cdarxml_request: SubmitCDARXMLRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1538,16 +1473,10 @@ class CDARCycleDeVieApi:
     ) -> ApiResponse[SubmitCDARResponse]:
         """Soumettre un XML CDAR pré-généré
 
-        Soumet un message XML CDAR pré-généré à la plateforme PA/PDP.  Utile pour soumettre des XML générés par d'autres systèmes.
+        Soumet un message XML CDAR pré-généré à la plateforme PA/PDP.  Utile pour soumettre des XML générés par d'autres systèmes.  **Stratégies d'authentification:** 1. **JWT avec client_uid** (recommandé): credentials PDP récupérés du backend 2. **Zero-storage**: Fournir pdpFlowServiceUrl, pdpClientId, pdpClientSecret dans la requête
 
-        :param user_id: (required)
-        :type user_id: int
-        :param body_submit_cdar_xml_api_v1_cdar_submit_xml_post: (required)
-        :type body_submit_cdar_xml_api_v1_cdar_submit_xml_post: BodySubmitCdarXmlApiV1CdarSubmitXmlPost
-        :param jwt_token:
-        :type jwt_token: str
-        :param client_uid:
-        :type client_uid: str
+        :param submit_cdarxml_request: (required)
+        :type submit_cdarxml_request: SubmitCDARXMLRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1571,10 +1500,7 @@ class CDARCycleDeVieApi:
         """ # noqa: E501
 
         _param = self._submit_cdar_xml_api_v1_cdar_submit_xml_post_serialize(
-            user_id=user_id,
-            body_submit_cdar_xml_api_v1_cdar_submit_xml_post=body_submit_cdar_xml_api_v1_cdar_submit_xml_post,
-            jwt_token=jwt_token,
-            client_uid=client_uid,
+            submit_cdarxml_request=submit_cdarxml_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1602,10 +1528,7 @@ class CDARCycleDeVieApi:
     @validate_call
     def submit_cdar_xml_api_v1_cdar_submit_xml_post_without_preload_content(
         self,
-        user_id: StrictInt,
-        body_submit_cdar_xml_api_v1_cdar_submit_xml_post: BodySubmitCdarXmlApiV1CdarSubmitXmlPost,
-        jwt_token: Optional[StrictStr] = None,
-        client_uid: Optional[StrictStr] = None,
+        submit_cdarxml_request: SubmitCDARXMLRequest,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1621,16 +1544,10 @@ class CDARCycleDeVieApi:
     ) -> RESTResponseType:
         """Soumettre un XML CDAR pré-généré
 
-        Soumet un message XML CDAR pré-généré à la plateforme PA/PDP.  Utile pour soumettre des XML générés par d'autres systèmes.
+        Soumet un message XML CDAR pré-généré à la plateforme PA/PDP.  Utile pour soumettre des XML générés par d'autres systèmes.  **Stratégies d'authentification:** 1. **JWT avec client_uid** (recommandé): credentials PDP récupérés du backend 2. **Zero-storage**: Fournir pdpFlowServiceUrl, pdpClientId, pdpClientSecret dans la requête
 
-        :param user_id: (required)
-        :type user_id: int
-        :param body_submit_cdar_xml_api_v1_cdar_submit_xml_post: (required)
-        :type body_submit_cdar_xml_api_v1_cdar_submit_xml_post: BodySubmitCdarXmlApiV1CdarSubmitXmlPost
-        :param jwt_token:
-        :type jwt_token: str
-        :param client_uid:
-        :type client_uid: str
+        :param submit_cdarxml_request: (required)
+        :type submit_cdarxml_request: SubmitCDARXMLRequest
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1654,10 +1571,7 @@ class CDARCycleDeVieApi:
         """ # noqa: E501
 
         _param = self._submit_cdar_xml_api_v1_cdar_submit_xml_post_serialize(
-            user_id=user_id,
-            body_submit_cdar_xml_api_v1_cdar_submit_xml_post=body_submit_cdar_xml_api_v1_cdar_submit_xml_post,
-            jwt_token=jwt_token,
-            client_uid=client_uid,
+            submit_cdarxml_request=submit_cdarxml_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1680,10 +1594,7 @@ class CDARCycleDeVieApi:
 
     def _submit_cdar_xml_api_v1_cdar_submit_xml_post_serialize(
         self,
-        user_id,
-        body_submit_cdar_xml_api_v1_cdar_submit_xml_post,
-        jwt_token,
-        client_uid,
+        submit_cdarxml_request,
         _request_auth,
         _content_type,
         _headers,
@@ -1706,23 +1617,11 @@ class CDARCycleDeVieApi:
 
         # process the path parameters
         # process the query parameters
-        if user_id is not None:
-            
-            _query_params.append(('user_id', user_id))
-            
-        if jwt_token is not None:
-            
-            _query_params.append(('jwt_token', jwt_token))
-            
-        if client_uid is not None:
-            
-            _query_params.append(('client_uid', client_uid))
-            
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if body_submit_cdar_xml_api_v1_cdar_submit_xml_post is not None:
-            _body_params = body_submit_cdar_xml_api_v1_cdar_submit_xml_post
+        if submit_cdarxml_request is not None:
+            _body_params = submit_cdarxml_request
 
 
         # set the HTTP header `Accept`
@@ -1755,6 +1654,578 @@ class CDARCycleDeVieApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/api/v1/cdar/submit-xml',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def submit_encaissee_api_v1_cdar_encaissee_post(
+        self,
+        encaissee_request: EncaisseeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> SimplifiedCDARResponse:
+        """[Simplifié] Soumettre un statut ENCAISSÉE (212)
+
+        **Endpoint simplifié pour OD** - Soumet un statut ENCAISSÉE (212) pour une facture.  Ce statut est **obligatoire pour le PPF** (BR-FR-CDV-14 requiert le montant encaissé).  **Cas d'usage:** L'acheteur confirme le paiement d'une facture.  **Authentification:** JWT Bearer (recommandé) ou credentials PDP dans la requête.
+
+        :param encaissee_request: (required)
+        :type encaissee_request: EncaisseeRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._submit_encaissee_api_v1_cdar_encaissee_post_serialize(
+            encaissee_request=encaissee_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SimplifiedCDARResponse",
+            '400': None,
+            '422': None,
+            '500': None,
+            '401': "APIError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def submit_encaissee_api_v1_cdar_encaissee_post_with_http_info(
+        self,
+        encaissee_request: EncaisseeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[SimplifiedCDARResponse]:
+        """[Simplifié] Soumettre un statut ENCAISSÉE (212)
+
+        **Endpoint simplifié pour OD** - Soumet un statut ENCAISSÉE (212) pour une facture.  Ce statut est **obligatoire pour le PPF** (BR-FR-CDV-14 requiert le montant encaissé).  **Cas d'usage:** L'acheteur confirme le paiement d'une facture.  **Authentification:** JWT Bearer (recommandé) ou credentials PDP dans la requête.
+
+        :param encaissee_request: (required)
+        :type encaissee_request: EncaisseeRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._submit_encaissee_api_v1_cdar_encaissee_post_serialize(
+            encaissee_request=encaissee_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SimplifiedCDARResponse",
+            '400': None,
+            '422': None,
+            '500': None,
+            '401': "APIError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def submit_encaissee_api_v1_cdar_encaissee_post_without_preload_content(
+        self,
+        encaissee_request: EncaisseeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """[Simplifié] Soumettre un statut ENCAISSÉE (212)
+
+        **Endpoint simplifié pour OD** - Soumet un statut ENCAISSÉE (212) pour une facture.  Ce statut est **obligatoire pour le PPF** (BR-FR-CDV-14 requiert le montant encaissé).  **Cas d'usage:** L'acheteur confirme le paiement d'une facture.  **Authentification:** JWT Bearer (recommandé) ou credentials PDP dans la requête.
+
+        :param encaissee_request: (required)
+        :type encaissee_request: EncaisseeRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._submit_encaissee_api_v1_cdar_encaissee_post_serialize(
+            encaissee_request=encaissee_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SimplifiedCDARResponse",
+            '400': None,
+            '422': None,
+            '500': None,
+            '401': "APIError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _submit_encaissee_api_v1_cdar_encaissee_post_serialize(
+        self,
+        encaissee_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if encaissee_request is not None:
+            _body_params = encaissee_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'HTTPBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/api/v1/cdar/encaissee',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def submit_refusee_api_v1_cdar_refusee_post(
+        self,
+        refusee_request: RefuseeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> SimplifiedCDARResponse:
+        """[Simplifié] Soumettre un statut REFUSÉE (210)
+
+        **Endpoint simplifié pour OD** - Soumet un statut REFUSÉE (210) pour une facture.  Ce statut est **obligatoire pour le PPF** (BR-FR-CDV-15 requiert un code motif).  **Cas d'usage:** L'acheteur refuse une facture reçue.  **Codes motif autorisés (BR-FR-CDV-CL-09):** - `TX_TVA_ERR`: Taux de TVA erroné - `MONTANTTOTAL_ERR`: Montant total erroné - `CALCUL_ERR`: Erreur de calcul - `NON_CONFORME`: Non conforme - `DOUBLON`: Doublon - `DEST_ERR`: Destinataire erroné - `TRANSAC_INC`: Transaction incomplète - `EMMET_INC`: Émetteur inconnu - `CONTRAT_TERM`: Contrat terminé - `DOUBLE_FACT`: Double facturation - `CMD_ERR`: Commande erronée - `ADR_ERR`: Adresse erronée - `REF_CT_ABSENT`: Référence contrat absente  **Authentification:** JWT Bearer (recommandé) ou credentials PDP dans la requête.
+
+        :param refusee_request: (required)
+        :type refusee_request: RefuseeRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._submit_refusee_api_v1_cdar_refusee_post_serialize(
+            refusee_request=refusee_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SimplifiedCDARResponse",
+            '400': None,
+            '422': None,
+            '500': None,
+            '401': "APIError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def submit_refusee_api_v1_cdar_refusee_post_with_http_info(
+        self,
+        refusee_request: RefuseeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[SimplifiedCDARResponse]:
+        """[Simplifié] Soumettre un statut REFUSÉE (210)
+
+        **Endpoint simplifié pour OD** - Soumet un statut REFUSÉE (210) pour une facture.  Ce statut est **obligatoire pour le PPF** (BR-FR-CDV-15 requiert un code motif).  **Cas d'usage:** L'acheteur refuse une facture reçue.  **Codes motif autorisés (BR-FR-CDV-CL-09):** - `TX_TVA_ERR`: Taux de TVA erroné - `MONTANTTOTAL_ERR`: Montant total erroné - `CALCUL_ERR`: Erreur de calcul - `NON_CONFORME`: Non conforme - `DOUBLON`: Doublon - `DEST_ERR`: Destinataire erroné - `TRANSAC_INC`: Transaction incomplète - `EMMET_INC`: Émetteur inconnu - `CONTRAT_TERM`: Contrat terminé - `DOUBLE_FACT`: Double facturation - `CMD_ERR`: Commande erronée - `ADR_ERR`: Adresse erronée - `REF_CT_ABSENT`: Référence contrat absente  **Authentification:** JWT Bearer (recommandé) ou credentials PDP dans la requête.
+
+        :param refusee_request: (required)
+        :type refusee_request: RefuseeRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._submit_refusee_api_v1_cdar_refusee_post_serialize(
+            refusee_request=refusee_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SimplifiedCDARResponse",
+            '400': None,
+            '422': None,
+            '500': None,
+            '401': "APIError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def submit_refusee_api_v1_cdar_refusee_post_without_preload_content(
+        self,
+        refusee_request: RefuseeRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """[Simplifié] Soumettre un statut REFUSÉE (210)
+
+        **Endpoint simplifié pour OD** - Soumet un statut REFUSÉE (210) pour une facture.  Ce statut est **obligatoire pour le PPF** (BR-FR-CDV-15 requiert un code motif).  **Cas d'usage:** L'acheteur refuse une facture reçue.  **Codes motif autorisés (BR-FR-CDV-CL-09):** - `TX_TVA_ERR`: Taux de TVA erroné - `MONTANTTOTAL_ERR`: Montant total erroné - `CALCUL_ERR`: Erreur de calcul - `NON_CONFORME`: Non conforme - `DOUBLON`: Doublon - `DEST_ERR`: Destinataire erroné - `TRANSAC_INC`: Transaction incomplète - `EMMET_INC`: Émetteur inconnu - `CONTRAT_TERM`: Contrat terminé - `DOUBLE_FACT`: Double facturation - `CMD_ERR`: Commande erronée - `ADR_ERR`: Adresse erronée - `REF_CT_ABSENT`: Référence contrat absente  **Authentification:** JWT Bearer (recommandé) ou credentials PDP dans la requête.
+
+        :param refusee_request: (required)
+        :type refusee_request: RefuseeRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._submit_refusee_api_v1_cdar_refusee_post_serialize(
+            refusee_request=refusee_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SimplifiedCDARResponse",
+            '400': None,
+            '422': None,
+            '500': None,
+            '401': "APIError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _submit_refusee_api_v1_cdar_refusee_post_serialize(
+        self,
+        refusee_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if refusee_request is not None:
+            _body_params = refusee_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'HTTPBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/api/v1/cdar/refusee',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

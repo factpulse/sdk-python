@@ -9,6 +9,10 @@ Name | Type | Description | Notes
 **xml** | **str** | XML CDAR à soumettre | 
 **flow_type** | **str** | Type de flux AFNOR | [optional] [default to 'CustomerInvoiceLC']
 **filename** | **str** |  | [optional] 
+**pdp_flow_service_url** | **str** |  | [optional] 
+**pdp_token_url** | **str** |  | [optional] 
+**pdp_client_id** | **str** |  | [optional] 
+**pdp_client_secret** | **str** |  | [optional] 
 
 ## Example
 

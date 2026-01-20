@@ -49,7 +49,11 @@ class SubmitCDARRequest(BaseModel):
     action_code: Optional[StrictStr] = Field(default=None, alias="actionCode")
     encaisse_amount: Optional[Encaisseamount] = Field(default=None, alias="encaisseAmount")
     flow_type: Optional[StrictStr] = Field(default='CustomerInvoiceLC', description="Type de flux AFNOR (CustomerInvoiceLC, SupplierInvoiceLC, etc.)", alias="flowType")
-    __properties: ClassVar[List[str]] = ["documentId", "businessProcess", "typeCode", "senderSiren", "senderRole", "senderName", "senderEmail", "recipients", "invoiceId", "invoiceIssueDate", "invoiceTypeCode", "invoiceSellerSiren", "invoiceBuyerSiren", "status", "reasonCode", "reasonText", "actionCode", "encaisseAmount", "flowType"]
+    pdp_flow_service_url: Optional[StrictStr] = Field(default=None, alias="pdpFlowServiceUrl")
+    pdp_token_url: Optional[StrictStr] = Field(default=None, alias="pdpTokenUrl")
+    pdp_client_id: Optional[StrictStr] = Field(default=None, alias="pdpClientId")
+    pdp_client_secret: Optional[StrictStr] = Field(default=None, alias="pdpClientSecret")
+    __properties: ClassVar[List[str]] = ["documentId", "businessProcess", "typeCode", "senderSiren", "senderRole", "senderName", "senderEmail", "recipients", "invoiceId", "invoiceIssueDate", "invoiceTypeCode", "invoiceSellerSiren", "invoiceBuyerSiren", "status", "reasonCode", "reasonText", "actionCode", "encaisseAmount", "flowType", "pdpFlowServiceUrl", "pdpTokenUrl", "pdpClientId", "pdpClientSecret"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -140,6 +144,26 @@ class SubmitCDARRequest(BaseModel):
         if self.encaisse_amount is None and "encaisse_amount" in self.model_fields_set:
             _dict['encaisseAmount'] = None
 
+        # set to None if pdp_flow_service_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.pdp_flow_service_url is None and "pdp_flow_service_url" in self.model_fields_set:
+            _dict['pdpFlowServiceUrl'] = None
+
+        # set to None if pdp_token_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.pdp_token_url is None and "pdp_token_url" in self.model_fields_set:
+            _dict['pdpTokenUrl'] = None
+
+        # set to None if pdp_client_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.pdp_client_id is None and "pdp_client_id" in self.model_fields_set:
+            _dict['pdpClientId'] = None
+
+        # set to None if pdp_client_secret (nullable) is None
+        # and model_fields_set contains the field
+        if self.pdp_client_secret is None and "pdp_client_secret" in self.model_fields_set:
+            _dict['pdpClientSecret'] = None
+
         return _dict
 
     @classmethod
@@ -170,7 +194,11 @@ class SubmitCDARRequest(BaseModel):
             "reasonText": obj.get("reasonText"),
             "actionCode": obj.get("actionCode"),
             "encaisseAmount": Encaisseamount.from_dict(obj["encaisseAmount"]) if obj.get("encaisseAmount") is not None else None,
-            "flowType": obj.get("flowType") if obj.get("flowType") is not None else 'CustomerInvoiceLC'
+            "flowType": obj.get("flowType") if obj.get("flowType") is not None else 'CustomerInvoiceLC',
+            "pdpFlowServiceUrl": obj.get("pdpFlowServiceUrl"),
+            "pdpTokenUrl": obj.get("pdpTokenUrl"),
+            "pdpClientId": obj.get("pdpClientId"),
+            "pdpClientSecret": obj.get("pdpClientSecret")
         })
         return _obj
 

@@ -21,7 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.allowance_charge_reason_code import AllowanceChargeReasonCode
-from factpulse.models.amount1 import Amount1
+from factpulse.models.amount2 import Amount2
 from factpulse.models.base_amount import BaseAmount
 from factpulse.models.percentage import Percentage
 from factpulse.models.vat_category import VATCategory
@@ -34,7 +34,7 @@ class AllowanceCharge(BaseModel):
     Document-level or line-level allowance/charge.  Represents BG-20 (Document level allowances), BG-21 (Document level charges), BG-27 (Invoice line allowances), or BG-28 (Invoice line charges).
     """ # noqa: E501
     is_charge: StrictBool = Field(description="True for charge, False for allowance (ChargeIndicator).")
-    amount: Amount1
+    amount: Amount2
     base_amount: Optional[BaseAmount] = None
     percentage: Optional[Percentage] = None
     reason: Optional[StrictStr] = None
@@ -137,7 +137,7 @@ class AllowanceCharge(BaseModel):
 
         _obj = cls.model_validate({
             "is_charge": obj.get("is_charge"),
-            "amount": Amount1.from_dict(obj["amount"]) if obj.get("amount") is not None else None,
+            "amount": Amount2.from_dict(obj["amount"]) if obj.get("amount") is not None else None,
             "base_amount": BaseAmount.from_dict(obj["base_amount"]) if obj.get("base_amount") is not None else None,
             "percentage": Percentage.from_dict(obj["percentage"]) if obj.get("percentage") is not None else None,
             "reason": obj.get("reason"),

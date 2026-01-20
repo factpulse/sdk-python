@@ -61,7 +61,11 @@ class TestSubmitCDARRequest(unittest.TestCase):
                 reason_text = '',
                 action_code = '',
                 encaisse_amount = None,
-                flow_type = 'CustomerInvoiceLC'
+                flow_type = 'CustomerInvoiceLC',
+                pdp_flow_service_url = '',
+                pdp_token_url = '',
+                pdp_client_id = '',
+                pdp_client_secret = ''
             )
         else:
             return SubmitCDARRequest(

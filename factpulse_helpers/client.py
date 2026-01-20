@@ -78,8 +78,27 @@ class FactPulseClient:
         return _Endpoint(self, name.replace("_", "-"))
 
     def post(self, path: str, **data) -> Any:
-        """POST request to /api/v1/{path}"""
+        """POST request to /api/v1/{path} (JSON body)"""
         return self._do_request("POST", path, data, retry_auth=True)
+
+    def post_multipart(self, path: str, data: dict = None, files: dict = None) -> Any:
+        """POST request with multipart/form-data (for file uploads).
+
+        Args:
+            path: API endpoint path
+            data: Form fields (will be sent as multipart data)
+            files: Files to upload. Values can be:
+                - bytes: raw file content
+                - tuple: (filename, content, content_type)
+
+        Example:
+            result = client.post_multipart(
+                "processing/generate-invoice",
+                data={"invoice_data": json.dumps({...}), "profile": "EN16931"},
+                files={"source_pdf": pdf_bytes}
+            )
+        """
+        return self._do_request("POST_MULTIPART", path, {"data": data or {}, "files": files or {}}, retry_auth=True)
 
     def get(self, path: str, **params) -> Any:
         """GET request to /api/v1/{path}"""
@@ -96,6 +115,19 @@ class FactPulseClient:
         try:
             if method == "GET":
                 response = self._session.get(url, headers=headers, params=kwargs, timeout=self._timeout)
+            elif method == "POST_MULTIPART":
+                # Prepare files for requests library
+                files_prepared = {}
+                for key, value in kwargs.get("files", {}).items():
+                    if isinstance(value, bytes):
+                        files_prepared[key] = (key, value)
+                    elif isinstance(value, tuple):
+                        files_prepared[key] = value
+                    else:
+                        files_prepared[key] = value
+                response = self._session.post(
+                    url, headers=headers, data=kwargs.get("data", {}), files=files_prepared, timeout=self._timeout
+                )
             else:
                 response = self._session.post(url, headers=headers, json=kwargs, timeout=self._timeout)
         except requests.RequestException as e:

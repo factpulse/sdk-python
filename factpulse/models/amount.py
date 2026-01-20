@@ -29,7 +29,7 @@ AMOUNT_ANY_OF_SCHEMAS = ["float", "str"]
 
 class Amount(BaseModel):
     """
-    Payment amount
+    Montant encaissé en EUR (obligatoire, BR-FR-CDV-14)
     """
 
     # data type: float

@@ -13,94 +13,84 @@
 """  # noqa: E501
 
 
-import unittest
+from __future__ import annotations
+import pprint
+import re  # noqa: F401
+import json
 
-from factpulse.models.body_submit_cdar_api_v1_cdar_submit_post import BodySubmitCdarApiV1CdarSubmitPost
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
+from typing import Optional, Set
+from typing_extensions import Self
 
-class TestBodySubmitCdarApiV1CdarSubmitPost(unittest.TestCase):
-    """BodySubmitCdarApiV1CdarSubmitPost unit test stubs"""
+class SimplifiedCDARResponse(BaseModel):
+    """
+    Réponse pour les endpoints CDAR simplifiés.
+    """ # noqa: E501
+    flow_id: StrictStr = Field(description="Identifiant du flux AFNOR", alias="flowId")
+    document_id: StrictStr = Field(description="Identifiant du message CDAR généré", alias="documentId")
+    status: StrictStr = Field(description="Code statut soumis (210 ou 212)")
+    invoice_id: StrictStr = Field(description="Identifiant de la facture", alias="invoiceId")
+    message: StrictStr = Field(description="Message de confirmation")
+    __properties: ClassVar[List[str]] = ["flowId", "documentId", "status", "invoiceId", "message"]
 
-    def setUp(self):
-        pass
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
-    def tearDown(self):
-        pass
 
-    def make_instance(self, include_optional) -> BodySubmitCdarApiV1CdarSubmitPost:
-        """Test BodySubmitCdarApiV1CdarSubmitPost
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        # uncomment below to create an instance of `BodySubmitCdarApiV1CdarSubmitPost`
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.model_dump(by_alias=True))
+
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
+        return json.dumps(self.to_dict())
+
+    @classmethod
+    def from_json(cls, json_str: str) -> Optional[Self]:
+        """Create an instance of SimplifiedCDARResponse from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
         """
-        model = BodySubmitCdarApiV1CdarSubmitPost()
-        if include_optional:
-            return BodySubmitCdarApiV1CdarSubmitPost(
-                request = factpulse.models.submit_cdar_request.SubmitCDARRequest(
-                    document_id = '', 
-                    business_process = 'REGULATED', 
-                    type_code = '23', 
-                    sender_siren = '', 
-                    sender_role = 'WK', 
-                    sender_name = '', 
-                    sender_email = '', 
-                    recipients = [
-                        factpulse.models.recipient_input.RecipientInput(
-                            siren = '', 
-                            siret = '', 
-                            name = '', 
-                            role = 'BY', 
-                            email = '', )
-                        ], 
-                    invoice_id = '', 
-                    invoice_issue_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
-                    invoice_type_code = '380', 
-                    invoice_seller_siren = '', 
-                    invoice_buyer_siren = '', 
-                    status = '', 
-                    reason_code = '', 
-                    reason_text = '', 
-                    action_code = '', 
-                    encaisse_amount = null, 
-                    flow_type = 'CustomerInvoiceLC', ),
-                pdp_credentials = {"clientId":"factpulse_prod_abc123","clientSecret":"secret_xyz789","directoryServiceUrl":"https://api.pdp-example.fr/directory/v1","flowServiceUrl":"https://api.pdp-example.fr/flow/v1","tokenUrl":"https://auth.pdp-example.fr/oauth/token"}
-            )
-        else:
-            return BodySubmitCdarApiV1CdarSubmitPost(
-                request = factpulse.models.submit_cdar_request.SubmitCDARRequest(
-                    document_id = '', 
-                    business_process = 'REGULATED', 
-                    type_code = '23', 
-                    sender_siren = '', 
-                    sender_role = 'WK', 
-                    sender_name = '', 
-                    sender_email = '', 
-                    recipients = [
-                        factpulse.models.recipient_input.RecipientInput(
-                            siren = '', 
-                            siret = '', 
-                            name = '', 
-                            role = 'BY', 
-                            email = '', )
-                        ], 
-                    invoice_id = '', 
-                    invoice_issue_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), 
-                    invoice_type_code = '380', 
-                    invoice_seller_siren = '', 
-                    invoice_buyer_siren = '', 
-                    status = '', 
-                    reason_code = '', 
-                    reason_text = '', 
-                    action_code = '', 
-                    encaisse_amount = null, 
-                    flow_type = 'CustomerInvoiceLC', ),
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
         )
-        """
+        return _dict
 
-    def testBodySubmitCdarApiV1CdarSubmitPost(self):
-        """Test BodySubmitCdarApiV1CdarSubmitPost"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+    @classmethod
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+        """Create an instance of SimplifiedCDARResponse from a dict"""
+        if obj is None:
+            return None
 
-if __name__ == '__main__':
-    unittest.main()
+        if not isinstance(obj, dict):
+            return cls.model_validate(obj)
+
+        _obj = cls.model_validate({
+            "flowId": obj.get("flowId"),
+            "documentId": obj.get("documentId"),
+            "status": obj.get("status"),
+            "invoiceId": obj.get("invoiceId"),
+            "message": obj.get("message")
+        })
+        return _obj
+
+

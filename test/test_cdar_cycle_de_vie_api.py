@@ -69,6 +69,20 @@ class TestCDARCycleDeVieApi(unittest.TestCase):
         """
         pass
 
+    def test_submit_encaissee_api_v1_cdar_encaissee_post(self) -> None:
+        """Test case for submit_encaissee_api_v1_cdar_encaissee_post
+
+        [Simplifié] Soumettre un statut ENCAISSÉE (212)
+        """
+        pass
+
+    def test_submit_refusee_api_v1_cdar_refusee_post(self) -> None:
+        """Test case for submit_refusee_api_v1_cdar_refusee_post
+
+        [Simplifié] Soumettre un statut REFUSÉE (210)
+        """
+        pass
+
     def test_validate_cdar_api_v1_cdar_validate_post(self) -> None:
         """Test case for validate_cdar_api_v1_cdar_validate_post
 

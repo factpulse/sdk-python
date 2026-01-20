@@ -29,7 +29,7 @@ AMOUNT1_ANY_OF_SCHEMAS = ["float", "str"]
 
 class Amount1(BaseModel):
     """
-    Allowance/charge amount (BT-92/99/136/141).
+    Payment amount
     """
 
     # data type: float

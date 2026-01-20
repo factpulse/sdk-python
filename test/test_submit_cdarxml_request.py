@@ -38,7 +38,11 @@ class TestSubmitCDARXMLRequest(unittest.TestCase):
             return SubmitCDARXMLRequest(
                 xml = '',
                 flow_type = 'CustomerInvoiceLC',
-                filename = ''
+                filename = '',
+                pdp_flow_service_url = '',
+                pdp_token_url = '',
+                pdp_client_id = '',
+                pdp_client_secret = ''
             )
         else:
             return SubmitCDARXMLRequest(

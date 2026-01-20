@@ -13,22 +13,118 @@
 """  # noqa: E501
 
 
-import unittest
+from __future__ import annotations
+import pprint
+import re  # noqa: F401
+import json
 
-from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
+from uuid import UUID
+from typing import Optional, Set
+from typing_extensions import Self
 
-class TestFactureElectroniqueModelsInvoiceTypeCode(unittest.TestCase):
-    """FactureElectroniqueModelsInvoiceTypeCode unit test stubs"""
+class ClientDetail(BaseModel):
+    """
+    Detailed client view (same fields for now).
+    """ # noqa: E501
+    uid: UUID = Field(description="Unique client identifier")
+    name: StrictStr = Field(description="Client name")
+    siret: Optional[StrictStr] = None
+    description: Optional[StrictStr] = None
+    is_active: StrictBool = Field(description="Whether the client is active", alias="isActive")
+    has_config_pdp: StrictBool = Field(description="Whether PDP config exists", alias="hasConfigPdp")
+    pdp_is_active: Optional[StrictBool] = Field(default=None, alias="pdpIsActive")
+    pdp_is_mock: Optional[StrictBool] = Field(default=None, alias="pdpIsMock")
+    has_config_chorus: StrictBool = Field(description="Whether Chorus Pro config exists", alias="hasConfigChorus")
+    created_at: datetime = Field(description="Creation date", alias="createdAt")
+    updated_at: datetime = Field(description="Last update date", alias="updatedAt")
+    __properties: ClassVar[List[str]] = ["uid", "name", "siret", "description", "isActive", "hasConfigPdp", "pdpIsActive", "pdpIsMock", "hasConfigChorus", "createdAt", "updatedAt"]
 
-    def setUp(self):
-        pass
+    model_config = ConfigDict(
+        populate_by_name=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
 
-    def tearDown(self):
-        pass
 
-    def testFactureElectroniqueModelsInvoiceTypeCode(self):
-        """Test FactureElectroniqueModelsInvoiceTypeCode"""
-        # inst = FactureElectroniqueModelsInvoiceTypeCode()
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.model_dump(by_alias=True))
 
-if __name__ == '__main__':
-    unittest.main()
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
+        return json.dumps(self.to_dict())
+
+    @classmethod
+    def from_json(cls, json_str: str) -> Optional[Self]:
+        """Create an instance of ClientDetail from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
+        """
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
+        )
+        # set to None if siret (nullable) is None
+        # and model_fields_set contains the field
+        if self.siret is None and "siret" in self.model_fields_set:
+            _dict['siret'] = None
+
+        # set to None if description (nullable) is None
+        # and model_fields_set contains the field
+        if self.description is None and "description" in self.model_fields_set:
+            _dict['description'] = None
+
+        # set to None if pdp_is_active (nullable) is None
+        # and model_fields_set contains the field
+        if self.pdp_is_active is None and "pdp_is_active" in self.model_fields_set:
+            _dict['pdpIsActive'] = None
+
+        # set to None if pdp_is_mock (nullable) is None
+        # and model_fields_set contains the field
+        if self.pdp_is_mock is None and "pdp_is_mock" in self.model_fields_set:
+            _dict['pdpIsMock'] = None
+
+        return _dict
+
+    @classmethod
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+        """Create an instance of ClientDetail from a dict"""
+        if obj is None:
+            return None
+
+        if not isinstance(obj, dict):
+            return cls.model_validate(obj)
+
+        _obj = cls.model_validate({
+            "uid": obj.get("uid"),
+            "name": obj.get("name"),
+            "siret": obj.get("siret"),
+            "description": obj.get("description"),
+            "isActive": obj.get("isActive"),
+            "hasConfigPdp": obj.get("hasConfigPdp"),
+            "pdpIsActive": obj.get("pdpIsActive"),
+            "pdpIsMock": obj.get("pdpIsMock"),
+            "hasConfigChorus": obj.get("hasConfigChorus"),
+            "createdAt": obj.get("createdAt"),
+            "updatedAt": obj.get("updatedAt")
+        })
+        return _obj
+
+

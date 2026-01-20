@@ -41,7 +41,7 @@ class TestSubmitFlowRequest(unittest.TestCase):
                 flow_profile = 'Basic',
                 tracking_id = '',
                 request_id = '',
-                pdp_credentials = {"clientId":"factpulse_prod_abc123","clientSecret":"secret_xyz789","directoryServiceUrl":"https://api.pdp-example.fr/directory/v1","flowServiceUrl":"https://api.pdp-example.fr/flow/v1","tokenUrl":"https://auth.pdp-example.fr/oauth/token"}
+                pdp_credentials = {clientId=factpulse_prod_abc123, clientSecret=secret_xyz789, directoryServiceUrl=https://api.pdp-example.fr/directory/v1, flowServiceUrl=https://api.pdp-example.fr/flow/v1, tokenUrl=https://auth.pdp-example.fr/oauth/token}
             )
         else:
             return SubmitFlowRequest(

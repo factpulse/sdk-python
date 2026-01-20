@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.0.0"
+__version__ = "1.0.0"
 
 # Define package exports
 __all__ = [
@@ -24,6 +24,7 @@ __all__ = [
     "AFNORPDPPAFlowServiceApi",
     "CDARCycleDeVieApi",
     "ChorusProApi",
+    "ClientManagementApi",
     "DocumentConversionApi",
     "DownloadsApi",
     "EReportingApi",
@@ -149,11 +150,10 @@ __all__ = [
     "AllowanceTotalAmount",
     "Amount",
     "Amount1",
+    "Amount2",
     "AmountDue",
     "AsyncTaskStatus",
     "BaseAmount",
-    "BodySubmitCdarApiV1CdarSubmitPost",
-    "BodySubmitCdarXmlApiV1CdarSubmitXmlPost",
     "BoundingBoxSchema",
     "Buyercountry",
     "CeleryStatus",
@@ -162,6 +162,12 @@ __all__ = [
     "ChorusProCredentials",
     "ChorusProDestination",
     "ChorusProResult",
+    "ClientActivateResponse",
+    "ClientCreateRequest",
+    "ClientDetail",
+    "ClientListResponse",
+    "ClientSummary",
+    "ClientUpdateRequest",
     "Contact",
     "ConvertResumeRequest",
     "ConvertSuccessResponse",
@@ -181,14 +187,15 @@ __all__ = [
     "ElectronicAddress",
     "Encaisseamount",
     "Encaisseamount1",
+    "EncaisseeRequest",
     "EnrichedInvoiceInfo",
     "ErrorLevel",
     "ErrorSource",
     "ExtractionInfo",
     "FacturXInvoice",
     "FacturXPDFInfo",
-    "FactureElectroniqueModelsInvoiceTypeCode",
     "FactureElectroniqueRestApiSchemasCdarValidationErrorResponse",
+    "FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode",
     "FactureElectroniqueRestApiSchemasProcessingChorusProCredentials",
     "FieldStatus",
     "FileInfo",
@@ -239,6 +246,8 @@ __all__ = [
     "OperationNature",
     "OutputFormat",
     "PDFValidationResultAPI",
+    "PDPConfigResponse",
+    "PDPConfigUpdateRequest",
     "PDPCredentials",
     "PageDimensionsSchema",
     "Payee",
@@ -260,6 +269,7 @@ __all__ = [
     "ReasonCodesResponse",
     "Recipient",
     "RecipientInput",
+    "RefuseeRequest",
     "ReportPeriod",
     "ReportSender",
     "RoundingAmount",
@@ -270,10 +280,12 @@ __all__ = [
     "SearchServicesResponse",
     "SearchStructureRequest",
     "SearchStructureResponse",
+    "SecretStatus",
     "Sellercountry",
     "SignatureInfo",
     "SignatureInfoAPI",
     "SignatureParameters",
+    "SimplifiedCDARResponse",
     "SimplifiedInvoiceData",
     "StatusCodeInfo",
     "StatusCodesResponse",
@@ -341,6 +353,7 @@ from factpulse.api.afnorpdppa_directory_service_api import AFNORPDPPADirectorySe
 from factpulse.api.afnorpdppa_flow_service_api import AFNORPDPPAFlowServiceApi as AFNORPDPPAFlowServiceApi
 from factpulse.api.cdar_cycle_de_vie_api import CDARCycleDeVieApi as CDARCycleDeVieApi
 from factpulse.api.chorus_pro_api import ChorusProApi as ChorusProApi
+from factpulse.api.client_management_api import ClientManagementApi as ClientManagementApi
 from factpulse.api.document_conversion_api import DocumentConversionApi as DocumentConversionApi
 from factpulse.api.downloads_api import DownloadsApi as DownloadsApi
 from factpulse.api.e_reporting_api import EReportingApi as EReportingApi
@@ -470,11 +483,10 @@ from factpulse.models.allowance_reason_code import AllowanceReasonCode as Allowa
 from factpulse.models.allowance_total_amount import AllowanceTotalAmount as AllowanceTotalAmount
 from factpulse.models.amount import Amount as Amount
 from factpulse.models.amount1 import Amount1 as Amount1
+from factpulse.models.amount2 import Amount2 as Amount2
 from factpulse.models.amount_due import AmountDue as AmountDue
 from factpulse.models.async_task_status import AsyncTaskStatus as AsyncTaskStatus
 from factpulse.models.base_amount import BaseAmount as BaseAmount
-from factpulse.models.body_submit_cdar_api_v1_cdar_submit_post import BodySubmitCdarApiV1CdarSubmitPost as BodySubmitCdarApiV1CdarSubmitPost
-from factpulse.models.body_submit_cdar_xml_api_v1_cdar_submit_xml_post import BodySubmitCdarXmlApiV1CdarSubmitXmlPost as BodySubmitCdarXmlApiV1CdarSubmitXmlPost
 from factpulse.models.bounding_box_schema import BoundingBoxSchema as BoundingBoxSchema
 from factpulse.models.buyercountry import Buyercountry as Buyercountry
 from factpulse.models.celery_status import CeleryStatus as CeleryStatus
@@ -483,6 +495,12 @@ from factpulse.models.charge_total_amount import ChargeTotalAmount as ChargeTota
 from factpulse.models.chorus_pro_credentials import ChorusProCredentials as ChorusProCredentials
 from factpulse.models.chorus_pro_destination import ChorusProDestination as ChorusProDestination
 from factpulse.models.chorus_pro_result import ChorusProResult as ChorusProResult
+from factpulse.models.client_activate_response import ClientActivateResponse as ClientActivateResponse
+from factpulse.models.client_create_request import ClientCreateRequest as ClientCreateRequest
+from factpulse.models.client_detail import ClientDetail as ClientDetail
+from factpulse.models.client_list_response import ClientListResponse as ClientListResponse
+from factpulse.models.client_summary import ClientSummary as ClientSummary
+from factpulse.models.client_update_request import ClientUpdateRequest as ClientUpdateRequest
 from factpulse.models.contact import Contact as Contact
 from factpulse.models.convert_resume_request import ConvertResumeRequest as ConvertResumeRequest
 from factpulse.models.convert_success_response import ConvertSuccessResponse as ConvertSuccessResponse
@@ -502,14 +520,15 @@ from factpulse.models.e_reporting_validation_error import EReportingValidationEr
 from factpulse.models.electronic_address import ElectronicAddress as ElectronicAddress
 from factpulse.models.encaisseamount import Encaisseamount as Encaisseamount
 from factpulse.models.encaisseamount1 import Encaisseamount1 as Encaisseamount1
+from factpulse.models.encaissee_request import EncaisseeRequest as EncaisseeRequest
 from factpulse.models.enriched_invoice_info import EnrichedInvoiceInfo as EnrichedInvoiceInfo
 from factpulse.models.error_level import ErrorLevel as ErrorLevel
 from factpulse.models.error_source import ErrorSource as ErrorSource
 from factpulse.models.extraction_info import ExtractionInfo as ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
-from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode as FactureElectroniqueModelsInvoiceTypeCode
 from factpulse.models.facture_electronique_rest_api_schemas_cdar_validation_error_response import FactureElectroniqueRestApiSchemasCdarValidationErrorResponse as FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode as FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
 from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials as FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
 from factpulse.models.field_status import FieldStatus as FieldStatus
 from factpulse.models.file_info import FileInfo as FileInfo
@@ -560,6 +579,8 @@ from factpulse.models.missing_field import MissingField as MissingField
 from factpulse.models.operation_nature import OperationNature as OperationNature
 from factpulse.models.output_format import OutputFormat as OutputFormat
 from factpulse.models.pdf_validation_result_api import PDFValidationResultAPI as PDFValidationResultAPI
+from factpulse.models.pdp_config_response import PDPConfigResponse as PDPConfigResponse
+from factpulse.models.pdp_config_update_request import PDPConfigUpdateRequest as PDPConfigUpdateRequest
 from factpulse.models.pdp_credentials import PDPCredentials as PDPCredentials
 from factpulse.models.page_dimensions_schema import PageDimensionsSchema as PageDimensionsSchema
 from factpulse.models.payee import Payee as Payee
@@ -581,6 +602,7 @@ from factpulse.models.reason_code_info import ReasonCodeInfo as ReasonCodeInfo
 from factpulse.models.reason_codes_response import ReasonCodesResponse as ReasonCodesResponse
 from factpulse.models.recipient import Recipient as Recipient
 from factpulse.models.recipient_input import RecipientInput as RecipientInput
+from factpulse.models.refusee_request import RefuseeRequest as RefuseeRequest
 from factpulse.models.report_period import ReportPeriod as ReportPeriod
 from factpulse.models.report_sender import ReportSender as ReportSender
 from factpulse.models.rounding_amount import RoundingAmount as RoundingAmount
@@ -591,10 +613,12 @@ from factpulse.models.search_flow_response import SearchFlowResponse as SearchFl
 from factpulse.models.search_services_response import SearchServicesResponse as SearchServicesResponse
 from factpulse.models.search_structure_request import SearchStructureRequest as SearchStructureRequest
 from factpulse.models.search_structure_response import SearchStructureResponse as SearchStructureResponse
+from factpulse.models.secret_status import SecretStatus as SecretStatus
 from factpulse.models.sellercountry import Sellercountry as Sellercountry
 from factpulse.models.signature_info import SignatureInfo as SignatureInfo
 from factpulse.models.signature_info_api import SignatureInfoAPI as SignatureInfoAPI
 from factpulse.models.signature_parameters import SignatureParameters as SignatureParameters
+from factpulse.models.simplified_cdar_response import SimplifiedCDARResponse as SimplifiedCDARResponse
 from factpulse.models.simplified_invoice_data import SimplifiedInvoiceData as SimplifiedInvoiceData
 from factpulse.models.status_code_info import StatusCodeInfo as StatusCodeInfo
 from factpulse.models.status_codes_response import StatusCodesResponse as StatusCodesResponse
