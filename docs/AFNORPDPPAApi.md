@@ -4,86 +4,9 @@ All URIs are relative to *https://factpulse.fr*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**get_afnor_credentials_api_v1_afnor_credentials_get**](AFNORPDPPAApi.md#get_afnor_credentials_api_v1_afnor_credentials_get) | **GET** /api/v1/afnor/credentials | Retrieve stored AFNOR credentials
 [**get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get**](AFNORPDPPAApi.md#get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get) | **GET** /api/v1/afnor/incoming-flows/{flow_id} | Retrieve and extract an incoming invoice
-[**oauth_token_proxy_api_v1_afnor_oauth_token_post**](AFNORPDPPAApi.md#oauth_token_proxy_api_v1_afnor_oauth_token_post) | **POST** /api/v1/afnor/oauth/token | OAuth2 endpoint for AFNOR authentication
+[**oauth_token_proxy_api_v1_afnor_oauth_token_post**](AFNORPDPPAApi.md#oauth_token_proxy_api_v1_afnor_oauth_token_post) | **POST** /api/v1/afnor/oauth/token | Test PDP OAuth2 credentials
 
-
-# **get_afnor_credentials_api_v1_afnor_credentials_get**
-> object get_afnor_credentials_api_v1_afnor_credentials_get()
-
-Retrieve stored AFNOR credentials
-
-Retrieves stored AFNOR/PDP credentials for the JWT's client_uid. This endpoint is used by the SDK in 'stored' mode to retrieve credentials before performing AFNOR OAuth itself.
-
-### Example
-
-* Bearer Authentication (HTTPBearer):
-
-```python
-import factpulse
-from factpulse.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://factpulse.fr
-# See configuration.py for a list of all supported configuration parameters.
-configuration = factpulse.Configuration(
-    host = "https://factpulse.fr"
-)
-
-# The client must configure the authentication and authorization parameters
-# in accordance with the API server security policy.
-# Examples for each auth method are provided below, use the example that
-# satisfies your auth use case.
-
-# Configure Bearer authorization: HTTPBearer
-configuration = factpulse.Configuration(
-    access_token = os.environ["BEARER_TOKEN"]
-)
-
-# Enter a context with an instance of the API client
-with factpulse.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = factpulse.AFNORPDPPAApi(api_client)
-
-    try:
-        # Retrieve stored AFNOR credentials
-        api_response = api_instance.get_afnor_credentials_api_v1_afnor_credentials_get()
-        print("The response of AFNORPDPPAApi->get_afnor_credentials_api_v1_afnor_credentials_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling AFNORPDPPAApi->get_afnor_credentials_api_v1_afnor_credentials_get: %s\n" % e)
-```
-
-
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-**object**
-
-### Authorization
-
-[HTTPBearer](../README.md#HTTPBearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | AFNOR credentials retrieved successfully |  -  |
-**400** | No client_uid in JWT |  -  |
-**401** | Not authenticated - Missing or invalid JWT token |  -  |
-**404** | Client not found or no AFNOR credentials configured |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get**
 > IncomingInvoice get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get(flow_id, include_document=include_document)
@@ -173,9 +96,9 @@ Name | Type | Description  | Notes
 # **oauth_token_proxy_api_v1_afnor_oauth_token_post**
 > object oauth_token_proxy_api_v1_afnor_oauth_token_post()
 
-OAuth2 endpoint for AFNOR authentication
+Test PDP OAuth2 credentials
 
-OAuth2 proxy endpoint to obtain an AFNOR access token. Proxies to AFNOR mock (sandbox) or real PDP depending on MOCK_AFNOR_BASE_URL. This endpoint is public (no Django auth required) as it is called by the AFNOR SDK.
+OAuth2 proxy to validate PDP credentials. Use this endpoint to verify that OAuth credentials (client_id, client_secret) are valid before saving a PDP configuration. This endpoint is public (no authentication required).
 
 ### Example
 
@@ -198,7 +121,7 @@ with factpulse.ApiClient(configuration) as api_client:
     api_instance = factpulse.AFNORPDPPAApi(api_client)
 
     try:
-        # OAuth2 endpoint for AFNOR authentication
+        # Test PDP OAuth2 credentials
         api_response = api_instance.oauth_token_proxy_api_v1_afnor_oauth_token_post()
         print("The response of AFNORPDPPAApi->oauth_token_proxy_api_v1_afnor_oauth_token_post:\n")
         pprint(api_response)
@@ -229,8 +152,9 @@ No authorization required
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | OAuth2 token acquired successfully |  -  |
-**401** | Invalid credentials |  -  |
+**200** | OAuth2 token acquired successfully - credentials are valid |  -  |
+**401** | Invalid credentials - client_id or client_secret is wrong |  -  |
+**503** | PDP OAuth server unavailable |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

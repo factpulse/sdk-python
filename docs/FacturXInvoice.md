@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **invoice_number** | **str** |  | 
 **payment_due_date** | **str** |  | 
 **invoice_date** | **str** |  | [optional] 
-**submission_mode** | [**SubmissionMode**](SubmissionMode.md) |  | 
+**submission_mode** | [**SubmissionMode**](SubmissionMode.md) |  | [optional] 
 **recipient** | [**Recipient**](Recipient.md) |  | 
 **supplier** | [**Supplier**](Supplier.md) |  | 
 **invoicing_framework** | [**InvoicingFramework**](InvoicingFramework.md) |  | 

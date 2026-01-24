@@ -1,6 +1,6 @@
 # InvoiceInput
 
-Invoice for B2B international reporting (flux 10.1).  Used for unitary declaration of international B2B invoices.
+Invoice for B2B international reporting (flux 10.1).  Used for unitary declaration of international B2B invoices. Supports three scenarios: - B2Bi: French seller → Foreign buyer (issuer role = SE) - Bi2B: Foreign seller → French buyer (issuer role = BY) - Bi2Bi: Foreign seller → Foreign buyer (issuer role = SE or BY)  Source: Annexe 6 v1.9, bloc TG-8 \"Invoice\"
 
 ## Properties
 
@@ -11,7 +11,8 @@ Name | Type | Description | Notes
 **type_code** | [**FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode**](FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode.md) | Invoice type code | [optional] 
 **currency** | [**Currency**](Currency.md) |  | [optional] 
 **due_date** | **date** |  | [optional] 
-**seller_siren** | **str** | Seller SIREN/SIRET | 
+**seller_id** | **str** |  | [optional] 
+**seller_siren** | **str** |  | [optional] 
 **seller_vat_id** | **str** |  | [optional] 
 **seller_country** | [**Sellercountry**](Sellercountry.md) |  | [optional] 
 **buyer_id** | **str** |  | [optional] 

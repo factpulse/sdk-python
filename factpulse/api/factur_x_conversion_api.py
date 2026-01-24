@@ -3,7 +3,7 @@
 """
     FactPulse REST API
 
-     REST API for electronic invoicing in France: Factur-X, AFNOR PDP/PA, electronic signatures.  ## 🎯 Main Features  ### 📄 Factur-X Invoice Generation - **Formats**: XML only or PDF/A-3 with embedded XML - **Profiles**: MINIMUM, BASIC, EN16931, EXTENDED - **Standards**: EN 16931 (EU directive 2014/55), ISO 19005-3 (PDF/A-3), CII (UN/CEFACT) - **🆕 Simplified Format**: Generation from SIRET + auto-enrichment (Chorus Pro API + Business Search)  ### ✅ Validation and Compliance - **XML Validation**: Schematron (45 to 210+ rules depending on profile) - **PDF Validation**: PDF/A-3, Factur-X XMP metadata, electronic signatures - **VeraPDF**: Strict PDF/A validation (146+ ISO 19005-3 rules) - **Asynchronous Processing**: Celery support for heavy validations (VeraPDF)  ### 📡 AFNOR PDP/PA Integration (XP Z12-013) - **Flow Submission**: Send invoices to Partner Dematerialization Platforms - **Flow Search**: View submitted invoices - **Download**: Retrieve PDF/A-3 with XML - **Directory Service**: Company search (SIREN/SIRET) - **Multi-client**: Support for multiple PDP configs per user (stored credentials or zero-storage)  ### ✍️ PDF Electronic Signature - **Standards**: PAdES-B-B, PAdES-B-T (RFC 3161 timestamping), PAdES-B-LT (long-term archival) - **eIDAS Levels**: SES (self-signed), AdES (commercial CA), QES (QTSP) - **Validation**: Cryptographic integrity and certificate verification - **Certificate Generation**: Self-signed X.509 certificates for testing  ### 🔄 Asynchronous Processing - **Celery**: Asynchronous generation, validation and signing - **Polling**: Status tracking via `/tasks/{task_id}/status` - **No timeout**: Ideal for large files or heavy validations  ## 🔒 Authentication  All requests require a **JWT token** in the Authorization header: ``` Authorization: Bearer YOUR_JWT_TOKEN ```  ### How to obtain a JWT token?  #### 🔑 Method 1: `/api/token/` API (Recommended)  **URL:** `https://factpulse.fr/api/token/`  This method is **recommended** for integration in your applications and CI/CD workflows.  **Prerequisites:** Having set a password on your account  **For users registered via email/password:** - You already have a password, use it directly  **For users registered via OAuth (Google/GitHub):** - You must first set a password at: https://factpulse.fr/accounts/password/set/ - Once the password is created, you can use the API  **Request example:** ```bash curl -X POST https://factpulse.fr/api/token/ \\   -H \"Content-Type: application/json\" \\   -d '{     \"username\": \"your_email@example.com\",     \"password\": \"your_password\"   }' ```  **Optional `client_uid` parameter:**  To select credentials for a specific client (PA/PDP, Chorus Pro, signing certificates), add `client_uid`:  ```bash curl -X POST https://factpulse.fr/api/token/ \\   -H \"Content-Type: application/json\" \\   -d '{     \"username\": \"your_email@example.com\",     \"password\": \"your_password\",     \"client_uid\": \"550e8400-e29b-41d4-a716-446655440000\"   }' ```  The `client_uid` will be included in the JWT and allow the API to automatically use: - AFNOR/PDP credentials configured for this client - Chorus Pro credentials configured for this client - Electronic signature certificates configured for this client  **Response:** ```json {   \"access\": \"eyJ0eXAiOiJKV1QiLCJhbGc...\",  // Access token (validity: 30 min)   \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGc...\"  // Refresh token (validity: 7 days) } ```  **Advantages:** - ✅ Full automation (CI/CD, scripts) - ✅ Programmatic token management - ✅ Refresh token support for automatic access renewal - ✅ Easy integration in any language/tool  #### 🖥️ Method 2: Dashboard Generation (Alternative)  **URL:** https://factpulse.fr/api/dashboard/  This method is suitable for quick tests or occasional use via the graphical interface.  **How it works:** - Log in to the dashboard - Use the \"Generate Test Token\" or \"Generate Production Token\" buttons - Works for **all** users (OAuth and email/password), without requiring a password  **Token types:** - **Test Token**: 24h validity, 1000 calls/day quota (free) - **Production Token**: 7 days validity, quota based on your plan  **Advantages:** - ✅ Quick for API testing - ✅ No password required - ✅ Simple visual interface  **Disadvantages:** - ❌ Requires manual action - ❌ No refresh token - ❌ Less suited for automation  ### 📚 Full Documentation  For more information on authentication and API usage: https://factpulse.fr/documentation-api/     
+     REST API for electronic invoicing in France: Factur-X, AFNOR PDP/PA, electronic signatures.  ## 🎯 Main Features  ### 📄 Factur-X - Generation - **Formats**: XML only or PDF/A-3 with embedded XML - **Profiles**: MINIMUM, BASIC, EN16931, EXTENDED - **Standards**: EN 16931 (EU directive 2014/55), ISO 19005-3 (PDF/A-3), CII (UN/CEFACT) - **🆕 Simplified Format**: Generation from SIRET + auto-enrichment (Chorus Pro API + Business Search)  ### ✅ Factur-X - Validation - **XML Validation**: Schematron (45 to 210+ rules depending on profile) - **PDF Validation**: PDF/A-3, Factur-X XMP metadata - **VeraPDF**: Strict PDF/A validation (146+ ISO 19005-3 rules)  ### ✍️ Electronic Signature - **Standards**: PAdES-B-B, PAdES-B-T (RFC 3161 timestamping), PAdES-B-LT (long-term archival) - **eIDAS Levels**: SES (self-signed), AdES (commercial CA), QES (QTSP) - **Validation**: Cryptographic integrity and certificate verification  ### 📋 Flux 6 - Invoice Lifecycle (CDAR) - **CDAR Messages**: Acknowledgements, invoice statuses - **PPF Statuses**: REFUSED (210), PAID (212)  ### 📊 Flux 10 - E-Reporting - **Tax Declarations**: International B2B, B2C - **Flow Types**: 10.1 (B2B transactions), 10.2 (B2B payments), 10.3 (B2C transactions), 10.4 (B2C payments)  ### 📡 AFNOR PDP/PA (XP Z12-013) - **Flow Service**: Submit and search flows to PDPs - **Directory Service**: Company search (SIREN/SIRET) - **Multi-client**: Support for multiple PDP configs per user  ### 🏛️ Chorus Pro - **Public Sector Invoicing**: Complete API for Chorus Pro  ### ⏳ Async Tasks - **Celery**: Asynchronous generation, validation and signing - **Polling**: Status tracking via `/tasks/{task_id}/status` - **Webhooks**: Automatic notifications when tasks complete  ## 🔒 Authentication  All requests require a **JWT token** in the Authorization header: ``` Authorization: Bearer YOUR_JWT_TOKEN ```  ### How to obtain a JWT token?  #### 🔑 Method 1: `/api/token/` API (Recommended)  **URL:** `https://factpulse.fr/api/token/`  This method is **recommended** for integration in your applications and CI/CD workflows.  **Prerequisites:** Having set a password on your account  **For users registered via email/password:** - You already have a password, use it directly  **For users registered via OAuth (Google/GitHub):** - You must first set a password at: https://factpulse.fr/accounts/password/set/ - Once the password is created, you can use the API  **Request example:** ```bash curl -X POST https://factpulse.fr/api/token/ \\   -H \"Content-Type: application/json\" \\   -d '{     \"username\": \"your_email@example.com\",     \"password\": \"your_password\"   }' ```  **Optional `client_uid` parameter:**  To select credentials for a specific client (PA/PDP, Chorus Pro, signing certificates), add `client_uid`:  ```bash curl -X POST https://factpulse.fr/api/token/ \\   -H \"Content-Type: application/json\" \\   -d '{     \"username\": \"your_email@example.com\",     \"password\": \"your_password\",     \"client_uid\": \"550e8400-e29b-41d4-a716-446655440000\"   }' ```  The `client_uid` will be included in the JWT and allow the API to automatically use: - AFNOR/PDP credentials configured for this client - Chorus Pro credentials configured for this client - Electronic signature certificates configured for this client  **Response:** ```json {   \"access\": \"eyJ0eXAiOiJKV1QiLCJhbGc...\",  // Access token (validity: 30 min)   \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGc...\"  // Refresh token (validity: 7 days) } ```  **Advantages:** - ✅ Full automation (CI/CD, scripts) - ✅ Programmatic token management - ✅ Refresh token support for automatic access renewal - ✅ Easy integration in any language/tool  #### 🖥️ Method 2: Dashboard Generation (Alternative)  **URL:** https://factpulse.fr/api/dashboard/  This method is suitable for quick tests or occasional use via the graphical interface.  **How it works:** - Log in to the dashboard - Use the \"Generate Test Token\" or \"Generate Production Token\" buttons - Works for **all** users (OAuth and email/password), without requiring a password  **Token types:** - **Test Token**: 24h validity, 1000 calls/day quota (free) - **Production Token**: 7 days validity, quota based on your plan  **Advantages:** - ✅ Quick for API testing - ✅ No password required - ✅ Simple visual interface  **Disadvantages:** - ❌ Requires manual action - ❌ No refresh token - ❌ Less suited for automation  ### 📚 Full Documentation  For more information on authentication and API usage: https://factpulse.fr/documentation-api/     
 
     The version of the OpenAPI document: 1.0.0
     Contact: contact@factpulse.fr
@@ -28,7 +28,7 @@ from factpulse.api_response import ApiResponse
 from factpulse.rest import RESTResponseType
 
 
-class DocumentConversionApi:
+class FacturXConversionApi:
     """NOTE: This class is auto generated by OpenAPI Generator
     Ref: https://openapi-generator.tech
 
@@ -44,10 +44,10 @@ class DocumentConversionApi:
     @validate_call
     def convert_document_async_api_v1_convert_async_post(
         self,
-        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Document à convertir (PDF, DOCX, XLSX, JPG, PNG)")],
-        output: Annotated[Optional[StrictStr], Field(description="Format de sortie: pdf, xml, both")] = None,
+        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Document to convert (PDF, DOCX, XLSX, JPG, PNG)")],
+        output: Annotated[Optional[StrictStr], Field(description="Output format: pdf, xml, both")] = None,
         callback_url: Optional[StrictStr] = None,
-        webhook_mode: Annotated[Optional[StrictStr], Field(description="Mode de livraison du contenu: 'inline' (base64 dans webhook) ou 'download_url' (URL temporaire 1h)")] = None,
+        webhook_mode: Annotated[Optional[StrictStr], Field(description="Content delivery mode: 'inline' (base64 in webhook) or 'download_url' (temporary URL, 1h TTL)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -61,17 +61,17 @@ class DocumentConversionApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Convertir un document en Factur-X (mode asynchrone)
+        """Convert a document to Factur-X (async mode)
 
-        Lance une conversion asynchrone via Celery.  ## Workflow  1. **Upload** : Le document est envoyé en multipart/form-data 2. **Task Celery** : La tâche est mise en file d'attente 3. **Callback** : Notification par webhook à la fin  ## Réponses possibles  - **202** : Tâche acceptée, en cours de traitement - **400** : Fichier invalide
+        Launch an asynchronous conversion via Celery.  ## Workflow  1. **Upload**: Document is sent as multipart/form-data 2. **Celery Task**: Task is queued for processing 3. **Callback**: Webhook notification on completion  ## Possible responses  - **202**: Task accepted, processing - **400**: Invalid file
 
-        :param file: Document à convertir (PDF, DOCX, XLSX, JPG, PNG) (required)
+        :param file: Document to convert (PDF, DOCX, XLSX, JPG, PNG) (required)
         :type file: bytearray
-        :param output: Format de sortie: pdf, xml, both
+        :param output: Output format: pdf, xml, both
         :type output: str
         :param callback_url:
         :type callback_url: str
-        :param webhook_mode: Mode de livraison du contenu: 'inline' (base64 dans webhook) ou 'download_url' (URL temporaire 1h)
+        :param webhook_mode: Content delivery mode: 'inline' (base64 in webhook) or 'download_url' (temporary URL, 1h TTL)
         :type webhook_mode: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -127,10 +127,10 @@ class DocumentConversionApi:
     @validate_call
     def convert_document_async_api_v1_convert_async_post_with_http_info(
         self,
-        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Document à convertir (PDF, DOCX, XLSX, JPG, PNG)")],
-        output: Annotated[Optional[StrictStr], Field(description="Format de sortie: pdf, xml, both")] = None,
+        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Document to convert (PDF, DOCX, XLSX, JPG, PNG)")],
+        output: Annotated[Optional[StrictStr], Field(description="Output format: pdf, xml, both")] = None,
         callback_url: Optional[StrictStr] = None,
-        webhook_mode: Annotated[Optional[StrictStr], Field(description="Mode de livraison du contenu: 'inline' (base64 dans webhook) ou 'download_url' (URL temporaire 1h)")] = None,
+        webhook_mode: Annotated[Optional[StrictStr], Field(description="Content delivery mode: 'inline' (base64 in webhook) or 'download_url' (temporary URL, 1h TTL)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -144,17 +144,17 @@ class DocumentConversionApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Convertir un document en Factur-X (mode asynchrone)
+        """Convert a document to Factur-X (async mode)
 
-        Lance une conversion asynchrone via Celery.  ## Workflow  1. **Upload** : Le document est envoyé en multipart/form-data 2. **Task Celery** : La tâche est mise en file d'attente 3. **Callback** : Notification par webhook à la fin  ## Réponses possibles  - **202** : Tâche acceptée, en cours de traitement - **400** : Fichier invalide
+        Launch an asynchronous conversion via Celery.  ## Workflow  1. **Upload**: Document is sent as multipart/form-data 2. **Celery Task**: Task is queued for processing 3. **Callback**: Webhook notification on completion  ## Possible responses  - **202**: Task accepted, processing - **400**: Invalid file
 
-        :param file: Document à convertir (PDF, DOCX, XLSX, JPG, PNG) (required)
+        :param file: Document to convert (PDF, DOCX, XLSX, JPG, PNG) (required)
         :type file: bytearray
-        :param output: Format de sortie: pdf, xml, both
+        :param output: Output format: pdf, xml, both
         :type output: str
         :param callback_url:
         :type callback_url: str
-        :param webhook_mode: Mode de livraison du contenu: 'inline' (base64 dans webhook) ou 'download_url' (URL temporaire 1h)
+        :param webhook_mode: Content delivery mode: 'inline' (base64 in webhook) or 'download_url' (temporary URL, 1h TTL)
         :type webhook_mode: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -210,10 +210,10 @@ class DocumentConversionApi:
     @validate_call
     def convert_document_async_api_v1_convert_async_post_without_preload_content(
         self,
-        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Document à convertir (PDF, DOCX, XLSX, JPG, PNG)")],
-        output: Annotated[Optional[StrictStr], Field(description="Format de sortie: pdf, xml, both")] = None,
+        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Document to convert (PDF, DOCX, XLSX, JPG, PNG)")],
+        output: Annotated[Optional[StrictStr], Field(description="Output format: pdf, xml, both")] = None,
         callback_url: Optional[StrictStr] = None,
-        webhook_mode: Annotated[Optional[StrictStr], Field(description="Mode de livraison du contenu: 'inline' (base64 dans webhook) ou 'download_url' (URL temporaire 1h)")] = None,
+        webhook_mode: Annotated[Optional[StrictStr], Field(description="Content delivery mode: 'inline' (base64 in webhook) or 'download_url' (temporary URL, 1h TTL)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -227,17 +227,17 @@ class DocumentConversionApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Convertir un document en Factur-X (mode asynchrone)
+        """Convert a document to Factur-X (async mode)
 
-        Lance une conversion asynchrone via Celery.  ## Workflow  1. **Upload** : Le document est envoyé en multipart/form-data 2. **Task Celery** : La tâche est mise en file d'attente 3. **Callback** : Notification par webhook à la fin  ## Réponses possibles  - **202** : Tâche acceptée, en cours de traitement - **400** : Fichier invalide
+        Launch an asynchronous conversion via Celery.  ## Workflow  1. **Upload**: Document is sent as multipart/form-data 2. **Celery Task**: Task is queued for processing 3. **Callback**: Webhook notification on completion  ## Possible responses  - **202**: Task accepted, processing - **400**: Invalid file
 
-        :param file: Document à convertir (PDF, DOCX, XLSX, JPG, PNG) (required)
+        :param file: Document to convert (PDF, DOCX, XLSX, JPG, PNG) (required)
         :type file: bytearray
-        :param output: Format de sortie: pdf, xml, both
+        :param output: Output format: pdf, xml, both
         :type output: str
         :param callback_url:
         :type callback_url: str
-        :param webhook_mode: Mode de livraison du contenu: 'inline' (base64 dans webhook) ou 'download_url' (URL temporaire 1h)
+        :param webhook_mode: Content delivery mode: 'inline' (base64 in webhook) or 'download_url' (temporary URL, 1h TTL)
         :type webhook_mode: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -390,9 +390,9 @@ class DocumentConversionApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> object:
-        """Télécharger un fichier généré
+        """Download a generated file
 
-        Télécharge le fichier Factur-X PDF ou XML généré.  ## Fichiers disponibles  - `facturx.pdf` : PDF/A-3 avec XML embarqué - `facturx.xml` : XML CII seul (Cross Industry Invoice)  Les fichiers sont disponibles pendant 24 heures après génération.
+        Download the generated Factur-X PDF or XML file.  ## Available files  - `facturx.pdf`: PDF/A-3 with embedded XML - `facturx.xml`: XML CII only (Cross Industry Invoice)  Files are available for 24 hours after generation.
 
         :param conversion_id: Conversion ID returned by POST /convert (UUID format) (required)
         :type conversion_id: str
@@ -464,9 +464,9 @@ class DocumentConversionApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[object]:
-        """Télécharger un fichier généré
+        """Download a generated file
 
-        Télécharge le fichier Factur-X PDF ou XML généré.  ## Fichiers disponibles  - `facturx.pdf` : PDF/A-3 avec XML embarqué - `facturx.xml` : XML CII seul (Cross Industry Invoice)  Les fichiers sont disponibles pendant 24 heures après génération.
+        Download the generated Factur-X PDF or XML file.  ## Available files  - `facturx.pdf`: PDF/A-3 with embedded XML - `facturx.xml`: XML CII only (Cross Industry Invoice)  Files are available for 24 hours after generation.
 
         :param conversion_id: Conversion ID returned by POST /convert (UUID format) (required)
         :type conversion_id: str
@@ -538,9 +538,9 @@ class DocumentConversionApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Télécharger un fichier généré
+        """Download a generated file
 
-        Télécharge le fichier Factur-X PDF ou XML généré.  ## Fichiers disponibles  - `facturx.pdf` : PDF/A-3 avec XML embarqué - `facturx.xml` : XML CII seul (Cross Industry Invoice)  Les fichiers sont disponibles pendant 24 heures après génération.
+        Download the generated Factur-X PDF or XML file.  ## Available files  - `facturx.pdf`: PDF/A-3 with embedded XML - `facturx.xml`: XML CII only (Cross Industry Invoice)  Files are available for 24 hours after generation.
 
         :param conversion_id: Conversion ID returned by POST /convert (UUID format) (required)
         :type conversion_id: str
@@ -674,9 +674,9 @@ class DocumentConversionApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Dict[str, object]:
-        """Vérifier le statut d'une conversion
+        """Check conversion status
 
-        Retourne le statut actuel d'une conversion asynchrone.
+        Returns the current status of an asynchronous conversion.
 
         :param conversion_id: Conversion ID returned by POST /convert (UUID format) (required)
         :type conversion_id: str
@@ -743,9 +743,9 @@ class DocumentConversionApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Dict[str, object]]:
-        """Vérifier le statut d'une conversion
+        """Check conversion status
 
-        Retourne le statut actuel d'une conversion asynchrone.
+        Returns the current status of an asynchronous conversion.
 
         :param conversion_id: Conversion ID returned by POST /convert (UUID format) (required)
         :type conversion_id: str
@@ -812,9 +812,9 @@ class DocumentConversionApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Vérifier le statut d'une conversion
+        """Check conversion status
 
-        Retourne le statut actuel d'une conversion asynchrone.
+        Returns the current status of an asynchronous conversion.
 
         :param conversion_id: Conversion ID returned by POST /convert (UUID format) (required)
         :type conversion_id: str
@@ -942,9 +942,9 @@ class DocumentConversionApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ConvertSuccessResponse:
-        """Reprendre une conversion avec corrections
+        """Resume a conversion with corrections
 
-        Reprend une conversion après complétion des données manquantes ou correction des erreurs.  L'extraction OCR est conservée, les données sont mises à jour avec les corrections, puis une nouvelle validation Schematron est effectuée.
+        Resume a conversion after completing missing data or correcting errors.  The OCR extraction is preserved, data is updated with corrections, then a new Schematron validation is performed.
 
         :param conversion_id: Conversion ID returned by POST /convert (UUID format) (required)
         :type conversion_id: str
@@ -1016,9 +1016,9 @@ class DocumentConversionApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ConvertSuccessResponse]:
-        """Reprendre une conversion avec corrections
+        """Resume a conversion with corrections
 
-        Reprend une conversion après complétion des données manquantes ou correction des erreurs.  L'extraction OCR est conservée, les données sont mises à jour avec les corrections, puis une nouvelle validation Schematron est effectuée.
+        Resume a conversion after completing missing data or correcting errors.  The OCR extraction is preserved, data is updated with corrections, then a new Schematron validation is performed.
 
         :param conversion_id: Conversion ID returned by POST /convert (UUID format) (required)
         :type conversion_id: str
@@ -1090,9 +1090,9 @@ class DocumentConversionApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """Reprendre une conversion avec corrections
+        """Resume a conversion with corrections
 
-        Reprend une conversion après complétion des données manquantes ou correction des erreurs.  L'extraction OCR est conservée, les données sont mises à jour avec les corrections, puis une nouvelle validation Schematron est effectuée.
+        Resume a conversion after completing missing data or correcting errors.  The OCR extraction is preserved, data is updated with corrections, then a new Schematron validation is performed.
 
         :param conversion_id: Conversion ID returned by POST /convert (UUID format) (required)
         :type conversion_id: str

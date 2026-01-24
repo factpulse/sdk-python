@@ -10,7 +10,8 @@ Name | Type | Description | Notes
 **report_name** | **str** |  | [optional] 
 **flow_type** | [**EReportingFlowType**](EReportingFlowType.md) | E-Reporting flux type (for internal routing) | 
 **transmission_type** | [**TransmissionTypeCode**](TransmissionTypeCode.md) | Transmission type (TT-4 TypeCode): IN&#x3D;Initial, RE&#x3D;Rectificative | [optional] 
-**sender** | [**ReportSender**](ReportSender.md) | Report sender (declarant) | 
+**sender** | [**ReportSender**](ReportSender.md) | Report sender (PA transmitting the report) | 
+**issuer** | [**ReportIssuer**](ReportIssuer.md) |  | [optional] 
 **period** | [**ReportPeriod**](ReportPeriod.md) | Reporting period | 
 **invoices** | [**List[InvoiceInput]**](InvoiceInput.md) |  | [optional] 
 **transactions** | [**List[AggregatedTransactionInput]**](AggregatedTransactionInput.md) |  | [optional] 

@@ -1,32 +1,32 @@
-# factpulse.DocumentConversionApi
+# factpulse.FacturXConversionApi
 
 All URIs are relative to *https://factpulse.fr*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**convert_document_async_api_v1_convert_async_post**](DocumentConversionApi.md#convert_document_async_api_v1_convert_async_post) | **POST** /api/v1/convert/async | Convertir un document en Factur-X (mode asynchrone)
-[**download_file_api_v1_convert_conversion_id_download_filename_get**](DocumentConversionApi.md#download_file_api_v1_convert_conversion_id_download_filename_get) | **GET** /api/v1/convert/{conversion_id}/download/{filename} | Télécharger un fichier généré
-[**get_conversion_status_api_v1_convert_conversion_id_status_get**](DocumentConversionApi.md#get_conversion_status_api_v1_convert_conversion_id_status_get) | **GET** /api/v1/convert/{conversion_id}/status | Vérifier le statut d&#39;une conversion
-[**resume_conversion_api_v1_convert_conversion_id_resume_post**](DocumentConversionApi.md#resume_conversion_api_v1_convert_conversion_id_resume_post) | **POST** /api/v1/convert/{conversion_id}/resume | Reprendre une conversion avec corrections
+[**convert_document_async_api_v1_convert_async_post**](FacturXConversionApi.md#convert_document_async_api_v1_convert_async_post) | **POST** /api/v1/convert/async | Convert a document to Factur-X (async mode)
+[**download_file_api_v1_convert_conversion_id_download_filename_get**](FacturXConversionApi.md#download_file_api_v1_convert_conversion_id_download_filename_get) | **GET** /api/v1/convert/{conversion_id}/download/{filename} | Download a generated file
+[**get_conversion_status_api_v1_convert_conversion_id_status_get**](FacturXConversionApi.md#get_conversion_status_api_v1_convert_conversion_id_status_get) | **GET** /api/v1/convert/{conversion_id}/status | Check conversion status
+[**resume_conversion_api_v1_convert_conversion_id_resume_post**](FacturXConversionApi.md#resume_conversion_api_v1_convert_conversion_id_resume_post) | **POST** /api/v1/convert/{conversion_id}/resume | Resume a conversion with corrections
 
 
 # **convert_document_async_api_v1_convert_async_post**
 > object convert_document_async_api_v1_convert_async_post(file, output=output, callback_url=callback_url, webhook_mode=webhook_mode)
 
-Convertir un document en Factur-X (mode asynchrone)
+Convert a document to Factur-X (async mode)
 
-Lance une conversion asynchrone via Celery.
+Launch an asynchronous conversion via Celery.
 
 ## Workflow
 
-1. **Upload** : Le document est envoyé en multipart/form-data
-2. **Task Celery** : La tâche est mise en file d'attente
-3. **Callback** : Notification par webhook à la fin
+1. **Upload**: Document is sent as multipart/form-data
+2. **Celery Task**: Task is queued for processing
+3. **Callback**: Webhook notification on completion
 
-## Réponses possibles
+## Possible responses
 
-- **202** : Tâche acceptée, en cours de traitement
-- **400** : Fichier invalide
+- **202**: Task accepted, processing
+- **400**: Invalid file
 
 ### Example
 
@@ -56,19 +56,19 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.DocumentConversionApi(api_client)
-    file = None # bytearray | Document à convertir (PDF, DOCX, XLSX, JPG, PNG)
-    output = 'pdf' # str | Format de sortie: pdf, xml, both (optional) (default to 'pdf')
+    api_instance = factpulse.FacturXConversionApi(api_client)
+    file = None # bytearray | Document to convert (PDF, DOCX, XLSX, JPG, PNG)
+    output = 'pdf' # str | Output format: pdf, xml, both (optional) (default to 'pdf')
     callback_url = 'callback_url_example' # str |  (optional)
-    webhook_mode = 'inline' # str | Mode de livraison du contenu: 'inline' (base64 dans webhook) ou 'download_url' (URL temporaire 1h) (optional) (default to 'inline')
+    webhook_mode = 'inline' # str | Content delivery mode: 'inline' (base64 in webhook) or 'download_url' (temporary URL, 1h TTL) (optional) (default to 'inline')
 
     try:
-        # Convertir un document en Factur-X (mode asynchrone)
+        # Convert a document to Factur-X (async mode)
         api_response = api_instance.convert_document_async_api_v1_convert_async_post(file, output=output, callback_url=callback_url, webhook_mode=webhook_mode)
-        print("The response of DocumentConversionApi->convert_document_async_api_v1_convert_async_post:\n")
+        print("The response of FacturXConversionApi->convert_document_async_api_v1_convert_async_post:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DocumentConversionApi->convert_document_async_api_v1_convert_async_post: %s\n" % e)
+        print("Exception when calling FacturXConversionApi->convert_document_async_api_v1_convert_async_post: %s\n" % e)
 ```
 
 
@@ -78,10 +78,10 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **file** | **bytearray**| Document à convertir (PDF, DOCX, XLSX, JPG, PNG) | 
- **output** | **str**| Format de sortie: pdf, xml, both | [optional] [default to &#39;pdf&#39;]
+ **file** | **bytearray**| Document to convert (PDF, DOCX, XLSX, JPG, PNG) | 
+ **output** | **str**| Output format: pdf, xml, both | [optional] [default to &#39;pdf&#39;]
  **callback_url** | **str**|  | [optional] 
- **webhook_mode** | **str**| Mode de livraison du contenu: &#39;inline&#39; (base64 dans webhook) ou &#39;download_url&#39; (URL temporaire 1h) | [optional] [default to &#39;inline&#39;]
+ **webhook_mode** | **str**| Content delivery mode: &#39;inline&#39; (base64 in webhook) or &#39;download_url&#39; (temporary URL, 1h TTL) | [optional] [default to &#39;inline&#39;]
 
 ### Return type
 
@@ -101,8 +101,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**202** | Tâche acceptée |  -  |
-**400** | Fichier invalide |  -  |
+**202** | Task accepted |  -  |
+**400** | Invalid file |  -  |
 **422** | Validation Error |  -  |
 **401** | Authentication required - Invalid or missing JWT token |  -  |
 
@@ -111,16 +111,16 @@ Name | Type | Description  | Notes
 # **download_file_api_v1_convert_conversion_id_download_filename_get**
 > object download_file_api_v1_convert_conversion_id_download_filename_get(conversion_id, filename)
 
-Télécharger un fichier généré
+Download a generated file
 
-Télécharge le fichier Factur-X PDF ou XML généré.
+Download the generated Factur-X PDF or XML file.
 
-## Fichiers disponibles
+## Available files
 
-- `facturx.pdf` : PDF/A-3 avec XML embarqué
-- `facturx.xml` : XML CII seul (Cross Industry Invoice)
+- `facturx.pdf`: PDF/A-3 with embedded XML
+- `facturx.xml`: XML CII only (Cross Industry Invoice)
 
-Les fichiers sont disponibles pendant 24 heures après génération.
+Files are available for 24 hours after generation.
 
 ### Example
 
@@ -150,17 +150,17 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.DocumentConversionApi(api_client)
+    api_instance = factpulse.FacturXConversionApi(api_client)
     conversion_id = 'conversion_id_example' # str | Conversion ID returned by POST /convert (UUID format)
     filename = 'filename_example' # str | File to download: 'facturx.pdf' or 'facturx.xml'
 
     try:
-        # Télécharger un fichier généré
+        # Download a generated file
         api_response = api_instance.download_file_api_v1_convert_conversion_id_download_filename_get(conversion_id, filename)
-        print("The response of DocumentConversionApi->download_file_api_v1_convert_conversion_id_download_filename_get:\n")
+        print("The response of FacturXConversionApi->download_file_api_v1_convert_conversion_id_download_filename_get:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DocumentConversionApi->download_file_api_v1_convert_conversion_id_download_filename_get: %s\n" % e)
+        print("Exception when calling FacturXConversionApi->download_file_api_v1_convert_conversion_id_download_filename_get: %s\n" % e)
 ```
 
 
@@ -190,8 +190,8 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Fichier téléchargé |  -  |
-**404** | Fichier non trouvé ou expiré |  -  |
+**200** | File downloaded |  -  |
+**404** | File not found or expired |  -  |
 **422** | Validation Error |  -  |
 **401** | Authentication required - Invalid or missing JWT token |  -  |
 
@@ -200,9 +200,9 @@ Name | Type | Description  | Notes
 # **get_conversion_status_api_v1_convert_conversion_id_status_get**
 > Dict[str, object] get_conversion_status_api_v1_convert_conversion_id_status_get(conversion_id)
 
-Vérifier le statut d'une conversion
+Check conversion status
 
-Retourne le statut actuel d'une conversion asynchrone.
+Returns the current status of an asynchronous conversion.
 
 ### Example
 
@@ -232,16 +232,16 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.DocumentConversionApi(api_client)
+    api_instance = factpulse.FacturXConversionApi(api_client)
     conversion_id = 'conversion_id_example' # str | Conversion ID returned by POST /convert (UUID format)
 
     try:
-        # Vérifier le statut d'une conversion
+        # Check conversion status
         api_response = api_instance.get_conversion_status_api_v1_convert_conversion_id_status_get(conversion_id)
-        print("The response of DocumentConversionApi->get_conversion_status_api_v1_convert_conversion_id_status_get:\n")
+        print("The response of FacturXConversionApi->get_conversion_status_api_v1_convert_conversion_id_status_get:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DocumentConversionApi->get_conversion_status_api_v1_convert_conversion_id_status_get: %s\n" % e)
+        print("Exception when calling FacturXConversionApi->get_conversion_status_api_v1_convert_conversion_id_status_get: %s\n" % e)
 ```
 
 
@@ -279,12 +279,12 @@ Name | Type | Description  | Notes
 # **resume_conversion_api_v1_convert_conversion_id_resume_post**
 > ConvertSuccessResponse resume_conversion_api_v1_convert_conversion_id_resume_post(conversion_id, convert_resume_request)
 
-Reprendre une conversion avec corrections
+Resume a conversion with corrections
 
-Reprend une conversion après complétion des données manquantes ou correction des erreurs.
+Resume a conversion after completing missing data or correcting errors.
 
-L'extraction OCR est conservée, les données sont mises à jour avec les corrections,
-puis une nouvelle validation Schematron est effectuée.
+The OCR extraction is preserved, data is updated with corrections,
+then a new Schematron validation is performed.
 
 ### Example
 
@@ -316,17 +316,17 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.DocumentConversionApi(api_client)
+    api_instance = factpulse.FacturXConversionApi(api_client)
     conversion_id = 'conversion_id_example' # str | Conversion ID returned by POST /convert (UUID format)
     convert_resume_request = factpulse.ConvertResumeRequest() # ConvertResumeRequest | 
 
     try:
-        # Reprendre une conversion avec corrections
+        # Resume a conversion with corrections
         api_response = api_instance.resume_conversion_api_v1_convert_conversion_id_resume_post(conversion_id, convert_resume_request)
-        print("The response of DocumentConversionApi->resume_conversion_api_v1_convert_conversion_id_resume_post:\n")
+        print("The response of FacturXConversionApi->resume_conversion_api_v1_convert_conversion_id_resume_post:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling DocumentConversionApi->resume_conversion_api_v1_convert_conversion_id_resume_post: %s\n" % e)
+        print("Exception when calling FacturXConversionApi->resume_conversion_api_v1_convert_conversion_id_resume_post: %s\n" % e)
 ```
 
 
@@ -357,8 +357,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successful Response |  -  |
-**404** | Conversion non trouvée ou expirée |  -  |
-**422** | Validation toujours en échec |  -  |
+**404** | Conversion not found or expired |  -  |
+**422** | Validation still failing |  -  |
 **401** | Authentication required - Invalid or missing JWT token |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

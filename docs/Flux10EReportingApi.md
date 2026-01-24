@@ -1,20 +1,20 @@
-# factpulse.EReportingApi
+# factpulse.Flux10EReportingApi
 
 All URIs are relative to *https://factpulse.fr*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**generate_aggregated_ereporting_api_v1_ereporting_generate_aggregated_post**](EReportingApi.md#generate_aggregated_ereporting_api_v1_ereporting_generate_aggregated_post) | **POST** /api/v1/ereporting/generate-aggregated | Generate aggregated e-reporting XML (PPF-compliant)
-[**generate_ereporting_api_v1_ereporting_generate_post**](EReportingApi.md#generate_ereporting_api_v1_ereporting_generate_post) | **POST** /api/v1/ereporting/generate | Generate e-reporting XML
-[**generate_ereporting_download_api_v1_ereporting_generate_download_post**](EReportingApi.md#generate_ereporting_download_api_v1_ereporting_generate_download_post) | **POST** /api/v1/ereporting/generate/download | Generate and download e-reporting XML
-[**list_category_codes_api_v1_ereporting_category_codes_get**](EReportingApi.md#list_category_codes_api_v1_ereporting_category_codes_get) | **GET** /api/v1/ereporting/category-codes | List PPF-compliant category codes
-[**list_flow_types_api_v1_ereporting_flow_types_get**](EReportingApi.md#list_flow_types_api_v1_ereporting_flow_types_get) | **GET** /api/v1/ereporting/flow-types | List available flow types
-[**submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post**](EReportingApi.md#submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post) | **POST** /api/v1/ereporting/submit-aggregated | Submit aggregated e-reporting to PA/PDP
-[**submit_ereporting_api_v1_ereporting_submit_post**](EReportingApi.md#submit_ereporting_api_v1_ereporting_submit_post) | **POST** /api/v1/ereporting/submit | Submit e-reporting to PA/PDP
-[**submit_xml_ereporting_api_v1_ereporting_submit_xml_post**](EReportingApi.md#submit_xml_ereporting_api_v1_ereporting_submit_xml_post) | **POST** /api/v1/ereporting/submit-xml | Submit pre-generated e-reporting XML
-[**validate_aggregated_ereporting_api_v1_ereporting_validate_aggregated_post**](EReportingApi.md#validate_aggregated_ereporting_api_v1_ereporting_validate_aggregated_post) | **POST** /api/v1/ereporting/validate-aggregated | Validate aggregated e-reporting data
-[**validate_ereporting_api_v1_ereporting_validate_post**](EReportingApi.md#validate_ereporting_api_v1_ereporting_validate_post) | **POST** /api/v1/ereporting/validate | Validate e-reporting data
-[**validate_xml_ereporting_api_v1_ereporting_validate_xml_post**](EReportingApi.md#validate_xml_ereporting_api_v1_ereporting_validate_xml_post) | **POST** /api/v1/ereporting/validate-xml | Validate e-reporting XML against PPF XSD schemas and business rules
+[**generate_aggregated_ereporting_api_v1_ereporting_generate_aggregated_post**](Flux10EReportingApi.md#generate_aggregated_ereporting_api_v1_ereporting_generate_aggregated_post) | **POST** /api/v1/ereporting/generate-aggregated | Generate aggregated e-reporting XML (PPF-compliant)
+[**generate_ereporting_api_v1_ereporting_generate_post**](Flux10EReportingApi.md#generate_ereporting_api_v1_ereporting_generate_post) | **POST** /api/v1/ereporting/generate | Generate e-reporting XML
+[**generate_ereporting_download_api_v1_ereporting_generate_download_post**](Flux10EReportingApi.md#generate_ereporting_download_api_v1_ereporting_generate_download_post) | **POST** /api/v1/ereporting/generate/download | Generate and download e-reporting XML
+[**list_category_codes_api_v1_ereporting_category_codes_get**](Flux10EReportingApi.md#list_category_codes_api_v1_ereporting_category_codes_get) | **GET** /api/v1/ereporting/category-codes | List PPF-compliant category codes
+[**list_flow_types_api_v1_ereporting_flow_types_get**](Flux10EReportingApi.md#list_flow_types_api_v1_ereporting_flow_types_get) | **GET** /api/v1/ereporting/flow-types | List available flow types
+[**submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post**](Flux10EReportingApi.md#submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post) | **POST** /api/v1/ereporting/submit-aggregated | Submit aggregated e-reporting to PA/PDP
+[**submit_ereporting_api_v1_ereporting_submit_post**](Flux10EReportingApi.md#submit_ereporting_api_v1_ereporting_submit_post) | **POST** /api/v1/ereporting/submit | Submit e-reporting to PA/PDP
+[**submit_xml_ereporting_api_v1_ereporting_submit_xml_post**](Flux10EReportingApi.md#submit_xml_ereporting_api_v1_ereporting_submit_xml_post) | **POST** /api/v1/ereporting/submit-xml | Submit pre-generated e-reporting XML
+[**validate_aggregated_ereporting_api_v1_ereporting_validate_aggregated_post**](Flux10EReportingApi.md#validate_aggregated_ereporting_api_v1_ereporting_validate_aggregated_post) | **POST** /api/v1/ereporting/validate-aggregated | Validate aggregated e-reporting data
+[**validate_ereporting_api_v1_ereporting_validate_post**](Flux10EReportingApi.md#validate_ereporting_api_v1_ereporting_validate_post) | **POST** /api/v1/ereporting/validate | Validate e-reporting data
+[**validate_xml_ereporting_api_v1_ereporting_validate_xml_post**](Flux10EReportingApi.md#validate_xml_ereporting_api_v1_ereporting_validate_xml_post) | **POST** /api/v1/ereporting/validate-xml | Validate e-reporting XML (PPF Annexe 6 v1.9 compliant)
 
 
 # **generate_aggregated_ereporting_api_v1_ereporting_generate_aggregated_post**
@@ -68,16 +68,16 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.EReportingApi(api_client)
+    api_instance = factpulse.Flux10EReportingApi(api_client)
     create_aggregated_report_request = factpulse.CreateAggregatedReportRequest() # CreateAggregatedReportRequest | 
 
     try:
         # Generate aggregated e-reporting XML (PPF-compliant)
         api_response = api_instance.generate_aggregated_ereporting_api_v1_ereporting_generate_aggregated_post(create_aggregated_report_request)
-        print("The response of EReportingApi->generate_aggregated_ereporting_api_v1_ereporting_generate_aggregated_post:\n")
+        print("The response of Flux10EReportingApi->generate_aggregated_ereporting_api_v1_ereporting_generate_aggregated_post:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling EReportingApi->generate_aggregated_ereporting_api_v1_ereporting_generate_aggregated_post: %s\n" % e)
+        print("Exception when calling Flux10EReportingApi->generate_aggregated_ereporting_api_v1_ereporting_generate_aggregated_post: %s\n" % e)
 ```
 
 
@@ -160,16 +160,16 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.EReportingApi(api_client)
+    api_instance = factpulse.Flux10EReportingApi(api_client)
     create_e_reporting_request = factpulse.CreateEReportingRequest() # CreateEReportingRequest | 
 
     try:
         # Generate e-reporting XML
         api_response = api_instance.generate_ereporting_api_v1_ereporting_generate_post(create_e_reporting_request)
-        print("The response of EReportingApi->generate_ereporting_api_v1_ereporting_generate_post:\n")
+        print("The response of Flux10EReportingApi->generate_ereporting_api_v1_ereporting_generate_post:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling EReportingApi->generate_ereporting_api_v1_ereporting_generate_post: %s\n" % e)
+        print("Exception when calling Flux10EReportingApi->generate_ereporting_api_v1_ereporting_generate_post: %s\n" % e)
 ```
 
 
@@ -242,7 +242,7 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.EReportingApi(api_client)
+    api_instance = factpulse.Flux10EReportingApi(api_client)
     create_e_reporting_request = factpulse.CreateEReportingRequest() # CreateEReportingRequest | 
     filename = 'filename_example' # str | Output filename (default: ereporting_{reportId}.xml) (optional)
 
@@ -250,7 +250,7 @@ with factpulse.ApiClient(configuration) as api_client:
         # Generate and download e-reporting XML
         api_instance.generate_ereporting_download_api_v1_ereporting_generate_download_post(create_e_reporting_request, filename=filename)
     except Exception as e:
-        print("Exception when calling EReportingApi->generate_ereporting_download_api_v1_ereporting_generate_download_post: %s\n" % e)
+        print("Exception when calling Flux10EReportingApi->generate_ereporting_download_api_v1_ereporting_generate_download_post: %s\n" % e)
 ```
 
 
@@ -315,15 +315,15 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.EReportingApi(api_client)
+    api_instance = factpulse.Flux10EReportingApi(api_client)
 
     try:
         # List PPF-compliant category codes
         api_response = api_instance.list_category_codes_api_v1_ereporting_category_codes_get()
-        print("The response of EReportingApi->list_category_codes_api_v1_ereporting_category_codes_get:\n")
+        print("The response of Flux10EReportingApi->list_category_codes_api_v1_ereporting_category_codes_get:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling EReportingApi->list_category_codes_api_v1_ereporting_category_codes_get: %s\n" % e)
+        print("Exception when calling Flux10EReportingApi->list_category_codes_api_v1_ereporting_category_codes_get: %s\n" % e)
 ```
 
 
@@ -381,15 +381,15 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.EReportingApi(api_client)
+    api_instance = factpulse.Flux10EReportingApi(api_client)
 
     try:
         # List available flow types
         api_response = api_instance.list_flow_types_api_v1_ereporting_flow_types_get()
-        print("The response of EReportingApi->list_flow_types_api_v1_ereporting_flow_types_get:\n")
+        print("The response of Flux10EReportingApi->list_flow_types_api_v1_ereporting_flow_types_get:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling EReportingApi->list_flow_types_api_v1_ereporting_flow_types_get: %s\n" % e)
+        print("Exception when calling Flux10EReportingApi->list_flow_types_api_v1_ereporting_flow_types_get: %s\n" % e)
 ```
 
 
@@ -462,16 +462,16 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.EReportingApi(api_client)
+    api_instance = factpulse.Flux10EReportingApi(api_client)
     submit_aggregated_report_request = factpulse.SubmitAggregatedReportRequest() # SubmitAggregatedReportRequest | 
 
     try:
         # Submit aggregated e-reporting to PA/PDP
         api_response = api_instance.submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post(submit_aggregated_report_request)
-        print("The response of EReportingApi->submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post:\n")
+        print("The response of Flux10EReportingApi->submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling EReportingApi->submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post: %s\n" % e)
+        print("Exception when calling Flux10EReportingApi->submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post: %s\n" % e)
 ```
 
 
@@ -552,16 +552,16 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.EReportingApi(api_client)
+    api_instance = factpulse.Flux10EReportingApi(api_client)
     submit_e_reporting_request = factpulse.SubmitEReportingRequest() # SubmitEReportingRequest | 
 
     try:
         # Submit e-reporting to PA/PDP
         api_response = api_instance.submit_ereporting_api_v1_ereporting_submit_post(submit_e_reporting_request)
-        print("The response of EReportingApi->submit_ereporting_api_v1_ereporting_submit_post:\n")
+        print("The response of Flux10EReportingApi->submit_ereporting_api_v1_ereporting_submit_post:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling EReportingApi->submit_ereporting_api_v1_ereporting_submit_post: %s\n" % e)
+        print("Exception when calling Flux10EReportingApi->submit_ereporting_api_v1_ereporting_submit_post: %s\n" % e)
 ```
 
 
@@ -645,7 +645,7 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.EReportingApi(api_client)
+    api_instance = factpulse.Flux10EReportingApi(api_client)
     xml_file = None # bytearray | E-reporting XML file
     tracking_id = 'tracking_id_example' # str |  (optional)
     skip_validation = False # bool | Skip XSD validation (optional) (default to False)
@@ -657,10 +657,10 @@ with factpulse.ApiClient(configuration) as api_client:
     try:
         # Submit pre-generated e-reporting XML
         api_response = api_instance.submit_xml_ereporting_api_v1_ereporting_submit_xml_post(xml_file, tracking_id=tracking_id, skip_validation=skip_validation, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret)
-        print("The response of EReportingApi->submit_xml_ereporting_api_v1_ereporting_submit_xml_post:\n")
+        print("The response of Flux10EReportingApi->submit_xml_ereporting_api_v1_ereporting_submit_xml_post:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling EReportingApi->submit_xml_ereporting_api_v1_ereporting_submit_xml_post: %s\n" % e)
+        print("Exception when calling Flux10EReportingApi->submit_xml_ereporting_api_v1_ereporting_submit_xml_post: %s\n" % e)
 ```
 
 
@@ -739,16 +739,16 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.EReportingApi(api_client)
+    api_instance = factpulse.Flux10EReportingApi(api_client)
     create_aggregated_report_request = factpulse.CreateAggregatedReportRequest() # CreateAggregatedReportRequest | 
 
     try:
         # Validate aggregated e-reporting data
         api_response = api_instance.validate_aggregated_ereporting_api_v1_ereporting_validate_aggregated_post(create_aggregated_report_request)
-        print("The response of EReportingApi->validate_aggregated_ereporting_api_v1_ereporting_validate_aggregated_post:\n")
+        print("The response of Flux10EReportingApi->validate_aggregated_ereporting_api_v1_ereporting_validate_aggregated_post:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling EReportingApi->validate_aggregated_ereporting_api_v1_ereporting_validate_aggregated_post: %s\n" % e)
+        print("Exception when calling Flux10EReportingApi->validate_aggregated_ereporting_api_v1_ereporting_validate_aggregated_post: %s\n" % e)
 ```
 
 
@@ -829,16 +829,16 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.EReportingApi(api_client)
+    api_instance = factpulse.Flux10EReportingApi(api_client)
     validate_e_reporting_request = factpulse.ValidateEReportingRequest() # ValidateEReportingRequest | 
 
     try:
         # Validate e-reporting data
         api_response = api_instance.validate_ereporting_api_v1_ereporting_validate_post(validate_e_reporting_request)
-        print("The response of EReportingApi->validate_ereporting_api_v1_ereporting_validate_post:\n")
+        print("The response of Flux10EReportingApi->validate_ereporting_api_v1_ereporting_validate_post:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling EReportingApi->validate_ereporting_api_v1_ereporting_validate_post: %s\n" % e)
+        print("Exception when calling Flux10EReportingApi->validate_ereporting_api_v1_ereporting_validate_post: %s\n" % e)
 ```
 
 
@@ -876,20 +876,26 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **validate_xml_ereporting_api_v1_ereporting_validate_xml_post**
-> Dict[str, object] validate_xml_ereporting_api_v1_ereporting_validate_xml_post(xml_file, validate_business_rules=validate_business_rules)
+> Dict[str, object] validate_xml_ereporting_api_v1_ereporting_validate_xml_post(xml_file, validate_coherence=validate_coherence, validate_period=validate_period)
 
-Validate e-reporting XML against PPF XSD schemas and business rules
+Validate e-reporting XML (PPF Annexe 6 v1.9 compliant)
 
-Validates an e-reporting XML file against:
+Validates an e-reporting XML file against PPF specifications (Annexe 6 v1.9):
 
-1. **XSD schemas**: Official PPF e-reporting XSD (structure, types, cardinality)
-2. **Business rules**: ISO codes and enum validation
-   - Currency codes (ISO 4217: EUR, USD, GBP, etc.)
-   - Country codes (ISO 3166-1 alpha-2: FR, DE, US, etc.)
-   - Scheme IDs (0009=SIRET, 0002=SIREN, etc.)
-   - Role codes (UNCL 3035: SE=Seller, BY=Buyer, WK=Working party, etc.)
+**Validation levels:**
+1. **XSD (REJ_SEMAN)**: Structure, types, cardinality
+2. **Semantic (REJ_SEMAN)**: Authorized values from codelists
+3. **Coherence (REJ_COH)**: Data consistency (totals = sum of breakdowns)
+4. **Period (REJ_PER)**: Transaction dates within declared period
 
-Returns validation status and detailed error messages if invalid.
+**Validated codes:**
+- SchemeID (ISO 6523): 0002=SIREN, 0009=SIRET, 0224=RoutingCode, etc.
+- RoleCode (UNCL 3035): SE=Seller, BY=Buyer, WK=Working party
+- CategoryCode (TT-81): TLB1, TPS1, TNT1, TMA1
+- TaxCategoryCode (UNTDID 5305): S, Z, E, AE, K, G, O
+- Currency (ISO 4217), Country (ISO 3166-1)
+
+Returns structured validation errors with PPF rejection codes.
 
 ### Example
 
@@ -919,17 +925,18 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.EReportingApi(api_client)
+    api_instance = factpulse.Flux10EReportingApi(api_client)
     xml_file = None # bytearray | E-reporting XML file to validate
-    validate_business_rules = True # bool | Also validate business rules (ISO codes, enums) (optional) (default to True)
+    validate_coherence = True # bool | Validate data coherence (REJ_COH) (optional) (default to True)
+    validate_period = True # bool | Validate period coherence (REJ_PER) (optional) (default to True)
 
     try:
-        # Validate e-reporting XML against PPF XSD schemas and business rules
-        api_response = api_instance.validate_xml_ereporting_api_v1_ereporting_validate_xml_post(xml_file, validate_business_rules=validate_business_rules)
-        print("The response of EReportingApi->validate_xml_ereporting_api_v1_ereporting_validate_xml_post:\n")
+        # Validate e-reporting XML (PPF Annexe 6 v1.9 compliant)
+        api_response = api_instance.validate_xml_ereporting_api_v1_ereporting_validate_xml_post(xml_file, validate_coherence=validate_coherence, validate_period=validate_period)
+        print("The response of Flux10EReportingApi->validate_xml_ereporting_api_v1_ereporting_validate_xml_post:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling EReportingApi->validate_xml_ereporting_api_v1_ereporting_validate_xml_post: %s\n" % e)
+        print("Exception when calling Flux10EReportingApi->validate_xml_ereporting_api_v1_ereporting_validate_xml_post: %s\n" % e)
 ```
 
 
@@ -940,7 +947,8 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **xml_file** | **bytearray**| E-reporting XML file to validate | 
- **validate_business_rules** | **bool**| Also validate business rules (ISO codes, enums) | [optional] [default to True]
+ **validate_coherence** | **bool**| Validate data coherence (REJ_COH) | [optional] [default to True]
+ **validate_period** | **bool**| Validate period coherence (REJ_PER) | [optional] [default to True]
 
 ### Return type
 
