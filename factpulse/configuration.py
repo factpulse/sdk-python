@@ -115,6 +115,7 @@ AuthSettings = TypedDict(
     "AuthSettings",
     {
         "HTTPBearer": BearerAuthSetting,
+        "APIKeyHeader": APIKeyAuthSetting,
     },
     total=False,
 )
@@ -168,6 +169,25 @@ class Configuration:
     :param key_file: the path to a client key file, for mTLS.
 
     :Example:
+
+    API Key Authentication Example.
+    Given the following security scheme in the OpenAPI specification:
+      components:
+        securitySchemes:
+          cookieAuth:         # name for the security scheme
+            type: apiKey
+            in: cookie
+            name: JSESSIONID  # cookie name
+
+    You can programmatically set the cookie:
+
+conf = factpulse.Configuration(
+    api_key={'cookieAuth': 'abc123'}
+    api_key_prefix={'cookieAuth': 'JSESSIONID'}
+)
+
+    The following cookie will be added to the HTTP request:
+       Cookie: JSESSIONID abc123
     """
 
     _default: ClassVar[Optional[Self]] = None
@@ -505,6 +525,15 @@ class Configuration:
                 'key': 'Authorization',
                 'value': 'Bearer ' + self.access_token
             }
+        if 'APIKeyHeader' in self.api_key:
+            auth['APIKeyHeader'] = {
+                'type': 'api_key',
+                'in': 'header',
+                'key': 'X-API-Key',
+                'value': self.get_api_key_with_prefix(
+                    'APIKeyHeader',
+                ),
+            }
         return auth
 
     def to_debug_report(self) -> str:
@@ -516,7 +545,7 @@ class Configuration:
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 1.0.0\n"\
-               "SDK Package Version: 4.0.2".\
+               "SDK Package Version: 0.1.0".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:

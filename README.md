@@ -39,11 +39,13 @@ result = client.post(
     invoiceData={
         "number": "INV-2025-001",
         "supplier": {
+            "name": "ACME Corporation",
             "siret": "12345678901234",
             "iban": "FR7630001007941234567890185",
             "routing_address": "12345678901234",
         },
         "recipient": {
+            "name": "Client Company SA",
             "siret": "98765432109876",
             "routing_address": "98765432109876",
         },
@@ -190,6 +192,16 @@ except FactPulseError as e:
     print(f"Status code: {e.status_code}")
     print(f"Details: {e.details}")  # Validation errors list
 ```
+
+## Available Helpers
+
+The SDK provides the following helper classes:
+
+- `FactPulseClient`: Main HTTP client with auto-auth and polling
+- `FactPulseError`: Base exception class
+- `FactPulseAuthError`: Authentication failure
+- `FactPulseValidationError`: Validation errors with details
+- `FactPulsePollingTimeout`: Task polling timeout
 
 ## Resources
 

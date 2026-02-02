@@ -18,14 +18,14 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
 class PDPConfigUpdateRequest(BaseModel):
     """
-    PDP configuration update request.
+    PDP configuration update request.  For encryption_mode='double', the X-Encryption-Key header must also be provided containing a base64-encoded AES-256 key (32 bytes).
     """ # noqa: E501
     is_active: Optional[StrictBool] = Field(default=True, description="Whether config is active", alias="isActive")
     mode_sandbox: Optional[StrictBool] = Field(default=False, description="Sandbox mode", alias="modeSandbox")
@@ -33,7 +33,18 @@ class PDPConfigUpdateRequest(BaseModel):
     token_url: StrictStr = Field(description="PDP OAuth token URL", alias="tokenUrl")
     oauth_client_id: StrictStr = Field(description="OAuth Client ID", alias="oauthClientId")
     client_secret: StrictStr = Field(description="OAuth Client Secret (sent but never returned)", alias="clientSecret")
-    __properties: ClassVar[List[str]] = ["isActive", "modeSandbox", "flowServiceUrl", "tokenUrl", "oauthClientId", "clientSecret"]
+    encryption_mode: Optional[StrictStr] = Field(default=None, alias="encryptionMode")
+    __properties: ClassVar[List[str]] = ["isActive", "modeSandbox", "flowServiceUrl", "tokenUrl", "oauthClientId", "clientSecret", "encryptionMode"]
+
+    @field_validator('encryption_mode')
+    def encryption_mode_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['fernet', 'double']):
+            raise ValueError("must be one of enum values ('fernet', 'double')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -74,6 +85,11 @@ class PDPConfigUpdateRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if encryption_mode (nullable) is None
+        # and model_fields_set contains the field
+        if self.encryption_mode is None and "encryption_mode" in self.model_fields_set:
+            _dict['encryptionMode'] = None
+
         return _dict
 
     @classmethod
@@ -91,7 +107,8 @@ class PDPConfigUpdateRequest(BaseModel):
             "flowServiceUrl": obj.get("flowServiceUrl"),
             "tokenUrl": obj.get("tokenUrl"),
             "oauthClientId": obj.get("oauthClientId"),
-            "clientSecret": obj.get("clientSecret")
+            "clientSecret": obj.get("clientSecret"),
+            "encryptionMode": obj.get("encryptionMode")
         })
         return _obj
 

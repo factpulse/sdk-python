@@ -409,6 +409,7 @@ class FacturXGenerationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 
@@ -689,6 +690,7 @@ class FacturXGenerationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 
@@ -1003,6 +1005,7 @@ class FacturXGenerationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 

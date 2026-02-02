@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 
 # **get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get**
-> IncomingInvoice get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get(flow_id, include_document=include_document)
+> IncomingInvoice get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get(flow_id, include_document=include_document, x_encryption_key=x_encryption_key)
 
 Retrieve and extract an incoming invoice
 
@@ -17,6 +17,7 @@ Downloads an incoming flow from the AFNOR PDP and extracts invoice metadata into
 
 ### Example
 
+* Api Key Authentication (APIKeyHeader):
 * Bearer Authentication (HTTPBearer):
 
 ```python
@@ -36,6 +37,12 @@ configuration = factpulse.Configuration(
 # Examples for each auth method are provided below, use the example that
 # satisfies your auth use case.
 
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
 # Configure Bearer authorization: HTTPBearer
 configuration = factpulse.Configuration(
     access_token = os.environ["BEARER_TOKEN"]
@@ -47,10 +54,11 @@ with factpulse.ApiClient(configuration) as api_client:
     api_instance = factpulse.AFNORPDPPAApi(api_client)
     flow_id = 'flow_id_example' # str | AFNOR flow ID (UUID format)
     include_document = False # bool | Include base64-encoded document in response (optional) (default to False)
+    x_encryption_key = 'x_encryption_key_example' # str | Client encryption key for double encryption mode. Must be a base64-encoded AES-256 key (32 bytes). Required only when accessing resources encrypted with encryption_mode='double'. (optional)
 
     try:
         # Retrieve and extract an incoming invoice
-        api_response = api_instance.get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get(flow_id, include_document=include_document)
+        api_response = api_instance.get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get(flow_id, include_document=include_document, x_encryption_key=x_encryption_key)
         print("The response of AFNORPDPPAApi->get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get:\n")
         pprint(api_response)
     except Exception as e:
@@ -66,6 +74,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **flow_id** | **str**| AFNOR flow ID (UUID format) | 
  **include_document** | **bool**| Include base64-encoded document in response | [optional] [default to False]
+ **x_encryption_key** | **str**| Client encryption key for double encryption mode. Must be a base64-encoded AES-256 key (32 bytes). Required only when accessing resources encrypted with encryption_mode&#x3D;&#39;double&#39;. | [optional] 
 
 ### Return type
 
@@ -73,7 +82,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[HTTPBearer](../README.md#HTTPBearer)
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
 
 ### HTTP request headers
 

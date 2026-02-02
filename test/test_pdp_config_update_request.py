@@ -41,7 +41,8 @@ class TestPDPConfigUpdateRequest(unittest.TestCase):
                 flow_service_url = '',
                 token_url = '',
                 oauth_client_id = '',
-                client_secret = ''
+                client_secret = '',
+                encryption_mode = 'fernet'
             )
         else:
             return PDPConfigUpdateRequest(

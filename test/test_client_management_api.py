@@ -48,6 +48,20 @@ class TestClientManagementApi(unittest.TestCase):
         """
         pass
 
+    def test_delete_webhook_secret_api_v1_clients_uid_webhook_secret_delete(self) -> None:
+        """Test case for delete_webhook_secret_api_v1_clients_uid_webhook_secret_delete
+
+        Delete webhook secret
+        """
+        pass
+
+    def test_generate_webhook_secret_api_v1_clients_uid_webhook_secret_generate_post(self) -> None:
+        """Test case for generate_webhook_secret_api_v1_clients_uid_webhook_secret_generate_post
+
+        Generate webhook secret
+        """
+        pass
+
     def test_get_client_api_v1_clients_uid_get(self) -> None:
         """Test case for get_client_api_v1_clients_uid_get
 
@@ -62,10 +76,24 @@ class TestClientManagementApi(unittest.TestCase):
         """
         pass
 
+    def test_get_webhook_secret_status_api_v1_clients_uid_webhook_secret_status_get(self) -> None:
+        """Test case for get_webhook_secret_status_api_v1_clients_uid_webhook_secret_status_get
+
+        Get webhook secret status
+        """
+        pass
+
     def test_list_clients_api_v1_clients_get(self) -> None:
         """Test case for list_clients_api_v1_clients_get
 
         List clients
+        """
+        pass
+
+    def test_rotate_encryption_key_api_v1_clients_uid_rotate_encryption_key_post(self) -> None:
+        """Test case for rotate_encryption_key_api_v1_clients_uid_rotate_encryption_key_post
+
+        Rotate client encryption key
         """
         pass
 

@@ -43,9 +43,12 @@ class TestPDPConfigResponse(unittest.TestCase):
                 flow_service_url = '',
                 token_url = '',
                 oauth_client_id = '',
+                encryption_mode = '',
                 secret_status = factpulse.models.secret_status.SecretStatus(
                     status = '', 
-                    message = '', ),
+                    message = '', 
+                    encryption_mode = '', 
+                    requires_client_key = True, ),
                 last_test_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 last_test_success = True,
                 last_test_error = '',

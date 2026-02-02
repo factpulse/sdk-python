@@ -306,6 +306,7 @@ class ElectronicSignatureApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 
@@ -685,6 +686,7 @@ class ElectronicSignatureApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 
@@ -1091,6 +1093,7 @@ class ElectronicSignatureApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 
@@ -1374,6 +1377,7 @@ class ElectronicSignatureApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 

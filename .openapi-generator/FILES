@@ -169,9 +169,9 @@ docs/FacturXInvoice.md
 docs/FacturXPDFInfo.md
 docs/FacturXPDFXMLVerificationApi.md
 docs/FacturXValidationApi.md
-docs/FactureElectroniqueRestApiSchemasCdarValidationErrorResponse.md
-docs/FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.md
 docs/FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode.md
+docs/FactureElectroniqueRestApiSchemasProcessingChorusProCredentials.md
+docs/FactureElectroniqueRestApiSchemasValidationValidationErrorResponse.md
 docs/FieldStatus.md
 docs/FileInfo.md
 docs/FilesInfo.md
@@ -214,6 +214,8 @@ docs/InvoiceTypeCodeOutput.md
 docs/InvoicingFramework.md
 docs/InvoicingFrameworkCode.md
 docs/IssuerRoleCode.md
+docs/KeyRotationRequest.md
+docs/KeyRotationResponse.md
 docs/LineNetAmount.md
 docs/LineSubType.md
 docs/LineTotalAmount.md
@@ -325,6 +327,9 @@ docs/ValidationSuccessResponse.md
 docs/VatRate.md
 docs/VerificationSuccessResponse.md
 docs/VerifiedFieldSchema.md
+docs/WebhookSecretDeleteResponse.md
+docs/WebhookSecretGenerateResponse.md
+docs/WebhookSecretStatusResponse.md
 factpulse/__init__.py
 factpulse/api/__init__.py
 factpulse/api/afnorpdppa_api.py
@@ -500,9 +505,9 @@ factpulse/models/error_source.py
 factpulse/models/extraction_info.py
 factpulse/models/factur_x_invoice.py
 factpulse/models/factur_xpdf_info.py
-factpulse/models/facture_electronique_rest_api_schemas_cdar_validation_error_response.py
-factpulse/models/facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials.py
 factpulse/models/facture_electronique_rest_api_schemas_ereporting_invoice_type_code.py
+factpulse/models/facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
+factpulse/models/facture_electronique_rest_api_schemas_validation_validation_error_response.py
 factpulse/models/field_status.py
 factpulse/models/file_info.py
 factpulse/models/files_info.py
@@ -542,6 +547,8 @@ factpulse/models/invoice_type_code_output.py
 factpulse/models/invoicing_framework.py
 factpulse/models/invoicing_framework_code.py
 factpulse/models/issuer_role_code.py
+factpulse/models/key_rotation_request.py
+factpulse/models/key_rotation_response.py
 factpulse/models/line_net_amount.py
 factpulse/models/line_sub_type.py
 factpulse/models/line_total_amount.py
@@ -653,6 +660,9 @@ factpulse/models/vat_point_date_code.py
 factpulse/models/vat_rate.py
 factpulse/models/verification_success_response.py
 factpulse/models/verified_field_schema.py
+factpulse/models/webhook_secret_delete_response.py
+factpulse/models/webhook_secret_generate_response.py
+factpulse/models/webhook_secret_status_response.py
 factpulse/py.typed
 factpulse/rest.py
 git_push.sh
@@ -827,9 +837,9 @@ test/test_factur_x_invoice.py
 test/test_factur_x_validation_api.py
 test/test_factur_xpdf_info.py
 test/test_factur_xpdfxml_verification_api.py
-test/test_facture_electronique_rest_api_schemas_cdar_validation_error_response.py
-test/test_facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials.py
 test/test_facture_electronique_rest_api_schemas_ereporting_invoice_type_code.py
+test/test_facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
+test/test_facture_electronique_rest_api_schemas_validation_validation_error_response.py
 test/test_field_status.py
 test/test_file_info.py
 test/test_files_info.py
@@ -872,6 +882,8 @@ test/test_invoice_type_code_output.py
 test/test_invoicing_framework.py
 test/test_invoicing_framework_code.py
 test/test_issuer_role_code.py
+test/test_key_rotation_request.py
+test/test_key_rotation_response.py
 test/test_line_net_amount.py
 test/test_line_sub_type.py
 test/test_line_total_amount.py
@@ -983,4 +995,7 @@ test/test_vat_point_date_code.py
 test/test_vat_rate.py
 test/test_verification_success_response.py
 test/test_verified_field_schema.py
+test/test_webhook_secret_delete_response.py
+test/test_webhook_secret_generate_response.py
+test/test_webhook_secret_status_response.py
 tox.ini

@@ -8,6 +8,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **status** | **str** | Secret status: &#39;active&#39;, &#39;missing&#39;, etc. | 
 **message** | **str** | Descriptive status message | 
+**encryption_mode** | **str** |  | [optional] 
+**requires_client_key** | **bool** |  | [optional] 
 
 ## Example
 

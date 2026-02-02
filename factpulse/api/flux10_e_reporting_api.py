@@ -313,6 +313,7 @@ class Flux10EReportingApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 
@@ -599,6 +600,7 @@ class Flux10EReportingApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 
@@ -902,6 +904,7 @@ class Flux10EReportingApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 
@@ -2644,6 +2647,7 @@ class Flux10EReportingApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 
@@ -2930,6 +2934,7 @@ class Flux10EReportingApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 
@@ -3250,6 +3255,7 @@ class Flux10EReportingApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 

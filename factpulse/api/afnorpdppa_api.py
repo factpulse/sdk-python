@@ -45,6 +45,7 @@ class AFNORPDPPAApi:
         self,
         flow_id: Annotated[StrictStr, Field(description="AFNOR flow ID (UUID format)")],
         include_document: Annotated[Optional[StrictBool], Field(description="Include base64-encoded document in response")] = None,
+        x_encryption_key: Annotated[Optional[StrictStr], Field(description="Client encryption key for double encryption mode. Must be a base64-encoded AES-256 key (32 bytes). Required only when accessing resources encrypted with encryption_mode='double'.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -66,6 +67,8 @@ class AFNORPDPPAApi:
         :type flow_id: str
         :param include_document: Include base64-encoded document in response
         :type include_document: bool
+        :param x_encryption_key: Client encryption key for double encryption mode. Must be a base64-encoded AES-256 key (32 bytes). Required only when accessing resources encrypted with encryption_mode='double'.
+        :type x_encryption_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -91,6 +94,7 @@ class AFNORPDPPAApi:
         _param = self._get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get_serialize(
             flow_id=flow_id,
             include_document=include_document,
+            x_encryption_key=x_encryption_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -121,6 +125,7 @@ class AFNORPDPPAApi:
         self,
         flow_id: Annotated[StrictStr, Field(description="AFNOR flow ID (UUID format)")],
         include_document: Annotated[Optional[StrictBool], Field(description="Include base64-encoded document in response")] = None,
+        x_encryption_key: Annotated[Optional[StrictStr], Field(description="Client encryption key for double encryption mode. Must be a base64-encoded AES-256 key (32 bytes). Required only when accessing resources encrypted with encryption_mode='double'.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -142,6 +147,8 @@ class AFNORPDPPAApi:
         :type flow_id: str
         :param include_document: Include base64-encoded document in response
         :type include_document: bool
+        :param x_encryption_key: Client encryption key for double encryption mode. Must be a base64-encoded AES-256 key (32 bytes). Required only when accessing resources encrypted with encryption_mode='double'.
+        :type x_encryption_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -167,6 +174,7 @@ class AFNORPDPPAApi:
         _param = self._get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get_serialize(
             flow_id=flow_id,
             include_document=include_document,
+            x_encryption_key=x_encryption_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -197,6 +205,7 @@ class AFNORPDPPAApi:
         self,
         flow_id: Annotated[StrictStr, Field(description="AFNOR flow ID (UUID format)")],
         include_document: Annotated[Optional[StrictBool], Field(description="Include base64-encoded document in response")] = None,
+        x_encryption_key: Annotated[Optional[StrictStr], Field(description="Client encryption key for double encryption mode. Must be a base64-encoded AES-256 key (32 bytes). Required only when accessing resources encrypted with encryption_mode='double'.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -218,6 +227,8 @@ class AFNORPDPPAApi:
         :type flow_id: str
         :param include_document: Include base64-encoded document in response
         :type include_document: bool
+        :param x_encryption_key: Client encryption key for double encryption mode. Must be a base64-encoded AES-256 key (32 bytes). Required only when accessing resources encrypted with encryption_mode='double'.
+        :type x_encryption_key: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -243,6 +254,7 @@ class AFNORPDPPAApi:
         _param = self._get_flux_entrant_api_v1_afnor_incoming_flows_flow_id_get_serialize(
             flow_id=flow_id,
             include_document=include_document,
+            x_encryption_key=x_encryption_key,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -268,6 +280,7 @@ class AFNORPDPPAApi:
         self,
         flow_id,
         include_document,
+        x_encryption_key,
         _request_auth,
         _content_type,
         _headers,
@@ -297,6 +310,8 @@ class AFNORPDPPAApi:
             _query_params.append(('include_document', include_document))
             
         # process the header parameters
+        if x_encryption_key is not None:
+            _header_params['X-Encryption-Key'] = x_encryption_key
         # process the form parameters
         # process the body parameter
 
@@ -312,6 +327,7 @@ class AFNORPDPPAApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 

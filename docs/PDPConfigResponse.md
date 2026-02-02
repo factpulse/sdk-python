@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **flow_service_url** | **str** |  | [optional] 
 **token_url** | **str** |  | [optional] 
 **oauth_client_id** | **str** |  | [optional] 
+**encryption_mode** | **str** |  | [optional] 
 **secret_status** | [**SecretStatus**](SecretStatus.md) |  | [optional] 
 **last_test_at** | **datetime** |  | [optional] 
 **last_test_success** | **bool** |  | [optional] 

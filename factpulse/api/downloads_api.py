@@ -291,6 +291,7 @@ class DownloadsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 
@@ -584,6 +585,7 @@ class DownloadsApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 

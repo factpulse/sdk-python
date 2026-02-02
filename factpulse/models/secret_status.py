@@ -18,8 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,7 +29,9 @@ class SecretStatus(BaseModel):
     """ # noqa: E501
     status: StrictStr = Field(description="Secret status: 'active', 'missing', etc.")
     message: StrictStr = Field(description="Descriptive status message")
-    __properties: ClassVar[List[str]] = ["status", "message"]
+    encryption_mode: Optional[StrictStr] = Field(default=None, alias="encryptionMode")
+    requires_client_key: Optional[StrictBool] = Field(default=None, alias="requiresClientKey")
+    __properties: ClassVar[List[str]] = ["status", "message", "encryptionMode", "requiresClientKey"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -70,6 +72,16 @@ class SecretStatus(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if encryption_mode (nullable) is None
+        # and model_fields_set contains the field
+        if self.encryption_mode is None and "encryption_mode" in self.model_fields_set:
+            _dict['encryptionMode'] = None
+
+        # set to None if requires_client_key (nullable) is None
+        # and model_fields_set contains the field
+        if self.requires_client_key is None and "requires_client_key" in self.model_fields_set:
+            _dict['requiresClientKey'] = None
+
         return _dict
 
     @classmethod
@@ -83,7 +95,9 @@ class SecretStatus(BaseModel):
 
         _obj = cls.model_validate({
             "status": obj.get("status"),
-            "message": obj.get("message")
+            "message": obj.get("message"),
+            "encryptionMode": obj.get("encryptionMode"),
+            "requiresClientKey": obj.get("requiresClientKey")
         })
         return _obj
 

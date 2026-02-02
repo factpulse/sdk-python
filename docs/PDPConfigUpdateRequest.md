@@ -1,6 +1,6 @@
 # PDPConfigUpdateRequest
 
-PDP configuration update request.
+PDP configuration update request.  For encryption_mode='double', the X-Encryption-Key header must also be provided containing a base64-encoded AES-256 key (32 bytes).
 
 ## Properties
 
@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **token_url** | **str** | PDP OAuth token URL | 
 **oauth_client_id** | **str** | OAuth Client ID | 
 **client_secret** | **str** | OAuth Client Secret (sent but never returned) | 
+**encryption_mode** | **str** |  | [optional] 
 
 ## Example
 

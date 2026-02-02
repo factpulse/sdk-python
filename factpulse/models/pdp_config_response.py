@@ -36,6 +36,7 @@ class PDPConfigResponse(BaseModel):
     flow_service_url: Optional[StrictStr] = Field(default=None, alias="flowServiceUrl")
     token_url: Optional[StrictStr] = Field(default=None, alias="tokenUrl")
     oauth_client_id: Optional[StrictStr] = Field(default=None, alias="oauthClientId")
+    encryption_mode: Optional[StrictStr] = Field(default=None, alias="encryptionMode")
     secret_status: Optional[SecretStatus] = Field(default=None, alias="secretStatus")
     last_test_at: Optional[datetime] = Field(default=None, alias="lastTestAt")
     last_test_success: Optional[StrictBool] = Field(default=None, alias="lastTestSuccess")
@@ -43,7 +44,7 @@ class PDPConfigResponse(BaseModel):
     created_at: Optional[datetime] = Field(default=None, alias="createdAt")
     updated_at: Optional[datetime] = Field(default=None, alias="updatedAt")
     message: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["isConfigured", "id", "isActive", "modeSandbox", "flowServiceUrl", "tokenUrl", "oauthClientId", "secretStatus", "lastTestAt", "lastTestSuccess", "lastTestError", "createdAt", "updatedAt", "message"]
+    __properties: ClassVar[List[str]] = ["isConfigured", "id", "isActive", "modeSandbox", "flowServiceUrl", "tokenUrl", "oauthClientId", "encryptionMode", "secretStatus", "lastTestAt", "lastTestSuccess", "lastTestError", "createdAt", "updatedAt", "message"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -117,6 +118,11 @@ class PDPConfigResponse(BaseModel):
         if self.oauth_client_id is None and "oauth_client_id" in self.model_fields_set:
             _dict['oauthClientId'] = None
 
+        # set to None if encryption_mode (nullable) is None
+        # and model_fields_set contains the field
+        if self.encryption_mode is None and "encryption_mode" in self.model_fields_set:
+            _dict['encryptionMode'] = None
+
         # set to None if secret_status (nullable) is None
         # and model_fields_set contains the field
         if self.secret_status is None and "secret_status" in self.model_fields_set:
@@ -171,6 +177,7 @@ class PDPConfigResponse(BaseModel):
             "flowServiceUrl": obj.get("flowServiceUrl"),
             "tokenUrl": obj.get("tokenUrl"),
             "oauthClientId": obj.get("oauthClientId"),
+            "encryptionMode": obj.get("encryptionMode"),
             "secretStatus": SecretStatus.from_dict(obj["secretStatus"]) if obj.get("secretStatus") is not None else None,
             "lastTestAt": obj.get("lastTestAt"),
             "lastTestSuccess": obj.get("lastTestSuccess"),

@@ -349,6 +349,7 @@ class FacturXValidationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 
@@ -692,6 +693,7 @@ class FacturXValidationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 
@@ -776,7 +778,7 @@ class FacturXValidationApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ValidationSuccessResponse",
-            '400': "ValidationErrorResponse",
+            '400': "FactureElectroniqueRestApiSchemasValidationValidationErrorResponse",
             '422': "HTTPValidationError",
             '401': "APIError",
         }
@@ -854,7 +856,7 @@ class FacturXValidationApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ValidationSuccessResponse",
-            '400': "ValidationErrorResponse",
+            '400': "FactureElectroniqueRestApiSchemasValidationValidationErrorResponse",
             '422': "HTTPValidationError",
             '401': "APIError",
         }
@@ -932,7 +934,7 @@ class FacturXValidationApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ValidationSuccessResponse",
-            '400': "ValidationErrorResponse",
+            '400': "FactureElectroniqueRestApiSchemasValidationValidationErrorResponse",
             '422': "HTTPValidationError",
             '401': "APIError",
         }
@@ -1005,6 +1007,7 @@ class FacturXValidationApi:
 
         # authentication setting
         _auth_settings: List[str] = [
+            'APIKeyHeader', 
             'HTTPBearer'
         ]
 

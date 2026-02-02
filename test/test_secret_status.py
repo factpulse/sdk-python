@@ -37,7 +37,9 @@ class TestSecretStatus(unittest.TestCase):
         if include_optional:
             return SecretStatus(
                 status = '',
-                message = ''
+                message = '',
+                encryption_mode = '',
+                requires_client_key = True
             )
         else:
             return SecretStatus(

@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.0.2"
+__version__ = "0.1.0"
 
 # Define package exports
 __all__ = [
@@ -196,9 +196,9 @@ __all__ = [
     "ExtractionInfo",
     "FacturXInvoice",
     "FacturXPDFInfo",
-    "FactureElectroniqueRestApiSchemasCdarValidationErrorResponse",
-    "FactureElectroniqueRestApiSchemasChorusProChorusProCredentials",
     "FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode",
+    "FactureElectroniqueRestApiSchemasProcessingChorusProCredentials",
+    "FactureElectroniqueRestApiSchemasValidationValidationErrorResponse",
     "FieldStatus",
     "FileInfo",
     "FilesInfo",
@@ -238,6 +238,8 @@ __all__ = [
     "InvoicingFramework",
     "InvoicingFrameworkCode",
     "IssuerRoleCode",
+    "KeyRotationRequest",
+    "KeyRotationResponse",
     "LineNetAmount",
     "LineSubType",
     "LineTotalAmount",
@@ -349,6 +351,9 @@ __all__ = [
     "VatRate",
     "VerificationSuccessResponse",
     "VerifiedFieldSchema",
+    "WebhookSecretDeleteResponse",
+    "WebhookSecretGenerateResponse",
+    "WebhookSecretStatusResponse",
 ]
 
 # import apis into sdk package
@@ -533,9 +538,9 @@ from factpulse.models.error_source import ErrorSource as ErrorSource
 from factpulse.models.extraction_info import ExtractionInfo as ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
-from factpulse.models.facture_electronique_rest_api_schemas_cdar_validation_error_response import FactureElectroniqueRestApiSchemasCdarValidationErrorResponse as FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
-from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials as FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
 from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode as FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
+from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials as FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
+from factpulse.models.facture_electronique_rest_api_schemas_validation_validation_error_response import FactureElectroniqueRestApiSchemasValidationValidationErrorResponse as FactureElectroniqueRestApiSchemasValidationValidationErrorResponse
 from factpulse.models.field_status import FieldStatus as FieldStatus
 from factpulse.models.file_info import FileInfo as FileInfo
 from factpulse.models.files_info import FilesInfo as FilesInfo
@@ -575,6 +580,8 @@ from factpulse.models.invoice_type_code_output import InvoiceTypeCodeOutput as I
 from factpulse.models.invoicing_framework import InvoicingFramework as InvoicingFramework
 from factpulse.models.invoicing_framework_code import InvoicingFrameworkCode as InvoicingFrameworkCode
 from factpulse.models.issuer_role_code import IssuerRoleCode as IssuerRoleCode
+from factpulse.models.key_rotation_request import KeyRotationRequest as KeyRotationRequest
+from factpulse.models.key_rotation_response import KeyRotationResponse as KeyRotationResponse
 from factpulse.models.line_net_amount import LineNetAmount as LineNetAmount
 from factpulse.models.line_sub_type import LineSubType as LineSubType
 from factpulse.models.line_total_amount import LineTotalAmount as LineTotalAmount
@@ -686,4 +693,7 @@ from factpulse.models.validation_success_response import ValidationSuccessRespon
 from factpulse.models.vat_rate import VatRate as VatRate
 from factpulse.models.verification_success_response import VerificationSuccessResponse as VerificationSuccessResponse
 from factpulse.models.verified_field_schema import VerifiedFieldSchema as VerifiedFieldSchema
+from factpulse.models.webhook_secret_delete_response import WebhookSecretDeleteResponse as WebhookSecretDeleteResponse
+from factpulse.models.webhook_secret_generate_response import WebhookSecretGenerateResponse as WebhookSecretGenerateResponse
+from factpulse.models.webhook_secret_status_response import WebhookSecretStatusResponse as WebhookSecretStatusResponse
 
