@@ -18,17 +18,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
 class ConvertResumeRequest(BaseModel):
     """
-    Requete de reprise de conversion avec corrections.  Le champ `overrides` accepte n'importe quel sous-ensemble de FacturXInvoice. Seuls les champs fournis seront mis a jour (merge profond).  Exemple:     {         \"overrides\": {             \"supplier\": {                 \"name\": \"Ma Société\",                 \"siret\": \"12345678901234\"             },             \"totals\": {                 \"total_net_amount\": 1000.00             }         }     }
+    Requete de reprise de conversion avec corrections.  Le champ `overrides` accepte n'importe quel sous-ensemble de FacturXInvoice. Seuls les champs fournis seront mis a jour (merge profond).  Exemple:     {         \"overrides\": {             \"supplier\": {                 \"name\": \"Ma Société\",                 \"siret\": \"12345678901234\"             },             \"totals\": {                 \"total_net_amount\": 1000.00             }         },         \"callback_url\": \"https://example.com/webhook\",         \"webhook_mode\": \"inline\"     }
     """ # noqa: E501
     overrides: Optional[Dict[str, Any]] = Field(default=None, description="Sous-ensemble de FacturXInvoice a mettre a jour (merge profond)")
-    __properties: ClassVar[List[str]] = ["overrides"]
+    callback_url: Optional[StrictStr] = None
+    webhook_mode: Optional[StrictStr] = Field(default='inline', description="Mode de livraison webhook: 'inline' ou 'download_url'")
+    __properties: ClassVar[List[str]] = ["overrides", "callback_url", "webhook_mode"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -69,6 +71,11 @@ class ConvertResumeRequest(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if callback_url (nullable) is None
+        # and model_fields_set contains the field
+        if self.callback_url is None and "callback_url" in self.model_fields_set:
+            _dict['callback_url'] = None
+
         return _dict
 
     @classmethod
@@ -81,7 +88,9 @@ class ConvertResumeRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "overrides": obj.get("overrides")
+            "overrides": obj.get("overrides"),
+            "callback_url": obj.get("callback_url"),
+            "webhook_mode": obj.get("webhook_mode") if obj.get("webhook_mode") is not None else 'inline'
         })
         return _obj
 

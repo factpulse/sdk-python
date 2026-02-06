@@ -36,7 +36,9 @@ class TestConvertResumeRequest(unittest.TestCase):
         model = ConvertResumeRequest()
         if include_optional:
             return ConvertResumeRequest(
-                overrides = { }
+                overrides = { },
+                callback_url = '',
+                webhook_mode = 'inline'
             )
         else:
             return ConvertResumeRequest(

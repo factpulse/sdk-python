@@ -55,6 +55,13 @@ class TestFacturXConversionApi(unittest.TestCase):
         """
         pass
 
+    def test_resume_conversion_async_api_v1_convert_conversion_id_resume_async_post(self) -> None:
+        """Test case for resume_conversion_async_api_v1_convert_conversion_id_resume_async_post
+
+        Resume a conversion asynchronously
+        """
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()
