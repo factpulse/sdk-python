@@ -1,28 +1,32 @@
-# factpulse.FacturXGenerationApi
+# factpulse.InvoiceGenerationApi
 
 All URIs are relative to *https://factpulse.fr*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**generate_invoice_api_v1_processing_generate_invoice_post**](FacturXGenerationApi.md#generate_invoice_api_v1_processing_generate_invoice_post) | **POST** /api/v1/processing/generate-invoice | Generate a Factur-X invoice
-[**submit_complete_invoice_api_v1_processing_invoices_submit_complete_post**](FacturXGenerationApi.md#submit_complete_invoice_api_v1_processing_invoices_submit_complete_post) | **POST** /api/v1/processing/invoices/submit-complete | Submit a complete invoice (generation + signature + submission)
-[**submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post**](FacturXGenerationApi.md#submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post) | **POST** /api/v1/processing/invoices/submit-complete-async | Submit a complete invoice (asynchronous with Celery)
+[**generate_invoice_api_v1_processing_generate_invoice_post**](InvoiceGenerationApi.md#generate_invoice_api_v1_processing_generate_invoice_post) | **POST** /api/v1/processing/generate-invoice | Generate an electronic invoice (CII / UBL / Factur-X PDF)
+[**submit_complete_invoice_api_v1_processing_invoices_submit_complete_post**](InvoiceGenerationApi.md#submit_complete_invoice_api_v1_processing_invoices_submit_complete_post) | **POST** /api/v1/processing/invoices/submit-complete | Submit a complete invoice (generation + signature + submission)
+[**submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post**](InvoiceGenerationApi.md#submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post) | **POST** /api/v1/processing/invoices/submit-complete-async | Submit a complete invoice (asynchronous with Celery)
 
 
 # **generate_invoice_api_v1_processing_generate_invoice_post**
 > TaskResponse generate_invoice_api_v1_processing_generate_invoice_post(invoice_data, profile=profile, output_format=output_format, auto_enrich=auto_enrich, source_pdf=source_pdf, callback_url=callback_url, webhook_mode=webhook_mode, skip_br_fr=skip_br_fr)
 
-Generate a Factur-X invoice
+Generate an electronic invoice (CII / UBL / Factur-X PDF)
 
-Generates an electronic invoice in Factur-X format compliant with European standards.
+Generates an electronic invoice compliant with European standards.
+
+Supports **two XML syntaxes** defined by EN 16931:
+- **CII** (Cross-Industry Invoice, UN/CEFACT) — the Factur-X / ZUGFeRD syntax
+- **UBL 2.1** (Universal Business Language, OASIS) — the Peppol BIS Billing syntax
 
 ## Applied Standards
 
-- **Factur-X** (France): FNFE-MPE standard (Forum National de la Facture Électronique)
-- **ZUGFeRD** (Germany): German format compatible with Factur-X
 - **EN 16931**: European semantic standard for electronic invoicing
-- **ISO 19005-3** (PDF/A-3): Long-term electronic archiving
-- **Cross Industry Invoice (CII)**: UN/CEFACT XML syntax
+- **Factur-X / ZUGFeRD** (CII syntax): Franco-German standard
+- **UBL 2.1** (OASIS): International standard, used by Peppol
+- **ISO 19005-3** (PDF/A-3): Long-term electronic archiving (PDF output only)
+- **Schematron**: Business rules validation (EN16931-CII, EN16931-UBL, BR-FR)
 
 ## 🆕 New: Simplified format with auto-enrichment (P0.1)
 
@@ -119,15 +123,18 @@ See `/docs/WEBHOOKS.md` for full documentation.
 
 ## Output formats
 
-- **xml**: Generates only Factur-X XML (recommended for testing)
-- **pdf**: Generates PDF/A-3 with embedded XML (requires `source_pdf`)
+- **xml** / **cii**: CII XML (Factur-X syntax, UN/CEFACT)
+- **ubl**: UBL 2.1 XML (OASIS, Peppol BIS Billing 3.0)
+- **pdf**: Factur-X PDF/A-3 with embedded CII XML (requires `source_pdf`)
 
-## Factur-X profiles
+## Factur-X profiles (CII only)
 
 - **MINIMUM**: Minimal data (simplified invoice)
 - **BASIC**: Basic information (SMEs)
 - **EN16931**: European standard (recommended, compliant with directive 2014/55/EU)
 - **EXTENDED**: All available data (large accounts)
+
+When `output_format=ubl`, the profile parameter is ignored (UBL always uses EN16931).
 
 ## What you get
 
@@ -178,10 +185,10 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.FacturXGenerationApi(api_client)
+    api_instance = factpulse.InvoiceGenerationApi(api_client)
     invoice_data = 'invoice_data_example' # str | Invoice data in JSON format.              Two formats accepted:             1. **Classic format**: Complete FacturXInvoice structure (all fields)             2. **Simplified format** (🆕 P0.1): Minimal structure with auto-enrichment              Format is detected automatically!             
-    profile = factpulse.APIProfile() # APIProfile | Factur-X profile: MINIMUM, BASIC, EN16931 or EXTENDED. (optional)
-    output_format = factpulse.OutputFormat() # OutputFormat | Output format: 'xml' (XML only) or 'pdf' (Factur-X PDF with embedded XML). (optional)
+    profile = factpulse.APIProfile() # APIProfile | Factur-X/CII profile: MINIMUM, BASIC, EN16931 or EXTENDED. Ignored when output_format='ubl' (always EN16931). (optional)
+    output_format = factpulse.OutputFormat() # OutputFormat | Output format: 'xml' or 'cii' (CII/Factur-X XML), 'ubl' (UBL 2.1 XML), 'pdf' (Factur-X PDF/A-3). (optional)
     auto_enrich = True # bool | 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only) (optional) (default to True)
     source_pdf = None # bytearray |  (optional)
     callback_url = 'callback_url_example' # str |  (optional)
@@ -189,12 +196,12 @@ with factpulse.ApiClient(configuration) as api_client:
     skip_br_fr = True # bool |  (optional)
 
     try:
-        # Generate a Factur-X invoice
+        # Generate an electronic invoice (CII / UBL / Factur-X PDF)
         api_response = api_instance.generate_invoice_api_v1_processing_generate_invoice_post(invoice_data, profile=profile, output_format=output_format, auto_enrich=auto_enrich, source_pdf=source_pdf, callback_url=callback_url, webhook_mode=webhook_mode, skip_br_fr=skip_br_fr)
-        print("The response of FacturXGenerationApi->generate_invoice_api_v1_processing_generate_invoice_post:\n")
+        print("The response of InvoiceGenerationApi->generate_invoice_api_v1_processing_generate_invoice_post:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling FacturXGenerationApi->generate_invoice_api_v1_processing_generate_invoice_post: %s\n" % e)
+        print("Exception when calling InvoiceGenerationApi->generate_invoice_api_v1_processing_generate_invoice_post: %s\n" % e)
 ```
 
 
@@ -205,8 +212,8 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **invoice_data** | **str**| Invoice data in JSON format.              Two formats accepted:             1. **Classic format**: Complete FacturXInvoice structure (all fields)             2. **Simplified format** (🆕 P0.1): Minimal structure with auto-enrichment              Format is detected automatically!              | 
- **profile** | [**APIProfile**](APIProfile.md)| Factur-X profile: MINIMUM, BASIC, EN16931 or EXTENDED. | [optional] 
- **output_format** | [**OutputFormat**](OutputFormat.md)| Output format: &#39;xml&#39; (XML only) or &#39;pdf&#39; (Factur-X PDF with embedded XML). | [optional] 
+ **profile** | [**APIProfile**](APIProfile.md)| Factur-X/CII profile: MINIMUM, BASIC, EN16931 or EXTENDED. Ignored when output_format&#x3D;&#39;ubl&#39; (always EN16931). | [optional] 
+ **output_format** | [**OutputFormat**](OutputFormat.md)| Output format: &#39;xml&#39; or &#39;cii&#39; (CII/Factur-X XML), &#39;ubl&#39; (UBL 2.1 XML), &#39;pdf&#39; (Factur-X PDF/A-3). | [optional] 
  **auto_enrich** | **bool**| 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only) | [optional] [default to True]
  **source_pdf** | **bytearray**|  | [optional] 
  **callback_url** | **str**|  | [optional] 
@@ -323,16 +330,16 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.FacturXGenerationApi(api_client)
+    api_instance = factpulse.InvoiceGenerationApi(api_client)
     submit_complete_invoice_request = factpulse.SubmitCompleteInvoiceRequest() # SubmitCompleteInvoiceRequest | 
 
     try:
         # Submit a complete invoice (generation + signature + submission)
         api_response = api_instance.submit_complete_invoice_api_v1_processing_invoices_submit_complete_post(submit_complete_invoice_request)
-        print("The response of FacturXGenerationApi->submit_complete_invoice_api_v1_processing_invoices_submit_complete_post:\n")
+        print("The response of InvoiceGenerationApi->submit_complete_invoice_api_v1_processing_invoices_submit_complete_post:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling FacturXGenerationApi->submit_complete_invoice_api_v1_processing_invoices_submit_complete_post: %s\n" % e)
+        print("Exception when calling InvoiceGenerationApi->submit_complete_invoice_api_v1_processing_invoices_submit_complete_post: %s\n" % e)
 ```
 
 
@@ -443,7 +450,7 @@ configuration = factpulse.Configuration(
 # Enter a context with an instance of the API client
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
-    api_instance = factpulse.FacturXGenerationApi(api_client)
+    api_instance = factpulse.InvoiceGenerationApi(api_client)
     submit_complete_invoice_request = factpulse.SubmitCompleteInvoiceRequest() # SubmitCompleteInvoiceRequest | 
     callback_url = 'callback_url_example' # str | Webhook URL for async notification when submission completes. (optional)
     webhook_mode = 'inline' # str | Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL) (optional) (default to 'inline')
@@ -451,10 +458,10 @@ with factpulse.ApiClient(configuration) as api_client:
     try:
         # Submit a complete invoice (asynchronous with Celery)
         api_response = api_instance.submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post(submit_complete_invoice_request, callback_url=callback_url, webhook_mode=webhook_mode)
-        print("The response of FacturXGenerationApi->submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post:\n")
+        print("The response of InvoiceGenerationApi->submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post:\n")
         pprint(api_response)
     except Exception as e:
-        print("Exception when calling FacturXGenerationApi->submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post: %s\n" % e)
+        print("Exception when calling InvoiceGenerationApi->submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post: %s\n" % e)
 ```
 
 

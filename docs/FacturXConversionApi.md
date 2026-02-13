@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**convert_document_async_api_v1_convert_async_post**](FacturXConversionApi.md#convert_document_async_api_v1_convert_async_post) | **POST** /api/v1/convert/async | Convert a document to Factur-X (async mode)
 [**download_file_api_v1_convert_conversion_id_download_filename_get**](FacturXConversionApi.md#download_file_api_v1_convert_conversion_id_download_filename_get) | **GET** /api/v1/convert/{conversion_id}/download/{filename} | Download a generated file
 [**get_conversion_status_api_v1_convert_conversion_id_status_get**](FacturXConversionApi.md#get_conversion_status_api_v1_convert_conversion_id_status_get) | **GET** /api/v1/convert/{conversion_id}/status | Check conversion status
+[**get_conversion_task_status_api_v1_convert_tasks_task_id_conversion_status_get**](FacturXConversionApi.md#get_conversion_task_status_api_v1_convert_tasks_task_id_conversion_status_get) | **GET** /api/v1/convert/tasks/{task_id}/conversion-status | Get typed conversion task status
 [**resume_conversion_api_v1_convert_conversion_id_resume_post**](FacturXConversionApi.md#resume_conversion_api_v1_convert_conversion_id_resume_post) | **POST** /api/v1/convert/{conversion_id}/resume | Resume a conversion with corrections
 [**resume_conversion_async_api_v1_convert_conversion_id_resume_async_post**](FacturXConversionApi.md#resume_conversion_async_api_v1_convert_conversion_id_resume_async_post) | **POST** /api/v1/convert/{conversion_id}/resume/async | Resume a conversion asynchronously
 
@@ -278,6 +279,99 @@ Name | Type | Description  | Notes
 ### Return type
 
 **Dict[str, object]**
+
+### Authorization
+
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**422** | Validation Error |  -  |
+**401** | Authentication required - Invalid or missing JWT token |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_conversion_task_status_api_v1_convert_tasks_task_id_conversion_status_get**
+> ConversionTaskStatus get_conversion_task_status_api_v1_convert_tasks_task_id_conversion_status_get(task_id)
+
+Get typed conversion task status
+
+Typed status endpoint for document conversion tasks.
+
+Returns a strongly-typed `result` discriminated on `result.status`:
+- **SUCCESS**: `ConversionSuccessTaskResult`
+- **PENDING_INPUT**: `ConversionPendingInputResult` (missing fields)
+- **VALIDATION_FAILED**: `ConversionValidationFailedResult`
+- **ERROR**: `ConversionErrorResult`
+
+### Example
+
+* Api Key Authentication (APIKeyHeader):
+* Bearer Authentication (HTTPBearer):
+
+```python
+import factpulse
+from factpulse.models.conversion_task_status import ConversionTaskStatus
+from factpulse.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://factpulse.fr
+# See configuration.py for a list of all supported configuration parameters.
+configuration = factpulse.Configuration(
+    host = "https://factpulse.fr"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with factpulse.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = factpulse.FacturXConversionApi(api_client)
+    task_id = 'task_id_example' # str | Celery task ID returned by POST /convert
+
+    try:
+        # Get typed conversion task status
+        api_response = api_instance.get_conversion_task_status_api_v1_convert_tasks_task_id_conversion_status_get(task_id)
+        print("The response of FacturXConversionApi->get_conversion_task_status_api_v1_convert_tasks_task_id_conversion_status_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FacturXConversionApi->get_conversion_task_status_api_v1_convert_tasks_task_id_conversion_status_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **task_id** | **str**| Celery task ID returned by POST /convert | 
+
+### Return type
+
+[**ConversionTaskStatus**](ConversionTaskStatus.md)
 
 ### Authorization
 

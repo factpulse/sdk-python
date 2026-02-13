@@ -10,7 +10,8 @@ Name | Type | Description | Notes
 **destination_type** | **str** | Destination type | 
 **chorus_result** | [**ChorusProResult**](ChorusProResult.md) |  | [optional] 
 **afnor_result** | [**AFNORResult**](AFNORResult.md) |  | [optional] 
-**enriched_invoice** | [**EnrichedInvoiceInfo**](EnrichedInvoiceInfo.md) | Enriched invoice data | 
+**enriched_invoice** | [**EnrichedInvoiceInfo**](EnrichedInvoiceInfo.md) | Enriched invoice data (summary) | 
+**invoice** | **Dict[str, object]** | Complete enriched invoice data (FacturXInvoice format). Use this to regenerate the same invoice. | 
 **facturx_pdf** | [**FacturXPDFInfo**](FacturXPDFInfo.md) | Generated PDF information | 
 **signature** | [**SignatureInfo**](SignatureInfo.md) |  | [optional] 
 **content_b64** | **str** | Generated Factur-X PDF (and signed if requested) base64-encoded | 

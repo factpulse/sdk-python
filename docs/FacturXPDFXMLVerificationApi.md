@@ -5,6 +5,7 @@ All URIs are relative to *https://factpulse.fr*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**get_verification_status_api_v1_verification_verify_async_task_id_status_get**](FacturXPDFXMLVerificationApi.md#get_verification_status_api_v1_verification_verify_async_task_id_status_get) | **GET** /api/v1/verification/verify-async/{task_id}/status | Get status of an asynchronous verification
+[**get_verification_typed_status_api_v1_verification_verify_async_task_id_typed_status_get**](FacturXPDFXMLVerificationApi.md#get_verification_typed_status_api_v1_verification_verify_async_task_id_typed_status_get) | **GET** /api/v1/verification/verify-async/{task_id}/typed-status | Get typed status of an asynchronous verification
 [**verify_pdf_async_api_v1_verification_verify_async_post**](FacturXPDFXMLVerificationApi.md#verify_pdf_async_api_v1_verification_verify_async_post) | **POST** /api/v1/verification/verify-async | Verify PDF/XML Factur-X compliance (asynchronous)
 [**verify_pdf_sync_api_v1_verification_verify_post**](FacturXPDFXMLVerificationApi.md#verify_pdf_sync_api_v1_verification_verify_post) | **POST** /api/v1/verification/verify | Verify PDF/XML Factur-X compliance (synchronous)
 
@@ -85,6 +86,97 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**AsyncTaskStatus**](AsyncTaskStatus.md)
+
+### Authorization
+
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**422** | Validation Error |  -  |
+**401** | Authentication required - Invalid or missing JWT token |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_verification_typed_status_api_v1_verification_verify_async_task_id_typed_status_get**
+> VerificationTypedTaskStatus get_verification_typed_status_api_v1_verification_verify_async_task_id_typed_status_get(task_id)
+
+Get typed status of an asynchronous verification
+
+Typed status endpoint for async verification tasks.
+
+Returns a strongly-typed `result` (discriminated on `result.status`):
+- **SUCCESS**: `VerificationSuccessTaskResult` with `verification_result`
+- **ERROR**: `TaskErrorResult` in AFNOR format
+
+### Example
+
+* Api Key Authentication (APIKeyHeader):
+* Bearer Authentication (HTTPBearer):
+
+```python
+import factpulse
+from factpulse.models.verification_typed_task_status import VerificationTypedTaskStatus
+from factpulse.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://factpulse.fr
+# See configuration.py for a list of all supported configuration parameters.
+configuration = factpulse.Configuration(
+    host = "https://factpulse.fr"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with factpulse.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = factpulse.FacturXPDFXMLVerificationApi(api_client)
+    task_id = 'task_id_example' # str | Celery task ID returned by /verify-async endpoint
+
+    try:
+        # Get typed status of an asynchronous verification
+        api_response = api_instance.get_verification_typed_status_api_v1_verification_verify_async_task_id_typed_status_get(task_id)
+        print("The response of FacturXPDFXMLVerificationApi->get_verification_typed_status_api_v1_verification_verify_async_task_id_typed_status_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling FacturXPDFXMLVerificationApi->get_verification_typed_status_api_v1_verification_verify_async_task_id_typed_status_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **task_id** | **str**| Celery task ID returned by /verify-async endpoint | 
+
+### Return type
+
+[**VerificationTypedTaskStatus**](VerificationTypedTaskStatus.md)
 
 ### Authorization
 

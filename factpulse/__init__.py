@@ -5,7 +5,7 @@
 """
     FactPulse REST API
 
-     REST API for electronic invoicing in France: Factur-X, AFNOR PDP/PA, electronic signatures.  ## 🎯 Main Features  ### 📄 Factur-X - Generation - **Formats**: XML only or PDF/A-3 with embedded XML - **Profiles**: MINIMUM, BASIC, EN16931, EXTENDED - **Standards**: EN 16931 (EU directive 2014/55), ISO 19005-3 (PDF/A-3), CII (UN/CEFACT) - **🆕 Simplified Format**: Generation from SIRET + auto-enrichment (Chorus Pro API + Business Search)  ### ✅ Factur-X - Validation - **XML Validation**: Schematron (45 to 210+ rules depending on profile) - **PDF Validation**: PDF/A-3, Factur-X XMP metadata - **VeraPDF**: Strict PDF/A validation (146+ ISO 19005-3 rules)  ### ✍️ Electronic Signature - **Standards**: PAdES-B-B, PAdES-B-T (RFC 3161 timestamping), PAdES-B-LT (long-term archival) - **eIDAS Levels**: SES (self-signed), AdES (commercial CA), QES (QTSP) - **Validation**: Cryptographic integrity and certificate verification  ### 📋 Flux 6 - Invoice Lifecycle (CDAR) - **CDAR Messages**: Acknowledgements, invoice statuses - **PPF Statuses**: REFUSED (210), PAID (212)  ### 📊 Flux 10 - E-Reporting - **Tax Declarations**: International B2B, B2C - **Flow Types**: 10.1 (B2B transactions), 10.2 (B2B payments), 10.3 (B2C transactions), 10.4 (B2C payments)  ### 📡 AFNOR PDP/PA (XP Z12-013) - **Flow Service**: Submit and search flows to PDPs - **Directory Service**: Company search (SIREN/SIRET) - **Multi-client**: Support for multiple PDP configs per user  ### 🏛️ Chorus Pro - **Public Sector Invoicing**: Complete API for Chorus Pro  ### ⏳ Async Tasks - **Celery**: Asynchronous generation, validation and signing - **Polling**: Status tracking via `/tasks/{task_id}/status` - **Webhooks**: Automatic notifications when tasks complete  ## 🔒 Authentication  All requests require a **JWT token** in the Authorization header: ``` Authorization: Bearer YOUR_JWT_TOKEN ```  ### How to obtain a JWT token?  #### 🔑 Method 1: `/api/token/` API (Recommended)  **URL:** `https://factpulse.fr/api/token/`  This method is **recommended** for integration in your applications and CI/CD workflows.  **Prerequisites:** Having set a password on your account  **For users registered via email/password:** - You already have a password, use it directly  **For users registered via OAuth (Google/GitHub):** - You must first set a password at: https://factpulse.fr/accounts/password/set/ - Once the password is created, you can use the API  **Request example:** ```bash curl -X POST https://factpulse.fr/api/token/ \\   -H \"Content-Type: application/json\" \\   -d '{     \"username\": \"your_email@example.com\",     \"password\": \"your_password\"   }' ```  **Optional `client_uid` parameter:**  To select credentials for a specific client (PA/PDP, Chorus Pro, signing certificates), add `client_uid`:  ```bash curl -X POST https://factpulse.fr/api/token/ \\   -H \"Content-Type: application/json\" \\   -d '{     \"username\": \"your_email@example.com\",     \"password\": \"your_password\",     \"client_uid\": \"550e8400-e29b-41d4-a716-446655440000\"   }' ```  The `client_uid` will be included in the JWT and allow the API to automatically use: - AFNOR/PDP credentials configured for this client - Chorus Pro credentials configured for this client - Electronic signature certificates configured for this client  **Response:** ```json {   \"access\": \"eyJ0eXAiOiJKV1QiLCJhbGc...\",  // Access token (validity: 30 min)   \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGc...\"  // Refresh token (validity: 7 days) } ```  **Advantages:** - ✅ Full automation (CI/CD, scripts) - ✅ Programmatic token management - ✅ Refresh token support for automatic access renewal - ✅ Easy integration in any language/tool  #### 🖥️ Method 2: Dashboard Generation (Alternative)  **URL:** https://factpulse.fr/api/dashboard/  This method is suitable for quick tests or occasional use via the graphical interface.  **How it works:** - Log in to the dashboard - Use the \"Generate Test Token\" or \"Generate Production Token\" buttons - Works for **all** users (OAuth and email/password), without requiring a password  **Token types:** - **Test Token**: 24h validity, 1000 calls/day quota (free) - **Production Token**: 7 days validity, quota based on your plan  **Advantages:** - ✅ Quick for API testing - ✅ No password required - ✅ Simple visual interface  **Disadvantages:** - ❌ Requires manual action - ❌ No refresh token - ❌ Less suited for automation  ### 📚 Full Documentation  For more information on authentication and API usage: https://factpulse.fr/documentation-api/     
+     REST API for electronic invoicing in France: Factur-X (CII), UBL 2.1, AFNOR PDP/PA, electronic signatures.  ## 🎯 Main Features  ### 📄 Invoice Generation - **Formats**: CII XML, UBL 2.1 XML, or Factur-X PDF/A-3 - **Profiles** (CII/PDF): MINIMUM, BASIC, EN16931, EXTENDED - **UBL**: Always EN16931 compliant - **Standards**: EN 16931 (EU directive 2014/55), ISO 19005-3 (PDF/A-3), CII (UN/CEFACT), UBL 2.1 (OASIS) - **Simplified Format**: Generation from SIRET + auto-enrichment (Chorus Pro API + Business Search)  ### ✅ Factur-X - Validation - **XML Validation**: Schematron (45 to 210+ rules depending on profile) - **PDF Validation**: PDF/A-3, Factur-X XMP metadata - **VeraPDF**: Strict PDF/A validation (146+ ISO 19005-3 rules)  ### ✍️ Electronic Signature - **Standards**: PAdES-B-B, PAdES-B-T (RFC 3161 timestamping), PAdES-B-LT (long-term archival) - **eIDAS Levels**: SES (self-signed), AdES (commercial CA), QES (QTSP) - **Validation**: Cryptographic integrity and certificate verification  ### 📋 Flux 6 - Invoice Lifecycle (CDAR) - **CDAR Messages**: Acknowledgements, invoice statuses - **PPF Statuses**: REFUSED (210), PAID (212)  ### 📊 Flux 10 - E-Reporting - **Tax Declarations**: International B2B, B2C - **Flow Types**: 10.1 (B2B transactions), 10.2 (B2B payments), 10.3 (B2C transactions), 10.4 (B2C payments)  ### 📡 AFNOR PDP/PA (XP Z12-013) - **Flow Service**: Submit and search flows to PDPs - **Directory Service**: Company search (SIREN/SIRET) - **Multi-client**: Support for multiple PDP configs per user  ### 🏛️ Chorus Pro - **Public Sector Invoicing**: Complete API for Chorus Pro  ### ⏳ Async Tasks - **Celery**: Asynchronous generation, validation and signing - **Polling**: Status tracking via `/tasks/{task_id}/status` - **Webhooks**: Automatic notifications when tasks complete  ## 🔒 Authentication  All requests require a **JWT token** in the Authorization header: ``` Authorization: Bearer YOUR_JWT_TOKEN ```  ### How to obtain a JWT token?  #### 🔑 Method 1: `/api/token/` API (Recommended)  **URL:** `https://factpulse.fr/api/token/`  This method is **recommended** for integration in your applications and CI/CD workflows.  **Prerequisites:** Having set a password on your account  **For users registered via email/password:** - You already have a password, use it directly  **For users registered via OAuth (Google/GitHub):** - You must first set a password at: https://factpulse.fr/accounts/password/set/ - Once the password is created, you can use the API  **Request example:** ```bash curl -X POST https://factpulse.fr/api/token/ \\   -H \"Content-Type: application/json\" \\   -d '{     \"username\": \"your_email@example.com\",     \"password\": \"your_password\"   }' ```  **Optional `client_uid` parameter:**  To select credentials for a specific client (PA/PDP, Chorus Pro, signing certificates), add `client_uid`:  ```bash curl -X POST https://factpulse.fr/api/token/ \\   -H \"Content-Type: application/json\" \\   -d '{     \"username\": \"your_email@example.com\",     \"password\": \"your_password\",     \"client_uid\": \"550e8400-e29b-41d4-a716-446655440000\"   }' ```  The `client_uid` will be included in the JWT and allow the API to automatically use: - AFNOR/PDP credentials configured for this client - Chorus Pro credentials configured for this client - Electronic signature certificates configured for this client  **Response:** ```json {   \"access\": \"eyJ0eXAiOiJKV1QiLCJhbGc...\",  // Access token (validity: 30 min)   \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGc...\"  // Refresh token (validity: 7 days) } ```  **Advantages:** - ✅ Full automation (CI/CD, scripts) - ✅ Programmatic token management - ✅ Refresh token support for automatic access renewal - ✅ Easy integration in any language/tool  #### 🖥️ Method 2: Dashboard Generation (Alternative)  **URL:** https://factpulse.fr/api/dashboard/  This method is suitable for quick tests or occasional use via the graphical interface.  **How it works:** - Log in to the dashboard - Use the \"Generate Test Token\" or \"Generate Production Token\" buttons - Works for **all** users (OAuth and email/password), without requiring a password  **Token types:** - **Test Token**: 24h validity, 1000 calls/day quota (free) - **Production Token**: 7 days validity, quota based on your plan  **Advantages:** - ✅ Quick for API testing - ✅ No password required - ✅ Simple visual interface  **Disadvantages:** - ❌ Requires manual action - ❌ No refresh token - ❌ Less suited for automation  ### 📚 Full Documentation  For more information on authentication and API usage: https://factpulse.fr/documentation-api/     
 
     The version of the OpenAPI document: 1.0.0
     Contact: contact@factpulse.fr
@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.0.3"
+__version__ = "4.1.0"
 
 # Define package exports
 __all__ = [
@@ -28,12 +28,14 @@ __all__ = [
     "DownloadsApi",
     "ElectronicSignatureApi",
     "FacturXConversionApi",
-    "FacturXGenerationApi",
     "FacturXPDFXMLVerificationApi",
     "FacturXValidationApi",
     "Flux10EReportingApi",
     "Flux6InvoiceLifecycleCDARApi",
     "HealthApi",
+    "InvoiceGenerationApi",
+    "ParseApi",
+    "ValidationApi",
     "ApiResponse",
     "ApiClient",
     "Configuration",
@@ -66,6 +68,7 @@ __all__ = [
     "AFNORDirectoryLineSearchPost200Response",
     "AFNOREntityType",
     "AFNORError",
+    "AFNORErrorDetail",
     "AFNORFacilityAdministrativeStatus",
     "AFNORFacilityNature",
     "AFNORFacilityPayloadHistory",
@@ -171,6 +174,13 @@ __all__ = [
     "ClientSummary",
     "ClientUpdateRequest",
     "Contact",
+    "ConversionErrorResult",
+    "ConversionExtractionInfo",
+    "ConversionPendingInputResult",
+    "ConversionSuccessTaskResult",
+    "ConversionTaskStatus",
+    "ConversionTaskStatusResult",
+    "ConversionValidationFailedResult",
     "ConvertResumeRequest",
     "ConvertSuccessResponse",
     "ConvertValidationFailedResponse",
@@ -196,8 +206,8 @@ __all__ = [
     "ExtractionInfo",
     "FacturXInvoice",
     "FacturXPDFInfo",
+    "FactureElectroniqueModelsInvoiceTypeCode",
     "FactureElectroniqueRestApiSchemasChorusProChorusProCredentials",
-    "FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode",
     "FactureElectroniqueRestApiSchemasValidationValidationErrorResponse",
     "FieldStatus",
     "FileInfo",
@@ -212,6 +222,9 @@ __all__ = [
     "GenerateCertificateRequest",
     "GenerateCertificateResponse",
     "GenerateEReportingResponse",
+    "GenerationSuccessResult",
+    "GenerationTaskStatus",
+    "GenerationTaskStatusResult",
     "GetChorusProIdRequest",
     "GetChorusProIdResponse",
     "GetInvoiceRequest",
@@ -255,6 +268,7 @@ __all__ = [
     "PDPConfigUpdateRequest",
     "PDPCredentials",
     "PageDimensionsSchema",
+    "ParseFacturXResponse",
     "Payee",
     "PaymentAmountByRate",
     "PaymentCard",
@@ -291,6 +305,9 @@ __all__ = [
     "SignatureInfo",
     "SignatureInfoAPI",
     "SignatureParameters",
+    "SignatureSuccessResult",
+    "SignatureTaskStatus",
+    "SignatureTaskStatusResult",
     "SimplifiedCDARResponse",
     "SimplifiedInvoiceData",
     "StatusCodeInfo",
@@ -316,6 +333,7 @@ __all__ = [
     "SubmitVatAmount",
     "SupplementaryAttachment",
     "Supplier",
+    "TaskErrorResult",
     "TaskResponse",
     "TaxBreakdownInput",
     "TaxDueDateType",
@@ -348,8 +366,14 @@ __all__ = [
     "ValidationErrorResponse",
     "ValidationInfo",
     "ValidationSuccessResponse",
+    "ValidationSuccessTaskResult",
+    "ValidationTaskStatus",
+    "ValidationTaskStatusResult",
     "VatRate",
     "VerificationSuccessResponse",
+    "VerificationSuccessTaskResult",
+    "VerificationTypedTaskStatus",
+    "VerificationTypedTaskStatusResult",
     "VerifiedFieldSchema",
     "WebhookSecretDeleteResponse",
     "WebhookSecretGenerateResponse",
@@ -366,12 +390,14 @@ from factpulse.api.client_management_api import ClientManagementApi as ClientMan
 from factpulse.api.downloads_api import DownloadsApi as DownloadsApi
 from factpulse.api.electronic_signature_api import ElectronicSignatureApi as ElectronicSignatureApi
 from factpulse.api.factur_x_conversion_api import FacturXConversionApi as FacturXConversionApi
-from factpulse.api.factur_x_generation_api import FacturXGenerationApi as FacturXGenerationApi
 from factpulse.api.factur_xpdfxml_verification_api import FacturXPDFXMLVerificationApi as FacturXPDFXMLVerificationApi
 from factpulse.api.factur_x_validation_api import FacturXValidationApi as FacturXValidationApi
 from factpulse.api.flux10_e_reporting_api import Flux10EReportingApi as Flux10EReportingApi
 from factpulse.api.flux6_invoice_lifecycle_cdar_api import Flux6InvoiceLifecycleCDARApi as Flux6InvoiceLifecycleCDARApi
 from factpulse.api.health_api import HealthApi as HealthApi
+from factpulse.api.invoice_generation_api import InvoiceGenerationApi as InvoiceGenerationApi
+from factpulse.api.parse_api import ParseApi as ParseApi
+from factpulse.api.validation_api import ValidationApi as ValidationApi
 
 # import ApiClient
 from factpulse.api_response import ApiResponse as ApiResponse
@@ -408,6 +434,7 @@ from factpulse.models.afnor_directory_line_post201_response import AFNORDirector
 from factpulse.models.afnor_directory_line_search_post200_response import AFNORDirectoryLineSearchPost200Response as AFNORDirectoryLineSearchPost200Response
 from factpulse.models.afnor_entity_type import AFNOREntityType as AFNOREntityType
 from factpulse.models.afnor_error import AFNORError as AFNORError
+from factpulse.models.afnor_error_detail import AFNORErrorDetail as AFNORErrorDetail
 from factpulse.models.afnor_facility_administrative_status import AFNORFacilityAdministrativeStatus as AFNORFacilityAdministrativeStatus
 from factpulse.models.afnor_facility_nature import AFNORFacilityNature as AFNORFacilityNature
 from factpulse.models.afnor_facility_payload_history import AFNORFacilityPayloadHistory as AFNORFacilityPayloadHistory
@@ -513,6 +540,13 @@ from factpulse.models.client_list_response import ClientListResponse as ClientLi
 from factpulse.models.client_summary import ClientSummary as ClientSummary
 from factpulse.models.client_update_request import ClientUpdateRequest as ClientUpdateRequest
 from factpulse.models.contact import Contact as Contact
+from factpulse.models.conversion_error_result import ConversionErrorResult as ConversionErrorResult
+from factpulse.models.conversion_extraction_info import ConversionExtractionInfo as ConversionExtractionInfo
+from factpulse.models.conversion_pending_input_result import ConversionPendingInputResult as ConversionPendingInputResult
+from factpulse.models.conversion_success_task_result import ConversionSuccessTaskResult as ConversionSuccessTaskResult
+from factpulse.models.conversion_task_status import ConversionTaskStatus as ConversionTaskStatus
+from factpulse.models.conversion_task_status_result import ConversionTaskStatusResult as ConversionTaskStatusResult
+from factpulse.models.conversion_validation_failed_result import ConversionValidationFailedResult as ConversionValidationFailedResult
 from factpulse.models.convert_resume_request import ConvertResumeRequest as ConvertResumeRequest
 from factpulse.models.convert_success_response import ConvertSuccessResponse as ConvertSuccessResponse
 from factpulse.models.convert_validation_failed_response import ConvertValidationFailedResponse as ConvertValidationFailedResponse
@@ -538,8 +572,8 @@ from factpulse.models.error_source import ErrorSource as ErrorSource
 from factpulse.models.extraction_info import ExtractionInfo as ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
+from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode as FactureElectroniqueModelsInvoiceTypeCode
 from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials as FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
-from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode as FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
 from factpulse.models.facture_electronique_rest_api_schemas_validation_validation_error_response import FactureElectroniqueRestApiSchemasValidationValidationErrorResponse as FactureElectroniqueRestApiSchemasValidationValidationErrorResponse
 from factpulse.models.field_status import FieldStatus as FieldStatus
 from factpulse.models.file_info import FileInfo as FileInfo
@@ -554,6 +588,9 @@ from factpulse.models.generate_cdar_response import GenerateCDARResponse as Gene
 from factpulse.models.generate_certificate_request import GenerateCertificateRequest as GenerateCertificateRequest
 from factpulse.models.generate_certificate_response import GenerateCertificateResponse as GenerateCertificateResponse
 from factpulse.models.generate_e_reporting_response import GenerateEReportingResponse as GenerateEReportingResponse
+from factpulse.models.generation_success_result import GenerationSuccessResult as GenerationSuccessResult
+from factpulse.models.generation_task_status import GenerationTaskStatus as GenerationTaskStatus
+from factpulse.models.generation_task_status_result import GenerationTaskStatusResult as GenerationTaskStatusResult
 from factpulse.models.get_chorus_pro_id_request import GetChorusProIdRequest as GetChorusProIdRequest
 from factpulse.models.get_chorus_pro_id_response import GetChorusProIdResponse as GetChorusProIdResponse
 from factpulse.models.get_invoice_request import GetInvoiceRequest as GetInvoiceRequest
@@ -597,6 +634,7 @@ from factpulse.models.pdp_config_response import PDPConfigResponse as PDPConfigR
 from factpulse.models.pdp_config_update_request import PDPConfigUpdateRequest as PDPConfigUpdateRequest
 from factpulse.models.pdp_credentials import PDPCredentials as PDPCredentials
 from factpulse.models.page_dimensions_schema import PageDimensionsSchema as PageDimensionsSchema
+from factpulse.models.parse_factur_x_response import ParseFacturXResponse as ParseFacturXResponse
 from factpulse.models.payee import Payee as Payee
 from factpulse.models.payment_amount_by_rate import PaymentAmountByRate as PaymentAmountByRate
 from factpulse.models.payment_card import PaymentCard as PaymentCard
@@ -633,6 +671,9 @@ from factpulse.models.sellercountry import Sellercountry as Sellercountry
 from factpulse.models.signature_info import SignatureInfo as SignatureInfo
 from factpulse.models.signature_info_api import SignatureInfoAPI as SignatureInfoAPI
 from factpulse.models.signature_parameters import SignatureParameters as SignatureParameters
+from factpulse.models.signature_success_result import SignatureSuccessResult as SignatureSuccessResult
+from factpulse.models.signature_task_status import SignatureTaskStatus as SignatureTaskStatus
+from factpulse.models.signature_task_status_result import SignatureTaskStatusResult as SignatureTaskStatusResult
 from factpulse.models.simplified_cdar_response import SimplifiedCDARResponse as SimplifiedCDARResponse
 from factpulse.models.simplified_invoice_data import SimplifiedInvoiceData as SimplifiedInvoiceData
 from factpulse.models.status_code_info import StatusCodeInfo as StatusCodeInfo
@@ -658,6 +699,7 @@ from factpulse.models.submit_net_amount import SubmitNetAmount as SubmitNetAmoun
 from factpulse.models.submit_vat_amount import SubmitVatAmount as SubmitVatAmount
 from factpulse.models.supplementary_attachment import SupplementaryAttachment as SupplementaryAttachment
 from factpulse.models.supplier import Supplier as Supplier
+from factpulse.models.task_error_result import TaskErrorResult as TaskErrorResult
 from factpulse.models.task_response import TaskResponse as TaskResponse
 from factpulse.models.tax_breakdown_input import TaxBreakdownInput as TaxBreakdownInput
 from factpulse.models.tax_due_date_type import TaxDueDateType as TaxDueDateType
@@ -690,8 +732,14 @@ from factpulse.models.validation_error_detail import ValidationErrorDetail as Va
 from factpulse.models.validation_error_response import ValidationErrorResponse as ValidationErrorResponse
 from factpulse.models.validation_info import ValidationInfo as ValidationInfo
 from factpulse.models.validation_success_response import ValidationSuccessResponse as ValidationSuccessResponse
+from factpulse.models.validation_success_task_result import ValidationSuccessTaskResult as ValidationSuccessTaskResult
+from factpulse.models.validation_task_status import ValidationTaskStatus as ValidationTaskStatus
+from factpulse.models.validation_task_status_result import ValidationTaskStatusResult as ValidationTaskStatusResult
 from factpulse.models.vat_rate import VatRate as VatRate
 from factpulse.models.verification_success_response import VerificationSuccessResponse as VerificationSuccessResponse
+from factpulse.models.verification_success_task_result import VerificationSuccessTaskResult as VerificationSuccessTaskResult
+from factpulse.models.verification_typed_task_status import VerificationTypedTaskStatus as VerificationTypedTaskStatus
+from factpulse.models.verification_typed_task_status_result import VerificationTypedTaskStatusResult as VerificationTypedTaskStatusResult
 from factpulse.models.verified_field_schema import VerifiedFieldSchema as VerifiedFieldSchema
 from factpulse.models.webhook_secret_delete_response import WebhookSecretDeleteResponse as WebhookSecretDeleteResponse
 from factpulse.models.webhook_secret_generate_response import WebhookSecretGenerateResponse as WebhookSecretGenerateResponse

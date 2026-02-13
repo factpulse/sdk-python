@@ -10,10 +10,12 @@ from factpulse.api.client_management_api import ClientManagementApi
 from factpulse.api.downloads_api import DownloadsApi
 from factpulse.api.electronic_signature_api import ElectronicSignatureApi
 from factpulse.api.factur_x_conversion_api import FacturXConversionApi
-from factpulse.api.factur_x_generation_api import FacturXGenerationApi
 from factpulse.api.factur_xpdfxml_verification_api import FacturXPDFXMLVerificationApi
 from factpulse.api.factur_x_validation_api import FacturXValidationApi
 from factpulse.api.flux10_e_reporting_api import Flux10EReportingApi
 from factpulse.api.flux6_invoice_lifecycle_cdar_api import Flux6InvoiceLifecycleCDARApi
 from factpulse.api.health_api import HealthApi
+from factpulse.api.invoice_generation_api import InvoiceGenerationApi
+from factpulse.api.parse_api import ParseApi
+from factpulse.api.validation_api import ValidationApi
 
