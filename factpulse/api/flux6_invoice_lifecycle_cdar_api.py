@@ -17,12 +17,13 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from pydantic import Field, StrictBytes, StrictStr
-from typing import Any, Dict, Tuple, Union
+from typing import Any, Dict, Optional, Tuple, Union
 from typing_extensions import Annotated
 from factpulse.models.action_codes_response import ActionCodesResponse
 from factpulse.models.create_cdar_request import CreateCDARRequest
 from factpulse.models.encaissee_request import EncaisseeRequest
 from factpulse.models.generate_cdar_response import GenerateCDARResponse
+from factpulse.models.lifecycle_response import LifecycleResponse
 from factpulse.models.reason_codes_response import ReasonCodesResponse
 from factpulse.models.refusee_request import RefuseeRequest
 from factpulse.models.simplified_cdar_response import SimplifiedCDARResponse
@@ -577,6 +578,366 @@ class Flux6InvoiceLifecycleCDARApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/api/v1/cdar/action-codes',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_lifecycle_api_v1_cdar_lifecycle_get(
+        self,
+        days: Annotated[Optional[Annotated[int, Field(le=365, strict=True, ge=1)]], Field(description="Number of days to look back")] = None,
+        invoice_id: Annotated[Optional[StrictStr], Field(description="Filter by invoice reference")] = None,
+        pdp_flow_service_url: Annotated[Optional[StrictStr], Field(description="PDP Flow Service URL")] = None,
+        pdp_token_url: Annotated[Optional[StrictStr], Field(description="PDP OAuth token URL")] = None,
+        pdp_client_id: Annotated[Optional[StrictStr], Field(description="PDP Client ID")] = None,
+        pdp_client_secret: Annotated[Optional[StrictStr], Field(description="PDP Client Secret")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> LifecycleResponse:
+        """[Simplified] Get lifecycle events for invoices
+
+        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7) - `invoiceId`: Optional filter on a specific invoice reference  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
+
+        :param days: Number of days to look back
+        :type days: int
+        :param invoice_id: Filter by invoice reference
+        :type invoice_id: str
+        :param pdp_flow_service_url: PDP Flow Service URL
+        :type pdp_flow_service_url: str
+        :param pdp_token_url: PDP OAuth token URL
+        :type pdp_token_url: str
+        :param pdp_client_id: PDP Client ID
+        :type pdp_client_id: str
+        :param pdp_client_secret: PDP Client Secret
+        :type pdp_client_secret: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_lifecycle_api_v1_cdar_lifecycle_get_serialize(
+            days=days,
+            invoice_id=invoice_id,
+            pdp_flow_service_url=pdp_flow_service_url,
+            pdp_token_url=pdp_token_url,
+            pdp_client_id=pdp_client_id,
+            pdp_client_secret=pdp_client_secret,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "LifecycleResponse",
+            '400': None,
+            '422': None,
+            '500': None,
+            '401': "APIError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_lifecycle_api_v1_cdar_lifecycle_get_with_http_info(
+        self,
+        days: Annotated[Optional[Annotated[int, Field(le=365, strict=True, ge=1)]], Field(description="Number of days to look back")] = None,
+        invoice_id: Annotated[Optional[StrictStr], Field(description="Filter by invoice reference")] = None,
+        pdp_flow_service_url: Annotated[Optional[StrictStr], Field(description="PDP Flow Service URL")] = None,
+        pdp_token_url: Annotated[Optional[StrictStr], Field(description="PDP OAuth token URL")] = None,
+        pdp_client_id: Annotated[Optional[StrictStr], Field(description="PDP Client ID")] = None,
+        pdp_client_secret: Annotated[Optional[StrictStr], Field(description="PDP Client Secret")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[LifecycleResponse]:
+        """[Simplified] Get lifecycle events for invoices
+
+        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7) - `invoiceId`: Optional filter on a specific invoice reference  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
+
+        :param days: Number of days to look back
+        :type days: int
+        :param invoice_id: Filter by invoice reference
+        :type invoice_id: str
+        :param pdp_flow_service_url: PDP Flow Service URL
+        :type pdp_flow_service_url: str
+        :param pdp_token_url: PDP OAuth token URL
+        :type pdp_token_url: str
+        :param pdp_client_id: PDP Client ID
+        :type pdp_client_id: str
+        :param pdp_client_secret: PDP Client Secret
+        :type pdp_client_secret: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_lifecycle_api_v1_cdar_lifecycle_get_serialize(
+            days=days,
+            invoice_id=invoice_id,
+            pdp_flow_service_url=pdp_flow_service_url,
+            pdp_token_url=pdp_token_url,
+            pdp_client_id=pdp_client_id,
+            pdp_client_secret=pdp_client_secret,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "LifecycleResponse",
+            '400': None,
+            '422': None,
+            '500': None,
+            '401': "APIError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_lifecycle_api_v1_cdar_lifecycle_get_without_preload_content(
+        self,
+        days: Annotated[Optional[Annotated[int, Field(le=365, strict=True, ge=1)]], Field(description="Number of days to look back")] = None,
+        invoice_id: Annotated[Optional[StrictStr], Field(description="Filter by invoice reference")] = None,
+        pdp_flow_service_url: Annotated[Optional[StrictStr], Field(description="PDP Flow Service URL")] = None,
+        pdp_token_url: Annotated[Optional[StrictStr], Field(description="PDP OAuth token URL")] = None,
+        pdp_client_id: Annotated[Optional[StrictStr], Field(description="PDP Client ID")] = None,
+        pdp_client_secret: Annotated[Optional[StrictStr], Field(description="PDP Client Secret")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """[Simplified] Get lifecycle events for invoices
+
+        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7) - `invoiceId`: Optional filter on a specific invoice reference  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
+
+        :param days: Number of days to look back
+        :type days: int
+        :param invoice_id: Filter by invoice reference
+        :type invoice_id: str
+        :param pdp_flow_service_url: PDP Flow Service URL
+        :type pdp_flow_service_url: str
+        :param pdp_token_url: PDP OAuth token URL
+        :type pdp_token_url: str
+        :param pdp_client_id: PDP Client ID
+        :type pdp_client_id: str
+        :param pdp_client_secret: PDP Client Secret
+        :type pdp_client_secret: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_lifecycle_api_v1_cdar_lifecycle_get_serialize(
+            days=days,
+            invoice_id=invoice_id,
+            pdp_flow_service_url=pdp_flow_service_url,
+            pdp_token_url=pdp_token_url,
+            pdp_client_id=pdp_client_id,
+            pdp_client_secret=pdp_client_secret,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "LifecycleResponse",
+            '400': None,
+            '422': None,
+            '500': None,
+            '401': "APIError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_lifecycle_api_v1_cdar_lifecycle_get_serialize(
+        self,
+        days,
+        invoice_id,
+        pdp_flow_service_url,
+        pdp_token_url,
+        pdp_client_id,
+        pdp_client_secret,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if days is not None:
+            
+            _query_params.append(('days', days))
+            
+        if invoice_id is not None:
+            
+            _query_params.append(('invoiceId', invoice_id))
+            
+        if pdp_flow_service_url is not None:
+            
+            _query_params.append(('pdpFlowServiceUrl', pdp_flow_service_url))
+            
+        if pdp_token_url is not None:
+            
+            _query_params.append(('pdpTokenUrl', pdp_token_url))
+            
+        if pdp_client_id is not None:
+            
+            _query_params.append(('pdpClientId', pdp_client_id))
+            
+        if pdp_client_secret is not None:
+            
+            _query_params.append(('pdpClientSecret', pdp_client_secret))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'HTTPBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/cdar/lifecycle',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -2553,7 +2914,7 @@ class Flux6InvoiceLifecycleCDARApi:
         Validates a CDAR XML file against:  1. **XSD schema**: UN/CEFACT D22B CrossDomainAcknowledgementAndResponse 2. **Schematron BR-FR-CDV**: French business rules for invoice lifecycle  Returns validation status and detailed error messages if invalid.  **Note:** Use `/validate` to validate structured data fields (JSON).
 
         :param xml_file: CDAR XML file to validate (required)
-        :type xml_file: bytearray
+        :type xml_file: bytes
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2624,7 +2985,7 @@ class Flux6InvoiceLifecycleCDARApi:
         Validates a CDAR XML file against:  1. **XSD schema**: UN/CEFACT D22B CrossDomainAcknowledgementAndResponse 2. **Schematron BR-FR-CDV**: French business rules for invoice lifecycle  Returns validation status and detailed error messages if invalid.  **Note:** Use `/validate` to validate structured data fields (JSON).
 
         :param xml_file: CDAR XML file to validate (required)
-        :type xml_file: bytearray
+        :type xml_file: bytes
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2695,7 +3056,7 @@ class Flux6InvoiceLifecycleCDARApi:
         Validates a CDAR XML file against:  1. **XSD schema**: UN/CEFACT D22B CrossDomainAcknowledgementAndResponse 2. **Schematron BR-FR-CDV**: French business rules for invoice lifecycle  Returns validation status and detailed error messages if invalid.  **Note:** Use `/validate` to validate structured data fields (JSON).
 
         :param xml_file: CDAR XML file to validate (required)
-        :type xml_file: bytearray
+        :type xml_file: bytes
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of

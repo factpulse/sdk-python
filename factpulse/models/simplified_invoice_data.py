@@ -21,7 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode
+from factpulse.models.invoice_type_code import InvoiceTypeCode
 from factpulse.models.invoicing_framework_code import InvoicingFrameworkCode
 from factpulse.models.operation_nature import OperationNature
 from typing import Optional, Set
@@ -40,7 +40,7 @@ class SimplifiedInvoiceData(BaseModel):
     comment: Optional[StrictStr] = None
     purchase_order_reference: Optional[StrictStr] = Field(default=None, alias="purchaseOrderReference")
     contract_reference: Optional[StrictStr] = Field(default=None, alias="contractReference")
-    invoice_type: Optional[FactureElectroniqueModelsInvoiceTypeCode] = Field(default=None, description="Document type (UNTDID 1001). Default: 380 (Invoice).", alias="invoiceType")
+    invoice_type: Optional[InvoiceTypeCode] = Field(default=None, description="Document type (UNTDID 1001). Default: 380 (Invoice).", alias="invoiceType")
     preceding_invoice_reference: Optional[StrictStr] = Field(default=None, alias="precedingInvoiceReference")
     operation_nature: Optional[OperationNature] = Field(default=None, alias="operationNature")
     invoicing_framework: Optional[InvoicingFrameworkCode] = Field(default=None, alias="invoicingFramework")

@@ -18,21 +18,20 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from factpulse.models.vatex_code_info import VATEXCodeInfo
 from typing import Optional, Set
 from typing_extensions import Self
 
-class FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(BaseModel):
+class VATEXCodesResponse(BaseModel):
     """
-    Chorus Pro credentials for Zero-Trust mode.  **Zero-Trust Mode**: Credentials are passed in each request and are NEVER stored.  **Security**: - Credentials are never persisted in the database - They are used only for the duration of the request - Secure transmission via HTTPS  **Use cases**: - High-security environments (banks, administrations) - Strict GDPR compliance - Tests with temporary credentials - Users who don't want to store their credentials
+    Response for the VATEX codes endpoint.
     """ # noqa: E501
-    piste_client_id: StrictStr = Field(description="PISTE Client ID (government API portal)", alias="pisteClientId")
-    piste_client_secret: StrictStr = Field(description="PISTE Client Secret", alias="pisteClientSecret")
-    chorus_pro_login: StrictStr = Field(description="Chorus Pro login", alias="chorusProLogin")
-    chorus_pro_password: StrictStr = Field(description="Chorus Pro password", alias="chorusProPassword")
-    sandbox: Optional[StrictBool] = Field(default=True, description="Use sandbox environment (true) or production (false)")
-    __properties: ClassVar[List[str]] = ["pisteClientId", "pisteClientSecret", "chorusProLogin", "chorusProPassword", "sandbox"]
+    codes: List[VATEXCodeInfo]
+    count: StrictInt
+    source: Optional[StrictStr] = 'https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/'
+    __properties: ClassVar[List[str]] = ["codes", "count", "source"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +51,7 @@ class FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of FactureElectroniqueRestApiSchemasChorusProChorusProCredentials from a JSON string"""
+        """Create an instance of VATEXCodesResponse from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,11 +72,18 @@ class FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in codes (list)
+        _items = []
+        if self.codes:
+            for _item_codes in self.codes:
+                if _item_codes:
+                    _items.append(_item_codes.to_dict())
+            _dict['codes'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of FactureElectroniqueRestApiSchemasChorusProChorusProCredentials from a dict"""
+        """Create an instance of VATEXCodesResponse from a dict"""
         if obj is None:
             return None
 
@@ -85,11 +91,9 @@ class FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "pisteClientId": obj.get("pisteClientId"),
-            "pisteClientSecret": obj.get("pisteClientSecret"),
-            "chorusProLogin": obj.get("chorusProLogin"),
-            "chorusProPassword": obj.get("chorusProPassword"),
-            "sandbox": obj.get("sandbox") if obj.get("sandbox") is not None else True
+            "codes": [VATEXCodeInfo.from_dict(_item) for _item in obj["codes"]] if obj.get("codes") is not None else None,
+            "count": obj.get("count"),
+            "source": obj.get("source") if obj.get("source") is not None else 'https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/'
         })
         return _obj
 

@@ -15,20 +15,25 @@
 
 import unittest
 
-from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode
+from factpulse.api.references_api import ReferencesApi
 
-class TestFactureElectroniqueModelsInvoiceTypeCode(unittest.TestCase):
-    """FactureElectroniqueModelsInvoiceTypeCode unit test stubs"""
 
-    def setUp(self):
+class TestReferencesApi(unittest.TestCase):
+    """ReferencesApi unit test stubs"""
+
+    def setUp(self) -> None:
+        self.api = ReferencesApi()
+
+    def tearDown(self) -> None:
         pass
 
-    def tearDown(self):
+    def test_get_vatex_codes_api_v1_references_vatex_codes_get(self) -> None:
+        """Test case for get_vatex_codes_api_v1_references_vatex_codes_get
+
+        VATEX exemption reason codes
+        """
         pass
 
-    def testFactureElectroniqueModelsInvoiceTypeCode(self):
-        """Test FactureElectroniqueModelsInvoiceTypeCode"""
-        # inst = FactureElectroniqueModelsInvoiceTypeCode()
 
 if __name__ == '__main__':
     unittest.main()

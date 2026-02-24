@@ -64,7 +64,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ClientManagementApi(api_client)
-    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
 
     try:
         # Activate a client
@@ -82,7 +82,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **uid** | **UUID**|  | 
+ **uid** | **UUID**| Client unique identifier (UUID) | 
 
 ### Return type
 
@@ -259,7 +259,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ClientManagementApi(api_client)
-    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
 
     try:
         # Deactivate a client
@@ -277,7 +277,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **uid** | **UUID**|  | 
+ **uid** | **UUID**| Client unique identifier (UUID) | 
 
 ### Return type
 
@@ -355,7 +355,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ClientManagementApi(api_client)
-    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
 
     try:
         # Delete webhook secret
@@ -373,7 +373,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **uid** | **UUID**|  | 
+ **uid** | **UUID**| Client unique identifier (UUID) | 
 
 ### Return type
 
@@ -453,7 +453,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ClientManagementApi(api_client)
-    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
 
     try:
         # Generate webhook secret
@@ -471,7 +471,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **uid** | **UUID**|  | 
+ **uid** | **UUID**| Client unique identifier (UUID) | 
 
 ### Return type
 
@@ -549,7 +549,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ClientManagementApi(api_client)
-    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
 
     try:
         # Get client details
@@ -567,7 +567,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **uid** | **UUID**|  | 
+ **uid** | **UUID**| Client unique identifier (UUID) | 
 
 ### Return type
 
@@ -649,7 +649,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ClientManagementApi(api_client)
-    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
 
     try:
         # Get client PDP configuration
@@ -667,7 +667,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **uid** | **UUID**|  | 
+ **uid** | **UUID**| Client unique identifier (UUID) | 
 
 ### Return type
 
@@ -748,7 +748,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ClientManagementApi(api_client)
-    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
 
     try:
         # Get webhook secret status
@@ -766,7 +766,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **uid** | **UUID**|  | 
+ **uid** | **UUID**| Client unique identifier (UUID) | 
 
 ### Return type
 
@@ -957,7 +957,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ClientManagementApi(api_client)
-    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
     key_rotation_request = factpulse.KeyRotationRequest() # KeyRotationRequest | 
 
     try:
@@ -976,7 +976,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **uid** | **UUID**|  | 
+ **uid** | **UUID**| Client unique identifier (UUID) | 
  **key_rotation_request** | [**KeyRotationRequest**](KeyRotationRequest.md)|  | 
 
 ### Return type
@@ -1060,7 +1060,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ClientManagementApi(api_client)
-    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
     client_update_request = factpulse.ClientUpdateRequest() # ClientUpdateRequest | 
 
     try:
@@ -1079,7 +1079,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **uid** | **UUID**|  | 
+ **uid** | **UUID**| Client unique identifier (UUID) | 
  **client_update_request** | [**ClientUpdateRequest**](ClientUpdateRequest.md)|  | 
 
 ### Return type
@@ -1179,7 +1179,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ClientManagementApi(api_client)
-    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | 
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
     pdp_config_update_request = factpulse.PDPConfigUpdateRequest() # PDPConfigUpdateRequest | 
     x_encryption_key = 'x_encryption_key_example' # str | Client encryption key for double encryption mode. Must be a base64-encoded AES-256 key (32 bytes). Required only when accessing resources encrypted with encryption_mode='double'. (optional)
 
@@ -1199,7 +1199,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **uid** | **UUID**|  | 
+ **uid** | **UUID**| Client unique identifier (UUID) | 
  **pdp_config_update_request** | [**PDPConfigUpdateRequest**](PDPConfigUpdateRequest.md)|  | 
  **x_encryption_key** | **str**| Client encryption key for double encryption mode. Must be a base64-encoded AES-256 key (32 bytes). Required only when accessing resources encrypted with encryption_mode&#x3D;&#39;double&#39;. | [optional] 
 

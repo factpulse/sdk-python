@@ -61,7 +61,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ParseApi(api_client)
-    file = None # bytearray | Factur-X PDF or XML file to parse
+    file = None # bytes | Factur-X PDF or XML file to parse
     callback_url = 'callback_url_example' # str |  (optional)
 
     try:
@@ -80,7 +80,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **file** | **bytearray**| Factur-X PDF or XML file to parse | 
+ **file** | **bytes**| Factur-X PDF or XML file to parse | 
  **callback_url** | **str**|  | [optional] 
 
 ### Return type
@@ -164,7 +164,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ParseApi(api_client)
-    file = None # bytearray | Factur-X PDF or XML file to parse
+    file = None # bytes | Factur-X PDF or XML file to parse
 
     try:
         # Parse CII, UBL or Factur-X PDF (sync)
@@ -182,7 +182,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **file** | **bytearray**| Factur-X PDF or XML file to parse | 
+ **file** | **bytes**| Factur-X PDF or XML file to parse | 
 
 ### Return type
 

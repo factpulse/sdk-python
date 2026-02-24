@@ -355,7 +355,7 @@ class ElectronicSignatureApi:
         Signs an uploaded PDF with the electronic certificate configured for the client (via client_uid from JWT).      **Supported standards**: PAdES-B-B, PAdES-B-T (timestamping), PAdES-B-LT (long-term archiving).      **eIDAS levels**: SES (self-signed), AdES (commercial CA), QES (PSCO - out of scope).      **Security**: Double authentication X-Internal-Secret + JWT Bearer to retrieve the certificate.      **⚠️ Legal disclaimer**: Generated signatures are electronic seals as defined by     the eIDAS regulation. The level of legal validity depends on the certificate used (SES/AdES/QES).     FactPulse does not provide QES qualified certificates - you must obtain a certificate from     a PSCO (qualified Trust Service Provider) for maximum legal validity.
 
         :param pdf_file: PDF file to sign (will be processed and returned signed in base64) (required)
-        :type pdf_file: bytearray
+        :type pdf_file: bytes
         :param reason:
         :type reason: str
         :param location:
@@ -451,7 +451,7 @@ class ElectronicSignatureApi:
         Signs an uploaded PDF with the electronic certificate configured for the client (via client_uid from JWT).      **Supported standards**: PAdES-B-B, PAdES-B-T (timestamping), PAdES-B-LT (long-term archiving).      **eIDAS levels**: SES (self-signed), AdES (commercial CA), QES (PSCO - out of scope).      **Security**: Double authentication X-Internal-Secret + JWT Bearer to retrieve the certificate.      **⚠️ Legal disclaimer**: Generated signatures are electronic seals as defined by     the eIDAS regulation. The level of legal validity depends on the certificate used (SES/AdES/QES).     FactPulse does not provide QES qualified certificates - you must obtain a certificate from     a PSCO (qualified Trust Service Provider) for maximum legal validity.
 
         :param pdf_file: PDF file to sign (will be processed and returned signed in base64) (required)
-        :type pdf_file: bytearray
+        :type pdf_file: bytes
         :param reason:
         :type reason: str
         :param location:
@@ -547,7 +547,7 @@ class ElectronicSignatureApi:
         Signs an uploaded PDF with the electronic certificate configured for the client (via client_uid from JWT).      **Supported standards**: PAdES-B-B, PAdES-B-T (timestamping), PAdES-B-LT (long-term archiving).      **eIDAS levels**: SES (self-signed), AdES (commercial CA), QES (PSCO - out of scope).      **Security**: Double authentication X-Internal-Secret + JWT Bearer to retrieve the certificate.      **⚠️ Legal disclaimer**: Generated signatures are electronic seals as defined by     the eIDAS regulation. The level of legal validity depends on the certificate used (SES/AdES/QES).     FactPulse does not provide QES qualified certificates - you must obtain a certificate from     a PSCO (qualified Trust Service Provider) for maximum legal validity.
 
         :param pdf_file: PDF file to sign (will be processed and returned signed in base64) (required)
-        :type pdf_file: bytearray
+        :type pdf_file: bytes
         :param reason:
         :type reason: str
         :param location:
@@ -737,7 +737,7 @@ class ElectronicSignatureApi:
         Signs an uploaded PDF asynchronously via a Celery task.      **Difference with /sign-pdf**:     - `/sign-pdf`: Synchronous signature (blocking until completion)     - `/sign-pdf-async`: Asynchronous signature (returns immediately with task_id)      **Async advantages**:     - No timeout for large files     - No blocking of FastAPI worker     - Progress tracking via task_id     - Ideal for batch processing      **Supported standards**: PAdES-B-B, PAdES-B-T (timestamping), PAdES-B-LT (long-term archiving).      **⚠️ Legal disclaimer**: Same as /sign-pdf (see that endpoint's documentation).
 
         :param pdf_file: PDF file to sign (processed asynchronously) (required)
-        :type pdf_file: bytearray
+        :type pdf_file: bytes
         :param callback_url:
         :type callback_url: str
         :param webhook_mode: Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)
@@ -840,7 +840,7 @@ class ElectronicSignatureApi:
         Signs an uploaded PDF asynchronously via a Celery task.      **Difference with /sign-pdf**:     - `/sign-pdf`: Synchronous signature (blocking until completion)     - `/sign-pdf-async`: Asynchronous signature (returns immediately with task_id)      **Async advantages**:     - No timeout for large files     - No blocking of FastAPI worker     - Progress tracking via task_id     - Ideal for batch processing      **Supported standards**: PAdES-B-B, PAdES-B-T (timestamping), PAdES-B-LT (long-term archiving).      **⚠️ Legal disclaimer**: Same as /sign-pdf (see that endpoint's documentation).
 
         :param pdf_file: PDF file to sign (processed asynchronously) (required)
-        :type pdf_file: bytearray
+        :type pdf_file: bytes
         :param callback_url:
         :type callback_url: str
         :param webhook_mode: Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)
@@ -943,7 +943,7 @@ class ElectronicSignatureApi:
         Signs an uploaded PDF asynchronously via a Celery task.      **Difference with /sign-pdf**:     - `/sign-pdf`: Synchronous signature (blocking until completion)     - `/sign-pdf-async`: Asynchronous signature (returns immediately with task_id)      **Async advantages**:     - No timeout for large files     - No blocking of FastAPI worker     - Progress tracking via task_id     - Ideal for batch processing      **Supported standards**: PAdES-B-B, PAdES-B-T (timestamping), PAdES-B-LT (long-term archiving).      **⚠️ Legal disclaimer**: Same as /sign-pdf (see that endpoint's documentation).
 
         :param pdf_file: PDF file to sign (processed asynchronously) (required)
-        :type pdf_file: bytearray
+        :type pdf_file: bytes
         :param callback_url:
         :type callback_url: str
         :param webhook_mode: Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)
@@ -1136,7 +1136,7 @@ class ElectronicSignatureApi:
         Validates electronic signatures present in an uploaded PDF.      **Verifications performed**:     - Presence of signatures     - Document integrity (not modified since signing)     - Certificate validity     - Chain of trust (if available)     - Presence of timestamp (PAdES-B-T)     - Validation data (PAdES-B-LT)      **Supported standards**: PAdES-B-B, PAdES-B-T, PAdES-B-LT, ISO 32000-2.      **⚠️ Note**: This validation is technical (cryptographic integrity). Legal validity     depends on the eIDAS level of the certificate (SES/AdES/QES) and the context of use.
 
         :param pdf_file: PDF file to validate (will be analyzed to detect and validate signatures) (required)
-        :type pdf_file: bytearray
+        :type pdf_file: bytes
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1206,7 +1206,7 @@ class ElectronicSignatureApi:
         Validates electronic signatures present in an uploaded PDF.      **Verifications performed**:     - Presence of signatures     - Document integrity (not modified since signing)     - Certificate validity     - Chain of trust (if available)     - Presence of timestamp (PAdES-B-T)     - Validation data (PAdES-B-LT)      **Supported standards**: PAdES-B-B, PAdES-B-T, PAdES-B-LT, ISO 32000-2.      **⚠️ Note**: This validation is technical (cryptographic integrity). Legal validity     depends on the eIDAS level of the certificate (SES/AdES/QES) and the context of use.
 
         :param pdf_file: PDF file to validate (will be analyzed to detect and validate signatures) (required)
-        :type pdf_file: bytearray
+        :type pdf_file: bytes
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1276,7 +1276,7 @@ class ElectronicSignatureApi:
         Validates electronic signatures present in an uploaded PDF.      **Verifications performed**:     - Presence of signatures     - Document integrity (not modified since signing)     - Certificate validity     - Chain of trust (if available)     - Presence of timestamp (PAdES-B-T)     - Validation data (PAdES-B-LT)      **Supported standards**: PAdES-B-B, PAdES-B-T, PAdES-B-LT, ISO 32000-2.      **⚠️ Note**: This validation is technical (cryptographic integrity). Legal validity     depends on the eIDAS level of the certificate (SES/AdES/QES) and the context of use.
 
         :param pdf_file: PDF file to validate (will be analyzed to detect and validate signatures) (required)
-        :type pdf_file: bytearray
+        :type pdf_file: bytes
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of

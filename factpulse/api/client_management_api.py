@@ -54,7 +54,7 @@ class ClientManagementApi:
     @validate_call
     def activate_client_api_v1_clients_uid_activer_post(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -72,7 +72,7 @@ class ClientManagementApi:
 
         Activate a deactivated client.  **Scope**: Client level (JWT with client_uid that must match {uid})
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -127,7 +127,7 @@ class ClientManagementApi:
     @validate_call
     def activate_client_api_v1_clients_uid_activer_post_with_http_info(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -145,7 +145,7 @@ class ClientManagementApi:
 
         Activate a deactivated client.  **Scope**: Client level (JWT with client_uid that must match {uid})
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -200,7 +200,7 @@ class ClientManagementApi:
     @validate_call
     def activate_client_api_v1_clients_uid_activer_post_without_preload_content(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -218,7 +218,7 @@ class ClientManagementApi:
 
         Activate a deactivated client.  **Scope**: Client level (JWT with client_uid that must match {uid})
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -627,7 +627,7 @@ class ClientManagementApi:
     @validate_call
     def deactivate_client_api_v1_clients_uid_desactiver_post(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -645,7 +645,7 @@ class ClientManagementApi:
 
         Deactivate an active client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Note**: A deactivated client cannot be used for API calls (AFNOR, Chorus Pro, etc.).
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -700,7 +700,7 @@ class ClientManagementApi:
     @validate_call
     def deactivate_client_api_v1_clients_uid_desactiver_post_with_http_info(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -718,7 +718,7 @@ class ClientManagementApi:
 
         Deactivate an active client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Note**: A deactivated client cannot be used for API calls (AFNOR, Chorus Pro, etc.).
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -773,7 +773,7 @@ class ClientManagementApi:
     @validate_call
     def deactivate_client_api_v1_clients_uid_desactiver_post_without_preload_content(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -791,7 +791,7 @@ class ClientManagementApi:
 
         Deactivate an active client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Note**: A deactivated client cannot be used for API calls (AFNOR, Chorus Pro, etc.).
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -907,7 +907,7 @@ class ClientManagementApi:
     @validate_call
     def delete_webhook_secret_api_v1_clients_uid_webhook_secret_delete(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -925,7 +925,7 @@ class ClientManagementApi:
 
         Delete the webhook secret for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **After deletion**: Webhooks for this client will use the global server key for HMAC signature instead of a client-specific key.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -980,7 +980,7 @@ class ClientManagementApi:
     @validate_call
     def delete_webhook_secret_api_v1_clients_uid_webhook_secret_delete_with_http_info(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -998,7 +998,7 @@ class ClientManagementApi:
 
         Delete the webhook secret for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **After deletion**: Webhooks for this client will use the global server key for HMAC signature instead of a client-specific key.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1053,7 +1053,7 @@ class ClientManagementApi:
     @validate_call
     def delete_webhook_secret_api_v1_clients_uid_webhook_secret_delete_without_preload_content(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1071,7 +1071,7 @@ class ClientManagementApi:
 
         Delete the webhook secret for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **After deletion**: Webhooks for this client will use the global server key for HMAC signature instead of a client-specific key.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1187,7 +1187,7 @@ class ClientManagementApi:
     @validate_call
     def generate_webhook_secret_api_v1_clients_uid_webhook_secret_generate_post(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1205,7 +1205,7 @@ class ClientManagementApi:
 
         Generate or regenerate the webhook secret for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Important**: Save the returned secret immediately - it will never be shown again. The secret is used to sign webhooks sent by the server (HMAC-SHA256).  **If a secret already exists**: It will be replaced by the new one.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1260,7 +1260,7 @@ class ClientManagementApi:
     @validate_call
     def generate_webhook_secret_api_v1_clients_uid_webhook_secret_generate_post_with_http_info(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1278,7 +1278,7 @@ class ClientManagementApi:
 
         Generate or regenerate the webhook secret for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Important**: Save the returned secret immediately - it will never be shown again. The secret is used to sign webhooks sent by the server (HMAC-SHA256).  **If a secret already exists**: It will be replaced by the new one.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1333,7 +1333,7 @@ class ClientManagementApi:
     @validate_call
     def generate_webhook_secret_api_v1_clients_uid_webhook_secret_generate_post_without_preload_content(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1351,7 +1351,7 @@ class ClientManagementApi:
 
         Generate or regenerate the webhook secret for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Important**: Save the returned secret immediately - it will never be shown again. The secret is used to sign webhooks sent by the server (HMAC-SHA256).  **If a secret already exists**: It will be replaced by the new one.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1467,7 +1467,7 @@ class ClientManagementApi:
     @validate_call
     def get_client_api_v1_clients_uid_get(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1485,7 +1485,7 @@ class ClientManagementApi:
 
         Get details of a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Security**: If the JWT contains a client_uid, it must match the {uid} in the URL, otherwise a 403 error is returned.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1540,7 +1540,7 @@ class ClientManagementApi:
     @validate_call
     def get_client_api_v1_clients_uid_get_with_http_info(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1558,7 +1558,7 @@ class ClientManagementApi:
 
         Get details of a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Security**: If the JWT contains a client_uid, it must match the {uid} in the URL, otherwise a 403 error is returned.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1613,7 +1613,7 @@ class ClientManagementApi:
     @validate_call
     def get_client_api_v1_clients_uid_get_without_preload_content(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1631,7 +1631,7 @@ class ClientManagementApi:
 
         Get details of a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Security**: If the JWT contains a client_uid, it must match the {uid} in the URL, otherwise a 403 error is returned.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1747,7 +1747,7 @@ class ClientManagementApi:
     @validate_call
     def get_pdp_config_api_v1_clients_uid_pdp_config_get(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1765,7 +1765,7 @@ class ClientManagementApi:
 
         Get the PDP (PA/PDP) configuration for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Security**: The client secret is never returned. Only a status (`secretStatus`) indicates whether a secret is configured.  **Response**: - If configured: all config details (URLs, client_id, secret status) - If not configured: `isConfigured: false` with a message
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1820,7 +1820,7 @@ class ClientManagementApi:
     @validate_call
     def get_pdp_config_api_v1_clients_uid_pdp_config_get_with_http_info(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1838,7 +1838,7 @@ class ClientManagementApi:
 
         Get the PDP (PA/PDP) configuration for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Security**: The client secret is never returned. Only a status (`secretStatus`) indicates whether a secret is configured.  **Response**: - If configured: all config details (URLs, client_id, secret status) - If not configured: `isConfigured: false` with a message
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1893,7 +1893,7 @@ class ClientManagementApi:
     @validate_call
     def get_pdp_config_api_v1_clients_uid_pdp_config_get_without_preload_content(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1911,7 +1911,7 @@ class ClientManagementApi:
 
         Get the PDP (PA/PDP) configuration for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Security**: The client secret is never returned. Only a status (`secretStatus`) indicates whether a secret is configured.  **Response**: - If configured: all config details (URLs, client_id, secret status) - If not configured: `isConfigured: false` with a message
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2027,7 +2027,7 @@ class ClientManagementApi:
     @validate_call
     def get_webhook_secret_status_api_v1_clients_uid_webhook_secret_status_get(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2045,7 +2045,7 @@ class ClientManagementApi:
 
         Check if a webhook secret is configured for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Response**: - `hasSecret`: Whether a webhook secret is configured - `createdAt`: When the secret was created (if exists)  **Note**: The secret value is never returned, only its status.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2100,7 +2100,7 @@ class ClientManagementApi:
     @validate_call
     def get_webhook_secret_status_api_v1_clients_uid_webhook_secret_status_get_with_http_info(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2118,7 +2118,7 @@ class ClientManagementApi:
 
         Check if a webhook secret is configured for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Response**: - `hasSecret`: Whether a webhook secret is configured - `createdAt`: When the secret was created (if exists)  **Note**: The secret value is never returned, only its status.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2173,7 +2173,7 @@ class ClientManagementApi:
     @validate_call
     def get_webhook_secret_status_api_v1_clients_uid_webhook_secret_status_get_without_preload_content(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2191,7 +2191,7 @@ class ClientManagementApi:
 
         Check if a webhook secret is configured for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Response**: - `hasSecret`: Whether a webhook secret is configured - `createdAt`: When the secret was created (if exists)  **Note**: The secret value is never returned, only its status.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2606,7 +2606,7 @@ class ClientManagementApi:
     @validate_call
     def rotate_encryption_key_api_v1_clients_uid_rotate_encryption_key_post(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         key_rotation_request: KeyRotationRequest,
         _request_timeout: Union[
             None,
@@ -2625,7 +2625,7 @@ class ClientManagementApi:
 
         Rotate the client encryption key for all secrets in double encryption mode.  **Scope**: Client level (JWT with client_uid that must match {uid})  **What this does**: 1. Decrypts all secrets (PDP, Chorus Pro) using the old key 2. Re-encrypts them using the new key 3. Saves to database  **Important notes**: - Both keys must be base64-encoded AES-256 keys (32 bytes each) - The old key becomes invalid immediately after rotation - Only secrets encrypted with `encryptionMode: \"double\"` are affected - If the client has no double-encrypted secrets, returns 404  **Security**: - The old key must be valid (decryption is verified) - If decryption fails, rotation is aborted (atomic operation) - Neither key is logged or stored by the server
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param key_rotation_request: (required)
         :type key_rotation_request: KeyRotationRequest
@@ -2683,7 +2683,7 @@ class ClientManagementApi:
     @validate_call
     def rotate_encryption_key_api_v1_clients_uid_rotate_encryption_key_post_with_http_info(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         key_rotation_request: KeyRotationRequest,
         _request_timeout: Union[
             None,
@@ -2702,7 +2702,7 @@ class ClientManagementApi:
 
         Rotate the client encryption key for all secrets in double encryption mode.  **Scope**: Client level (JWT with client_uid that must match {uid})  **What this does**: 1. Decrypts all secrets (PDP, Chorus Pro) using the old key 2. Re-encrypts them using the new key 3. Saves to database  **Important notes**: - Both keys must be base64-encoded AES-256 keys (32 bytes each) - The old key becomes invalid immediately after rotation - Only secrets encrypted with `encryptionMode: \"double\"` are affected - If the client has no double-encrypted secrets, returns 404  **Security**: - The old key must be valid (decryption is verified) - If decryption fails, rotation is aborted (atomic operation) - Neither key is logged or stored by the server
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param key_rotation_request: (required)
         :type key_rotation_request: KeyRotationRequest
@@ -2760,7 +2760,7 @@ class ClientManagementApi:
     @validate_call
     def rotate_encryption_key_api_v1_clients_uid_rotate_encryption_key_post_without_preload_content(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         key_rotation_request: KeyRotationRequest,
         _request_timeout: Union[
             None,
@@ -2779,7 +2779,7 @@ class ClientManagementApi:
 
         Rotate the client encryption key for all secrets in double encryption mode.  **Scope**: Client level (JWT with client_uid that must match {uid})  **What this does**: 1. Decrypts all secrets (PDP, Chorus Pro) using the old key 2. Re-encrypts them using the new key 3. Saves to database  **Important notes**: - Both keys must be base64-encoded AES-256 keys (32 bytes each) - The old key becomes invalid immediately after rotation - Only secrets encrypted with `encryptionMode: \"double\"` are affected - If the client has no double-encrypted secrets, returns 404  **Security**: - The old key must be valid (decryption is verified) - If decryption fails, rotation is aborted (atomic operation) - Neither key is logged or stored by the server
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param key_rotation_request: (required)
         :type key_rotation_request: KeyRotationRequest
@@ -2914,7 +2914,7 @@ class ClientManagementApi:
     @validate_call
     def update_client_api_v1_clients_uid_patch(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         client_update_request: ClientUpdateRequest,
         _request_timeout: Union[
             None,
@@ -2933,7 +2933,7 @@ class ClientManagementApi:
 
         Update client information (partial update).  **Scope**: Client level (JWT with client_uid that must match {uid})  **Updatable fields**: - `name`: Client name - `description`: Description - `siret`: SIRET (14 digits)  Only provided fields are updated.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param client_update_request: (required)
         :type client_update_request: ClientUpdateRequest
@@ -2991,7 +2991,7 @@ class ClientManagementApi:
     @validate_call
     def update_client_api_v1_clients_uid_patch_with_http_info(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         client_update_request: ClientUpdateRequest,
         _request_timeout: Union[
             None,
@@ -3010,7 +3010,7 @@ class ClientManagementApi:
 
         Update client information (partial update).  **Scope**: Client level (JWT with client_uid that must match {uid})  **Updatable fields**: - `name`: Client name - `description`: Description - `siret`: SIRET (14 digits)  Only provided fields are updated.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param client_update_request: (required)
         :type client_update_request: ClientUpdateRequest
@@ -3068,7 +3068,7 @@ class ClientManagementApi:
     @validate_call
     def update_client_api_v1_clients_uid_patch_without_preload_content(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         client_update_request: ClientUpdateRequest,
         _request_timeout: Union[
             None,
@@ -3087,7 +3087,7 @@ class ClientManagementApi:
 
         Update client information (partial update).  **Scope**: Client level (JWT with client_uid that must match {uid})  **Updatable fields**: - `name`: Client name - `description`: Description - `siret`: SIRET (14 digits)  Only provided fields are updated.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param client_update_request: (required)
         :type client_update_request: ClientUpdateRequest
@@ -3222,7 +3222,7 @@ class ClientManagementApi:
     @validate_call
     def update_pdp_config_api_v1_clients_uid_pdp_config_put(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         pdp_config_update_request: PDPConfigUpdateRequest,
         x_encryption_key: Annotated[Optional[StrictStr], Field(description="Client encryption key for double encryption mode. Must be a base64-encoded AES-256 key (32 bytes). Required only when accessing resources encrypted with encryption_mode='double'.")] = None,
         _request_timeout: Union[
@@ -3242,7 +3242,7 @@ class ClientManagementApi:
 
         Configure or update the PDP (PA/PDP) configuration for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Required fields**: - `flowServiceUrl`: PDP Flow Service URL - `tokenUrl`: PDP OAuth token URL - `oauthClientId`: OAuth Client ID - `clientSecret`: OAuth Client Secret (sent but NEVER returned)  **Optional fields**: - `isActive`: Enable/disable the config (default: true) - `modeSandbox`: Sandbox mode (default: false) - `encryptionMode`: Encryption mode (default: \"fernet\")   - \"fernet\": Server-side encryption only   - \"double\": Client AES-256-GCM + Server Fernet (requires X-Encryption-Key header)  **Double Encryption Mode**: When `encryptionMode` is set to \"double\", you MUST also provide the `X-Encryption-Key` header containing a base64-encoded AES-256 key (32 bytes). This key is used to encrypt the `clientSecret` on the client side before the server encrypts it again with Fernet. The server cannot decrypt the secret without the client key.  **Security**: The `clientSecret` is stored encrypted on Django side and is never returned in API responses.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param pdp_config_update_request: (required)
         :type pdp_config_update_request: PDPConfigUpdateRequest
@@ -3303,7 +3303,7 @@ class ClientManagementApi:
     @validate_call
     def update_pdp_config_api_v1_clients_uid_pdp_config_put_with_http_info(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         pdp_config_update_request: PDPConfigUpdateRequest,
         x_encryption_key: Annotated[Optional[StrictStr], Field(description="Client encryption key for double encryption mode. Must be a base64-encoded AES-256 key (32 bytes). Required only when accessing resources encrypted with encryption_mode='double'.")] = None,
         _request_timeout: Union[
@@ -3323,7 +3323,7 @@ class ClientManagementApi:
 
         Configure or update the PDP (PA/PDP) configuration for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Required fields**: - `flowServiceUrl`: PDP Flow Service URL - `tokenUrl`: PDP OAuth token URL - `oauthClientId`: OAuth Client ID - `clientSecret`: OAuth Client Secret (sent but NEVER returned)  **Optional fields**: - `isActive`: Enable/disable the config (default: true) - `modeSandbox`: Sandbox mode (default: false) - `encryptionMode`: Encryption mode (default: \"fernet\")   - \"fernet\": Server-side encryption only   - \"double\": Client AES-256-GCM + Server Fernet (requires X-Encryption-Key header)  **Double Encryption Mode**: When `encryptionMode` is set to \"double\", you MUST also provide the `X-Encryption-Key` header containing a base64-encoded AES-256 key (32 bytes). This key is used to encrypt the `clientSecret` on the client side before the server encrypts it again with Fernet. The server cannot decrypt the secret without the client key.  **Security**: The `clientSecret` is stored encrypted on Django side and is never returned in API responses.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param pdp_config_update_request: (required)
         :type pdp_config_update_request: PDPConfigUpdateRequest
@@ -3384,7 +3384,7 @@ class ClientManagementApi:
     @validate_call
     def update_pdp_config_api_v1_clients_uid_pdp_config_put_without_preload_content(
         self,
-        uid: UUID,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
         pdp_config_update_request: PDPConfigUpdateRequest,
         x_encryption_key: Annotated[Optional[StrictStr], Field(description="Client encryption key for double encryption mode. Must be a base64-encoded AES-256 key (32 bytes). Required only when accessing resources encrypted with encryption_mode='double'.")] = None,
         _request_timeout: Union[
@@ -3404,7 +3404,7 @@ class ClientManagementApi:
 
         Configure or update the PDP (PA/PDP) configuration for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Required fields**: - `flowServiceUrl`: PDP Flow Service URL - `tokenUrl`: PDP OAuth token URL - `oauthClientId`: OAuth Client ID - `clientSecret`: OAuth Client Secret (sent but NEVER returned)  **Optional fields**: - `isActive`: Enable/disable the config (default: true) - `modeSandbox`: Sandbox mode (default: false) - `encryptionMode`: Encryption mode (default: \"fernet\")   - \"fernet\": Server-side encryption only   - \"double\": Client AES-256-GCM + Server Fernet (requires X-Encryption-Key header)  **Double Encryption Mode**: When `encryptionMode` is set to \"double\", you MUST also provide the `X-Encryption-Key` header containing a base64-encoded AES-256 key (32 bytes). This key is used to encrypt the `clientSecret` on the client side before the server encrypts it again with Fernet. The server cannot decrypt the secret without the client key.  **Security**: The `clientSecret` is stored encrypted on Django side and is never returned in API responses.
 
-        :param uid: (required)
+        :param uid: Client unique identifier (UUID) (required)
         :type uid: UUID
         :param pdp_config_update_request: (required)
         :type pdp_config_update_request: PDPConfigUpdateRequest

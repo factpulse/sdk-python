@@ -49,7 +49,7 @@ class FacturXInvoice(BaseModel):
     submission_mode: Optional[SubmissionMode] = None
     recipient: Recipient
     supplier: Supplier
-    invoicing_framework: InvoicingFramework
+    invoicing_framework: Optional[InvoicingFramework] = None
     references: InvoiceReferences
     totals: InvoiceTotals
     invoice_lines: Optional[List[InvoiceLine]] = None
@@ -183,6 +183,11 @@ class FacturXInvoice(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of payment_card
         if self.payment_card:
             _dict['payment_card'] = self.payment_card.to_dict()
+        # set to None if invoicing_framework (nullable) is None
+        # and model_fields_set contains the field
+        if self.invoicing_framework is None and "invoicing_framework" in self.model_fields_set:
+            _dict['invoicing_framework'] = None
+
         # set to None if comment (nullable) is None
         # and model_fields_set contains the field
         if self.comment is None and "comment" in self.model_fields_set:

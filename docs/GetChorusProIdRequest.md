@@ -6,7 +6,7 @@ Get Chorus Pro ID from SIRET.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**credentials** | [**FactureElectroniqueRestApiSchemasChorusProChorusProCredentials**](FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.md) |  | [optional] 
+**credentials** | [**ChorusProCredentials**](ChorusProCredentials.md) |  | [optional] 
 **siret** | **str** | Structure SIRET (14 digits) | 
 **identifier_type** | **str** | Identifier type (SIRET, SIREN, UE_HORS_FRANCE, etc.) | [optional] [default to 'SIRET']
 

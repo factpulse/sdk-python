@@ -58,7 +58,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.DownloadsApi(api_client)
-    download_id = 'download_id_example' # str | 
+    download_id = 'download_id_example' # str | Unique identifier of the temporary file to check
 
     try:
         # Check if a file exists
@@ -76,7 +76,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **download_id** | **str**|  | 
+ **download_id** | **str**| Unique identifier of the temporary file to check | 
 
 ### Return type
 
@@ -155,7 +155,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.DownloadsApi(api_client)
-    download_id = 'download_id_example' # str | 
+    download_id = 'download_id_example' # str | Unique identifier of the temporary file to download
     delete_after = False # bool | If true, delete the file after download (one-time download) (optional) (default to False)
 
     try:
@@ -174,7 +174,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **download_id** | **str**|  | 
+ **download_id** | **str**| Unique identifier of the temporary file to download | 
  **delete_after** | **bool**| If true, delete the file after download (one-time download) | [optional] [default to False]
 
 ### Return type

@@ -41,7 +41,7 @@ class DownloadsApi:
     @validate_call
     def check_file_api_v1_download_download_id_head(
         self,
-        download_id: StrictStr,
+        download_id: Annotated[StrictStr, Field(description="Unique identifier of the temporary file to check")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -59,7 +59,7 @@ class DownloadsApi:
 
         Check if a temporary file exists and get its metadata without downloading.  Useful for: - Verifying a download URL is still valid - Getting file size before downloading - Checking expiration time  **Security**: Requires authentication, only file owner can check.
 
-        :param download_id: (required)
+        :param download_id: Unique identifier of the temporary file to check (required)
         :type download_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -112,7 +112,7 @@ class DownloadsApi:
     @validate_call
     def check_file_api_v1_download_download_id_head_with_http_info(
         self,
-        download_id: StrictStr,
+        download_id: Annotated[StrictStr, Field(description="Unique identifier of the temporary file to check")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -130,7 +130,7 @@ class DownloadsApi:
 
         Check if a temporary file exists and get its metadata without downloading.  Useful for: - Verifying a download URL is still valid - Getting file size before downloading - Checking expiration time  **Security**: Requires authentication, only file owner can check.
 
-        :param download_id: (required)
+        :param download_id: Unique identifier of the temporary file to check (required)
         :type download_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -183,7 +183,7 @@ class DownloadsApi:
     @validate_call
     def check_file_api_v1_download_download_id_head_without_preload_content(
         self,
-        download_id: StrictStr,
+        download_id: Annotated[StrictStr, Field(description="Unique identifier of the temporary file to check")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -201,7 +201,7 @@ class DownloadsApi:
 
         Check if a temporary file exists and get its metadata without downloading.  Useful for: - Verifying a download URL is still valid - Getting file size before downloading - Checking expiration time  **Security**: Requires authentication, only file owner can check.
 
-        :param download_id: (required)
+        :param download_id: Unique identifier of the temporary file to check (required)
         :type download_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -315,7 +315,7 @@ class DownloadsApi:
     @validate_call
     def download_file_api_v1_download_download_id_get(
         self,
-        download_id: StrictStr,
+        download_id: Annotated[StrictStr, Field(description="Unique identifier of the temporary file to download")],
         delete_after: Annotated[Optional[StrictBool], Field(description="If true, delete the file after download (one-time download)")] = None,
         _request_timeout: Union[
             None,
@@ -334,7 +334,7 @@ class DownloadsApi:
 
         Download a file stored temporarily after asynchronous processing.  **Usage**: - This URL is provided in webhook notifications when using `webhook_mode: \"download_url\"` - Files are automatically deleted after 1 hour - Each file can only be downloaded until it expires  **Security**: - Requires a valid JWT token - Only the user who initiated the task can download the file
 
-        :param download_id: (required)
+        :param download_id: Unique identifier of the temporary file to download (required)
         :type download_id: str
         :param delete_after: If true, delete the file after download (one-time download)
         :type delete_after: bool
@@ -390,7 +390,7 @@ class DownloadsApi:
     @validate_call
     def download_file_api_v1_download_download_id_get_with_http_info(
         self,
-        download_id: StrictStr,
+        download_id: Annotated[StrictStr, Field(description="Unique identifier of the temporary file to download")],
         delete_after: Annotated[Optional[StrictBool], Field(description="If true, delete the file after download (one-time download)")] = None,
         _request_timeout: Union[
             None,
@@ -409,7 +409,7 @@ class DownloadsApi:
 
         Download a file stored temporarily after asynchronous processing.  **Usage**: - This URL is provided in webhook notifications when using `webhook_mode: \"download_url\"` - Files are automatically deleted after 1 hour - Each file can only be downloaded until it expires  **Security**: - Requires a valid JWT token - Only the user who initiated the task can download the file
 
-        :param download_id: (required)
+        :param download_id: Unique identifier of the temporary file to download (required)
         :type download_id: str
         :param delete_after: If true, delete the file after download (one-time download)
         :type delete_after: bool
@@ -465,7 +465,7 @@ class DownloadsApi:
     @validate_call
     def download_file_api_v1_download_download_id_get_without_preload_content(
         self,
-        download_id: StrictStr,
+        download_id: Annotated[StrictStr, Field(description="Unique identifier of the temporary file to download")],
         delete_after: Annotated[Optional[StrictBool], Field(description="If true, delete the file after download (one-time download)")] = None,
         _request_timeout: Union[
             None,
@@ -484,7 +484,7 @@ class DownloadsApi:
 
         Download a file stored temporarily after asynchronous processing.  **Usage**: - This URL is provided in webhook notifications when using `webhook_mode: \"download_url\"` - Files are automatically deleted after 1 hour - Each file can only be downloaded until it expires  **Security**: - Requires a valid JWT token - Only the user who initiated the task can download the file
 
-        :param download_id: (required)
+        :param download_id: Unique identifier of the temporary file to download (required)
         :type download_id: str
         :param delete_after: If true, delete the file after download (one-time download)
         :type delete_after: bool

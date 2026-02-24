@@ -36,15 +36,15 @@ class TestValidationErrorResponse(unittest.TestCase):
         model = ValidationErrorResponse()
         if include_optional:
             return ValidationErrorResponse(
-                var_field = '',
-                message = '',
-                rule = '',
-                severity = 'error'
+                detail = [
+                    ''
+                    ]
             )
         else:
             return ValidationErrorResponse(
-                var_field = '',
-                message = '',
+                detail = [
+                    ''
+                    ],
         )
         """
 

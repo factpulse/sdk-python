@@ -41,6 +41,13 @@ class TestFlux6InvoiceLifecycleCDARApi(unittest.TestCase):
         """
         pass
 
+    def test_get_lifecycle_api_v1_cdar_lifecycle_get(self) -> None:
+        """Test case for get_lifecycle_api_v1_cdar_lifecycle_get
+
+        [Simplified] Get lifecycle events for invoices
+        """
+        pass
+
     def test_get_reason_codes_api_v1_cdar_reason_codes_get(self) -> None:
         """Test case for get_reason_codes_api_v1_cdar_reason_codes_get
 

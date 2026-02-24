@@ -78,7 +78,7 @@ class InvoiceGenerationApi:
         :param auto_enrich: 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only)
         :type auto_enrich: bool
         :param source_pdf:
-        :type source_pdf: bytearray
+        :type source_pdf: bytes
         :param callback_url:
         :type callback_url: str
         :param webhook_mode: Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)
@@ -176,7 +176,7 @@ class InvoiceGenerationApi:
         :param auto_enrich: 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only)
         :type auto_enrich: bool
         :param source_pdf:
-        :type source_pdf: bytearray
+        :type source_pdf: bytes
         :param callback_url:
         :type callback_url: str
         :param webhook_mode: Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)
@@ -274,7 +274,7 @@ class InvoiceGenerationApi:
         :param auto_enrich: 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only)
         :type auto_enrich: bool
         :param source_pdf:
-        :type source_pdf: bytearray
+        :type source_pdf: bytes
         :param callback_url:
         :type callback_url: str
         :param webhook_mode: Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)

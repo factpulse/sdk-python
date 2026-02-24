@@ -176,9 +176,9 @@ docs/FacturXInvoice.md
 docs/FacturXPDFInfo.md
 docs/FacturXPDFXMLVerificationApi.md
 docs/FacturXValidationApi.md
-docs/FactureElectroniqueModelsInvoiceTypeCode.md
-docs/FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.md
-docs/FactureElectroniqueRestApiSchemasValidationValidationErrorResponse.md
+docs/FactureElectroniqueRestApiSchemasCdarValidationErrorResponse.md
+docs/FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode.md
+docs/FactureElectroniqueRestApiSchemasProcessingChorusProCredentials.md
 docs/FieldStatus.md
 docs/FileInfo.md
 docs/FilesInfo.md
@@ -212,6 +212,7 @@ docs/IncomingSupplier.md
 docs/InvoiceFormat.md
 docs/InvoiceGenerationApi.md
 docs/InvoiceInput.md
+docs/InvoiceLifecycle.md
 docs/InvoiceLine.md
 docs/InvoiceLineAllowanceAmount.md
 docs/InvoiceNote.md
@@ -227,6 +228,8 @@ docs/InvoicingFrameworkCode.md
 docs/IssuerRoleCode.md
 docs/KeyRotationRequest.md
 docs/KeyRotationResponse.md
+docs/LifecycleEvent.md
+docs/LifecycleResponse.md
 docs/LineNetAmount.md
 docs/LineSubType.md
 docs/LineTotalAmount.md
@@ -263,6 +266,7 @@ docs/ReasonCodeInfo.md
 docs/ReasonCodesResponse.md
 docs/Recipient.md
 docs/RecipientInput.md
+docs/ReferencesApi.md
 docs/RefuseeRequest.md
 docs/ReportIssuer.md
 docs/ReportPeriod.md
@@ -330,6 +334,8 @@ docs/UnitOfMeasure.md
 docs/VATAccountingCode.md
 docs/VATAmount.md
 docs/VATCategory.md
+docs/VATEXCodeInfo.md
+docs/VATEXCodesResponse.md
 docs/VATLine.md
 docs/VATPointDateCode.md
 docs/ValidateCDARRequest.md
@@ -372,6 +378,7 @@ factpulse/api/flux6_invoice_lifecycle_cdar_api.py
 factpulse/api/health_api.py
 factpulse/api/invoice_generation_api.py
 factpulse/api/parse_api.py
+factpulse/api/references_api.py
 factpulse/api/validation_api.py
 factpulse/api_client.py
 factpulse/api_response.py
@@ -539,9 +546,9 @@ factpulse/models/error_source.py
 factpulse/models/extraction_info.py
 factpulse/models/factur_x_invoice.py
 factpulse/models/factur_xpdf_info.py
-factpulse/models/facture_electronique_models_invoice_type_code.py
-factpulse/models/facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials.py
-factpulse/models/facture_electronique_rest_api_schemas_validation_validation_error_response.py
+factpulse/models/facture_electronique_rest_api_schemas_cdar_validation_error_response.py
+factpulse/models/facture_electronique_rest_api_schemas_ereporting_invoice_type_code.py
+factpulse/models/facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
 factpulse/models/field_status.py
 factpulse/models/file_info.py
 factpulse/models/files_info.py
@@ -571,6 +578,7 @@ factpulse/models/incoming_invoice.py
 factpulse/models/incoming_supplier.py
 factpulse/models/invoice_format.py
 factpulse/models/invoice_input.py
+factpulse/models/invoice_lifecycle.py
 factpulse/models/invoice_line.py
 factpulse/models/invoice_line_allowance_amount.py
 factpulse/models/invoice_note.py
@@ -586,6 +594,8 @@ factpulse/models/invoicing_framework_code.py
 factpulse/models/issuer_role_code.py
 factpulse/models/key_rotation_request.py
 factpulse/models/key_rotation_response.py
+factpulse/models/lifecycle_event.py
+factpulse/models/lifecycle_response.py
 factpulse/models/line_net_amount.py
 factpulse/models/line_sub_type.py
 factpulse/models/line_total_amount.py
@@ -703,6 +713,8 @@ factpulse/models/vat_category.py
 factpulse/models/vat_line.py
 factpulse/models/vat_point_date_code.py
 factpulse/models/vat_rate.py
+factpulse/models/vatex_code_info.py
+factpulse/models/vatex_codes_response.py
 factpulse/models/verification_success_response.py
 factpulse/models/verification_success_task_result.py
 factpulse/models/verification_typed_task_status.py
@@ -892,9 +904,9 @@ test/test_factur_x_invoice.py
 test/test_factur_x_validation_api.py
 test/test_factur_xpdf_info.py
 test/test_factur_xpdfxml_verification_api.py
-test/test_facture_electronique_models_invoice_type_code.py
-test/test_facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials.py
-test/test_facture_electronique_rest_api_schemas_validation_validation_error_response.py
+test/test_facture_electronique_rest_api_schemas_cdar_validation_error_response.py
+test/test_facture_electronique_rest_api_schemas_ereporting_invoice_type_code.py
+test/test_facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
 test/test_field_status.py
 test/test_file_info.py
 test/test_files_info.py
@@ -928,6 +940,7 @@ test/test_incoming_supplier.py
 test/test_invoice_format.py
 test/test_invoice_generation_api.py
 test/test_invoice_input.py
+test/test_invoice_lifecycle.py
 test/test_invoice_line.py
 test/test_invoice_line_allowance_amount.py
 test/test_invoice_note.py
@@ -943,6 +956,8 @@ test/test_invoicing_framework_code.py
 test/test_issuer_role_code.py
 test/test_key_rotation_request.py
 test/test_key_rotation_response.py
+test/test_lifecycle_event.py
+test/test_lifecycle_response.py
 test/test_line_net_amount.py
 test/test_line_sub_type.py
 test/test_line_total_amount.py
@@ -979,6 +994,7 @@ test/test_reason_code_info.py
 test/test_reason_codes_response.py
 test/test_recipient.py
 test/test_recipient_input.py
+test/test_references_api.py
 test/test_refusee_request.py
 test/test_report_issuer.py
 test/test_report_period.py
@@ -1062,6 +1078,8 @@ test/test_vat_category.py
 test/test_vat_line.py
 test/test_vat_point_date_code.py
 test/test_vat_rate.py
+test/test_vatex_code_info.py
+test/test_vatex_codes_response.py
 test/test_verification_success_response.py
 test/test_verification_success_task_result.py
 test/test_verification_typed_task_status.py

@@ -912,7 +912,7 @@ class AFNORPDPPAFlowServiceApi:
         :param flow_info: (required)
         :type flow_info: AFNORFlowInfo
         :param file: Flow file (PDF/A-3 with embedded XML or XML) (required)
-        :type file: bytearray
+        :type file: bytes
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -993,7 +993,7 @@ class AFNORPDPPAFlowServiceApi:
         :param flow_info: (required)
         :type flow_info: AFNORFlowInfo
         :param file: Flow file (PDF/A-3 with embedded XML or XML) (required)
-        :type file: bytearray
+        :type file: bytes
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1074,7 +1074,7 @@ class AFNORPDPPAFlowServiceApi:
         :param flow_info: (required)
         :type flow_info: AFNORFlowInfo
         :param file: Flow file (PDF/A-3 with embedded XML or XML) (required)
-        :type file: bytearray
+        :type file: bytes
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of

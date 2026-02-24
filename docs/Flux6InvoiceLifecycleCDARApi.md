@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**generate_cdar_api_v1_cdar_generate_post**](Flux6InvoiceLifecycleCDARApi.md#generate_cdar_api_v1_cdar_generate_post) | **POST** /api/v1/cdar/generate | Generate a CDAR message
 [**get_action_codes_api_v1_cdar_action_codes_get**](Flux6InvoiceLifecycleCDARApi.md#get_action_codes_api_v1_cdar_action_codes_get) | **GET** /api/v1/cdar/action-codes | List of CDAR action codes
+[**get_lifecycle_api_v1_cdar_lifecycle_get**](Flux6InvoiceLifecycleCDARApi.md#get_lifecycle_api_v1_cdar_lifecycle_get) | **GET** /api/v1/cdar/lifecycle | [Simplified] Get lifecycle events for invoices
 [**get_reason_codes_api_v1_cdar_reason_codes_get**](Flux6InvoiceLifecycleCDARApi.md#get_reason_codes_api_v1_cdar_reason_codes_get) | **GET** /api/v1/cdar/reason-codes | List of CDAR reason codes
 [**get_status_codes_api_v1_cdar_status_codes_get**](Flux6InvoiceLifecycleCDARApi.md#get_status_codes_api_v1_cdar_status_codes_get) | **GET** /api/v1/cdar/status-codes | List of CDAR status codes
 [**submit_cdar_api_v1_cdar_submit_post**](Flux6InvoiceLifecycleCDARApi.md#submit_cdar_api_v1_cdar_submit_post) | **POST** /api/v1/cdar/submit | Generate and submit a CDAR message
@@ -181,6 +182,109 @@ No authorization required
 **400** | Invalid request |  -  |
 **422** | Validation error |  -  |
 **500** | Server error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_lifecycle_api_v1_cdar_lifecycle_get**
+> LifecycleResponse get_lifecycle_api_v1_cdar_lifecycle_get(days=days, invoice_id=invoice_id, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret)
+
+[Simplified] Get lifecycle events for invoices
+
+Returns lifecycle events (CDAR) grouped by invoice reference.
+
+**How it works (AFNOR XP Z12-013 compliant):**
+1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range
+2. Downloads and parses each CDAR XML to extract the invoice reference
+3. Groups events by invoice, sorted chronologically
+
+**Parameters:**
+- `days`: Number of days to look back (default: 7)
+- `invoiceId`: Optional filter on a specific invoice reference
+
+**Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
+
+### Example
+
+* Bearer Authentication (HTTPBearer):
+
+```python
+import factpulse
+from factpulse.models.lifecycle_response import LifecycleResponse
+from factpulse.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://factpulse.fr
+# See configuration.py for a list of all supported configuration parameters.
+configuration = factpulse.Configuration(
+    host = "https://factpulse.fr"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with factpulse.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = factpulse.Flux6InvoiceLifecycleCDARApi(api_client)
+    days = 7 # int | Number of days to look back (optional) (default to 7)
+    invoice_id = 'invoice_id_example' # str | Filter by invoice reference (optional)
+    pdp_flow_service_url = 'pdp_flow_service_url_example' # str | PDP Flow Service URL (optional)
+    pdp_token_url = 'pdp_token_url_example' # str | PDP OAuth token URL (optional)
+    pdp_client_id = 'pdp_client_id_example' # str | PDP Client ID (optional)
+    pdp_client_secret = 'pdp_client_secret_example' # str | PDP Client Secret (optional)
+
+    try:
+        # [Simplified] Get lifecycle events for invoices
+        api_response = api_instance.get_lifecycle_api_v1_cdar_lifecycle_get(days=days, invoice_id=invoice_id, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret)
+        print("The response of Flux6InvoiceLifecycleCDARApi->get_lifecycle_api_v1_cdar_lifecycle_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling Flux6InvoiceLifecycleCDARApi->get_lifecycle_api_v1_cdar_lifecycle_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **days** | **int**| Number of days to look back | [optional] [default to 7]
+ **invoice_id** | **str**| Filter by invoice reference | [optional] 
+ **pdp_flow_service_url** | **str**| PDP Flow Service URL | [optional] 
+ **pdp_token_url** | **str**| PDP OAuth token URL | [optional] 
+ **pdp_client_id** | **str**| PDP Client ID | [optional] 
+ **pdp_client_secret** | **str**| PDP Client Secret | [optional] 
+
+### Return type
+
+[**LifecycleResponse**](LifecycleResponse.md)
+
+### Authorization
+
+[HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**400** | Invalid request |  -  |
+**422** | Validation error |  -  |
+**500** | Server error |  -  |
+**401** | Authentication required - Invalid or missing JWT token |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -859,7 +963,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.Flux6InvoiceLifecycleCDARApi(api_client)
-    xml_file = None # bytearray | CDAR XML file to validate
+    xml_file = None # bytes | CDAR XML file to validate
 
     try:
         # Validate CDAR XML against XSD and Schematron BR-FR-CDV
@@ -877,7 +981,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xml_file** | **bytearray**| CDAR XML file to validate | 
+ **xml_file** | **bytes**| CDAR XML file to validate | 
 
 ### Return type
 

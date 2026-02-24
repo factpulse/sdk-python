@@ -43,7 +43,6 @@ class TestInvoicingFramework(unittest.TestCase):
             )
         else:
             return InvoicingFramework(
-                invoicing_framework_code = 'A1_FACTURE_FOURNISSEUR',
         )
         """
 

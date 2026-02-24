@@ -15,10 +15,10 @@
 
 import unittest
 
-from factpulse.models.facture_electronique_rest_api_schemas_validation_validation_error_response import FactureElectroniqueRestApiSchemasValidationValidationErrorResponse
+from factpulse.models.vatex_codes_response import VATEXCodesResponse
 
-class TestFactureElectroniqueRestApiSchemasValidationValidationErrorResponse(unittest.TestCase):
-    """FactureElectroniqueRestApiSchemasValidationValidationErrorResponse unit test stubs"""
+class TestVATEXCodesResponse(unittest.TestCase):
+    """VATEXCodesResponse unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,30 +26,41 @@ class TestFactureElectroniqueRestApiSchemasValidationValidationErrorResponse(uni
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> FactureElectroniqueRestApiSchemasValidationValidationErrorResponse:
-        """Test FactureElectroniqueRestApiSchemasValidationValidationErrorResponse
+    def make_instance(self, include_optional) -> VATEXCodesResponse:
+        """Test VATEXCodesResponse
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `FactureElectroniqueRestApiSchemasValidationValidationErrorResponse`
+        # uncomment below to create an instance of `VATEXCodesResponse`
         """
-        model = FactureElectroniqueRestApiSchemasValidationValidationErrorResponse()
+        model = VATEXCodesResponse()
         if include_optional:
-            return FactureElectroniqueRestApiSchemasValidationValidationErrorResponse(
-                detail = [
-                    ''
-                    ]
+            return VATEXCodesResponse(
+                codes = [
+                    factpulse.models.vatex_code_info.VATEXCodeInfo(
+                        code = '', 
+                        name = '', 
+                        description = '', 
+                        category = '', )
+                    ],
+                count = 56,
+                source = 'https://docs.peppol.eu/poacc/billing/3.0/codelist/vatex/'
             )
         else:
-            return FactureElectroniqueRestApiSchemasValidationValidationErrorResponse(
-                detail = [
-                    ''
+            return VATEXCodesResponse(
+                codes = [
+                    factpulse.models.vatex_code_info.VATEXCodeInfo(
+                        code = '', 
+                        name = '', 
+                        description = '', 
+                        category = '', )
                     ],
+                count = 56,
         )
         """
 
-    def testFactureElectroniqueRestApiSchemasValidationValidationErrorResponse(self):
-        """Test FactureElectroniqueRestApiSchemasValidationValidationErrorResponse"""
+    def testVATEXCodesResponse(self):
+        """Test VATEXCodesResponse"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

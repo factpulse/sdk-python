@@ -175,9 +175,9 @@ from factpulse.models.error_source import ErrorSource
 from factpulse.models.extraction_info import ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo
-from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode
-from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
-from factpulse.models.facture_electronique_rest_api_schemas_validation_validation_error_response import FactureElectroniqueRestApiSchemasValidationValidationErrorResponse
+from factpulse.models.facture_electronique_rest_api_schemas_cdar_validation_error_response import FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
+from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
 from factpulse.models.field_status import FieldStatus
 from factpulse.models.file_info import FileInfo
 from factpulse.models.files_info import FilesInfo
@@ -207,6 +207,7 @@ from factpulse.models.incoming_invoice import IncomingInvoice
 from factpulse.models.incoming_supplier import IncomingSupplier
 from factpulse.models.invoice_format import InvoiceFormat
 from factpulse.models.invoice_input import InvoiceInput
+from factpulse.models.invoice_lifecycle import InvoiceLifecycle
 from factpulse.models.invoice_line import InvoiceLine
 from factpulse.models.invoice_line_allowance_amount import InvoiceLineAllowanceAmount
 from factpulse.models.invoice_note import InvoiceNote
@@ -222,6 +223,8 @@ from factpulse.models.invoicing_framework_code import InvoicingFrameworkCode
 from factpulse.models.issuer_role_code import IssuerRoleCode
 from factpulse.models.key_rotation_request import KeyRotationRequest
 from factpulse.models.key_rotation_response import KeyRotationResponse
+from factpulse.models.lifecycle_event import LifecycleEvent
+from factpulse.models.lifecycle_response import LifecycleResponse
 from factpulse.models.line_net_amount import LineNetAmount
 from factpulse.models.line_sub_type import LineSubType
 from factpulse.models.line_total_amount import LineTotalAmount
@@ -324,6 +327,8 @@ from factpulse.models.unit_of_measure import UnitOfMeasure
 from factpulse.models.vat_accounting_code import VATAccountingCode
 from factpulse.models.vat_amount import VATAmount
 from factpulse.models.vat_category import VATCategory
+from factpulse.models.vatex_code_info import VATEXCodeInfo
+from factpulse.models.vatex_codes_response import VATEXCodesResponse
 from factpulse.models.vat_line import VATLine
 from factpulse.models.vat_point_date_code import VATPointDateCode
 from factpulse.models.validate_cdar_request import ValidateCDARRequest

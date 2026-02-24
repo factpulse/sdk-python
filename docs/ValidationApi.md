@@ -163,7 +163,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ValidationApi(api_client)
-    xml_file = None # bytearray | CII (Factur-X) or UBL XML file to validate (.xml format). Format is auto-detected.
+    xml_file = None # bytes | CII (Factur-X) or UBL XML file to validate (.xml format). Format is auto-detected.
     profile = factpulse.APIProfile() # APIProfile | Validation profile (MINIMUM, BASIC, EN16931, EXTENDED). Used for CII only; ignored for UBL (always EN16931). (optional)
     skip_br_fr = True # bool |  (optional)
 
@@ -183,7 +183,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xml_file** | **bytearray**| CII (Factur-X) or UBL XML file to validate (.xml format). Format is auto-detected. | 
+ **xml_file** | **bytes**| CII (Factur-X) or UBL XML file to validate (.xml format). Format is auto-detected. | 
  **profile** | [**APIProfile**](APIProfile.md)| Validation profile (MINIMUM, BASIC, EN16931, EXTENDED). Used for CII only; ignored for UBL (always EN16931). | [optional] 
  **skip_br_fr** | **bool**|  | [optional] 
 

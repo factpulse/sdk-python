@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class UnitOfMeasure(str, Enum):
     """
-    Enumeration of invoicing units of measure.
+    Units of measure for invoice lines (BT-130).  Accepts both legacy French labels and UN/ECE Recommendation 20 codes. UN/ECE codes are preferred for new integrations.  | UN/ECE code | Legacy alias | Description | |-------------|--------------|-------------| | C62 | PIECE | Unit / piece | | H87 | - | Piece (ISO synonym) | | HUR | HEURE | Hour | | DAY | JOUR | Day | | MON | - | Month | | MIN | - | Minute | | KGM | KILOGRAMME | Kilogram | | LTR | LITRE | Litre | | MTR | - | Metre | | MTK | - | Square metre | | TNE | - | Metric ton | | KWH | - | Kilowatt-hour | | SET | - | Set | | LS | FORFAIT | Lump sum |
     """
 
     """
@@ -33,6 +33,20 @@ class UnitOfMeasure(str, Enum):
     KILOGRAMME = 'KILOGRAMME'
     LITRE = 'LITRE'
     FORFAIT = 'FORFAIT'
+    C62 = 'C62'
+    H87 = 'H87'
+    HUR = 'HUR'
+    DAY = 'DAY'
+    MON = 'MON'
+    MIN = 'MIN'
+    KGM = 'KGM'
+    LTR = 'LTR'
+    MTR = 'MTR'
+    MTK = 'MTK'
+    TNE = 'TNE'
+    KWH = 'KWH'
+    SET = 'SET'
+    LS = 'LS'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

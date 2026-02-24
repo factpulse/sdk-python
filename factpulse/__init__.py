@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.1.0"
+__version__ = "4.1.1"
 
 # Define package exports
 __all__ = [
@@ -35,6 +35,7 @@ __all__ = [
     "HealthApi",
     "InvoiceGenerationApi",
     "ParseApi",
+    "ReferencesApi",
     "ValidationApi",
     "ApiResponse",
     "ApiClient",
@@ -206,9 +207,9 @@ __all__ = [
     "ExtractionInfo",
     "FacturXInvoice",
     "FacturXPDFInfo",
-    "FactureElectroniqueModelsInvoiceTypeCode",
-    "FactureElectroniqueRestApiSchemasChorusProChorusProCredentials",
-    "FactureElectroniqueRestApiSchemasValidationValidationErrorResponse",
+    "FactureElectroniqueRestApiSchemasCdarValidationErrorResponse",
+    "FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode",
+    "FactureElectroniqueRestApiSchemasProcessingChorusProCredentials",
     "FieldStatus",
     "FileInfo",
     "FilesInfo",
@@ -238,6 +239,7 @@ __all__ = [
     "IncomingSupplier",
     "InvoiceFormat",
     "InvoiceInput",
+    "InvoiceLifecycle",
     "InvoiceLine",
     "InvoiceLineAllowanceAmount",
     "InvoiceNote",
@@ -253,6 +255,8 @@ __all__ = [
     "IssuerRoleCode",
     "KeyRotationRequest",
     "KeyRotationResponse",
+    "LifecycleEvent",
+    "LifecycleResponse",
     "LineNetAmount",
     "LineSubType",
     "LineTotalAmount",
@@ -355,6 +359,8 @@ __all__ = [
     "VATAccountingCode",
     "VATAmount",
     "VATCategory",
+    "VATEXCodeInfo",
+    "VATEXCodesResponse",
     "VATLine",
     "VATPointDateCode",
     "ValidateCDARRequest",
@@ -397,6 +403,7 @@ from factpulse.api.flux6_invoice_lifecycle_cdar_api import Flux6InvoiceLifecycle
 from factpulse.api.health_api import HealthApi as HealthApi
 from factpulse.api.invoice_generation_api import InvoiceGenerationApi as InvoiceGenerationApi
 from factpulse.api.parse_api import ParseApi as ParseApi
+from factpulse.api.references_api import ReferencesApi as ReferencesApi
 from factpulse.api.validation_api import ValidationApi as ValidationApi
 
 # import ApiClient
@@ -572,9 +579,9 @@ from factpulse.models.error_source import ErrorSource as ErrorSource
 from factpulse.models.extraction_info import ExtractionInfo as ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
-from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode as FactureElectroniqueModelsInvoiceTypeCode
-from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials as FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
-from factpulse.models.facture_electronique_rest_api_schemas_validation_validation_error_response import FactureElectroniqueRestApiSchemasValidationValidationErrorResponse as FactureElectroniqueRestApiSchemasValidationValidationErrorResponse
+from factpulse.models.facture_electronique_rest_api_schemas_cdar_validation_error_response import FactureElectroniqueRestApiSchemasCdarValidationErrorResponse as FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode as FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
+from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials as FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
 from factpulse.models.field_status import FieldStatus as FieldStatus
 from factpulse.models.file_info import FileInfo as FileInfo
 from factpulse.models.files_info import FilesInfo as FilesInfo
@@ -604,6 +611,7 @@ from factpulse.models.incoming_invoice import IncomingInvoice as IncomingInvoice
 from factpulse.models.incoming_supplier import IncomingSupplier as IncomingSupplier
 from factpulse.models.invoice_format import InvoiceFormat as InvoiceFormat
 from factpulse.models.invoice_input import InvoiceInput as InvoiceInput
+from factpulse.models.invoice_lifecycle import InvoiceLifecycle as InvoiceLifecycle
 from factpulse.models.invoice_line import InvoiceLine as InvoiceLine
 from factpulse.models.invoice_line_allowance_amount import InvoiceLineAllowanceAmount as InvoiceLineAllowanceAmount
 from factpulse.models.invoice_note import InvoiceNote as InvoiceNote
@@ -619,6 +627,8 @@ from factpulse.models.invoicing_framework_code import InvoicingFrameworkCode as 
 from factpulse.models.issuer_role_code import IssuerRoleCode as IssuerRoleCode
 from factpulse.models.key_rotation_request import KeyRotationRequest as KeyRotationRequest
 from factpulse.models.key_rotation_response import KeyRotationResponse as KeyRotationResponse
+from factpulse.models.lifecycle_event import LifecycleEvent as LifecycleEvent
+from factpulse.models.lifecycle_response import LifecycleResponse as LifecycleResponse
 from factpulse.models.line_net_amount import LineNetAmount as LineNetAmount
 from factpulse.models.line_sub_type import LineSubType as LineSubType
 from factpulse.models.line_total_amount import LineTotalAmount as LineTotalAmount
@@ -721,6 +731,8 @@ from factpulse.models.unit_of_measure import UnitOfMeasure as UnitOfMeasure
 from factpulse.models.vat_accounting_code import VATAccountingCode as VATAccountingCode
 from factpulse.models.vat_amount import VATAmount as VATAmount
 from factpulse.models.vat_category import VATCategory as VATCategory
+from factpulse.models.vatex_code_info import VATEXCodeInfo as VATEXCodeInfo
+from factpulse.models.vatex_codes_response import VATEXCodesResponse as VATEXCodesResponse
 from factpulse.models.vat_line import VATLine as VATLine
 from factpulse.models.vat_point_date_code import VATPointDateCode as VATPointDateCode
 from factpulse.models.validate_cdar_request import ValidateCDARRequest as ValidateCDARRequest

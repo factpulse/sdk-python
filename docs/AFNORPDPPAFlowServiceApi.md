@@ -260,7 +260,7 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.AFNORPDPPAFlowServiceApi(api_client)
     flow_info = factpulse.AFNORFlowInfo() # AFNORFlowInfo | 
-    file = None # bytearray | Flow file (PDF/A-3 with embedded XML or XML)
+    file = None # bytes | Flow file (PDF/A-3 with embedded XML or XML)
 
     try:
         # Submit an invoicing flow
@@ -279,7 +279,7 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **flow_info** | [**AFNORFlowInfo**](AFNORFlowInfo.md)|  | 
- **file** | **bytearray**| Flow file (PDF/A-3 with embedded XML or XML) | 
+ **file** | **bytes**| Flow file (PDF/A-3 with embedded XML or XML) | 
 
 ### Return type
 

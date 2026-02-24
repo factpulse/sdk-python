@@ -66,7 +66,7 @@ class FacturXConversionApi:
         Launch an asynchronous conversion via Celery.  ## Workflow  1. **Upload**: Document is sent as multipart/form-data 2. **Celery Task**: Task is queued for processing 3. **Callback**: Webhook notification on completion  ## Possible responses  - **202**: Task accepted, processing - **400**: Invalid file
 
         :param file: Document to convert (PDF, DOCX, XLSX, JPG, PNG) (required)
-        :type file: bytearray
+        :type file: bytes
         :param output: Output format: pdf, xml, both
         :type output: str
         :param callback_url:
@@ -149,7 +149,7 @@ class FacturXConversionApi:
         Launch an asynchronous conversion via Celery.  ## Workflow  1. **Upload**: Document is sent as multipart/form-data 2. **Celery Task**: Task is queued for processing 3. **Callback**: Webhook notification on completion  ## Possible responses  - **202**: Task accepted, processing - **400**: Invalid file
 
         :param file: Document to convert (PDF, DOCX, XLSX, JPG, PNG) (required)
-        :type file: bytearray
+        :type file: bytes
         :param output: Output format: pdf, xml, both
         :type output: str
         :param callback_url:
@@ -232,7 +232,7 @@ class FacturXConversionApi:
         Launch an asynchronous conversion via Celery.  ## Workflow  1. **Upload**: Document is sent as multipart/form-data 2. **Celery Task**: Task is queued for processing 3. **Callback**: Webhook notification on completion  ## Possible responses  - **202**: Task accepted, processing - **400**: Invalid file
 
         :param file: Document to convert (PDF, DOCX, XLSX, JPG, PNG) (required)
-        :type file: bytearray
+        :type file: bytes
         :param output: Output format: pdf, xml, both
         :type output: str
         :param callback_url:

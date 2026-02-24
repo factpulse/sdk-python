@@ -31,7 +31,7 @@ class Supplier(BaseModel):
     Information about the supplier / seller (BG-4).
     """ # noqa: E501
     electronic_address: Optional[ElectronicAddress] = None
-    supplier_id: StrictInt
+    supplier_id: Optional[StrictInt] = Field(default=0, description="Chorus Pro supplier structure ID (idFournisseur). Only required for B2G.")
     private_id: Optional[StrictStr] = None
     supplier_bank_account_code: Optional[StrictInt] = None
     supplier_service_id: Optional[StrictInt] = None
@@ -203,7 +203,7 @@ class Supplier(BaseModel):
 
         _obj = cls.model_validate({
             "electronic_address": ElectronicAddress.from_dict(obj["electronic_address"]) if obj.get("electronic_address") is not None else None,
-            "supplier_id": obj.get("supplier_id"),
+            "supplier_id": obj.get("supplier_id") if obj.get("supplier_id") is not None else 0,
             "private_id": obj.get("private_id"),
             "supplier_bank_account_code": obj.get("supplier_bank_account_code"),
             "supplier_service_id": obj.get("supplier_service_id"),

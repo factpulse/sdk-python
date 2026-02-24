@@ -190,7 +190,7 @@ with factpulse.ApiClient(configuration) as api_client:
     profile = factpulse.APIProfile() # APIProfile | Factur-X/CII profile: MINIMUM, BASIC, EN16931 or EXTENDED. Ignored when output_format='ubl' (always EN16931). (optional)
     output_format = factpulse.OutputFormat() # OutputFormat | Output format: 'xml' or 'cii' (CII/Factur-X XML), 'ubl' (UBL 2.1 XML), 'pdf' (Factur-X PDF/A-3). (optional)
     auto_enrich = True # bool | 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only) (optional) (default to True)
-    source_pdf = None # bytearray |  (optional)
+    source_pdf = None # bytes |  (optional)
     callback_url = 'callback_url_example' # str |  (optional)
     webhook_mode = 'inline' # str | Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL) (optional) (default to 'inline')
     skip_br_fr = True # bool |  (optional)
@@ -215,7 +215,7 @@ Name | Type | Description  | Notes
  **profile** | [**APIProfile**](APIProfile.md)| Factur-X/CII profile: MINIMUM, BASIC, EN16931 or EXTENDED. Ignored when output_format&#x3D;&#39;ubl&#39; (always EN16931). | [optional] 
  **output_format** | [**OutputFormat**](OutputFormat.md)| Output format: &#39;xml&#39; or &#39;cii&#39; (CII/Factur-X XML), &#39;ubl&#39; (UBL 2.1 XML), &#39;pdf&#39; (Factur-X PDF/A-3). | [optional] 
  **auto_enrich** | **bool**| 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only) | [optional] [default to True]
- **source_pdf** | **bytearray**|  | [optional] 
+ **source_pdf** | **bytes**|  | [optional] 
  **callback_url** | **str**|  | [optional] 
  **webhook_mode** | **str**| Webhook content delivery: &#39;inline&#39; (base64 in payload) or &#39;download_url&#39; (temporary URL, 1h TTL) | [optional] [default to &#39;inline&#39;]
  **skip_br_fr** | **bool**|  | [optional] 

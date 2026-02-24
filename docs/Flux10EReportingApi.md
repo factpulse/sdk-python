@@ -667,7 +667,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.Flux10EReportingApi(api_client)
-    xml_file = None # bytearray | E-reporting XML file
+    xml_file = None # bytes | E-reporting XML file
     tracking_id = 'tracking_id_example' # str |  (optional)
     skip_validation = False # bool | Skip XSD validation (optional) (default to False)
     pdp_flow_service_url = 'pdp_flow_service_url_example' # str |  (optional)
@@ -691,7 +691,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xml_file** | **bytearray**| E-reporting XML file | 
+ **xml_file** | **bytes**| E-reporting XML file | 
  **tracking_id** | **str**|  | [optional] 
  **skip_validation** | **bool**| Skip XSD validation | [optional] [default to False]
  **pdp_flow_service_url** | **str**|  | [optional] 
@@ -968,7 +968,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.Flux10EReportingApi(api_client)
-    xml_file = None # bytearray | E-reporting XML file to validate
+    xml_file = None # bytes | E-reporting XML file to validate
     validate_coherence = True # bool | Validate data coherence (REJ_COH) (optional) (default to True)
     validate_period = True # bool | Validate period coherence (REJ_PER) (optional) (default to True)
 
@@ -988,7 +988,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xml_file** | **bytearray**| E-reporting XML file to validate | 
+ **xml_file** | **bytes**| E-reporting XML file to validate | 
  **validate_coherence** | **bool**| Validate data coherence (REJ_COH) | [optional] [default to True]
  **validate_period** | **bool**| Validate period coherence (REJ_PER) | [optional] [default to True]
 

@@ -17,5 +17,6 @@ from factpulse.api.flux6_invoice_lifecycle_cdar_api import Flux6InvoiceLifecycle
 from factpulse.api.health_api import HealthApi
 from factpulse.api.invoice_generation_api import InvoiceGenerationApi
 from factpulse.api.parse_api import ParseApi
+from factpulse.api.references_api import ReferencesApi
 from factpulse.api.validation_api import ValidationApi
 

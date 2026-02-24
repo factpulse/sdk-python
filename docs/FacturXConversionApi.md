@@ -66,7 +66,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.FacturXConversionApi(api_client)
-    file = None # bytearray | Document to convert (PDF, DOCX, XLSX, JPG, PNG)
+    file = None # bytes | Document to convert (PDF, DOCX, XLSX, JPG, PNG)
     output = 'pdf' # str | Output format: pdf, xml, both (optional) (default to 'pdf')
     callback_url = 'callback_url_example' # str |  (optional)
     webhook_mode = 'inline' # str | Content delivery mode: 'inline' (base64 in webhook) or 'download_url' (temporary URL, 1h TTL) (optional) (default to 'inline')
@@ -87,7 +87,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **file** | **bytearray**| Document to convert (PDF, DOCX, XLSX, JPG, PNG) | 
+ **file** | **bytes**| Document to convert (PDF, DOCX, XLSX, JPG, PNG) | 
  **output** | **str**| Output format: pdf, xml, both | [optional] [default to &#39;pdf&#39;]
  **callback_url** | **str**|  | [optional] 
  **webhook_mode** | **str**| Content delivery mode: &#39;inline&#39; (base64 in webhook) or &#39;download_url&#39; (temporary URL, 1h TTL) | [optional] [default to &#39;inline&#39;]

@@ -301,11 +301,6 @@ class TestFacturXInvoice(unittest.TestCase):
                             identifier = '', 
                             scheme_id = null, )
                         ], ),
-                invoicing_framework = factpulse.models.invoicing_framework.InvoicingFramework(
-                    invoicing_framework_code = null, 
-                    operation_nature = null, 
-                    approver_service_code = '', 
-                    approver_structure_code = '', ),
                 references = factpulse.models.invoice_references.InvoiceReferences(
                     business_process_id = '', 
                     invoice_currency = 'EUR', 

@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.invoicing_framework_code import InvoicingFrameworkCode
 from factpulse.models.operation_nature import OperationNature
@@ -29,7 +29,7 @@ class InvoicingFramework(BaseModel):
     """
     Defines the invoicing framework.  - invoicing_framework_code: Chorus Pro code (A1, A2, A9, A12) - used for B2G - operation_nature: Operation nature (B1, S1, M1, etc.) - priority for Factur-X  If operation_nature is provided, it will be used directly in Factur-X XML (BT-23). Otherwise, the code will be derived from invoicing_framework_code via automatic mapping.  Example:     >>> framework = InvoicingFramework(     ...     invoicing_framework_code=InvoicingFrameworkCode.A1_SUPPLIER_INVOICE,     ...     operation_nature=OperationNature.GOODS  # Forces B1 instead of S1     ... )
     """ # noqa: E501
-    invoicing_framework_code: InvoicingFrameworkCode = Field(description="Chorus Pro framework code (A1, A2, A9, A12)")
+    invoicing_framework_code: Optional[InvoicingFrameworkCode] = None
     operation_nature: Optional[OperationNature] = None
     approver_service_code: Optional[StrictStr] = None
     approver_structure_code: Optional[StrictStr] = None
@@ -74,6 +74,11 @@ class InvoicingFramework(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if invoicing_framework_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.invoicing_framework_code is None and "invoicing_framework_code" in self.model_fields_set:
+            _dict['invoicing_framework_code'] = None
+
         # set to None if operation_nature (nullable) is None
         # and model_fields_set contains the field
         if self.operation_nature is None and "operation_nature" in self.model_fields_set:

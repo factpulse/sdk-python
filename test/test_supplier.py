@@ -74,7 +74,6 @@ class TestSupplier(unittest.TestCase):
             )
         else:
             return Supplier(
-                supplier_id = 56,
         )
         """
 

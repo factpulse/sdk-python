@@ -2033,7 +2033,7 @@ class Flux10EReportingApi:
         Submit a pre-generated e-reporting XML file directly to a PA/PDP.  This endpoint is designed for clients who generate their own PPF-compliant XML and only need FactPulse for the PDP submission.  **Process:** 1. Validates the XML against PPF XSD schemas 2. Determines the appropriate AFNOR FlowType 3. Submits to the configured PDP/PA 4. Returns the flowId for tracking  **Authentication:** Same strategies as /submit endpoint (JWT or zero-storage credentials).
 
         :param xml_file: E-reporting XML file (required)
-        :type xml_file: bytearray
+        :type xml_file: bytes
         :param tracking_id:
         :type tracking_id: str
         :param skip_validation: Skip XSD validation
@@ -2128,7 +2128,7 @@ class Flux10EReportingApi:
         Submit a pre-generated e-reporting XML file directly to a PA/PDP.  This endpoint is designed for clients who generate their own PPF-compliant XML and only need FactPulse for the PDP submission.  **Process:** 1. Validates the XML against PPF XSD schemas 2. Determines the appropriate AFNOR FlowType 3. Submits to the configured PDP/PA 4. Returns the flowId for tracking  **Authentication:** Same strategies as /submit endpoint (JWT or zero-storage credentials).
 
         :param xml_file: E-reporting XML file (required)
-        :type xml_file: bytearray
+        :type xml_file: bytes
         :param tracking_id:
         :type tracking_id: str
         :param skip_validation: Skip XSD validation
@@ -2223,7 +2223,7 @@ class Flux10EReportingApi:
         Submit a pre-generated e-reporting XML file directly to a PA/PDP.  This endpoint is designed for clients who generate their own PPF-compliant XML and only need FactPulse for the PDP submission.  **Process:** 1. Validates the XML against PPF XSD schemas 2. Determines the appropriate AFNOR FlowType 3. Submits to the configured PDP/PA 4. Returns the flowId for tracking  **Authentication:** Same strategies as /submit endpoint (JWT or zero-storage credentials).
 
         :param xml_file: E-reporting XML file (required)
-        :type xml_file: bytearray
+        :type xml_file: bytes
         :param tracking_id:
         :type tracking_id: str
         :param skip_validation: Skip XSD validation
@@ -2979,7 +2979,7 @@ class Flux10EReportingApi:
         Validates an e-reporting XML file against PPF specifications (Annexe 6 v1.9):  **Validation levels:** 1. **XSD (REJ_SEMAN)**: Structure, types, cardinality 2. **Semantic (REJ_SEMAN)**: Authorized values from codelists 3. **Coherence (REJ_COH)**: Data consistency (totals = sum of breakdowns) 4. **Period (REJ_PER)**: Transaction dates within declared period  **Validated codes:** - SchemeID (ISO 6523): 0002=SIREN, 0009=SIRET, 0224=RoutingCode, etc. - RoleCode (UNCL 3035): SE=Seller, BY=Buyer, WK=Working party - CategoryCode (TT-81): TLB1, TPS1, TNT1, TMA1 - TaxCategoryCode (UNTDID 5305): S, Z, E, AE, K, G, O - Currency (ISO 4217), Country (ISO 3166-1)  Returns structured validation errors with PPF rejection codes.
 
         :param xml_file: E-reporting XML file to validate (required)
-        :type xml_file: bytearray
+        :type xml_file: bytes
         :param validate_coherence: Validate data coherence (REJ_COH)
         :type validate_coherence: bool
         :param validate_period: Validate period coherence (REJ_PER)
@@ -3058,7 +3058,7 @@ class Flux10EReportingApi:
         Validates an e-reporting XML file against PPF specifications (Annexe 6 v1.9):  **Validation levels:** 1. **XSD (REJ_SEMAN)**: Structure, types, cardinality 2. **Semantic (REJ_SEMAN)**: Authorized values from codelists 3. **Coherence (REJ_COH)**: Data consistency (totals = sum of breakdowns) 4. **Period (REJ_PER)**: Transaction dates within declared period  **Validated codes:** - SchemeID (ISO 6523): 0002=SIREN, 0009=SIRET, 0224=RoutingCode, etc. - RoleCode (UNCL 3035): SE=Seller, BY=Buyer, WK=Working party - CategoryCode (TT-81): TLB1, TPS1, TNT1, TMA1 - TaxCategoryCode (UNTDID 5305): S, Z, E, AE, K, G, O - Currency (ISO 4217), Country (ISO 3166-1)  Returns structured validation errors with PPF rejection codes.
 
         :param xml_file: E-reporting XML file to validate (required)
-        :type xml_file: bytearray
+        :type xml_file: bytes
         :param validate_coherence: Validate data coherence (REJ_COH)
         :type validate_coherence: bool
         :param validate_period: Validate period coherence (REJ_PER)
@@ -3137,7 +3137,7 @@ class Flux10EReportingApi:
         Validates an e-reporting XML file against PPF specifications (Annexe 6 v1.9):  **Validation levels:** 1. **XSD (REJ_SEMAN)**: Structure, types, cardinality 2. **Semantic (REJ_SEMAN)**: Authorized values from codelists 3. **Coherence (REJ_COH)**: Data consistency (totals = sum of breakdowns) 4. **Period (REJ_PER)**: Transaction dates within declared period  **Validated codes:** - SchemeID (ISO 6523): 0002=SIREN, 0009=SIRET, 0224=RoutingCode, etc. - RoleCode (UNCL 3035): SE=Seller, BY=Buyer, WK=Working party - CategoryCode (TT-81): TLB1, TPS1, TNT1, TMA1 - TaxCategoryCode (UNTDID 5305): S, Z, E, AE, K, G, O - Currency (ISO 4217), Country (ISO 3166-1)  Returns structured validation errors with PPF rejection codes.
 
         :param xml_file: E-reporting XML file to validate (required)
-        :type xml_file: bytearray
+        :type xml_file: bytes
         :param validate_coherence: Validate data coherence (REJ_COH)
         :type validate_coherence: bool
         :param validate_period: Validate period coherence (REJ_PER)
