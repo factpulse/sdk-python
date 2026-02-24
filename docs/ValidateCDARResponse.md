@@ -7,8 +7,8 @@ Réponse de validation CDAR.
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **valid** | **bool** | Résultat de validation | 
-**errors** | [**List[FactureElectroniqueRestApiSchemasCdarValidationErrorResponse]**](FactureElectroniqueRestApiSchemasCdarValidationErrorResponse.md) | Liste des erreurs | [optional] 
-**warnings** | [**List[FactureElectroniqueRestApiSchemasCdarValidationErrorResponse]**](FactureElectroniqueRestApiSchemasCdarValidationErrorResponse.md) | Liste des avertissements | [optional] 
+**errors** | [**List[ValidationErrorResponse]**](ValidationErrorResponse.md) | Liste des erreurs | [optional] 
+**warnings** | [**List[ValidationErrorResponse]**](ValidationErrorResponse.md) | Liste des avertissements | [optional] 
 
 ## Example
 

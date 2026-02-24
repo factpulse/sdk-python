@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.chorus_pro_credentials import ChorusProCredentials
+from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class SearchStructureRequest(BaseModel):
     """
     Search structures by criteria.
     """ # noqa: E501
-    credentials: Optional[ChorusProCredentials] = None
+    credentials: Optional[FactureElectroniqueRestApiSchemasChorusProChorusProCredentials] = None
     structure_identifier: Optional[StrictStr] = Field(default=None, alias="structureIdentifier")
     structure_identifier_type: Optional[StrictStr] = Field(default=None, alias="structureIdentifierType")
     company_name: Optional[StrictStr] = Field(default=None, alias="companyName")
@@ -109,7 +109,7 @@ class SearchStructureRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "credentials": ChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None,
+            "credentials": FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None,
             "structureIdentifier": obj.get("structureIdentifier"),
             "structureIdentifierType": obj.get("structureIdentifierType"),
             "companyName": obj.get("companyName"),

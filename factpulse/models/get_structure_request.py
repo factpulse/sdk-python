@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.chorus_pro_credentials import ChorusProCredentials
+from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class GetStructureRequest(BaseModel):
     """
     Get structure details.
     """ # noqa: E501
-    credentials: Optional[ChorusProCredentials] = None
+    credentials: Optional[FactureElectroniqueRestApiSchemasChorusProChorusProCredentials] = None
     structure_id: StrictInt = Field(description="Chorus Pro structure ID", alias="structureId")
     language_code: Optional[StrictStr] = Field(default='fr', description="Language code (fr, en)", alias="languageCode")
     __properties: ClassVar[List[str]] = ["credentials", "structureId", "languageCode"]
@@ -92,7 +92,7 @@ class GetStructureRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "credentials": ChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None,
+            "credentials": FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None,
             "structureId": obj.get("structureId"),
             "languageCode": obj.get("languageCode") if obj.get("languageCode") is not None else 'fr'
         })

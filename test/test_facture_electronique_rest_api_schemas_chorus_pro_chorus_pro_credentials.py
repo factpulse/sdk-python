@@ -15,10 +15,10 @@
 
 import unittest
 
-from factpulse.models.facture_electronique_rest_api_schemas_cdar_validation_error_response import FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
+from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
 
-class TestFactureElectroniqueRestApiSchemasCdarValidationErrorResponse(unittest.TestCase):
-    """FactureElectroniqueRestApiSchemasCdarValidationErrorResponse unit test stubs"""
+class TestFactureElectroniqueRestApiSchemasChorusProChorusProCredentials(unittest.TestCase):
+    """FactureElectroniqueRestApiSchemasChorusProChorusProCredentials unit test stubs"""
 
     def setUp(self):
         pass
@@ -26,30 +26,33 @@ class TestFactureElectroniqueRestApiSchemasCdarValidationErrorResponse(unittest.
     def tearDown(self):
         pass
 
-    def make_instance(self, include_optional) -> FactureElectroniqueRestApiSchemasCdarValidationErrorResponse:
-        """Test FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
+    def make_instance(self, include_optional) -> FactureElectroniqueRestApiSchemasChorusProChorusProCredentials:
+        """Test FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
             include_optional is a boolean, when False only required
             params are included, when True both required and
             optional params are included """
-        # uncomment below to create an instance of `FactureElectroniqueRestApiSchemasCdarValidationErrorResponse`
+        # uncomment below to create an instance of `FactureElectroniqueRestApiSchemasChorusProChorusProCredentials`
         """
-        model = FactureElectroniqueRestApiSchemasCdarValidationErrorResponse()
+        model = FactureElectroniqueRestApiSchemasChorusProChorusProCredentials()
         if include_optional:
-            return FactureElectroniqueRestApiSchemasCdarValidationErrorResponse(
-                var_field = '',
-                message = '',
-                rule = '',
-                severity = 'error'
+            return FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(
+                piste_client_id = '',
+                piste_client_secret = '',
+                chorus_pro_login = '',
+                chorus_pro_password = '',
+                sandbox = True
             )
         else:
-            return FactureElectroniqueRestApiSchemasCdarValidationErrorResponse(
-                var_field = '',
-                message = '',
+            return FactureElectroniqueRestApiSchemasChorusProChorusProCredentials(
+                piste_client_id = '',
+                piste_client_secret = '',
+                chorus_pro_login = '',
+                chorus_pro_password = '',
         )
         """
 
-    def testFactureElectroniqueRestApiSchemasCdarValidationErrorResponse(self):
-        """Test FactureElectroniqueRestApiSchemasCdarValidationErrorResponse"""
+    def testFactureElectroniqueRestApiSchemasChorusProChorusProCredentials(self):
+        """Test FactureElectroniqueRestApiSchemasChorusProChorusProCredentials"""
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 

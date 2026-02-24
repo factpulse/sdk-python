@@ -34,20 +34,6 @@ class TestHealthApi(unittest.TestCase):
         """
         pass
 
-    def test_healthcheck_healthcheck_get(self) -> None:
-        """Test case for healthcheck_healthcheck_get
-
-        Docker healthcheck endpoint
-        """
-        pass
-
-    def test_root_get(self) -> None:
-        """Test case for root_get
-
-        Check API status
-        """
-        pass
-
 
 if __name__ == '__main__':
     unittest.main()
