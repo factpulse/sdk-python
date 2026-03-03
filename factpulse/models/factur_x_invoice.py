@@ -76,7 +76,8 @@ class FacturXInvoice(BaseModel):
     __properties: ClassVar[List[str]] = ["invoice_number", "payment_due_date", "invoice_date", "submission_mode", "recipient", "supplier", "invoicing_framework", "references", "totals", "invoice_lines", "vat_lines", "notes", "comment", "current_user_id", "supplementary_attachments", "payee", "delivery_party", "tax_representative", "delivery_date", "billing_period_start", "billing_period_end", "payment_reference", "creditor_reference_id", "direct_debit_mandate_id", "debtor_iban", "payment_terms", "allowances_charges", "additional_documents", "buyer_accounting_reference", "payment_card"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

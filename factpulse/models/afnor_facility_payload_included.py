@@ -22,7 +22,6 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from factpulse.models.afnor_address_read import AFNORAddressRead
-from factpulse.models.afnor_diffusion_status import AFNORDiffusionStatus
 from factpulse.models.afnor_facility_administrative_status import AFNORFacilityAdministrativeStatus
 from factpulse.models.afnor_facility_payload_history_ule_b2g_additional_data import AFNORFacilityPayloadHistoryUleB2gAdditionalData
 from factpulse.models.afnor_facility_type import AFNORFacilityType
@@ -37,11 +36,10 @@ class AFNORFacilityPayloadIncluded(BaseModel):
     siren: Optional[Annotated[str, Field(strict=True, max_length=9)]] = Field(default=None, description="SIREN number")
     name: Optional[Annotated[str, Field(strict=True, max_length=100)]] = Field(default=None, description="business name")
     facility_type: Optional[AFNORFacilityType] = Field(default=None, alias="facilityType")
-    diffusible: Optional[AFNORDiffusionStatus] = None
     administrative_status: Optional[AFNORFacilityAdministrativeStatus] = Field(default=None, alias="administrativeStatus")
     address: Optional[AFNORAddressRead] = None
     b2g_additional_data: Optional[AFNORFacilityPayloadHistoryUleB2gAdditionalData] = Field(default=None, alias="b2gAdditionalData")
-    __properties: ClassVar[List[str]] = ["siret", "siren", "name", "facilityType", "diffusible", "administrativeStatus", "address", "b2gAdditionalData"]
+    __properties: ClassVar[List[str]] = ["siret", "siren", "name", "facilityType", "administrativeStatus", "address", "b2gAdditionalData"]
 
     @field_validator('siret')
     def siret_validate_regular_expression(cls, value):
@@ -64,7 +62,8 @@ class AFNORFacilityPayloadIncluded(BaseModel):
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -124,7 +123,6 @@ class AFNORFacilityPayloadIncluded(BaseModel):
             "siren": obj.get("siren"),
             "name": obj.get("name"),
             "facilityType": obj.get("facilityType"),
-            "diffusible": obj.get("diffusible"),
             "administrativeStatus": obj.get("administrativeStatus"),
             "address": AFNORAddressRead.from_dict(obj["address"]) if obj.get("address") is not None else None,
             "b2gAdditionalData": AFNORFacilityPayloadHistoryUleB2gAdditionalData.from_dict(obj["b2gAdditionalData"]) if obj.get("b2gAdditionalData") is not None else None

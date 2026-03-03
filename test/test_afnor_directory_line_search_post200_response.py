@@ -45,14 +45,16 @@ class TestAFNORDirectoryLineSearchPost200Response(unittest.TestCase):
                         siret = factpulse.models.afnor_search_siret_filters_siret.AFNOR_searchSiretFiltersSiret(), 
                         routing_identifier = factpulse.models.afnor_routing_code_search_filters_routing_identifier.AFNOR_routingCodeSearchFiltersRoutingIdentifier(), 
                         addressing_suffix = factpulse.models.afnor_search_directory_line_filters_addressing_suffix.AFNOR_searchDirectoryLineFiltersAddressingSuffix(), ), 
-                    sorting = [{champ=addressingIdentifier, order=ascending}], 
-                    fields = [addressingIdentifier, siren, siret, addressingSuffix, idInstance], 
+                    sorting = [{field=addressingIdentifier, order=ascending}], 
+                    fields = [addressingIdentifier, siren, siret, addressingSuffix], 
                     limit = 50, 
                     ignore = 20, ),
                 total_number_of_results = 1500,
                 results = [
                     factpulse.models.directory_line_payload_history_legal_unit_facility_routing_code.directoryLinePayloadHistoryLegalUnitFacilityRoutingCode(
                         addressing_identifier = 'dcsc456sdcsdcs556', 
+                        platform_type = 'WK', 
+                        directory_line_status = 'Enabled', 
                         siren = '702042755', 
                         siret = '70204275500240', 
                         addressing_suffix = 'dcsc456sdcsdcs556', 
@@ -71,10 +73,8 @@ class TestAFNORDirectoryLineSearchPost200Response(unittest.TestCase):
                                 locality = 'Grenoble', 
                                 country_code = 'FR', 
                                 country_name = 'France', ), ), 
-                        platform = factpulse.models.afnor_directory_line_payload_history_legal_unit_facility_routing_code_platform.AFNOR_directoryLinePayloadHistoryLegalUnitFacilityRoutingCodePlatform(
-                            platform_type = 'WK', 
-                            platform_status = 'Enabled', ), 
                         legal_unit = factpulse.models.legal_unit_payload_included.legalUnitPayloadIncluded(
+                            siren = '702042755', 
                             business_name = 'Boulangerie Pascale', 
                             entity_type = 'Public', ), 
                         facility = factpulse.models.facility_payload_included.facilityPayloadIncluded(
@@ -82,7 +82,6 @@ class TestAFNORDirectoryLineSearchPost200Response(unittest.TestCase):
                             siren = '702042755', 
                             name = 'Boulangerie Pascale', 
                             facility_type = 'P', 
-                            diffusible = 'O', 
                             b2g_additional_data = factpulse.models.afnor_facility_payload_history_ule_b2g_additional_data.AFNOR_facilityPayloadHistoryUleB2gAdditionalData(
                                 pm = True, 
                                 pm_only = True, 

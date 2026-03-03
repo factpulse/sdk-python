@@ -36,7 +36,8 @@ class InvoicingFramework(BaseModel):
     __properties: ClassVar[List[str]] = ["invoicing_framework_code", "operation_nature", "approver_service_code", "approver_structure_code"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

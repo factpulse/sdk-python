@@ -36,7 +36,7 @@ class TestAFNORSearchSirenFiltersSiren(unittest.TestCase):
         model = AFNORSearchSirenFiltersSiren()
         if include_optional:
             return AFNORSearchSirenFiltersSiren(
-                op = 'contains',
+                op = 'strict',
                 value = '702042755'
             )
         else:

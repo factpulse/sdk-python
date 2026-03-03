@@ -37,7 +37,8 @@ class ValidationInfo(BaseModel):
     __properties: ClassVar[List[str]] = ["profile", "schematron_rules_passed", "schematron_rules_total", "pdfa_compliant", "xml_embedded", "errors"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

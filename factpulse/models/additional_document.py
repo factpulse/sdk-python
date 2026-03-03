@@ -35,7 +35,8 @@ class AdditionalDocument(BaseModel):
     __properties: ClassVar[List[str]] = ["id", "type_code", "name", "uri", "reference_type_code"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

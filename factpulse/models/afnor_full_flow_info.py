@@ -20,7 +20,7 @@ import json
 
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field, field_validator
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing_extensions import Annotated
 from factpulse.models.afnor_flow_profile import AFNORFlowProfile
 from factpulse.models.afnor_flow_syntax import AFNORFlowSyntax
@@ -32,15 +32,15 @@ class AFNORFullFlowInfo(BaseModel):
     """
     Identified Flow info: flow info + id + timestamp
     """ # noqa: E501
-    tracking_id: Optional[Annotated[str, Field(strict=True, max_length=36)]] = Field(default=None, description="Unique identifier supporting UUID but not only, for flexibility purpose", alias="trackingId")
-    name: Optional[Annotated[str, Field(strict=True, max_length=255)]] = Field(default=None, description="Name of the file")
+    flow_id: Annotated[str, Field(strict=True, max_length=36)] = Field(description="Unique identifier supporting UUID but not only, for flexibility purpose", alias="flowId")
+    submitted_at: datetime = Field(description="The flow submission date and time (the date and time when the flow was created on the system) This property should be used by the API consumer as a time reference to avoid clock synchronization issues ", alias="submittedAt")
+    tracking_id: Optional[Annotated[str, Field(strict=True, max_length=36)]] = Field(default=None, description="The tracking id is an external identifier and is used to track the flow by the sender", alias="trackingId")
+    name: Annotated[str, Field(strict=True, max_length=255)] = Field(description="Name of the file")
     processing_rule: Optional[AFNORProcessingRule] = Field(default=None, alias="processingRule")
     flow_syntax: AFNORFlowSyntax = Field(alias="flowSyntax")
     flow_profile: Optional[AFNORFlowProfile] = Field(default=None, alias="flowProfile")
-    sha256: Optional[Annotated[str, Field(strict=True)]] = None
-    flow_id: Optional[Annotated[str, Field(strict=True, max_length=36)]] = Field(default=None, description="Unique identifier supporting UUID but not only, for flexibility purpose", alias="flowId")
-    submitted_at: Optional[datetime] = Field(default=None, description="The flow submission date and time (the date and time when the flow was created on the system) This property should be used by the API consumer as a time reference to avoid clock synchronization issues ", alias="submittedAt")
-    __properties: ClassVar[List[str]] = ["trackingId", "name", "processingRule", "flowSyntax", "flowProfile", "sha256", "flowId", "submittedAt"]
+    sha256: Optional[Union[Annotated[bytes, Field(strict=True)], Annotated[str, Field(strict=True)]]] = Field(default=None, description="The sha256 is the fingerprint of the attached file: - if provided in the request: it should be checked once received - if not provided in the request: it may be computed and returned in the response ")
+    __properties: ClassVar[List[str]] = ["flowId", "submittedAt", "trackingId", "name", "processingRule", "flowSyntax", "flowProfile", "sha256"]
 
     @field_validator('sha256')
     def sha256_validate_regular_expression(cls, value):
@@ -53,7 +53,8 @@ class AFNORFullFlowInfo(BaseModel):
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -103,14 +104,14 @@ class AFNORFullFlowInfo(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "flowId": obj.get("flowId"),
+            "submittedAt": obj.get("submittedAt"),
             "trackingId": obj.get("trackingId"),
             "name": obj.get("name"),
             "processingRule": obj.get("processingRule"),
             "flowSyntax": obj.get("flowSyntax"),
             "flowProfile": obj.get("flowProfile"),
-            "sha256": obj.get("sha256"),
-            "flowId": obj.get("flowId"),
-            "submittedAt": obj.get("submittedAt")
+            "sha256": obj.get("sha256")
         })
         return _obj
 

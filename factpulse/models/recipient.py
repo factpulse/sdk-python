@@ -42,7 +42,8 @@ class Recipient(BaseModel):
     __properties: ClassVar[List[str]] = ["electronic_address", "executing_service_code", "name", "siren", "siret", "vat_number", "postal_address", "contact", "global_ids"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

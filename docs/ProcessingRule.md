@@ -1,6 +1,6 @@
 # ProcessingRule
 
-AFNOR XP Z12-013 ProcessingRule (Annexe A, lignes 212-216).  Valeurs EXACTES de la spec (case-sensitive).
+AFNOR XP Z12-013 ProcessingRule (Annexe A v1.2.0).  Valeurs EXACTES de la spec (case-sensitive).
 
 ## Enum
 
@@ -10,7 +10,13 @@ AFNOR XP Z12-013 ProcessingRule (Annexe A, lignes 212-216).  Valeurs EXACTES de 
 
 * `B2C` (value: `'B2C'`)
 
+* `B2G` (value: `'B2G'`)
+
+* `B2GINT` (value: `'B2GInt'`)
+
 * `OUTOFSCOPE` (value: `'OutOfScope'`)
+
+* `B2GOUTOFSCOPE` (value: `'B2GOutOfScope'`)
 
 * `ARCHIVEONLY` (value: `'ArchiveOnly'`)
 

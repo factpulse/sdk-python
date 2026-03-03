@@ -39,13 +39,13 @@ class TestAFNORSirenSearchPost200Response(unittest.TestCase):
                 search = factpulse.models.search_siren.searchSiren(
                     filters = factpulse.models.afnor_search_siren_filters.AFNOR_searchSirenFilters(
                         siren = factpulse.models.afnor_search_siren_filters_siren.AFNOR_searchSirenFiltersSiren(
-                            op = 'contains', 
+                            op = 'strict', 
                             value = '702042755', ), 
                         business_name = factpulse.models.afnor_search_siren_filters_business_name.AFNOR_searchSirenFiltersBusinessName(), 
                         entity_type = factpulse.models.afnor_search_siren_filters_entity_type.AFNOR_searchSirenFiltersEntityType(), 
                         administrative_status = factpulse.models.afnor_search_siren_filters_administrative_status.AFNOR_searchSirenFiltersAdministrativeStatus(), ), 
                     sorting = [{field=siren, order=ascending}, {field=administrativeStatus, order=descending}], 
-                    fields = [siren, businessName, entityType, administrativeStatus, idInstance], 
+                    fields = [siren, businessName, entityType, administrativeStatus, instructions], 
                     limit = 50, 
                     ignore = 20, ),
                 total_number_of_results = 1500,
@@ -54,7 +54,9 @@ class TestAFNORSirenSearchPost200Response(unittest.TestCase):
                         siren = '702042755', 
                         business_name = 'Boulangerie Pascale', 
                         entity_type = 'Public', 
-                        administrative_status = 'A', )
+                        administrative_status = 'A', 
+                        instructions = factpulse.models.afnor_siren_instructions.AFNOR_sirenInstructions(
+                            is_sales_prospecting_forbidden = False, ), )
                     ]
             )
         else:

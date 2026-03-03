@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.afnor_directory_line_payload_history_legal_unit_facility_routing_code import AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCode
+from factpulse.models.afnor_directory_line_payload_status_legal_unit_facility_routing_code import AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode
 from factpulse.models.afnor_search_directory_line import AFNORSearchDirectoryLine
 from typing import Optional, Set
 from typing_extensions import Self
@@ -31,11 +31,12 @@ class AFNORDirectoryLineSearchPost200Response(BaseModel):
     """ # noqa: E501
     search: Optional[AFNORSearchDirectoryLine] = None
     total_number_of_results: Optional[StrictInt] = Field(default=None, description="The total number of results", alias="totalNumberOfResults")
-    results: Optional[List[AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCode]] = None
+    results: Optional[List[AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode]] = None
     __properties: ClassVar[List[str]] = ["search", "totalNumberOfResults", "results"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -97,7 +98,7 @@ class AFNORDirectoryLineSearchPost200Response(BaseModel):
         _obj = cls.model_validate({
             "search": AFNORSearchDirectoryLine.from_dict(obj["search"]) if obj.get("search") is not None else None,
             "totalNumberOfResults": obj.get("totalNumberOfResults"),
-            "results": [AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCode.from_dict(_item) for _item in obj["results"]] if obj.get("results") is not None else None
+            "results": [AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode.from_dict(_item) for _item in obj["results"]] if obj.get("results") is not None else None
         })
         return _obj
 

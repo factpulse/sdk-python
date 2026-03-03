@@ -54,7 +54,8 @@ class PDFValidationResultAPI(BaseModel):
     __properties: ClassVar[List[str]] = ["isCompliant", "xmlPresent", "xmlCompliant", "detectedProfile", "xmlErrors", "pdfaCompliant", "pdfaVersion", "pdfaValidationMethod", "validatedRules", "failedRules", "pdfaErrors", "pdfaWarnings", "xmpPresent", "xmpFacturxCompliant", "xmpProfile", "xmpVersion", "xmpErrors", "xmpMetadata", "isSigned", "signatureCount", "signatures", "signatureErrors", "summaryMessage"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

@@ -39,7 +39,9 @@ class TestAFNORLegalUnitPayloadHistory(unittest.TestCase):
                 siren = '702042755',
                 business_name = 'Boulangerie Pascale',
                 entity_type = 'Public',
-                administrative_status = 'A'
+                administrative_status = 'A',
+                instructions = factpulse.models.afnor_siren_instructions.AFNOR_sirenInstructions(
+                    is_sales_prospecting_forbidden = False, )
             )
         else:
             return AFNORLegalUnitPayloadHistory(

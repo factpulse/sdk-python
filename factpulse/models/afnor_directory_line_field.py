@@ -32,7 +32,6 @@ class AFNORDirectoryLineField(str, Enum):
     SIRET = 'siret'
     ROUTINGIDENTIFIER = 'routingIdentifier'
     ADDRESSINGSUFFIX = 'addressingSuffix'
-    IDINSTANCE = 'idInstance'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

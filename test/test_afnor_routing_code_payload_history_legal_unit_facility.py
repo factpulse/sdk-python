@@ -61,7 +61,6 @@ class TestAFNORRoutingCodePayloadHistoryLegalUnitFacility(unittest.TestCase):
                     siren = '702042755', 
                     name = 'Boulangerie Pascale', 
                     facility_type = 'P', 
-                    diffusible = 'O', 
                     administrative_status = 'A', 
                     address = factpulse.models.afnor_address_read.AFNOR_addressRead(
                         address_line1 = '16 BIS RUE HENRI BARBUSSE', 

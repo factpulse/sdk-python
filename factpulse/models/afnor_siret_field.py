@@ -31,16 +31,15 @@ class AFNORSiretField(str, Enum):
     SIREN = 'siren'
     NAME = 'name'
     FACILITYTYPE = 'facilityType'
-    ADDRESS = 'address'
-    DIFFUSIBLE = 'diffusible'
     ADMINISTRATIVESTATUS = 'administrativeStatus'
+    SIRETINSTRUCTIONS = 'siretInstructions'
+    ADDRESS = 'address'
     PMSTATUS = 'pmStatus'
     PMONLY = 'pmOnly'
     MANAGESPAYMENTSTATUS = 'managesPaymentStatus'
     MANAGESLEGALCOMMITMENT = 'managesLegalCommitment'
     MANAGESLEGALCOMMITMENTORSERVICE = 'managesLegalCommitmentOrService'
     SERVICECODESTATUS = 'serviceCodeStatus'
-    IDINSTANCE = 'idInstance'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

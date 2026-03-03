@@ -7,7 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **search** | [**AFNORSearchDirectoryLine**](AFNORSearchDirectoryLine.md) |  | [optional] 
 **total_number_of_results** | **int** | The total number of results | [optional] 
-**results** | [**List[AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCode]**](AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCode.md) |  | [optional] 
+**results** | [**List[AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode]**](AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode.md) |  | [optional] 
 
 ## Example
 

@@ -20,8 +20,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.afnor_contains_operator import AFNORContainsOperator
 from factpulse.models.afnor_facility_type import AFNORFacilityType
+from factpulse.models.afnor_strict_operator import AFNORStrictOperator
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,12 +29,13 @@ class AFNORSearchSiretFiltersFacilityType(BaseModel):
     """
     AFNORSearchSiretFiltersFacilityType
     """ # noqa: E501
-    op: Optional[AFNORContainsOperator] = None
+    op: Optional[AFNORStrictOperator] = None
     value: Optional[AFNORFacilityType] = None
     __properties: ClassVar[List[str]] = ["op", "value"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

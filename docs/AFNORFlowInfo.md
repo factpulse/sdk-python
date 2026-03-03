@@ -1,17 +1,17 @@
 # AFNORFlowInfo
 
-Signaling of the flow: - The tracking id is an external identifier and is used to track the flow by the sender - The sha256 is the fingerprint of the attached file:   - if provided in the request: it should be checked once received   - if not provided in the request: it should be computed and returned in the response 
+Signaling of the flow
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**tracking_id** | **str** | Unique identifier supporting UUID but not only, for flexibility purpose | [optional] 
-**name** | **str** | Name of the file | [optional] 
+**tracking_id** | **str** | The tracking id is an external identifier and is used to track the flow by the sender | [optional] 
+**name** | **str** | Name of the file | 
 **processing_rule** | [**AFNORProcessingRule**](AFNORProcessingRule.md) |  | [optional] 
 **flow_syntax** | [**AFNORFlowSyntax**](AFNORFlowSyntax.md) |  | 
 **flow_profile** | [**AFNORFlowProfile**](AFNORFlowProfile.md) |  | [optional] 
-**sha256** | **str** |  | [optional] 
+**sha256** | **bytes** | The sha256 is the fingerprint of the attached file: - if provided in the request: it should be checked once received - if not provided in the request: it may be computed and returned in the response  | [optional] 
 
 ## Example
 

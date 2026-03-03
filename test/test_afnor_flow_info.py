@@ -41,10 +41,11 @@ class TestAFNORFlowInfo(unittest.TestCase):
                 processing_rule = 'B2B',
                 flow_syntax = 'CII',
                 flow_profile = 'Basic',
-                sha256 = 'bf325375e030fccba00917317c574773100bf03b5fc61486286e564b23e9566b'
+                sha256 = 'YQ=='
             )
         else:
             return AFNORFlowInfo(
+                name = '',
                 flow_syntax = 'CII',
         )
         """

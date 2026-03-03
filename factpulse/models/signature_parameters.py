@@ -39,7 +39,8 @@ class SignatureParameters(BaseModel):
     __properties: ClassVar[List[str]] = ["keyPem", "certPem", "keyPassphrase", "reason", "location", "contact", "fieldName", "usePadesLt", "useTimestamp"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

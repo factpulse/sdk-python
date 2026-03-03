@@ -27,6 +27,20 @@ class TestAFNORPDPPAFlowServiceApi(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
+    def test_create_webhook_proxy_api_v1_afnor_flow_v1_webhooks_post(self) -> None:
+        """Test case for create_webhook_proxy_api_v1_afnor_flow_v1_webhooks_post
+
+        Create a webhook
+        """
+        pass
+
+    def test_delete_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_delete(self) -> None:
+        """Test case for delete_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_delete
+
+        Delete a webhook
+        """
+        pass
+
     def test_download_flow_proxy_api_v1_afnor_flow_v1_flows_flow_id_get(self) -> None:
         """Test case for download_flow_proxy_api_v1_afnor_flow_v1_flows_flow_id_get
 
@@ -41,6 +55,20 @@ class TestAFNORPDPPAFlowServiceApi(unittest.TestCase):
         """
         pass
 
+    def test_get_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_get(self) -> None:
+        """Test case for get_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_get
+
+        Get a webhook
+        """
+        pass
+
+    def test_list_webhooks_proxy_api_v1_afnor_flow_v1_webhooks_get(self) -> None:
+        """Test case for list_webhooks_proxy_api_v1_afnor_flow_v1_webhooks_get
+
+        List webhooks
+        """
+        pass
+
     def test_search_flows_proxy_api_v1_afnor_flow_v1_flows_search_post(self) -> None:
         """Test case for search_flows_proxy_api_v1_afnor_flow_v1_flows_search_post
 
@@ -52,6 +80,13 @@ class TestAFNORPDPPAFlowServiceApi(unittest.TestCase):
         """Test case for submit_flow_proxy_api_v1_afnor_flow_v1_flows_post
 
         Submit an invoicing flow
+        """
+        pass
+
+    def test_update_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_patch(self) -> None:
+        """Test case for update_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_patch
+
+        Update a webhook
         """
         pass
 

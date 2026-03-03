@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**op** | [**AFNORContainsOperator**](AFNORContainsOperator.md) |  | [optional] 
+**op** | [**AFNORStrictOperator**](AFNORStrictOperator.md) |  | [optional] 
 **value** | **str** | SIRET number to search for. | [optional] 
 
 ## Example

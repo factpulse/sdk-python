@@ -36,7 +36,7 @@ class TestAFNORSearchSiretFiltersSiret(unittest.TestCase):
         model = AFNORSearchSiretFiltersSiret()
         if include_optional:
             return AFNORSearchSiretFiltersSiret(
-                op = 'contains',
+                op = 'strict',
                 value = '70204275500000'
             )
         else:

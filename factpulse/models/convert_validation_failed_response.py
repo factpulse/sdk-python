@@ -43,7 +43,8 @@ class ConvertValidationFailedResponse(BaseModel):
     __properties: ClassVar[List[str]] = ["status", "conversion_id", "message", "extraction", "extracted_data", "missing_fields", "validation", "resume_url", "expires_at"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

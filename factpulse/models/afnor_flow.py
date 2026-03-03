@@ -35,31 +35,30 @@ class AFNORFlow(BaseModel):
     """
     The properties of a Flow resource
     """ # noqa: E501
-    submitted_at: Optional[datetime] = Field(default=None, description="The flow submission date and time (the date and time when the flow was created on the system) ", alias="submittedAt")
-    updated_at: Optional[datetime] = Field(default=None, description="The last update date and time of the flow. When the flow is submitted updatedAt is equal to submittedAt. When the flow acknowledgment status is changed updatedAt date and time is updated. ", alias="updatedAt")
-    flow_id: Optional[Annotated[str, Field(strict=True, max_length=36)]] = Field(default=None, description="Unique identifier supporting UUID but not only, for flexibility purpose", alias="flowId")
-    tracking_id: Optional[Annotated[str, Field(strict=True, max_length=36)]] = Field(default=None, description="Unique identifier supporting UUID but not only, for flexibility purpose", alias="trackingId")
-    flow_type: Optional[AFNORFlowType] = Field(default=None, alias="flowType")
+    tracking_id: Optional[Annotated[str, Field(strict=True, max_length=36)]] = Field(default=None, description="The tracking id is an external identifier and is used to track the flow by the sender", alias="trackingId")
+    name: Annotated[str, Field(strict=True, max_length=255)] = Field(description="Name of the file")
     processing_rule: Optional[AFNORProcessingRule] = Field(default=None, alias="processingRule")
-    processing_rule_source: Optional[StrictStr] = Field(default=None, description="Says whether the processing rule has been computed or the processing rule was an input parameter", alias="processingRuleSource")
-    flow_direction: Optional[AFNORFlowDirection] = Field(default=None, alias="flowDirection")
-    flow_syntax: Optional[AFNORFlowSyntax] = Field(default=None, alias="flowSyntax")
+    flow_syntax: AFNORFlowSyntax = Field(alias="flowSyntax")
     flow_profile: Optional[AFNORFlowProfile] = Field(default=None, alias="flowProfile")
-    acknowledgement: Optional[AFNORAcknowledgement] = None
-    __properties: ClassVar[List[str]] = ["submittedAt", "updatedAt", "flowId", "trackingId", "flowType", "processingRule", "processingRuleSource", "flowDirection", "flowSyntax", "flowProfile", "acknowledgement"]
+    flow_id: Annotated[str, Field(strict=True, max_length=36)] = Field(description="Unique identifier supporting UUID but not only, for flexibility purpose", alias="flowId")
+    submitted_at: datetime = Field(description="The flow submission date and time (the date and time when the flow was created on the system) This property should be used by the API consumer as a time reference to avoid clock synchronization issues ", alias="submittedAt")
+    updated_at: datetime = Field(description="The last update date and time of the flow. When the flow is submitted updatedAt is equal to submittedAt. When the flow acknowledgment status is changed updatedAt date and time is updated. ", alias="updatedAt")
+    flow_type: AFNORFlowType = Field(alias="flowType")
+    processing_rule_source: StrictStr = Field(description="Says whether the processing rule has been computed or the processing rule was an input parameter", alias="processingRuleSource")
+    flow_direction: AFNORFlowDirection = Field(alias="flowDirection")
+    acknowledgement: AFNORAcknowledgement
+    __properties: ClassVar[List[str]] = ["trackingId", "name", "processingRule", "flowSyntax", "flowProfile", "flowId", "submittedAt", "updatedAt", "flowType", "processingRuleSource", "flowDirection", "acknowledgement"]
 
     @field_validator('processing_rule_source')
     def processing_rule_source_validate_enum(cls, value):
         """Validates the enum"""
-        if value is None:
-            return value
-
         if value not in set(['Input', 'Computed']):
             raise ValueError("must be one of enum values ('Input', 'Computed')")
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -112,16 +111,17 @@ class AFNORFlow(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "submittedAt": obj.get("submittedAt"),
-            "updatedAt": obj.get("updatedAt"),
-            "flowId": obj.get("flowId"),
             "trackingId": obj.get("trackingId"),
-            "flowType": obj.get("flowType"),
+            "name": obj.get("name"),
             "processingRule": obj.get("processingRule"),
-            "processingRuleSource": obj.get("processingRuleSource"),
-            "flowDirection": obj.get("flowDirection"),
             "flowSyntax": obj.get("flowSyntax"),
             "flowProfile": obj.get("flowProfile"),
+            "flowId": obj.get("flowId"),
+            "submittedAt": obj.get("submittedAt"),
+            "updatedAt": obj.get("updatedAt"),
+            "flowType": obj.get("flowType"),
+            "processingRuleSource": obj.get("processingRuleSource"),
+            "flowDirection": obj.get("flowDirection"),
             "acknowledgement": AFNORAcknowledgement.from_dict(obj["acknowledgement"]) if obj.get("acknowledgement") is not None else None
         })
         return _obj

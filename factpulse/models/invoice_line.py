@@ -81,7 +81,8 @@ class InvoiceLine(BaseModel):
     __properties: ClassVar[List[str]] = ["line_number", "line_note", "parent_line_id", "line_sub_type", "reference", "buyer_assigned_id", "product_global_id", "product_global_id_scheme", "item_name", "item_description", "origin_country", "characteristics", "classifications", "quantity", "unit", "gross_unit_price", "unit_net_price", "price_basis_quantity", "price_basis_unit", "price_allowance_amount", "lineNetAmount", "allowanceAmount", "allowanceReasonCode", "allowanceReason", "allowances_charges", "vat_rate", "manual_vat_rate", "vat_category", "period_start_date", "period_end_date", "purchase_order_line_ref", "accounting_account", "additional_documents", "line_notes"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

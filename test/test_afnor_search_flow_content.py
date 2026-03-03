@@ -52,26 +52,7 @@ class TestAFNORSearchFlowContent(unittest.TestCase):
                     tracking_id = '', 
                     ack_status = 'Pending', ),
                 results = [
-                    factpulse.models.afnor_flow.AFNOR_Flow(
-                        submitted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
-                        updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
-                        flow_id = '', 
-                        tracking_id = '', 
-                        flow_type = 'SupplierInvoice', 
-                        processing_rule = 'B2B', 
-                        processing_rule_source = 'Input', 
-                        flow_direction = 'Out', 
-                        flow_syntax = 'CII', 
-                        flow_profile = 'Basic', 
-                        acknowledgement = factpulse.models.afnor_acknowledgement.AFNOR_Acknowledgement(
-                            status = 'Pending', 
-                            details = [
-                                factpulse.models.afnor_acknowledgement_detail.AFNOR_AcknowledgementDetail(
-                                    level = 'Error', 
-                                    item = '', 
-                                    reason_code = null, 
-                                    reason_message = '', )
-                                ], ), )
+                    null
                     ]
             )
         else:

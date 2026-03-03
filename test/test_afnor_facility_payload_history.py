@@ -40,8 +40,9 @@ class TestAFNORFacilityPayloadHistory(unittest.TestCase):
                 siren = '702042755',
                 name = 'Boulangerie Pascale',
                 facility_type = 'P',
-                diffusible = 'O',
                 administrative_status = 'A',
+                siret_instructions = factpulse.models.afnor_siret_instructions.AFNOR_siretInstructions(
+                    is_sales_prospecting_forbidden = False, ),
                 address = factpulse.models.afnor_address_read.AFNOR_addressRead(
                     address_line1 = '16 BIS RUE HENRI BARBUSSE', 
                     address_line2 = 'CEDEX 1', 
@@ -59,6 +60,7 @@ class TestAFNORFacilityPayloadHistory(unittest.TestCase):
                     manages_legal_commitment_or_service_code = True, 
                     service_code_status = True, ),
                 legal_unit = factpulse.models.legal_unit_payload_included.legalUnitPayloadIncluded(
+                    siren = '702042755', 
                     business_name = 'Boulangerie Pascale', 
                     entity_type = 'Public', 
                     administrative_status = 'A', )

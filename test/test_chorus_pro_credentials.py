@@ -38,12 +38,16 @@ class TestChorusProCredentials(unittest.TestCase):
             return ChorusProCredentials(
                 piste_client_id = '',
                 piste_client_secret = '',
-                chorus_login = '',
-                chorus_password = '',
-                sandbox_mode = True
+                chorus_pro_login = '',
+                chorus_pro_password = '',
+                sandbox = True
             )
         else:
             return ChorusProCredentials(
+                piste_client_id = '',
+                piste_client_secret = '',
+                chorus_pro_login = '',
+                chorus_pro_password = '',
         )
         """
 

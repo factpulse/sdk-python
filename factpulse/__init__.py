@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.1.2"
+__version__ = "4.2.0"
 
 # Define package exports
 __all__ = [
@@ -48,30 +48,28 @@ __all__ = [
     "ApiException",
     "AFNORAcknowledgement",
     "AFNORAcknowledgementDetail",
-    "AFNORAddressEdit",
-    "AFNORAddressPatch",
-    "AFNORAddressPut",
     "AFNORAddressRead",
     "AFNORAlgorithm",
+    "AFNORBasicAuthentication",
+    "AFNORCallbackAuthentication",
+    "AFNORCallbackHeader",
+    "AFNORCallbackParameters",
+    "AFNORCallbackSignature",
     "AFNORContainsOperator",
-    "AFNORCreateDirectoryLineBody",
-    "AFNORCreateDirectoryLineBodyAddressingInformation",
-    "AFNORCreateDirectoryLineBodyPeriod",
-    "AFNORCreateRoutingCodeBody",
+    "AFNORContainsOrStrictOperator",
+    "AFNORCoreFlowInfo",
     "AFNORCredentials",
     "AFNORDestination",
-    "AFNORDiffusionStatus",
     "AFNORDirectoryLineField",
-    "AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCode",
-    "AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCodePlatform",
     "AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCodeRoutingCode",
-    "AFNORDirectoryLinePost201Response",
+    "AFNORDirectoryLinePayloadLegalUnitFacilityRoutingCode",
+    "AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode",
     "AFNORDirectoryLineSearchPost200Response",
+    "AFNORDirectoryLineStatus",
     "AFNOREntityType",
     "AFNORError",
     "AFNORErrorDetail",
     "AFNORFacilityAdministrativeStatus",
-    "AFNORFacilityNature",
     "AFNORFacilityPayloadHistory",
     "AFNORFacilityPayloadHistoryUleB2gAdditionalData",
     "AFNORFacilityPayloadIncluded",
@@ -79,17 +77,19 @@ __all__ = [
     "AFNORFlow",
     "AFNORFlowAckStatus",
     "AFNORFlowDirection",
+    "AFNORFlowExtension",
     "AFNORFlowInfo",
+    "AFNORFlowInfoExtension",
     "AFNORFlowProfile",
     "AFNORFlowSyntax",
     "AFNORFlowType",
     "AFNORFullFlowInfo",
+    "AFNORFullFlowInfoExtension",
     "AFNORHealthCheckResponse",
     "AFNORLegalUnitAdministrativeStatus",
     "AFNORLegalUnitPayloadHistory",
     "AFNORLegalUnitPayloadIncluded",
-    "AFNORLegalUnitPayloadIncludedNoSiren",
-    "AFNORPlatformStatus",
+    "AFNOROAuth2Authentication",
     "AFNORProcessingRule",
     "AFNORReasonCode",
     "AFNORReasonCodeEnum",
@@ -98,7 +98,6 @@ __all__ = [
     "AFNORRoutingCodeAdministrativeStatus",
     "AFNORRoutingCodeField",
     "AFNORRoutingCodePayloadHistoryLegalUnitFacility",
-    "AFNORRoutingCodePost201Response",
     "AFNORRoutingCodeSearch",
     "AFNORRoutingCodeSearchFilters",
     "AFNORRoutingCodeSearchFiltersAdministrativeStatus",
@@ -133,15 +132,19 @@ __all__ = [
     "AFNORSearchSiretFiltersSiret",
     "AFNORSearchSiretSortingInner",
     "AFNORSirenField",
+    "AFNORSirenInstructions",
     "AFNORSirenSearchPost200Response",
     "AFNORSiretField",
+    "AFNORSiretInstructions",
     "AFNORSiretSearchPost200Response",
     "AFNORSortingOrder",
     "AFNORStrictOperator",
-    "AFNORUpdatePatchDirectoryLineBody",
-    "AFNORUpdatePatchRoutingCodeBody",
-    "AFNORUpdatePutRoutingCodeBody",
-    "AFNORWebhookCallbackContent",
+    "AFNORStrictOrStartWithOperator",
+    "AFNORWebhook",
+    "AFNORWebhookIdParam",
+    "AFNORWebhookMetadata",
+    "AFNORWebhookParams",
+    "AFNORWebhookPatchPayload",
     "APIError",
     "APIProfile",
     "AcknowledgmentStatus",
@@ -207,9 +210,9 @@ __all__ = [
     "ExtractionInfo",
     "FacturXInvoice",
     "FacturXPDFInfo",
-    "FactureElectroniqueModelsInvoiceTypeCode",
-    "FactureElectroniqueRestApiSchemasChorusProChorusProCredentials",
-    "FactureElectroniqueRestApiSchemasValidationValidationErrorResponse",
+    "FactureElectroniqueRestApiSchemasCdarValidationErrorResponse",
+    "FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode",
+    "FactureElectroniqueRestApiSchemasProcessingChorusProCredentials",
     "FieldStatus",
     "FileInfo",
     "FilesInfo",
@@ -420,30 +423,28 @@ from factpulse.exceptions import ApiException as ApiException
 # import models into sdk package
 from factpulse.models.afnor_acknowledgement import AFNORAcknowledgement as AFNORAcknowledgement
 from factpulse.models.afnor_acknowledgement_detail import AFNORAcknowledgementDetail as AFNORAcknowledgementDetail
-from factpulse.models.afnor_address_edit import AFNORAddressEdit as AFNORAddressEdit
-from factpulse.models.afnor_address_patch import AFNORAddressPatch as AFNORAddressPatch
-from factpulse.models.afnor_address_put import AFNORAddressPut as AFNORAddressPut
 from factpulse.models.afnor_address_read import AFNORAddressRead as AFNORAddressRead
 from factpulse.models.afnor_algorithm import AFNORAlgorithm as AFNORAlgorithm
+from factpulse.models.afnor_basic_authentication import AFNORBasicAuthentication as AFNORBasicAuthentication
+from factpulse.models.afnor_callback_authentication import AFNORCallbackAuthentication as AFNORCallbackAuthentication
+from factpulse.models.afnor_callback_header import AFNORCallbackHeader as AFNORCallbackHeader
+from factpulse.models.afnor_callback_parameters import AFNORCallbackParameters as AFNORCallbackParameters
+from factpulse.models.afnor_callback_signature import AFNORCallbackSignature as AFNORCallbackSignature
 from factpulse.models.afnor_contains_operator import AFNORContainsOperator as AFNORContainsOperator
-from factpulse.models.afnor_create_directory_line_body import AFNORCreateDirectoryLineBody as AFNORCreateDirectoryLineBody
-from factpulse.models.afnor_create_directory_line_body_addressing_information import AFNORCreateDirectoryLineBodyAddressingInformation as AFNORCreateDirectoryLineBodyAddressingInformation
-from factpulse.models.afnor_create_directory_line_body_period import AFNORCreateDirectoryLineBodyPeriod as AFNORCreateDirectoryLineBodyPeriod
-from factpulse.models.afnor_create_routing_code_body import AFNORCreateRoutingCodeBody as AFNORCreateRoutingCodeBody
+from factpulse.models.afnor_contains_or_strict_operator import AFNORContainsOrStrictOperator as AFNORContainsOrStrictOperator
+from factpulse.models.afnor_core_flow_info import AFNORCoreFlowInfo as AFNORCoreFlowInfo
 from factpulse.models.afnor_credentials import AFNORCredentials as AFNORCredentials
 from factpulse.models.afnor_destination import AFNORDestination as AFNORDestination
-from factpulse.models.afnor_diffusion_status import AFNORDiffusionStatus as AFNORDiffusionStatus
 from factpulse.models.afnor_directory_line_field import AFNORDirectoryLineField as AFNORDirectoryLineField
-from factpulse.models.afnor_directory_line_payload_history_legal_unit_facility_routing_code import AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCode as AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCode
-from factpulse.models.afnor_directory_line_payload_history_legal_unit_facility_routing_code_platform import AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCodePlatform as AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCodePlatform
 from factpulse.models.afnor_directory_line_payload_history_legal_unit_facility_routing_code_routing_code import AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCodeRoutingCode as AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCodeRoutingCode
-from factpulse.models.afnor_directory_line_post201_response import AFNORDirectoryLinePost201Response as AFNORDirectoryLinePost201Response
+from factpulse.models.afnor_directory_line_payload_legal_unit_facility_routing_code import AFNORDirectoryLinePayloadLegalUnitFacilityRoutingCode as AFNORDirectoryLinePayloadLegalUnitFacilityRoutingCode
+from factpulse.models.afnor_directory_line_payload_status_legal_unit_facility_routing_code import AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode as AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode
 from factpulse.models.afnor_directory_line_search_post200_response import AFNORDirectoryLineSearchPost200Response as AFNORDirectoryLineSearchPost200Response
+from factpulse.models.afnor_directory_line_status import AFNORDirectoryLineStatus as AFNORDirectoryLineStatus
 from factpulse.models.afnor_entity_type import AFNOREntityType as AFNOREntityType
 from factpulse.models.afnor_error import AFNORError as AFNORError
 from factpulse.models.afnor_error_detail import AFNORErrorDetail as AFNORErrorDetail
 from factpulse.models.afnor_facility_administrative_status import AFNORFacilityAdministrativeStatus as AFNORFacilityAdministrativeStatus
-from factpulse.models.afnor_facility_nature import AFNORFacilityNature as AFNORFacilityNature
 from factpulse.models.afnor_facility_payload_history import AFNORFacilityPayloadHistory as AFNORFacilityPayloadHistory
 from factpulse.models.afnor_facility_payload_history_ule_b2g_additional_data import AFNORFacilityPayloadHistoryUleB2gAdditionalData as AFNORFacilityPayloadHistoryUleB2gAdditionalData
 from factpulse.models.afnor_facility_payload_included import AFNORFacilityPayloadIncluded as AFNORFacilityPayloadIncluded
@@ -451,17 +452,19 @@ from factpulse.models.afnor_facility_type import AFNORFacilityType as AFNORFacil
 from factpulse.models.afnor_flow import AFNORFlow as AFNORFlow
 from factpulse.models.afnor_flow_ack_status import AFNORFlowAckStatus as AFNORFlowAckStatus
 from factpulse.models.afnor_flow_direction import AFNORFlowDirection as AFNORFlowDirection
+from factpulse.models.afnor_flow_extension import AFNORFlowExtension as AFNORFlowExtension
 from factpulse.models.afnor_flow_info import AFNORFlowInfo as AFNORFlowInfo
+from factpulse.models.afnor_flow_info_extension import AFNORFlowInfoExtension as AFNORFlowInfoExtension
 from factpulse.models.afnor_flow_profile import AFNORFlowProfile as AFNORFlowProfile
 from factpulse.models.afnor_flow_syntax import AFNORFlowSyntax as AFNORFlowSyntax
 from factpulse.models.afnor_flow_type import AFNORFlowType as AFNORFlowType
 from factpulse.models.afnor_full_flow_info import AFNORFullFlowInfo as AFNORFullFlowInfo
+from factpulse.models.afnor_full_flow_info_extension import AFNORFullFlowInfoExtension as AFNORFullFlowInfoExtension
 from factpulse.models.afnor_health_check_response import AFNORHealthCheckResponse as AFNORHealthCheckResponse
 from factpulse.models.afnor_legal_unit_administrative_status import AFNORLegalUnitAdministrativeStatus as AFNORLegalUnitAdministrativeStatus
 from factpulse.models.afnor_legal_unit_payload_history import AFNORLegalUnitPayloadHistory as AFNORLegalUnitPayloadHistory
 from factpulse.models.afnor_legal_unit_payload_included import AFNORLegalUnitPayloadIncluded as AFNORLegalUnitPayloadIncluded
-from factpulse.models.afnor_legal_unit_payload_included_no_siren import AFNORLegalUnitPayloadIncludedNoSiren as AFNORLegalUnitPayloadIncludedNoSiren
-from factpulse.models.afnor_platform_status import AFNORPlatformStatus as AFNORPlatformStatus
+from factpulse.models.afnoro_auth2_authentication import AFNOROAuth2Authentication as AFNOROAuth2Authentication
 from factpulse.models.afnor_processing_rule import AFNORProcessingRule as AFNORProcessingRule
 from factpulse.models.afnor_reason_code import AFNORReasonCode as AFNORReasonCode
 from factpulse.models.afnor_reason_code_enum import AFNORReasonCodeEnum as AFNORReasonCodeEnum
@@ -470,7 +473,6 @@ from factpulse.models.afnor_result import AFNORResult as AFNORResult
 from factpulse.models.afnor_routing_code_administrative_status import AFNORRoutingCodeAdministrativeStatus as AFNORRoutingCodeAdministrativeStatus
 from factpulse.models.afnor_routing_code_field import AFNORRoutingCodeField as AFNORRoutingCodeField
 from factpulse.models.afnor_routing_code_payload_history_legal_unit_facility import AFNORRoutingCodePayloadHistoryLegalUnitFacility as AFNORRoutingCodePayloadHistoryLegalUnitFacility
-from factpulse.models.afnor_routing_code_post201_response import AFNORRoutingCodePost201Response as AFNORRoutingCodePost201Response
 from factpulse.models.afnor_routing_code_search import AFNORRoutingCodeSearch as AFNORRoutingCodeSearch
 from factpulse.models.afnor_routing_code_search_filters import AFNORRoutingCodeSearchFilters as AFNORRoutingCodeSearchFilters
 from factpulse.models.afnor_routing_code_search_filters_administrative_status import AFNORRoutingCodeSearchFiltersAdministrativeStatus as AFNORRoutingCodeSearchFiltersAdministrativeStatus
@@ -505,15 +507,19 @@ from factpulse.models.afnor_search_siret_filters_postal_code import AFNORSearchS
 from factpulse.models.afnor_search_siret_filters_siret import AFNORSearchSiretFiltersSiret as AFNORSearchSiretFiltersSiret
 from factpulse.models.afnor_search_siret_sorting_inner import AFNORSearchSiretSortingInner as AFNORSearchSiretSortingInner
 from factpulse.models.afnor_siren_field import AFNORSirenField as AFNORSirenField
+from factpulse.models.afnor_siren_instructions import AFNORSirenInstructions as AFNORSirenInstructions
 from factpulse.models.afnor_siren_search_post200_response import AFNORSirenSearchPost200Response as AFNORSirenSearchPost200Response
 from factpulse.models.afnor_siret_field import AFNORSiretField as AFNORSiretField
+from factpulse.models.afnor_siret_instructions import AFNORSiretInstructions as AFNORSiretInstructions
 from factpulse.models.afnor_siret_search_post200_response import AFNORSiretSearchPost200Response as AFNORSiretSearchPost200Response
 from factpulse.models.afnor_sorting_order import AFNORSortingOrder as AFNORSortingOrder
 from factpulse.models.afnor_strict_operator import AFNORStrictOperator as AFNORStrictOperator
-from factpulse.models.afnor_update_patch_directory_line_body import AFNORUpdatePatchDirectoryLineBody as AFNORUpdatePatchDirectoryLineBody
-from factpulse.models.afnor_update_patch_routing_code_body import AFNORUpdatePatchRoutingCodeBody as AFNORUpdatePatchRoutingCodeBody
-from factpulse.models.afnor_update_put_routing_code_body import AFNORUpdatePutRoutingCodeBody as AFNORUpdatePutRoutingCodeBody
-from factpulse.models.afnor_webhook_callback_content import AFNORWebhookCallbackContent as AFNORWebhookCallbackContent
+from factpulse.models.afnor_strict_or_start_with_operator import AFNORStrictOrStartWithOperator as AFNORStrictOrStartWithOperator
+from factpulse.models.afnor_webhook import AFNORWebhook as AFNORWebhook
+from factpulse.models.afnor_webhook_id_param import AFNORWebhookIdParam as AFNORWebhookIdParam
+from factpulse.models.afnor_webhook_metadata import AFNORWebhookMetadata as AFNORWebhookMetadata
+from factpulse.models.afnor_webhook_params import AFNORWebhookParams as AFNORWebhookParams
+from factpulse.models.afnor_webhook_patch_payload import AFNORWebhookPatchPayload as AFNORWebhookPatchPayload
 from factpulse.models.api_error import APIError as APIError
 from factpulse.models.api_profile import APIProfile as APIProfile
 from factpulse.models.acknowledgment_status import AcknowledgmentStatus as AcknowledgmentStatus
@@ -579,9 +585,9 @@ from factpulse.models.error_source import ErrorSource as ErrorSource
 from factpulse.models.extraction_info import ExtractionInfo as ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
-from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode as FactureElectroniqueModelsInvoiceTypeCode
-from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials as FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
-from factpulse.models.facture_electronique_rest_api_schemas_validation_validation_error_response import FactureElectroniqueRestApiSchemasValidationValidationErrorResponse as FactureElectroniqueRestApiSchemasValidationValidationErrorResponse
+from factpulse.models.facture_electronique_rest_api_schemas_cdar_validation_error_response import FactureElectroniqueRestApiSchemasCdarValidationErrorResponse as FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode as FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
+from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials as FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
 from factpulse.models.field_status import FieldStatus as FieldStatus
 from factpulse.models.file_info import FileInfo as FileInfo
 from factpulse.models.files_info import FilesInfo as FilesInfo

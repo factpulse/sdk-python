@@ -27,27 +27,6 @@ class TestAFNORPDPPADirectoryServiceApi(unittest.TestCase):
     def tearDown(self) -> None:
         pass
 
-    def test_create_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_post(self) -> None:
-        """Test case for create_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_post
-
-        Creating a directory line
-        """
-        pass
-
-    def test_create_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_post(self) -> None:
-        """Test case for create_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_post
-
-        Create a routing code
-        """
-        pass
-
-    def test_delete_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_delete(self) -> None:
-        """Test case for delete_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_delete
-
-        Delete a directory line
-        """
-        pass
-
     def test_directory_healthcheck_proxy_api_v1_afnor_directory_v1_healthcheck_get(self) -> None:
         """Test case for directory_healthcheck_proxy_api_v1_afnor_directory_v1_healthcheck_get
 
@@ -59,20 +38,6 @@ class TestAFNORPDPPADirectoryServiceApi(unittest.TestCase):
         """Test case for get_directory_line_by_code_proxy_api_v1_afnor_directory_v1_directory_line_code_addressing_identifier_get
 
         Get a directory line.
-        """
-        pass
-
-    def test_get_directory_line_by_id_instance_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_get(self) -> None:
-        """Test case for get_directory_line_by_id_instance_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_get
-
-        Get a directory line.
-        """
-        pass
-
-    def test_get_routing_code_by_id_instance_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_get(self) -> None:
-        """Test case for get_routing_code_by_id_instance_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_get
-
-        Get a routing code by instance-id.
         """
         pass
 
@@ -90,45 +55,10 @@ class TestAFNORPDPPADirectoryServiceApi(unittest.TestCase):
         """
         pass
 
-    def test_get_siren_by_id_instance_proxy_api_v1_afnor_directory_v1_siren_id_instance_id_instance_get(self) -> None:
-        """Test case for get_siren_by_id_instance_proxy_api_v1_afnor_directory_v1_siren_id_instance_id_instance_get
-
-        Gets a siren (legal unit) by instance ID
-        """
-        pass
-
     def test_get_siret_by_code_insee_proxy_api_v1_afnor_directory_v1_siret_code_insee_siret_get(self) -> None:
         """Test case for get_siret_by_code_insee_proxy_api_v1_afnor_directory_v1_siret_code_insee_siret_get
 
         Gets a siret (facility) by SIRET number
-        """
-        pass
-
-    def test_get_siret_by_id_instance_proxy_api_v1_afnor_directory_v1_siret_id_instance_id_instance_get(self) -> None:
-        """Test case for get_siret_by_id_instance_proxy_api_v1_afnor_directory_v1_siret_id_instance_id_instance_get
-
-        Gets a siret (facility) by id-instance
-        """
-        pass
-
-    def test_patch_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_patch(self) -> None:
-        """Test case for patch_directory_line_proxy_api_v1_afnor_directory_v1_directory_line_id_instance_id_instance_patch
-
-        Partially updates a directory line..
-        """
-        pass
-
-    def test_patch_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_patch(self) -> None:
-        """Test case for patch_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_patch
-
-        Partially update a private routing code.
-        """
-        pass
-
-    def test_put_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_put(self) -> None:
-        """Test case for put_routing_code_proxy_api_v1_afnor_directory_v1_routing_code_id_instance_id_instance_put
-
-        Completely update a private routing code.
         """
         pass
 

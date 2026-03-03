@@ -36,7 +36,7 @@ class TestAFNORSearchSiretFiltersCountrySubdivision(unittest.TestCase):
         model = AFNORSearchSiretFiltersCountrySubdivision()
         if include_optional:
             return AFNORSearchSiretFiltersCountrySubdivision(
-                op = 'contains',
+                op = 'strict',
                 value = 'Bretagne'
             )
         else:

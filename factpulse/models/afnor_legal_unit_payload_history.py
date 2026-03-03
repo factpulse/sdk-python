@@ -23,6 +23,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from factpulse.models.afnor_entity_type import AFNOREntityType
 from factpulse.models.afnor_legal_unit_administrative_status import AFNORLegalUnitAdministrativeStatus
+from factpulse.models.afnor_siren_instructions import AFNORSirenInstructions
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -34,7 +35,8 @@ class AFNORLegalUnitPayloadHistory(BaseModel):
     business_name: Optional[Annotated[str, Field(strict=True, max_length=150)]] = Field(default=None, description="Business name", alias="businessName")
     entity_type: Optional[AFNOREntityType] = Field(default=None, alias="entityType")
     administrative_status: Optional[AFNORLegalUnitAdministrativeStatus] = Field(default=None, alias="administrativeStatus")
-    __properties: ClassVar[List[str]] = ["siren", "businessName", "entityType", "administrativeStatus"]
+    instructions: Optional[AFNORSirenInstructions] = None
+    __properties: ClassVar[List[str]] = ["siren", "businessName", "entityType", "administrativeStatus", "instructions"]
 
     @field_validator('siren')
     def siren_validate_regular_expression(cls, value):
@@ -47,7 +49,8 @@ class AFNORLegalUnitPayloadHistory(BaseModel):
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -85,6 +88,9 @@ class AFNORLegalUnitPayloadHistory(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of instructions
+        if self.instructions:
+            _dict['instructions'] = self.instructions.to_dict()
         return _dict
 
     @classmethod
@@ -100,7 +106,8 @@ class AFNORLegalUnitPayloadHistory(BaseModel):
             "siren": obj.get("siren"),
             "businessName": obj.get("businessName"),
             "entityType": obj.get("entityType"),
-            "administrativeStatus": obj.get("administrativeStatus")
+            "administrativeStatus": obj.get("administrativeStatus"),
+            "instructions": AFNORSirenInstructions.from_dict(obj["instructions"]) if obj.get("instructions") is not None else None
         })
         return _obj
 

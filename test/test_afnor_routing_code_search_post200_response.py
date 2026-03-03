@@ -48,7 +48,7 @@ class TestAFNORRoutingCodeSearchPost200Response(unittest.TestCase):
                         postal_code = factpulse.models.afnor_search_siret_filters_postal_code.AFNOR_searchSiretFiltersPostalCode(), 
                         locality = factpulse.models.afnor_search_siret_filters_locality.AFNOR_searchSiretFiltersLocality(), ), 
                     sorting = [{field=siret, order=ascendant}, {field=routingIdentifier, order=ascendant}], 
-                    fields = [siret, routingIdentifierType, routingCodeName, routingIdentifier, managesLegalCommitmentCode, administrativeStatus, address, idInstance], 
+                    fields = [siret, routingIdentifierType, routingCodeName, routingIdentifier, managesLegalCommitmentCode, administrativeStatus, address], 
                     include = [siren, siret], 
                     limit = 50, 
                     ignore = 20, ),
@@ -79,7 +79,6 @@ class TestAFNORRoutingCodeSearchPost200Response(unittest.TestCase):
                             siren = '702042755', 
                             name = 'Boulangerie Pascale', 
                             facility_type = 'P', 
-                            diffusible = 'O', 
                             b2g_additional_data = factpulse.models.afnor_facility_payload_history_ule_b2g_additional_data.AFNOR_facilityPayloadHistoryUleB2gAdditionalData(
                                 pm = True, 
                                 pm_only = True, 

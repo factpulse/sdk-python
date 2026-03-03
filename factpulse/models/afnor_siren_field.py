@@ -31,7 +31,7 @@ class AFNORSirenField(str, Enum):
     BUSINESSNAME = 'businessName'
     ENTITYTYPE = 'entityType'
     ADMINISTRATIVESTATUS = 'administrativeStatus'
-    IDINSTANCE = 'idInstance'
+    INSTRUCTIONS = 'instructions'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

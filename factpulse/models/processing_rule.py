@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class ProcessingRule(str, Enum):
     """
-    AFNOR XP Z12-013 ProcessingRule (Annexe A, lignes 212-216).  Valeurs EXACTES de la spec (case-sensitive).
+    AFNOR XP Z12-013 ProcessingRule (Annexe A v1.2.0).  Valeurs EXACTES de la spec (case-sensitive).
     """
 
     """
@@ -30,7 +30,10 @@ class ProcessingRule(str, Enum):
     B2B = 'B2B'
     B2BINT = 'B2BInt'
     B2C = 'B2C'
+    B2G = 'B2G'
+    B2GINT = 'B2GInt'
     OUTOFSCOPE = 'OutOfScope'
+    B2GOUTOFSCOPE = 'B2GOutOfScope'
     ARCHIVEONLY = 'ArchiveOnly'
     NOTAPPLICABLE = 'NotApplicable'
 

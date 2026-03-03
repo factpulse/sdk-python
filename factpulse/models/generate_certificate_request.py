@@ -42,7 +42,8 @@ class GenerateCertificateRequest(BaseModel):
     __properties: ClassVar[List[str]] = ["cn", "organization", "country", "city", "state", "email", "validityDays", "keySize", "keyPassphrase", "generateP12", "p12Passphrase"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

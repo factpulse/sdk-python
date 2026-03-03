@@ -37,7 +37,7 @@ class TestAFNORSearchSirenFilters(unittest.TestCase):
         if include_optional:
             return AFNORSearchSirenFilters(
                 siren = factpulse.models.afnor_search_siren_filters_siren.AFNOR_searchSirenFiltersSiren(
-                    op = 'contains', 
+                    op = 'strict', 
                     value = '702042755', ),
                 business_name = factpulse.models.afnor_search_siren_filters_business_name.AFNOR_searchSirenFiltersBusinessName(
                     op = 'contains', 

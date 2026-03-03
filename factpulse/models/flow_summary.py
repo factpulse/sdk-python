@@ -38,7 +38,8 @@ class FlowSummary(BaseModel):
     __properties: ClassVar[List[str]] = ["flow_id", "tracking_id", "name", "flow_type", "flow_direction", "acknowledgment_status", "created_at", "updated_at"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

@@ -44,7 +44,8 @@ class ConvertSuccessResponse(BaseModel):
     __properties: ClassVar[List[str]] = ["status", "conversion_id", "document_type", "invoice", "extraction", "validation", "files", "processing_time_ms", "pdf_regenerated", "pdf_regenerated_reason"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

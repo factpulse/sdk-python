@@ -34,7 +34,8 @@ class ExtractionInfo(BaseModel):
     __properties: ClassVar[List[str]] = ["confidence_score", "fields_extracted", "fields_enriched", "fields_missing"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

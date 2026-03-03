@@ -40,16 +40,16 @@ class TestAFNORSearchDirectoryLineFilters(unittest.TestCase):
                     op = 'contains', 
                     value = 'dcsc456sdcsdcs556', ),
                 siren = factpulse.models.afnor_search_siren_filters_siren.AFNOR_searchSirenFiltersSiren(
-                    op = 'contains', 
+                    op = 'strict', 
                     value = '702042755', ),
                 siret = factpulse.models.afnor_search_siret_filters_siret.AFNOR_searchSiretFiltersSiret(
-                    op = 'contains', 
+                    op = 'strict', 
                     value = '70204275500000', ),
                 routing_identifier = factpulse.models.afnor_routing_code_search_filters_routing_identifier.AFNOR_routingCodeSearchFiltersRoutingIdentifier(
                     op = 'contains', 
                     value = 'dcsc456sdcsdcs556', ),
                 addressing_suffix = factpulse.models.afnor_search_directory_line_filters_addressing_suffix.AFNOR_searchDirectoryLineFiltersAddressingSuffix(
-                    op = 'strict', 
+                    op = 'contains', 
                     value = 'dcsc456sdcsdcs556', )
             )
         else:

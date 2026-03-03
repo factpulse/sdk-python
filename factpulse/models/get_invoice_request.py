@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
+from factpulse.models.chorus_pro_credentials import ChorusProCredentials
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,12 +28,13 @@ class GetInvoiceRequest(BaseModel):
     """
     Get an invoice.
     """ # noqa: E501
-    credentials: Optional[FactureElectroniqueRestApiSchemasChorusProChorusProCredentials] = None
+    credentials: Optional[ChorusProCredentials] = None
     chorus_invoice_id: StrictInt = Field(description="Chorus Pro invoice ID", alias="chorusInvoiceId")
     __properties: ClassVar[List[str]] = ["credentials", "chorusInvoiceId"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
@@ -91,7 +92,7 @@ class GetInvoiceRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "credentials": FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None,
+            "credentials": ChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None,
             "chorusInvoiceId": obj.get("chorusInvoiceId")
         })
         return _obj

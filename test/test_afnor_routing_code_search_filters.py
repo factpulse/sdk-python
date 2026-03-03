@@ -40,7 +40,7 @@ class TestAFNORRoutingCodeSearchFilters(unittest.TestCase):
                     op = 'contains', 
                     value = 'dcsc456sdcsdcs556', ),
                 siret = factpulse.models.afnor_search_siret_filters_siret.AFNOR_searchSiretFiltersSiret(
-                    op = 'contains', 
+                    op = 'strict', 
                     value = '70204275500000', ),
                 routing_code_name = factpulse.models.afnor_routing_code_search_filters_routing_code_name.AFNOR_routingCodeSearchFiltersRoutingCodeName(
                     op = 'contains', 
@@ -52,7 +52,7 @@ class TestAFNORRoutingCodeSearchFilters(unittest.TestCase):
                     op = 'contains', 
                     value = '16 BIS RUE HENRI BARBUSSE - CEDEX 1 - Bâtiment le Callipso', ),
                 postal_code = factpulse.models.afnor_search_siret_filters_postal_code.AFNOR_searchSiretFiltersPostalCode(
-                    op = 'contains', 
+                    op = 'startWith', 
                     value = '38100', ),
                 locality = factpulse.models.afnor_search_siret_filters_locality.AFNOR_searchSiretFiltersLocality(
                     op = 'contains', 

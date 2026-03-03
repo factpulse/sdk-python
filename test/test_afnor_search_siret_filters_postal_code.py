@@ -36,7 +36,7 @@ class TestAFNORSearchSiretFiltersPostalCode(unittest.TestCase):
         model = AFNORSearchSiretFiltersPostalCode()
         if include_optional:
             return AFNORSearchSiretFiltersPostalCode(
-                op = 'contains',
+                op = 'startWith',
                 value = '38100'
             )
         else:

@@ -51,7 +51,8 @@ class InvoiceTotals(BaseModel):
     __properties: ClassVar[List[str]] = ["line_total_amount", "allowance_total_amount", "charge_total_amount", "total_net_amount", "vat_amount", "total_gross_amount", "prepayment", "rounding_amount", "amount_due", "globalAllowanceAmount", "globalAllowanceReason"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

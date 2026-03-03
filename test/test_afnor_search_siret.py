@@ -38,7 +38,7 @@ class TestAFNORSearchSiret(unittest.TestCase):
             return AFNORSearchSiret(
                 filters = factpulse.models.afnor_search_siret_filters.AFNOR_searchSiretFilters(
                     siret = factpulse.models.afnor_search_siret_filters_siret.AFNOR_searchSiretFiltersSiret(
-                        op = 'contains', 
+                        op = 'strict', 
                         value = '70204275500000', ), 
                     siren = factpulse.models.afnor_search_siren_filters_siren.AFNOR_searchSirenFiltersSiren(), 
                     facility_type = factpulse.models.afnor_search_siret_filters_facility_type.AFNOR_searchSiretFiltersFacilityType(), 
@@ -48,8 +48,8 @@ class TestAFNORSearchSiret(unittest.TestCase):
                     country_subdivision = factpulse.models.afnor_search_siret_filters_country_subdivision.AFNOR_searchSiretFiltersCountrySubdivision(), 
                     locality = factpulse.models.afnor_search_siret_filters_locality.AFNOR_searchSiretFiltersLocality(), 
                     administrative_status = factpulse.models.afnor_search_siret_filters_administrative_status.AFNOR_searchSiretFiltersAdministrativeStatus(), ),
-                sorting = [{champ=siret, order=ascending}, {champ=name, order=descending}],
-                fields = [siret, siren, name, facilityType, address, diffusible, administrativeStatus, pmStatus, pmOnly, managesPaymentStatus, managesLegalCommitment, managesLegalCommitmentOrService, serviceCodeStatus, idInstance],
+                sorting = [{field=siret, order=ascending}, {field=name, order=descending}],
+                fields = [siret, siren, name, facilityType, administrativeStatus, siretInstructions, address, pmStatus, pmOnly, managesPaymentStatus, managesLegalCommitment, managesLegalCommitmentOrService, serviceCodeStatus],
                 include = [siren],
                 limit = 50,
                 ignore = 20

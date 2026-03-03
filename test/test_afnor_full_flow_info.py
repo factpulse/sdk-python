@@ -36,17 +36,20 @@ class TestAFNORFullFlowInfo(unittest.TestCase):
         model = AFNORFullFlowInfo()
         if include_optional:
             return AFNORFullFlowInfo(
+                flow_id = '',
+                submitted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 tracking_id = '',
                 name = '',
                 processing_rule = 'B2B',
                 flow_syntax = 'CII',
                 flow_profile = 'Basic',
-                sha256 = 'bf325375e030fccba00917317c574773100bf03b5fc61486286e564b23e9566b',
-                flow_id = '',
-                submitted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f')
+                sha256 = 'YQ=='
             )
         else:
             return AFNORFullFlowInfo(
+                flow_id = '',
+                submitted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                name = '',
                 flow_syntax = 'CII',
         )
         """

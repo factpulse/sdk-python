@@ -27,10 +27,11 @@ class AFNORAlgorithm(str, Enum):
     """
     allowed enum values
     """
-    RSA = 'RSA'
+    RS256 = 'RS256'
+    HS256 = 'HS256'
     ECDSA = 'ECDSA'
-    RSA_PSS = 'RSA_PSS'
     EDDSA_25519 = 'EDDSA_25519'
+    RSA_PSS = 'RSA_PSS'
     EDDSA_448 = 'EDDSA_448'
 
     @classmethod

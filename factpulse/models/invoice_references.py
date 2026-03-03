@@ -51,7 +51,8 @@ class InvoiceReferences(BaseModel):
     __properties: ClassVar[List[str]] = ["business_process_id", "invoice_currency", "payment_means", "payment_means_text", "invoice_type", "vat_accounting_code", "buyer_reference", "contract_reference", "purchase_order_reference", "seller_order_reference", "receiving_advice_reference", "despatch_advice_reference", "tender_reference", "preceding_invoice_reference", "preceding_invoice_date", "project_reference", "project_name", "vat_exemption_reason"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

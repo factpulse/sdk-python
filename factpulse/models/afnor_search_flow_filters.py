@@ -33,7 +33,7 @@ class AFNORSearchFlowFilters(BaseModel):
     """
     Filtering criteria, at least one is required
     """ # noqa: E501
-    updated_after: Optional[datetime] = Field(default=None, alias="updatedAfter")
+    updated_after: Optional[datetime] = Field(default=None, description="The comparison with current date is strict : updatedAt > updatedAfter", alias="updatedAfter")
     updated_before: Optional[datetime] = Field(default=None, alias="updatedBefore")
     processing_rule: Optional[List[AFNORProcessingRule]] = Field(default=None, alias="processingRule")
     flow_type: Optional[List[AFNORFlowType]] = Field(default=None, alias="flowType")
@@ -43,7 +43,8 @@ class AFNORSearchFlowFilters(BaseModel):
     __properties: ClassVar[List[str]] = ["updatedAfter", "updatedBefore", "processingRule", "flowType", "flowDirection", "trackingId", "ackStatus"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

@@ -47,7 +47,7 @@ class TestAFNORRoutingCodeSearch(unittest.TestCase):
                     postal_code = factpulse.models.afnor_search_siret_filters_postal_code.AFNOR_searchSiretFiltersPostalCode(), 
                     locality = factpulse.models.afnor_search_siret_filters_locality.AFNOR_searchSiretFiltersLocality(), ),
                 sorting = [{field=siret, order=ascendant}, {field=routingIdentifier, order=ascendant}],
-                fields = [siret, routingIdentifierType, routingCodeName, routingIdentifier, managesLegalCommitmentCode, administrativeStatus, address, idInstance],
+                fields = [siret, routingIdentifierType, routingCodeName, routingIdentifier, managesLegalCommitmentCode, administrativeStatus, address],
                 include = [siren, siret],
                 limit = 50,
                 ignore = 20

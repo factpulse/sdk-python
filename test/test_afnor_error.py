@@ -36,14 +36,15 @@ class TestAFNORError(unittest.TestCase):
         model = AFNORError()
         if include_optional:
             return AFNORError(
+                error_code = 'MISSING_REQUIRED_FIELD',
+                error_message = 'Invalid request format',
                 type = 'about:blank',
-                message = 'Error message',
-                status = 100,
                 details = 'Error detailed description',
                 instance = '/chemin/url-de-reference#instance-du-contexte'
             )
         else:
             return AFNORError(
+                error_code = 'MISSING_REQUIRED_FIELD',
         )
         """
 

@@ -36,7 +36,7 @@ class TestAFNORSearchDirectoryLineFiltersAddressingSuffix(unittest.TestCase):
         model = AFNORSearchDirectoryLineFiltersAddressingSuffix()
         if include_optional:
             return AFNORSearchDirectoryLineFiltersAddressingSuffix(
-                op = 'strict',
+                op = 'contains',
                 value = 'dcsc456sdcsdcs556'
             )
         else:

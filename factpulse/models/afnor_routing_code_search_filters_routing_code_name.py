@@ -21,7 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from factpulse.models.afnor_contains_operator import AFNORContainsOperator
+from factpulse.models.afnor_contains_or_strict_operator import AFNORContainsOrStrictOperator
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,7 +29,7 @@ class AFNORRoutingCodeSearchFiltersRoutingCodeName(BaseModel):
     """
     AFNORRoutingCodeSearchFiltersRoutingCodeName
     """ # noqa: E501
-    op: Optional[AFNORContainsOperator] = None
+    op: Optional[AFNORContainsOrStrictOperator] = None
     value: Optional[Annotated[str, Field(strict=True, max_length=100)]] = Field(default=None, description="Name of the routing code.")
     __properties: ClassVar[List[str]] = ["op", "value"]
 
@@ -44,7 +44,8 @@ class AFNORRoutingCodeSearchFiltersRoutingCodeName(BaseModel):
         return value
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

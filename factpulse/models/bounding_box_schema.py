@@ -38,7 +38,8 @@ class BoundingBoxSchema(BaseModel):
     __properties: ClassVar[List[str]] = ["x0", "y0", "x1", "y1", "page", "width", "height"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

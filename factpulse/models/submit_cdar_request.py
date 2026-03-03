@@ -56,7 +56,8 @@ class SubmitCDARRequest(BaseModel):
     __properties: ClassVar[List[str]] = ["documentId", "businessProcess", "typeCode", "senderSiren", "senderRole", "senderName", "senderEmail", "recipients", "invoiceId", "invoiceIssueDate", "invoiceTypeCode", "invoiceSellerSiren", "invoiceBuyerSiren", "status", "reasonCode", "reasonText", "actionCode", "encaisseAmount", "flowType", "pdpFlowServiceUrl", "pdpTokenUrl", "pdpClientId", "pdpClientSecret"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

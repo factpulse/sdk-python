@@ -21,7 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from factpulse.models.afnor_contains_operator import AFNORContainsOperator
+from factpulse.models.afnor_strict_operator import AFNORStrictOperator
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,12 +29,13 @@ class AFNORSearchSiretFiltersCountrySubdivision(BaseModel):
     """
     AFNORSearchSiretFiltersCountrySubdivision
     """ # noqa: E501
-    op: Optional[AFNORContainsOperator] = None
+    op: Optional[AFNORStrictOperator] = None
     value: Optional[Annotated[str, Field(strict=True, max_length=255)]] = Field(default=None, description="Subdivision of the country")
     __properties: ClassVar[List[str]] = ["op", "value"]
 
     model_config = ConfigDict(
-        populate_by_name=True,
+        validate_by_name=True,
+        validate_by_alias=True,
         validate_assignment=True,
         protected_namespaces=(),
     )

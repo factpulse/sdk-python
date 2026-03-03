@@ -44,8 +44,8 @@ class TestAFNORSearchDirectoryLine(unittest.TestCase):
                     siret = factpulse.models.afnor_search_siret_filters_siret.AFNOR_searchSiretFiltersSiret(), 
                     routing_identifier = factpulse.models.afnor_routing_code_search_filters_routing_identifier.AFNOR_routingCodeSearchFiltersRoutingIdentifier(), 
                     addressing_suffix = factpulse.models.afnor_search_directory_line_filters_addressing_suffix.AFNOR_searchDirectoryLineFiltersAddressingSuffix(), ),
-                sorting = [{champ=addressingIdentifier, order=ascending}],
-                fields = [addressingIdentifier, siren, siret, addressingSuffix, idInstance],
+                sorting = [{field=addressingIdentifier, order=ascending}],
+                fields = [addressingIdentifier, siren, siret, addressingSuffix],
                 limit = 50,
                 ignore = 20
             )

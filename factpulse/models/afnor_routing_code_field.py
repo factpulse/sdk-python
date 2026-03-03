@@ -34,7 +34,6 @@ class AFNORRoutingCodeField(str, Enum):
     MANAGESLEGALCOMMITMENTCODE = 'managesLegalCommitmentCode'
     ADMINISTRATIVESTATUS = 'administrativeStatus'
     ADDRESS = 'address'
-    IDINSTANCE = 'idInstance'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

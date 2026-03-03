@@ -37,13 +37,13 @@ class TestAFNORSearchSiretFilters(unittest.TestCase):
         if include_optional:
             return AFNORSearchSiretFilters(
                 siret = factpulse.models.afnor_search_siret_filters_siret.AFNOR_searchSiretFiltersSiret(
-                    op = 'contains', 
+                    op = 'strict', 
                     value = '70204275500000', ),
                 siren = factpulse.models.afnor_search_siren_filters_siren.AFNOR_searchSirenFiltersSiren(
-                    op = 'contains', 
+                    op = 'strict', 
                     value = '702042755', ),
                 facility_type = factpulse.models.afnor_search_siret_filters_facility_type.AFNOR_searchSiretFiltersFacilityType(
-                    op = 'contains', 
+                    op = 'strict', 
                     value = 'P', ),
                 name = factpulse.models.afnor_search_siret_filters_name.AFNOR_searchSiretFiltersName(
                     op = 'contains', 
@@ -52,10 +52,10 @@ class TestAFNORSearchSiretFilters(unittest.TestCase):
                     op = 'contains', 
                     value = '16 BIS RUE HENRI BARBUSSE - CEDEX 1 - Bâtiment le Callipso', ),
                 postal_code = factpulse.models.afnor_search_siret_filters_postal_code.AFNOR_searchSiretFiltersPostalCode(
-                    op = 'contains', 
+                    op = 'startWith', 
                     value = '38100', ),
                 country_subdivision = factpulse.models.afnor_search_siret_filters_country_subdivision.AFNOR_searchSiretFiltersCountrySubdivision(
-                    op = 'contains', 
+                    op = 'strict', 
                     value = 'Bretagne', ),
                 locality = factpulse.models.afnor_search_siret_filters_locality.AFNOR_searchSiretFiltersLocality(
                     op = 'contains', 

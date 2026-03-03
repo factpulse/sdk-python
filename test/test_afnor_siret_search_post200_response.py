@@ -39,7 +39,7 @@ class TestAFNORSiretSearchPost200Response(unittest.TestCase):
                 search = factpulse.models.search_siret.searchSiret(
                     filters = factpulse.models.afnor_search_siret_filters.AFNOR_searchSiretFilters(
                         siret = factpulse.models.afnor_search_siret_filters_siret.AFNOR_searchSiretFiltersSiret(
-                            op = 'contains', 
+                            op = 'strict', 
                             value = '70204275500000', ), 
                         siren = factpulse.models.afnor_search_siren_filters_siren.AFNOR_searchSirenFiltersSiren(), 
                         facility_type = factpulse.models.afnor_search_siret_filters_facility_type.AFNOR_searchSiretFiltersFacilityType(), 
@@ -49,8 +49,8 @@ class TestAFNORSiretSearchPost200Response(unittest.TestCase):
                         country_subdivision = factpulse.models.afnor_search_siret_filters_country_subdivision.AFNOR_searchSiretFiltersCountrySubdivision(), 
                         locality = factpulse.models.afnor_search_siret_filters_locality.AFNOR_searchSiretFiltersLocality(), 
                         administrative_status = factpulse.models.afnor_search_siret_filters_administrative_status.AFNOR_searchSiretFiltersAdministrativeStatus(), ), 
-                    sorting = [{champ=siret, order=ascending}, {champ=name, order=descending}], 
-                    fields = [siret, siren, name, facilityType, address, diffusible, administrativeStatus, pmStatus, pmOnly, managesPaymentStatus, managesLegalCommitment, managesLegalCommitmentOrService, serviceCodeStatus, idInstance], 
+                    sorting = [{field=siret, order=ascending}, {field=name, order=descending}], 
+                    fields = [siret, siren, name, facilityType, administrativeStatus, siretInstructions, address, pmStatus, pmOnly, managesPaymentStatus, managesLegalCommitment, managesLegalCommitmentOrService, serviceCodeStatus], 
                     include = [siren], 
                     limit = 50, 
                     ignore = 20, ),
@@ -61,8 +61,9 @@ class TestAFNORSiretSearchPost200Response(unittest.TestCase):
                         siren = '702042755', 
                         name = 'Boulangerie Pascale', 
                         facility_type = 'P', 
-                        diffusible = 'O', 
                         administrative_status = 'A', 
+                        siret_instructions = factpulse.models.afnor_siret_instructions.AFNOR_siretInstructions(
+                            is_sales_prospecting_forbidden = False, ), 
                         address = factpulse.models.afnor_address_read.AFNOR_addressRead(
                             address_line1 = '16 BIS RUE HENRI BARBUSSE', 
                             address_line2 = 'CEDEX 1', 
@@ -80,6 +81,7 @@ class TestAFNORSiretSearchPost200Response(unittest.TestCase):
                             manages_legal_commitment_or_service_code = True, 
                             service_code_status = True, ), 
                         legal_unit = factpulse.models.legal_unit_payload_included.legalUnitPayloadIncluded(
+                            siren = '702042755', 
                             business_name = 'Boulangerie Pascale', 
                             entity_type = 'Public', ), )
                     ]
