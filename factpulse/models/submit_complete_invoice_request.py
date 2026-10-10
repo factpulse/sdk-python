@@ -21,17 +21,18 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.destination import Destination
+from factpulse.models.invoicedata import Invoicedata
 from factpulse.models.processing_options import ProcessingOptions
 from factpulse.models.signature_parameters import SignatureParameters
-from factpulse.models.simplified_invoice_data import SimplifiedInvoiceData
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class SubmitCompleteInvoiceRequest(BaseModel):
     """
     Request to submit a complete invoice (generation + submission).  Workflow: 1. Auto-enrichment (optional) 2. Factur-X PDF generation 3. Signature (optional) 4. Submission to destination
     """ # noqa: E501
-    invoice_data: SimplifiedInvoiceData = Field(description="Invoice data in simplified format (see examples)", alias="invoiceData")
+    invoice_data: Invoicedata = Field(alias="invoiceData")
     source_pdf: StrictStr = Field(description="Base64-encoded source PDF (will be transformed to Factur-X)", alias="sourcePdf")
     destination: Destination
     signature: Optional[SignatureParameters] = None
@@ -52,8 +53,7 @@ class SubmitCompleteInvoiceRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -107,7 +107,7 @@ class SubmitCompleteInvoiceRequest(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "invoiceData": SimplifiedInvoiceData.from_dict(obj["invoiceData"]) if obj.get("invoiceData") is not None else None,
+            "invoiceData": Invoicedata.from_dict(obj["invoiceData"]) if obj.get("invoiceData") is not None else None,
             "sourcePdf": obj.get("sourcePdf"),
             "destination": Destination.from_dict(obj["destination"]) if obj.get("destination") is not None else None,
             "signature": SignatureParameters.from_dict(obj["signature"]) if obj.get("signature") is not None else None,

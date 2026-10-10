@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**op** | [**AFNORContainsOrStrictOperator**](AFNORContainsOrStrictOperator.md) |  | [optional] 
+**op** | [**AFNORContainsOrStrictOrStartWithOperator**](AFNORContainsOrStrictOrStartWithOperator.md) |  | [optional] 
 **value** | **str** | Business name | [optional] 
 
 ## Example

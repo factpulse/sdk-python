@@ -53,7 +53,7 @@ class TestAFNORSiretSearchPost200Response(unittest.TestCase):
                     fields = [siret, siren, name, facilityType, administrativeStatus, siretInstructions, address, pmStatus, pmOnly, managesPaymentStatus, managesLegalCommitment, managesLegalCommitmentOrService, serviceCodeStatus], 
                     include = [siren], 
                     limit = 50, 
-                    ignore = 20, ),
+                    ignore = 0, ),
                 total_number_of_results = 1500,
                 results = [
                     factpulse.models.facility_payload_history.facilityPayloadHistory(
@@ -83,7 +83,9 @@ class TestAFNORSiretSearchPost200Response(unittest.TestCase):
                         legal_unit = factpulse.models.legal_unit_payload_included.legalUnitPayloadIncluded(
                             siren = '702042755', 
                             business_name = 'Boulangerie Pascale', 
-                            entity_type = 'Public', ), )
+                            entity_type = 'Public', 
+                            instructions = factpulse.models.afnor_siren_instructions.AFNOR_sirenInstructions(
+                                is_sales_prospecting_forbidden = False, ), ), )
                     ]
             )
         else:

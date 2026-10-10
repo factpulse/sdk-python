@@ -41,6 +41,8 @@ class TestAFNORFacilityPayloadIncluded(unittest.TestCase):
                 name = 'Boulangerie Pascale',
                 facility_type = 'P',
                 administrative_status = 'A',
+                instructions = factpulse.models.afnor_siret_instructions.AFNOR_siretInstructions(
+                    is_sales_prospecting_forbidden = False, ),
                 address = factpulse.models.afnor_address_read.AFNOR_addressRead(
                     address_line1 = '16 BIS RUE HENRI BARBUSSE', 
                     address_line2 = 'CEDEX 1', 

@@ -1,21 +1,21 @@
 # SimplifiedInvoiceData
 
-Simplified invoice data (minimal format for auto-enrichment).
+Simplified invoice data (minimal format for auto-enrichment).  Any field of the complete `FacturXInvoice` model may be added on top of the fields declared below (`deliveryDate` BT-72, `deliveryParty` BG-15, `paymentReference` BT-83, `payee` BG-10, ...): extra keys are kept and merged by `FacturXInvoice.create_from_simplified_dict`. Whatever the simplified format computes itself (totals, lines, addresses) always wins.
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **number** | **str** | Unique invoice number | 
-**supplier** | **Dict[str, object]** | Supplier information (siret, iban, ...) | 
-**recipient** | **Dict[str, object]** | Recipient information (siret, ...) | 
+**supplier** | **Dict[str, object]** | Supplier information (siret, iban, bic, routingAddress, ...). For a seller without an intra-community VAT number (VAT franchise, article 293 B of the CGI), provide &#x60;taxRegistrationId&#x60; (BT-32, usually the SIREN): it satisfies BR-E-02 and prevents BT-31 from being auto-calculated. | 
+**recipient** | **Dict[str, object]** | Recipient information (siret, vatNumber for BT-48, ...) | 
 **lines** | **List[Dict[str, object]]** | Invoice lines | 
 **var_date** | **str** |  | [optional] 
 **due_days** | **int** | Due date in days (default: 30) | [optional] [default to 30]
 **comment** | **str** |  | [optional] 
 **purchase_order_reference** | **str** |  | [optional] 
 **contract_reference** | **str** |  | [optional] 
-**invoice_type** | [**InvoiceTypeCode**](InvoiceTypeCode.md) | Document type (UNTDID 1001). Default: 380 (Invoice). | [optional] 
+**invoice_type** | [**FactureElectroniqueModelsInvoiceTypeCode**](FactureElectroniqueModelsInvoiceTypeCode.md) | Document type (UNTDID 1001). Default: 380 (Invoice). | [optional] 
 **preceding_invoice_reference** | **str** |  | [optional] 
 **operation_nature** | [**OperationNature**](OperationNature.md) |  | [optional] 
 **invoicing_framework** | [**InvoicingFrameworkCode**](InvoicingFrameworkCode.md) |  | [optional] 

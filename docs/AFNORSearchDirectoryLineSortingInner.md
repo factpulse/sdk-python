@@ -7,7 +7,7 @@ A sort criteria composed of a field and an order (ascending or descending).
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **var_field** | [**AFNORDirectoryLineField**](AFNORDirectoryLineField.md) |  | [optional] 
-**sorting_order** | [**AFNORSortingOrder**](AFNORSortingOrder.md) |  | [optional] 
+**order** | [**AFNORSortingOrder**](AFNORSortingOrder.md) |  | [optional] 
 
 ## Example
 

@@ -23,6 +23,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ReportSender(BaseModel):
     """
@@ -30,8 +31,9 @@ class ReportSender(BaseModel):
     """ # noqa: E501
     siren: Annotated[str, Field(min_length=9, strict=True, max_length=14)] = Field(description="SIREN or SIRET number of the sender (PA or company)")
     name: StrictStr = Field(description="Company name")
+    scheme_id: Optional[StrictStr] = Field(default=None, alias="schemeId")
     vat_id: Optional[StrictStr] = Field(default=None, alias="vatId")
-    __properties: ClassVar[List[str]] = ["siren", "name", "vatId"]
+    __properties: ClassVar[List[str]] = ["siren", "name", "schemeId", "vatId"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -47,8 +49,7 @@ class ReportSender(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -73,6 +74,11 @@ class ReportSender(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # set to None if scheme_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.scheme_id is None and "scheme_id" in self.model_fields_set:
+            _dict['schemeId'] = None
+
         # set to None if vat_id (nullable) is None
         # and model_fields_set contains the field
         if self.vat_id is None and "vat_id" in self.model_fields_set:
@@ -92,6 +98,7 @@ class ReportSender(BaseModel):
         _obj = cls.model_validate({
             "siren": obj.get("siren"),
             "name": obj.get("name"),
+            "schemeId": obj.get("schemeId"),
             "vatId": obj.get("vatId")
         })
         return _obj

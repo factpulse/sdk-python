@@ -23,6 +23,7 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class LifecycleEvent(BaseModel):
     """
@@ -32,6 +33,7 @@ class LifecycleEvent(BaseModel):
     status_code: StrictStr = Field(description="Code statut (200-601)", alias="statusCode")
     status_description: Optional[StrictStr] = Field(default=None, alias="statusDescription")
     ack_status: Optional[StrictStr] = Field(default=None, alias="ackStatus")
+    flow_direction: Optional[StrictStr] = Field(default=None, alias="flowDirection")
     at: Optional[StrictStr] = None
     document_id: Optional[StrictStr] = Field(default=None, alias="documentId")
     amount: Optional[Annotated[str, Field(strict=True)]] = None
@@ -39,7 +41,7 @@ class LifecycleEvent(BaseModel):
     issuer_siren: Optional[StrictStr] = Field(default=None, alias="issuerSiren")
     issuer_role: Optional[StrictStr] = Field(default=None, alias="issuerRole")
     reason_code: Optional[StrictStr] = Field(default=None, alias="reasonCode")
-    __properties: ClassVar[List[str]] = ["flowId", "statusCode", "statusDescription", "ackStatus", "at", "documentId", "amount", "currency", "issuerSiren", "issuerRole", "reasonCode"]
+    __properties: ClassVar[List[str]] = ["flowId", "statusCode", "statusDescription", "ackStatus", "flowDirection", "at", "documentId", "amount", "currency", "issuerSiren", "issuerRole", "reasonCode"]
 
     @field_validator('amount')
     def amount_validate_regular_expression(cls, value):
@@ -65,8 +67,7 @@ class LifecycleEvent(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -100,6 +101,11 @@ class LifecycleEvent(BaseModel):
         # and model_fields_set contains the field
         if self.ack_status is None and "ack_status" in self.model_fields_set:
             _dict['ackStatus'] = None
+
+        # set to None if flow_direction (nullable) is None
+        # and model_fields_set contains the field
+        if self.flow_direction is None and "flow_direction" in self.model_fields_set:
+            _dict['flowDirection'] = None
 
         # set to None if at (nullable) is None
         # and model_fields_set contains the field
@@ -152,6 +158,7 @@ class LifecycleEvent(BaseModel):
             "statusCode": obj.get("statusCode"),
             "statusDescription": obj.get("statusDescription"),
             "ackStatus": obj.get("ackStatus"),
+            "flowDirection": obj.get("flowDirection"),
             "at": obj.get("at"),
             "documentId": obj.get("documentId"),
             "amount": obj.get("amount"),

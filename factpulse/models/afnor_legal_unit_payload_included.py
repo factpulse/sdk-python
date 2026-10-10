@@ -23,8 +23,10 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from factpulse.models.afnor_entity_type import AFNOREntityType
 from factpulse.models.afnor_legal_unit_administrative_status import AFNORLegalUnitAdministrativeStatus
+from factpulse.models.afnor_siren_instructions import AFNORSirenInstructions
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORLegalUnitPayloadIncluded(BaseModel):
     """
@@ -34,7 +36,8 @@ class AFNORLegalUnitPayloadIncluded(BaseModel):
     business_name: Optional[Annotated[str, Field(strict=True, max_length=150)]] = Field(default=None, description="Business name", alias="businessName")
     entity_type: Optional[AFNOREntityType] = Field(default=None, alias="entityType")
     administrative_status: Optional[AFNORLegalUnitAdministrativeStatus] = Field(default=None, alias="administrativeStatus")
-    __properties: ClassVar[List[str]] = ["siren", "businessName", "entityType", "administrativeStatus"]
+    instructions: Optional[AFNORSirenInstructions] = None
+    __properties: ClassVar[List[str]] = ["siren", "businessName", "entityType", "administrativeStatus", "instructions"]
 
     @field_validator('siren')
     def siren_validate_regular_expression(cls, value):
@@ -60,8 +63,7 @@ class AFNORLegalUnitPayloadIncluded(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -86,6 +88,9 @@ class AFNORLegalUnitPayloadIncluded(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of instructions
+        if self.instructions:
+            _dict['instructions'] = self.instructions.to_dict()
         return _dict
 
     @classmethod
@@ -101,7 +106,8 @@ class AFNORLegalUnitPayloadIncluded(BaseModel):
             "siren": obj.get("siren"),
             "businessName": obj.get("businessName"),
             "entityType": obj.get("entityType"),
-            "administrativeStatus": obj.get("administrativeStatus")
+            "administrativeStatus": obj.get("administrativeStatus"),
+            "instructions": AFNORSirenInstructions.from_dict(obj["instructions"]) if obj.get("instructions") is not None else None
         })
         return _obj
 

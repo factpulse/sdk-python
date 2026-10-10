@@ -20,9 +20,10 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
-from factpulse.models.postal_address import PostalAddress
+from factpulse.models.postal_address_input import PostalAddressInput
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class TaxRepresentative(BaseModel):
     """
@@ -30,7 +31,7 @@ class TaxRepresentative(BaseModel):
     """ # noqa: E501
     name: StrictStr = Field(description="Tax representative name (BT-62).")
     vat_number: StrictStr = Field(description="Tax representative VAT identifier (BT-63).")
-    postal_address: PostalAddress = Field(description="Tax representative postal address (BG-12).")
+    postal_address: PostalAddressInput = Field(description="Tax representative postal address (BG-12).")
     __properties: ClassVar[List[str]] = ["name", "vat_number", "postal_address"]
 
     model_config = ConfigDict(
@@ -47,8 +48,7 @@ class TaxRepresentative(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -90,7 +90,7 @@ class TaxRepresentative(BaseModel):
         _obj = cls.model_validate({
             "name": obj.get("name"),
             "vat_number": obj.get("vat_number"),
-            "postal_address": PostalAddress.from_dict(obj["postal_address"]) if obj.get("postal_address") is not None else None
+            "postal_address": PostalAddressInput.from_dict(obj["postal_address"]) if obj.get("postal_address") is not None else None
         })
         return _obj
 

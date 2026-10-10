@@ -55,6 +55,13 @@ class TestClientManagementApi(unittest.TestCase):
         """
         pass
 
+    def test_disconnect_superpdp_api_v1_clients_uid_superpdp_delete(self) -> None:
+        """Test case for disconnect_superpdp_api_v1_clients_uid_superpdp_delete
+
+        Disconnect SuperPDP
+        """
+        pass
+
     def test_generate_webhook_secret_api_v1_clients_uid_webhook_secret_generate_post(self) -> None:
         """Test case for generate_webhook_secret_api_v1_clients_uid_webhook_secret_generate_post
 
@@ -73,6 +80,20 @@ class TestClientManagementApi(unittest.TestCase):
         """Test case for get_pdp_config_api_v1_clients_uid_pdp_config_get
 
         Get client PDP configuration
+        """
+        pass
+
+    def test_get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post(self) -> None:
+        """Test case for get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post
+
+        Get SuperPDP connection URL
+        """
+        pass
+
+    def test_get_superpdp_status_api_v1_clients_uid_superpdp_status_get(self) -> None:
+        """Test case for get_superpdp_status_api_v1_clients_uid_superpdp_status_get
+
+        Get SuperPDP connection status
         """
         pass
 

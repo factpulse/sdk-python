@@ -24,13 +24,15 @@ from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from factpulse.models.buyercountry import Buyercountry
 from factpulse.models.currency import Currency
-from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
+from factpulse.models.invoice_type_code import InvoiceTypeCode
 from factpulse.models.sellercountry import Sellercountry
 from factpulse.models.tax_breakdown_input import TaxBreakdownInput
 from factpulse.models.taxamount1 import Taxamount1
+from factpulse.models.taxamounteur import Taxamounteur
 from factpulse.models.taxexclusiveamount1 import Taxexclusiveamount1
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class InvoiceInput(BaseModel):
     """
@@ -38,7 +40,7 @@ class InvoiceInput(BaseModel):
     """ # noqa: E501
     invoice_id: StrictStr = Field(description="Invoice identifier", alias="invoiceId")
     issue_date: date = Field(description="Invoice issue date", alias="issueDate")
-    type_code: Optional[FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode] = Field(default=None, description="Invoice type code", alias="typeCode")
+    type_code: Optional[InvoiceTypeCode] = Field(default=None, description="Invoice type code", alias="typeCode")
     currency: Optional[Currency] = None
     due_date: Optional[date] = Field(default=None, alias="dueDate")
     seller_id: Optional[StrictStr] = Field(default=None, alias="sellerId")
@@ -51,9 +53,11 @@ class InvoiceInput(BaseModel):
     tax_exclusive_amount: Taxexclusiveamount1 = Field(alias="taxExclusiveAmount")
     tax_amount: Taxamount1 = Field(alias="taxAmount")
     tax_breakdown: Annotated[List[TaxBreakdownInput], Field(min_length=1)] = Field(description="VAT breakdown", alias="taxBreakdown")
+    tax_amount_eur: Optional[Taxamounteur] = Field(default=None, alias="taxAmountEur")
+    business_process_id: Optional[StrictStr] = Field(default=None, alias="businessProcessId")
     referenced_invoice_id: Optional[StrictStr] = Field(default=None, alias="referencedInvoiceId")
     referenced_invoice_date: Optional[date] = Field(default=None, alias="referencedInvoiceDate")
-    __properties: ClassVar[List[str]] = ["invoiceId", "issueDate", "typeCode", "currency", "dueDate", "sellerId", "sellerSiren", "sellerVatId", "sellerCountry", "buyerId", "buyerVatId", "buyerCountry", "taxExclusiveAmount", "taxAmount", "taxBreakdown", "referencedInvoiceId", "referencedInvoiceDate"]
+    __properties: ClassVar[List[str]] = ["invoiceId", "issueDate", "typeCode", "currency", "dueDate", "sellerId", "sellerSiren", "sellerVatId", "sellerCountry", "buyerId", "buyerVatId", "buyerCountry", "taxExclusiveAmount", "taxAmount", "taxBreakdown", "taxAmountEur", "businessProcessId", "referencedInvoiceId", "referencedInvoiceDate"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -69,8 +73,7 @@ class InvoiceInput(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -117,6 +120,9 @@ class InvoiceInput(BaseModel):
                 if _item_tax_breakdown:
                     _items.append(_item_tax_breakdown.to_dict())
             _dict['taxBreakdown'] = _items
+        # override the default output from pydantic by calling `to_dict()` of tax_amount_eur
+        if self.tax_amount_eur:
+            _dict['taxAmountEur'] = self.tax_amount_eur.to_dict()
         # set to None if due_date (nullable) is None
         # and model_fields_set contains the field
         if self.due_date is None and "due_date" in self.model_fields_set:
@@ -146,6 +152,16 @@ class InvoiceInput(BaseModel):
         # and model_fields_set contains the field
         if self.buyer_vat_id is None and "buyer_vat_id" in self.model_fields_set:
             _dict['buyerVatId'] = None
+
+        # set to None if tax_amount_eur (nullable) is None
+        # and model_fields_set contains the field
+        if self.tax_amount_eur is None and "tax_amount_eur" in self.model_fields_set:
+            _dict['taxAmountEur'] = None
+
+        # set to None if business_process_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.business_process_id is None and "business_process_id" in self.model_fields_set:
+            _dict['businessProcessId'] = None
 
         # set to None if referenced_invoice_id (nullable) is None
         # and model_fields_set contains the field
@@ -184,6 +200,8 @@ class InvoiceInput(BaseModel):
             "taxExclusiveAmount": Taxexclusiveamount1.from_dict(obj["taxExclusiveAmount"]) if obj.get("taxExclusiveAmount") is not None else None,
             "taxAmount": Taxamount1.from_dict(obj["taxAmount"]) if obj.get("taxAmount") is not None else None,
             "taxBreakdown": [TaxBreakdownInput.from_dict(_item) for _item in obj["taxBreakdown"]] if obj.get("taxBreakdown") is not None else None,
+            "taxAmountEur": Taxamounteur.from_dict(obj["taxAmountEur"]) if obj.get("taxAmountEur") is not None else None,
+            "businessProcessId": obj.get("businessProcessId"),
             "referencedInvoiceId": obj.get("referencedInvoiceId"),
             "referencedInvoiceDate": obj.get("referencedInvoiceDate")
         })

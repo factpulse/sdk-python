@@ -18,20 +18,23 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List
-from factpulse.models.amount1 import Amount1
+from pydantic import BaseModel, ConfigDict, Field
+from typing import Any, ClassVar, Dict, List, Optional
+from factpulse.models.amount2 import Amount2
+from factpulse.models.amounteur import Amounteur
 from factpulse.models.rate import Rate
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PaymentAmountByRate(BaseModel):
     """
     Payment amount for a specific VAT rate.
     """ # noqa: E501
     rate: Rate
-    amount: Amount1
-    __properties: ClassVar[List[str]] = ["rate", "amount"]
+    amount: Amount2
+    amount_eur: Optional[Amounteur] = Field(default=None, alias="amountEur")
+    __properties: ClassVar[List[str]] = ["rate", "amount", "amountEur"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -47,8 +50,7 @@ class PaymentAmountByRate(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -79,6 +81,14 @@ class PaymentAmountByRate(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of amount
         if self.amount:
             _dict['amount'] = self.amount.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of amount_eur
+        if self.amount_eur:
+            _dict['amountEur'] = self.amount_eur.to_dict()
+        # set to None if amount_eur (nullable) is None
+        # and model_fields_set contains the field
+        if self.amount_eur is None and "amount_eur" in self.model_fields_set:
+            _dict['amountEur'] = None
+
         return _dict
 
     @classmethod
@@ -92,7 +102,8 @@ class PaymentAmountByRate(BaseModel):
 
         _obj = cls.model_validate({
             "rate": Rate.from_dict(obj["rate"]) if obj.get("rate") is not None else None,
-            "amount": Amount1.from_dict(obj["amount"]) if obj.get("amount") is not None else None
+            "amount": Amount2.from_dict(obj["amount"]) if obj.get("amount") is not None else None,
+            "amountEur": Amounteur.from_dict(obj["amountEur"]) if obj.get("amountEur") is not None else None
         })
         return _obj
 

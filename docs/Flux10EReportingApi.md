@@ -444,7 +444,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post**
-> SubmitEReportingResponse submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post(submit_aggregated_report_request)
+> SubmitEReportingResponse submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post(submit_aggregated_report_request, organization_id=organization_id)
 
 Submit aggregated e-reporting to PA/PDP
 
@@ -485,10 +485,11 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.Flux10EReportingApi(api_client)
     submit_aggregated_report_request = factpulse.SubmitAggregatedReportRequest() # SubmitAggregatedReportRequest | 
+    organization_id = 'organization_id_example' # str | Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. (optional)
 
     try:
         # Submit aggregated e-reporting to PA/PDP
-        api_response = api_instance.submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post(submit_aggregated_report_request)
+        api_response = api_instance.submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post(submit_aggregated_report_request, organization_id=organization_id)
         print("The response of Flux10EReportingApi->submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -503,6 +504,7 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **submit_aggregated_report_request** | [**SubmitAggregatedReportRequest**](SubmitAggregatedReportRequest.md)|  | 
+ **organization_id** | **str**| Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. | [optional] 
 
 ### Return type
 
@@ -530,7 +532,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_ereporting_api_v1_ereporting_submit_post**
-> SubmitEReportingResponse submit_ereporting_api_v1_ereporting_submit_post(submit_e_reporting_request)
+> SubmitEReportingResponse submit_ereporting_api_v1_ereporting_submit_post(submit_e_reporting_request, organization_id=organization_id)
 
 Submit e-reporting to PA/PDP
 
@@ -575,10 +577,11 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.Flux10EReportingApi(api_client)
     submit_e_reporting_request = factpulse.SubmitEReportingRequest() # SubmitEReportingRequest | 
+    organization_id = 'organization_id_example' # str | Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. (optional)
 
     try:
         # Submit e-reporting to PA/PDP
-        api_response = api_instance.submit_ereporting_api_v1_ereporting_submit_post(submit_e_reporting_request)
+        api_response = api_instance.submit_ereporting_api_v1_ereporting_submit_post(submit_e_reporting_request, organization_id=organization_id)
         print("The response of Flux10EReportingApi->submit_ereporting_api_v1_ereporting_submit_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -593,6 +596,7 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **submit_e_reporting_request** | [**SubmitEReportingRequest**](SubmitEReportingRequest.md)|  | 
+ **organization_id** | **str**| Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. | [optional] 
 
 ### Return type
 
@@ -620,7 +624,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_xml_ereporting_api_v1_ereporting_submit_xml_post**
-> SubmitEReportingResponse submit_xml_ereporting_api_v1_ereporting_submit_xml_post(xml_file, tracking_id=tracking_id, skip_validation=skip_validation, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret)
+> SubmitEReportingResponse submit_xml_ereporting_api_v1_ereporting_submit_xml_post(xml_file, organization_id=organization_id, tracking_id=tracking_id, skip_validation=skip_validation, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret)
 
 Submit pre-generated e-reporting XML
 
@@ -668,6 +672,7 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.Flux10EReportingApi(api_client)
     xml_file = None # bytes | E-reporting XML file
+    organization_id = 'organization_id_example' # str | Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. (optional)
     tracking_id = 'tracking_id_example' # str |  (optional)
     skip_validation = False # bool | Skip XSD validation (optional) (default to False)
     pdp_flow_service_url = 'pdp_flow_service_url_example' # str |  (optional)
@@ -677,7 +682,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
     try:
         # Submit pre-generated e-reporting XML
-        api_response = api_instance.submit_xml_ereporting_api_v1_ereporting_submit_xml_post(xml_file, tracking_id=tracking_id, skip_validation=skip_validation, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret)
+        api_response = api_instance.submit_xml_ereporting_api_v1_ereporting_submit_xml_post(xml_file, organization_id=organization_id, tracking_id=tracking_id, skip_validation=skip_validation, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret)
         print("The response of Flux10EReportingApi->submit_xml_ereporting_api_v1_ereporting_submit_xml_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -692,6 +697,7 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **xml_file** | **bytes**| E-reporting XML file | 
+ **organization_id** | **str**| Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. | [optional] 
  **tracking_id** | **str**|  | [optional] 
  **skip_validation** | **bool**| Skip XSD validation | [optional] [default to False]
  **pdp_flow_service_url** | **str**|  | [optional] 

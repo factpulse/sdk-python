@@ -18,23 +18,24 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class PostalAddress(BaseModel):
     """
     Represents a postal address (BG-5, BG-8, BG-12, BG-15).
     """ # noqa: E501
-    postal_code: Optional[StrictStr] = Field(default=None, alias="postalCode")
-    line_one: Optional[StrictStr] = Field(default=None, alias="lineOne")
-    line_two: Optional[StrictStr] = Field(default=None, alias="lineTwo")
-    line_three: Optional[StrictStr] = Field(default=None, alias="lineThree")
+    postal_code: Optional[StrictStr] = None
+    line_one: Optional[StrictStr] = None
+    line_two: Optional[StrictStr] = None
+    line_three: Optional[StrictStr] = None
     city: Optional[StrictStr] = None
-    country_code: Optional[StrictStr] = Field(default=None, alias="countryCode")
-    country_subdivision: Optional[StrictStr] = Field(default=None, alias="countrySubdivision")
-    __properties: ClassVar[List[str]] = ["postalCode", "lineOne", "lineTwo", "lineThree", "city", "countryCode", "countrySubdivision"]
+    country_code: Optional[StrictStr] = None
+    country_subdivision: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["postal_code", "line_one", "line_two", "line_three", "city", "country_code", "country_subdivision"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -50,8 +51,7 @@ class PostalAddress(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -79,22 +79,22 @@ class PostalAddress(BaseModel):
         # set to None if postal_code (nullable) is None
         # and model_fields_set contains the field
         if self.postal_code is None and "postal_code" in self.model_fields_set:
-            _dict['postalCode'] = None
+            _dict['postal_code'] = None
 
         # set to None if line_one (nullable) is None
         # and model_fields_set contains the field
         if self.line_one is None and "line_one" in self.model_fields_set:
-            _dict['lineOne'] = None
+            _dict['line_one'] = None
 
         # set to None if line_two (nullable) is None
         # and model_fields_set contains the field
         if self.line_two is None and "line_two" in self.model_fields_set:
-            _dict['lineTwo'] = None
+            _dict['line_two'] = None
 
         # set to None if line_three (nullable) is None
         # and model_fields_set contains the field
         if self.line_three is None and "line_three" in self.model_fields_set:
-            _dict['lineThree'] = None
+            _dict['line_three'] = None
 
         # set to None if city (nullable) is None
         # and model_fields_set contains the field
@@ -104,12 +104,12 @@ class PostalAddress(BaseModel):
         # set to None if country_code (nullable) is None
         # and model_fields_set contains the field
         if self.country_code is None and "country_code" in self.model_fields_set:
-            _dict['countryCode'] = None
+            _dict['country_code'] = None
 
         # set to None if country_subdivision (nullable) is None
         # and model_fields_set contains the field
         if self.country_subdivision is None and "country_subdivision" in self.model_fields_set:
-            _dict['countrySubdivision'] = None
+            _dict['country_subdivision'] = None
 
         return _dict
 
@@ -123,13 +123,13 @@ class PostalAddress(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "postalCode": obj.get("postalCode"),
-            "lineOne": obj.get("lineOne"),
-            "lineTwo": obj.get("lineTwo"),
-            "lineThree": obj.get("lineThree"),
+            "postal_code": obj.get("postal_code"),
+            "line_one": obj.get("line_one"),
+            "line_two": obj.get("line_two"),
+            "line_three": obj.get("line_three"),
             "city": obj.get("city"),
-            "countryCode": obj.get("countryCode"),
-            "countrySubdivision": obj.get("countrySubdivision")
+            "country_code": obj.get("country_code"),
+            "country_subdivision": obj.get("country_subdivision")
         })
         return _obj
 

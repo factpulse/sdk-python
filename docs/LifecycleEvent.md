@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **status_code** | **str** | Code statut (200-601) | 
 **status_description** | **str** |  | [optional] 
 **ack_status** | **str** |  | [optional] 
+**flow_direction** | **str** |  | [optional] 
 **at** | **str** |  | [optional] 
 **document_id** | **str** |  | [optional] 
 **amount** | **str** |  | [optional] 

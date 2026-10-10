@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.3.0"
+__version__ = "4.4.0"
 
 # Define package exports
 __all__ = [
@@ -49,14 +49,9 @@ __all__ = [
     "AFNORAcknowledgement",
     "AFNORAcknowledgementDetail",
     "AFNORAddressRead",
-    "AFNORAlgorithm",
-    "AFNORBasicAuthentication",
-    "AFNORCallbackAuthentication",
-    "AFNORCallbackHeader",
-    "AFNORCallbackParameters",
-    "AFNORCallbackSignature",
-    "AFNORContainsOperator",
+    "AFNORContainsOrStartWithOperator",
     "AFNORContainsOrStrictOperator",
+    "AFNORContainsOrStrictOrStartWithOperator",
     "AFNORCoreFlowInfo",
     "AFNORCredentials",
     "AFNORDestination",
@@ -89,7 +84,6 @@ __all__ = [
     "AFNORLegalUnitAdministrativeStatus",
     "AFNORLegalUnitPayloadHistory",
     "AFNORLegalUnitPayloadIncluded",
-    "AFNOROAuth2Authentication",
     "AFNORProcessingRule",
     "AFNORReasonCode",
     "AFNORReasonCodeEnum",
@@ -140,11 +134,10 @@ __all__ = [
     "AFNORSortingOrder",
     "AFNORStrictOperator",
     "AFNORStrictOrStartWithOperator",
+    "AFNORUniqueDirectoryLineStatus",
     "AFNORWebhook",
     "AFNORWebhookIdParam",
-    "AFNORWebhookMetadata",
     "AFNORWebhookParams",
-    "AFNORWebhookPatchPayload",
     "APIError",
     "APIProfile",
     "AcknowledgmentStatus",
@@ -161,6 +154,7 @@ __all__ = [
     "Amount1",
     "Amount2",
     "AmountDue",
+    "Amounteur",
     "AsyncTaskStatus",
     "BaseAmount",
     "BoundingBoxSchema",
@@ -201,6 +195,8 @@ __all__ = [
     "EReportingFlowType",
     "EReportingValidationError",
     "ElectronicAddress",
+    "ElectronicAddressInput",
+    "ElectronicAddressOutput",
     "Encaisseamount",
     "Encaisseamount1",
     "EncaisseeRequest",
@@ -210,9 +206,9 @@ __all__ = [
     "ExtractionInfo",
     "FacturXInvoice",
     "FacturXPDFInfo",
+    "FactureElectroniqueModelsInvoiceTypeCode",
     "FactureElectroniqueRestApiSchemasCdarValidationErrorResponse",
-    "FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode",
-    "FactureElectroniqueRestApiSchemasProcessingChorusProCredentials",
+    "FactureElectroniqueRestApiSchemasChorusProChorusProCredentials",
     "FieldStatus",
     "FileInfo",
     "FilesInfo",
@@ -253,6 +249,7 @@ __all__ = [
     "InvoiceTotalsPrepayment",
     "InvoiceTypeCode",
     "InvoiceTypeCodeOutput",
+    "Invoicedata",
     "InvoicingFramework",
     "InvoicingFrameworkCode",
     "IssuerRoleCode",
@@ -282,6 +279,8 @@ __all__ = [
     "PaymentMeans",
     "Percentage",
     "PostalAddress",
+    "PostalAddressInput",
+    "PostalAddressOutput",
     "PriceAllowanceAmount",
     "PriceBasisQuantity",
     "ProcessingOptions",
@@ -338,6 +337,9 @@ __all__ = [
     "SubmitInvoiceResponse",
     "SubmitNetAmount",
     "SubmitVatAmount",
+    "SuperPDPConnectURLResponse",
+    "SuperPDPDisconnectResponse",
+    "SuperPDPStatusResponse",
     "SupplementaryAttachment",
     "Supplier",
     "TaskErrorResult",
@@ -350,6 +352,7 @@ __all__ = [
     "Taxamount",
     "Taxamount1",
     "Taxamount2",
+    "Taxamounteur",
     "Taxexclusiveamount",
     "Taxexclusiveamount1",
     "TotalGrossAmount",
@@ -424,14 +427,9 @@ from factpulse.exceptions import ApiException as ApiException
 from factpulse.models.afnor_acknowledgement import AFNORAcknowledgement as AFNORAcknowledgement
 from factpulse.models.afnor_acknowledgement_detail import AFNORAcknowledgementDetail as AFNORAcknowledgementDetail
 from factpulse.models.afnor_address_read import AFNORAddressRead as AFNORAddressRead
-from factpulse.models.afnor_algorithm import AFNORAlgorithm as AFNORAlgorithm
-from factpulse.models.afnor_basic_authentication import AFNORBasicAuthentication as AFNORBasicAuthentication
-from factpulse.models.afnor_callback_authentication import AFNORCallbackAuthentication as AFNORCallbackAuthentication
-from factpulse.models.afnor_callback_header import AFNORCallbackHeader as AFNORCallbackHeader
-from factpulse.models.afnor_callback_parameters import AFNORCallbackParameters as AFNORCallbackParameters
-from factpulse.models.afnor_callback_signature import AFNORCallbackSignature as AFNORCallbackSignature
-from factpulse.models.afnor_contains_operator import AFNORContainsOperator as AFNORContainsOperator
+from factpulse.models.afnor_contains_or_start_with_operator import AFNORContainsOrStartWithOperator as AFNORContainsOrStartWithOperator
 from factpulse.models.afnor_contains_or_strict_operator import AFNORContainsOrStrictOperator as AFNORContainsOrStrictOperator
+from factpulse.models.afnor_contains_or_strict_or_start_with_operator import AFNORContainsOrStrictOrStartWithOperator as AFNORContainsOrStrictOrStartWithOperator
 from factpulse.models.afnor_core_flow_info import AFNORCoreFlowInfo as AFNORCoreFlowInfo
 from factpulse.models.afnor_credentials import AFNORCredentials as AFNORCredentials
 from factpulse.models.afnor_destination import AFNORDestination as AFNORDestination
@@ -464,7 +462,6 @@ from factpulse.models.afnor_health_check_response import AFNORHealthCheckRespons
 from factpulse.models.afnor_legal_unit_administrative_status import AFNORLegalUnitAdministrativeStatus as AFNORLegalUnitAdministrativeStatus
 from factpulse.models.afnor_legal_unit_payload_history import AFNORLegalUnitPayloadHistory as AFNORLegalUnitPayloadHistory
 from factpulse.models.afnor_legal_unit_payload_included import AFNORLegalUnitPayloadIncluded as AFNORLegalUnitPayloadIncluded
-from factpulse.models.afnoro_auth2_authentication import AFNOROAuth2Authentication as AFNOROAuth2Authentication
 from factpulse.models.afnor_processing_rule import AFNORProcessingRule as AFNORProcessingRule
 from factpulse.models.afnor_reason_code import AFNORReasonCode as AFNORReasonCode
 from factpulse.models.afnor_reason_code_enum import AFNORReasonCodeEnum as AFNORReasonCodeEnum
@@ -515,11 +512,10 @@ from factpulse.models.afnor_siret_search_post200_response import AFNORSiretSearc
 from factpulse.models.afnor_sorting_order import AFNORSortingOrder as AFNORSortingOrder
 from factpulse.models.afnor_strict_operator import AFNORStrictOperator as AFNORStrictOperator
 from factpulse.models.afnor_strict_or_start_with_operator import AFNORStrictOrStartWithOperator as AFNORStrictOrStartWithOperator
+from factpulse.models.afnor_unique_directory_line_status import AFNORUniqueDirectoryLineStatus as AFNORUniqueDirectoryLineStatus
 from factpulse.models.afnor_webhook import AFNORWebhook as AFNORWebhook
 from factpulse.models.afnor_webhook_id_param import AFNORWebhookIdParam as AFNORWebhookIdParam
-from factpulse.models.afnor_webhook_metadata import AFNORWebhookMetadata as AFNORWebhookMetadata
 from factpulse.models.afnor_webhook_params import AFNORWebhookParams as AFNORWebhookParams
-from factpulse.models.afnor_webhook_patch_payload import AFNORWebhookPatchPayload as AFNORWebhookPatchPayload
 from factpulse.models.api_error import APIError as APIError
 from factpulse.models.api_profile import APIProfile as APIProfile
 from factpulse.models.acknowledgment_status import AcknowledgmentStatus as AcknowledgmentStatus
@@ -536,6 +532,7 @@ from factpulse.models.amount import Amount as Amount
 from factpulse.models.amount1 import Amount1 as Amount1
 from factpulse.models.amount2 import Amount2 as Amount2
 from factpulse.models.amount_due import AmountDue as AmountDue
+from factpulse.models.amounteur import Amounteur as Amounteur
 from factpulse.models.async_task_status import AsyncTaskStatus as AsyncTaskStatus
 from factpulse.models.base_amount import BaseAmount as BaseAmount
 from factpulse.models.bounding_box_schema import BoundingBoxSchema as BoundingBoxSchema
@@ -576,6 +573,8 @@ from factpulse.models.document_type_info import DocumentTypeInfo as DocumentType
 from factpulse.models.e_reporting_flow_type import EReportingFlowType as EReportingFlowType
 from factpulse.models.e_reporting_validation_error import EReportingValidationError as EReportingValidationError
 from factpulse.models.electronic_address import ElectronicAddress as ElectronicAddress
+from factpulse.models.electronic_address_input import ElectronicAddressInput as ElectronicAddressInput
+from factpulse.models.electronic_address_output import ElectronicAddressOutput as ElectronicAddressOutput
 from factpulse.models.encaisseamount import Encaisseamount as Encaisseamount
 from factpulse.models.encaisseamount1 import Encaisseamount1 as Encaisseamount1
 from factpulse.models.encaissee_request import EncaisseeRequest as EncaisseeRequest
@@ -585,9 +584,9 @@ from factpulse.models.error_source import ErrorSource as ErrorSource
 from factpulse.models.extraction_info import ExtractionInfo as ExtractionInfo
 from factpulse.models.factur_x_invoice import FacturXInvoice as FacturXInvoice
 from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
+from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode as FactureElectroniqueModelsInvoiceTypeCode
 from factpulse.models.facture_electronique_rest_api_schemas_cdar_validation_error_response import FactureElectroniqueRestApiSchemasCdarValidationErrorResponse as FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
-from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode as FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
-from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials as FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
+from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials as FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
 from factpulse.models.field_status import FieldStatus as FieldStatus
 from factpulse.models.file_info import FileInfo as FileInfo
 from factpulse.models.files_info import FilesInfo as FilesInfo
@@ -628,6 +627,7 @@ from factpulse.models.invoice_totals import InvoiceTotals as InvoiceTotals
 from factpulse.models.invoice_totals_prepayment import InvoiceTotalsPrepayment as InvoiceTotalsPrepayment
 from factpulse.models.invoice_type_code import InvoiceTypeCode as InvoiceTypeCode
 from factpulse.models.invoice_type_code_output import InvoiceTypeCodeOutput as InvoiceTypeCodeOutput
+from factpulse.models.invoicedata import Invoicedata as Invoicedata
 from factpulse.models.invoicing_framework import InvoicingFramework as InvoicingFramework
 from factpulse.models.invoicing_framework_code import InvoicingFrameworkCode as InvoicingFrameworkCode
 from factpulse.models.issuer_role_code import IssuerRoleCode as IssuerRoleCode
@@ -657,6 +657,8 @@ from factpulse.models.payment_card import PaymentCard as PaymentCard
 from factpulse.models.payment_means import PaymentMeans as PaymentMeans
 from factpulse.models.percentage import Percentage as Percentage
 from factpulse.models.postal_address import PostalAddress as PostalAddress
+from factpulse.models.postal_address_input import PostalAddressInput as PostalAddressInput
+from factpulse.models.postal_address_output import PostalAddressOutput as PostalAddressOutput
 from factpulse.models.price_allowance_amount import PriceAllowanceAmount as PriceAllowanceAmount
 from factpulse.models.price_basis_quantity import PriceBasisQuantity as PriceBasisQuantity
 from factpulse.models.processing_options import ProcessingOptions as ProcessingOptions
@@ -713,6 +715,9 @@ from factpulse.models.submit_invoice_request import SubmitInvoiceRequest as Subm
 from factpulse.models.submit_invoice_response import SubmitInvoiceResponse as SubmitInvoiceResponse
 from factpulse.models.submit_net_amount import SubmitNetAmount as SubmitNetAmount
 from factpulse.models.submit_vat_amount import SubmitVatAmount as SubmitVatAmount
+from factpulse.models.super_pdp_connect_url_response import SuperPDPConnectURLResponse as SuperPDPConnectURLResponse
+from factpulse.models.super_pdp_disconnect_response import SuperPDPDisconnectResponse as SuperPDPDisconnectResponse
+from factpulse.models.super_pdp_status_response import SuperPDPStatusResponse as SuperPDPStatusResponse
 from factpulse.models.supplementary_attachment import SupplementaryAttachment as SupplementaryAttachment
 from factpulse.models.supplier import Supplier as Supplier
 from factpulse.models.task_error_result import TaskErrorResult as TaskErrorResult
@@ -725,6 +730,7 @@ from factpulse.models.taxableamount import Taxableamount as Taxableamount
 from factpulse.models.taxamount import Taxamount as Taxamount
 from factpulse.models.taxamount1 import Taxamount1 as Taxamount1
 from factpulse.models.taxamount2 import Taxamount2 as Taxamount2
+from factpulse.models.taxamounteur import Taxamounteur as Taxamounteur
 from factpulse.models.taxexclusiveamount import Taxexclusiveamount as Taxexclusiveamount
 from factpulse.models.taxexclusiveamount1 import Taxexclusiveamount1 as Taxexclusiveamount1
 from factpulse.models.total_gross_amount import TotalGrossAmount as TotalGrossAmount

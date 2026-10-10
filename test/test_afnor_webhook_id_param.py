@@ -36,7 +36,9 @@ class TestAFNORWebhookIdParam(unittest.TestCase):
         model = AFNORWebhookIdParam()
         if include_optional:
             return AFNORWebhookIdParam(
-                webhook_id = ''
+                webhook_id = '',
+                signing_key = 'YQ==',
+                created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f')
             )
         else:
             return AFNORWebhookIdParam(

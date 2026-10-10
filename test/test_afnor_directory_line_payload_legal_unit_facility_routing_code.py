@@ -38,8 +38,10 @@ class TestAFNORDirectoryLinePayloadLegalUnitFacilityRoutingCode(unittest.TestCas
             return AFNORDirectoryLinePayloadLegalUnitFacilityRoutingCode(
                 addressing_identifier = 'dcsc456sdcsdcs556',
                 platform_type = 'WK',
+                directory_line_status = 'Enabled',
                 siren = '702042755',
                 siret = '70204275500240',
+                routing_identifier = 'dcsc456sdcsdcs556',
                 addressing_suffix = 'dcsc456sdcsdcs556',
                 routing_code = factpulse.models.afnor_directory_line_payload_history_legal_unit_facility_routing_code_routing_code.AFNOR_directoryLinePayloadHistoryLegalUnitFacilityRoutingCodeRoutingCode(
                     routing_identifier = 'dcsc456sdcsdcs556', 
@@ -60,13 +62,17 @@ class TestAFNORDirectoryLinePayloadLegalUnitFacilityRoutingCode(unittest.TestCas
                     siren = '702042755', 
                     business_name = 'Boulangerie Pascale', 
                     entity_type = 'Public', 
-                    administrative_status = 'A', ),
+                    administrative_status = 'A', 
+                    instructions = factpulse.models.afnor_siren_instructions.AFNOR_sirenInstructions(
+                        is_sales_prospecting_forbidden = False, ), ),
                 facility = factpulse.models.facility_payload_included.facilityPayloadIncluded(
                     siret = '70204275500240', 
                     siren = '702042755', 
                     name = 'Boulangerie Pascale', 
                     facility_type = 'P', 
                     administrative_status = 'A', 
+                    instructions = factpulse.models.afnor_siret_instructions.AFNOR_siretInstructions(
+                        is_sales_prospecting_forbidden = False, ), 
                     address = factpulse.models.afnor_address_read.AFNOR_addressRead(
                         address_line1 = '16 BIS RUE HENRI BARBUSSE', 
                         address_line2 = 'CEDEX 1', 

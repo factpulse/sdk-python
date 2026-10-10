@@ -26,12 +26,13 @@ from factpulse.models.afnor_flow_syntax import AFNORFlowSyntax
 from factpulse.models.afnor_processing_rule import AFNORProcessingRule
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORFlowInfo(BaseModel):
     """
     Signaling of the flow
     """ # noqa: E501
-    tracking_id: Optional[Annotated[str, Field(strict=True, max_length=36)]] = Field(default=None, description="The tracking id is an external identifier and is used to track the flow by the sender", alias="trackingId")
+    tracking_id: Optional[Annotated[str, Field(strict=True, max_length=64)]] = Field(default=None, description="The tracking id is an external identifier and is used to track the flow by the sender", alias="trackingId")
     name: Annotated[str, Field(strict=True, max_length=255)] = Field(description="Name of the file")
     processing_rule: Optional[AFNORProcessingRule] = Field(default=None, alias="processingRule")
     flow_syntax: AFNORFlowSyntax = Field(alias="flowSyntax")
@@ -63,8 +64,7 @@ class AFNORFlowInfo(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

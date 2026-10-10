@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **siren** | **str** | SIREN or SIRET number of the sender (PA or company) | 
 **name** | **str** | Company name | 
+**scheme_id** | **str** |  | [optional] 
 **vat_id** | **str** |  | [optional] 
 
 ## Example

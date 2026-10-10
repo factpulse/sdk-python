@@ -47,7 +47,7 @@ class TestAFNORSirenSearchPost200Response(unittest.TestCase):
                     sorting = [{field=siren, order=ascending}, {field=administrativeStatus, order=descending}], 
                     fields = [siren, businessName, entityType, administrativeStatus, instructions], 
                     limit = 50, 
-                    ignore = 20, ),
+                    ignore = 0, ),
                 total_number_of_results = 1500,
                 results = [
                     factpulse.models.legal_unit_payload_history.legalUnitPayloadHistory(

@@ -21,9 +21,10 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from factpulse.models.electronic_address import ElectronicAddress
+from factpulse.models.electronic_address_input import ElectronicAddressInput
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class Payee(BaseModel):
     """
@@ -33,10 +34,10 @@ class Payee(BaseModel):
     payee_id: Optional[StrictStr] = Field(default=None, alias="payeeId")
     siret: Optional[Annotated[str, Field(strict=True)]] = None
     siren: Optional[Annotated[str, Field(strict=True)]] = None
-    electronic_address: Optional[ElectronicAddress] = Field(default=None, alias="electronicAddress")
+    electronic_address: Optional[ElectronicAddressInput] = Field(default=None, alias="electronicAddress")
     iban: Optional[StrictStr] = None
     bic: Optional[StrictStr] = None
-    global_ids: Optional[List[ElectronicAddress]] = None
+    global_ids: Optional[List[ElectronicAddressInput]] = None
     __properties: ClassVar[List[str]] = ["nom", "payeeId", "siret", "siren", "electronicAddress", "iban", "bic", "global_ids"]
 
     @field_validator('siret')
@@ -73,8 +74,7 @@ class Payee(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -160,10 +160,10 @@ class Payee(BaseModel):
             "payeeId": obj.get("payeeId"),
             "siret": obj.get("siret"),
             "siren": obj.get("siren"),
-            "electronicAddress": ElectronicAddress.from_dict(obj["electronicAddress"]) if obj.get("electronicAddress") is not None else None,
+            "electronicAddress": ElectronicAddressInput.from_dict(obj["electronicAddress"]) if obj.get("electronicAddress") is not None else None,
             "iban": obj.get("iban"),
             "bic": obj.get("bic"),
-            "global_ids": [ElectronicAddress.from_dict(_item) for _item in obj["global_ids"]] if obj.get("global_ids") is not None else None
+            "global_ids": [ElectronicAddressInput.from_dict(_item) for _item in obj["global_ids"]] if obj.get("global_ids") is not None else None
         })
         return _obj
 

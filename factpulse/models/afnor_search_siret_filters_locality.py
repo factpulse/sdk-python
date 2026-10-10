@@ -21,15 +21,16 @@ import json
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from factpulse.models.afnor_contains_or_strict_operator import AFNORContainsOrStrictOperator
+from factpulse.models.afnor_contains_or_strict_or_start_with_operator import AFNORContainsOrStrictOrStartWithOperator
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORSearchSiretFiltersLocality(BaseModel):
     """
     AFNORSearchSiretFiltersLocality
     """ # noqa: E501
-    op: Optional[AFNORContainsOrStrictOperator] = None
+    op: Optional[AFNORContainsOrStrictOrStartWithOperator] = None
     value: Optional[Annotated[str, Field(strict=True, max_length=100)]] = Field(default=None, description="Municipality of the recipient structure having defined the directory line(s).")
     __properties: ClassVar[List[str]] = ["op", "value"]
 
@@ -47,8 +48,7 @@ class AFNORSearchSiretFiltersLocality(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

@@ -23,13 +23,14 @@ from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.api_profile import APIProfile
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ProcessingOptions(BaseModel):
     """
     Processing options for generation and submission.
     """ # noqa: E501
     facturx_profile: Optional[APIProfile] = Field(default=None, description="Factur-X profile to use", alias="facturxProfile")
-    auto_enrich: Optional[StrictBool] = Field(default=True, description="Auto-enrich data (Company APIs, Chorus Pro, etc.)", alias="autoEnrich")
+    auto_enrich: Optional[StrictBool] = Field(default=True, description="Auto-enrich data (Company APIs, Chorus Pro, etc.). Applies to the **simplified format** only: a complete `FacturXInvoice` payload is used exactly as provided.", alias="autoEnrich")
     validate_xml: Optional[StrictBool] = Field(default=True, description="Validate Factur-X XML with Schematron", alias="validateXml")
     verify_destination_parameters: Optional[StrictBool] = Field(default=True, description="Verify required parameters for destination (e.g., service_code for Chorus)", alias="verifyDestinationParameters")
     __properties: ClassVar[List[str]] = ["facturxProfile", "autoEnrich", "validateXml", "verifyDestinationParameters"]
@@ -48,8 +49,7 @@ class ProcessingOptions(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

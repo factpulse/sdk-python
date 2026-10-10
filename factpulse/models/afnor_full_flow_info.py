@@ -27,14 +27,15 @@ from factpulse.models.afnor_flow_syntax import AFNORFlowSyntax
 from factpulse.models.afnor_processing_rule import AFNORProcessingRule
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORFullFlowInfo(BaseModel):
     """
     Identified Flow info: flow info + id + timestamp
     """ # noqa: E501
-    flow_id: Annotated[str, Field(strict=True, max_length=36)] = Field(description="Unique identifier supporting UUID but not only, for flexibility purpose", alias="flowId")
+    flow_id: Annotated[str, Field(strict=True, max_length=64)] = Field(description="Unique identifier supporting UUID but not only, for flexibility purpose", alias="flowId")
     submitted_at: datetime = Field(description="The flow submission date and time (the date and time when the flow was created on the system) This property should be used by the API consumer as a time reference to avoid clock synchronization issues ", alias="submittedAt")
-    tracking_id: Optional[Annotated[str, Field(strict=True, max_length=36)]] = Field(default=None, description="The tracking id is an external identifier and is used to track the flow by the sender", alias="trackingId")
+    tracking_id: Optional[Annotated[str, Field(strict=True, max_length=64)]] = Field(default=None, description="The tracking id is an external identifier and is used to track the flow by the sender", alias="trackingId")
     name: Annotated[str, Field(strict=True, max_length=255)] = Field(description="Name of the file")
     processing_rule: Optional[AFNORProcessingRule] = Field(default=None, alias="processingRule")
     flow_syntax: AFNORFlowSyntax = Field(alias="flowSyntax")
@@ -66,8 +67,7 @@ class AFNORFullFlowInfo(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

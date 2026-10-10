@@ -54,8 +54,13 @@ class TestInvoiceInput(unittest.TestCase):
                     factpulse.models.tax_breakdown_input.TaxBreakdownInput(
                         rate = 20.00, 
                         taxable_amount = 10000.00, 
-                        tax_amount = 2000.00, )
+                        tax_amount = 2000.00, 
+                        tax_category_code = '', 
+                        exemption_reason_code = '', 
+                        exemption_reason = '', )
                     ],
+                tax_amount_eur = None,
+                business_process_id = '',
                 referenced_invoice_id = '',
                 referenced_invoice_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date()
             )
@@ -70,7 +75,10 @@ class TestInvoiceInput(unittest.TestCase):
                     factpulse.models.tax_breakdown_input.TaxBreakdownInput(
                         rate = 20.00, 
                         taxable_amount = 10000.00, 
-                        tax_amount = 2000.00, )
+                        tax_amount = 2000.00, 
+                        tax_category_code = '', 
+                        exemption_reason_code = '', 
+                        exemption_reason = '', )
                     ],
         )
         """

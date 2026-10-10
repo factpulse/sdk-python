@@ -46,7 +46,7 @@ class TestAFNORSearchSiren(unittest.TestCase):
                 sorting = [{field=siren, order=ascending}, {field=administrativeStatus, order=descending}],
                 fields = [siren, businessName, entityType, administrativeStatus, instructions],
                 limit = 50,
-                ignore = 20
+                ignore = 0
             )
         else:
             return AFNORSearchSiren(

@@ -24,14 +24,15 @@ from factpulse.models.afnor_siren_field import AFNORSirenField
 from factpulse.models.afnor_sorting_order import AFNORSortingOrder
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORSearchSirenSortingInner(BaseModel):
     """
     A sorting criteria composed of a field and an order (ascending or descending).
     """ # noqa: E501
     var_field: Optional[AFNORSirenField] = Field(default=None, alias="field")
-    sorting_order: Optional[AFNORSortingOrder] = Field(default=None, alias="sortingOrder")
-    __properties: ClassVar[List[str]] = ["field", "sortingOrder"]
+    order: Optional[AFNORSortingOrder] = None
+    __properties: ClassVar[List[str]] = ["field", "order"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -47,8 +48,7 @@ class AFNORSearchSirenSortingInner(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -86,7 +86,7 @@ class AFNORSearchSirenSortingInner(BaseModel):
 
         _obj = cls.model_validate({
             "field": obj.get("field"),
-            "sortingOrder": obj.get("sortingOrder")
+            "order": obj.get("order")
         })
         return _obj
 

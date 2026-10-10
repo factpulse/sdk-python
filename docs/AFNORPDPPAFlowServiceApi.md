@@ -8,11 +8,9 @@ Method | HTTP request | Description
 [**delete_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_delete**](AFNORPDPPAFlowServiceApi.md#delete_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_delete) | **DELETE** /api/v1/afnor/flow/v1/webhooks/{webhookUid} | Delete a webhook
 [**download_flow_proxy_api_v1_afnor_flow_v1_flows_flow_id_get**](AFNORPDPPAFlowServiceApi.md#download_flow_proxy_api_v1_afnor_flow_v1_flows_flow_id_get) | **GET** /api/v1/afnor/flow/v1/flows/{flowId} | Download a flow
 [**flow_healthcheck_proxy_api_v1_afnor_flow_v1_healthcheck_get**](AFNORPDPPAFlowServiceApi.md#flow_healthcheck_proxy_api_v1_afnor_flow_v1_healthcheck_get) | **GET** /api/v1/afnor/flow/v1/healthcheck | Healthcheck Flow Service
-[**get_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_get**](AFNORPDPPAFlowServiceApi.md#get_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_get) | **GET** /api/v1/afnor/flow/v1/webhooks/{webhookUid} | Get a webhook
 [**list_webhooks_proxy_api_v1_afnor_flow_v1_webhooks_get**](AFNORPDPPAFlowServiceApi.md#list_webhooks_proxy_api_v1_afnor_flow_v1_webhooks_get) | **GET** /api/v1/afnor/flow/v1/webhooks | List webhooks
 [**search_flows_proxy_api_v1_afnor_flow_v1_flows_search_post**](AFNORPDPPAFlowServiceApi.md#search_flows_proxy_api_v1_afnor_flow_v1_flows_search_post) | **POST** /api/v1/afnor/flow/v1/flows/search | Search flows
 [**submit_flow_proxy_api_v1_afnor_flow_v1_flows_post**](AFNORPDPPAFlowServiceApi.md#submit_flow_proxy_api_v1_afnor_flow_v1_flows_post) | **POST** /api/v1/afnor/flow/v1/flows | Submit an invoicing flow
-[**update_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_patch**](AFNORPDPPAFlowServiceApi.md#update_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_patch) | **PATCH** /api/v1/afnor/flow/v1/webhooks/{webhookUid} | Update a webhook
 
 
 # **create_webhook_proxy_api_v1_afnor_flow_v1_webhooks_post**
@@ -20,7 +18,7 @@ Method | HTTP request | Description
 
 Create a webhook
 
-Register a new webhook subscription (AFNOR XP Z12-013 v1.2.0)
+Register a new webhook subscription (AFNOR XP Z12-013 v1.3.0)
 
 ### Example
 
@@ -91,7 +89,7 @@ No authorization required
 
 Delete a webhook
 
-Delete a webhook subscription (AFNOR XP Z12-013 v1.2.0)
+Delete a webhook subscription (AFNOR XP Z12-013 v1.3.0)
 
 ### Example
 
@@ -308,87 +306,12 @@ No authorization required
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **get_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_get**
-> AFNORWebhook get_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_get(webhook_uid)
-
-Get a webhook
-
-Get details of a specific webhook (AFNOR XP Z12-013 v1.2.0)
-
-### Example
-
-
-```python
-import factpulse
-from factpulse.models.afnor_webhook import AFNORWebhook
-from factpulse.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://factpulse.fr
-# See configuration.py for a list of all supported configuration parameters.
-configuration = factpulse.Configuration(
-    host = "https://factpulse.fr"
-)
-
-
-# Enter a context with an instance of the API client
-with factpulse.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = factpulse.AFNORPDPPAFlowServiceApi(api_client)
-    webhook_uid = 'webhook_uid_example' # str | Webhook unique identifier (UUID)
-
-    try:
-        # Get a webhook
-        api_response = api_instance.get_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_get(webhook_uid)
-        print("The response of AFNORPDPPAFlowServiceApi->get_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_get:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling AFNORPDPPAFlowServiceApi->get_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_get: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **webhook_uid** | **str**| Webhook unique identifier (UUID) | 
-
-### Return type
-
-[**AFNORWebhook**](AFNORWebhook.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK - Webhook details returned |  -  |
-**401** | Authentication error - Missing or invalid token |  -  |
-**403** | Forbidden - Insufficient permissions |  -  |
-**404** | Resource not found |  -  |
-**429** | Too many requests - Rate limit exceeded |  -  |
-**500** | Internal server error |  -  |
-**503** | Service unavailable - PDP temporarily unavailable |  -  |
-**422** | Validation Error |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
 # **list_webhooks_proxy_api_v1_afnor_flow_v1_webhooks_get**
 > List[AFNORWebhook] list_webhooks_proxy_api_v1_afnor_flow_v1_webhooks_get()
 
 List webhooks
 
-List all registered webhooks (AFNOR XP Z12-013 v1.2.0)
+List all registered webhooks (AFNOR XP Z12-013 v1.3.0)
 
 ### Example
 
@@ -600,82 +523,6 @@ No authorization required
 **403** | Forbidden - Insufficient permissions |  -  |
 **404** | Resource not found |  -  |
 **413** | Payload too large - File exceeds maximum size |  -  |
-**422** | Unprocessable entity - Business rule validation failed |  -  |
-**429** | Too many requests - Rate limit exceeded |  -  |
-**500** | Internal server error |  -  |
-**503** | Service unavailable - PDP temporarily unavailable |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **update_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_patch**
-> AFNORWebhook update_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_patch(webhook_uid)
-
-Update a webhook
-
-Partially update a webhook subscription (AFNOR XP Z12-013 v1.2.0)
-
-### Example
-
-
-```python
-import factpulse
-from factpulse.models.afnor_webhook import AFNORWebhook
-from factpulse.rest import ApiException
-from pprint import pprint
-
-# Defining the host is optional and defaults to https://factpulse.fr
-# See configuration.py for a list of all supported configuration parameters.
-configuration = factpulse.Configuration(
-    host = "https://factpulse.fr"
-)
-
-
-# Enter a context with an instance of the API client
-with factpulse.ApiClient(configuration) as api_client:
-    # Create an instance of the API class
-    api_instance = factpulse.AFNORPDPPAFlowServiceApi(api_client)
-    webhook_uid = 'webhook_uid_example' # str | Webhook unique identifier (UUID)
-
-    try:
-        # Update a webhook
-        api_response = api_instance.update_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_patch(webhook_uid)
-        print("The response of AFNORPDPPAFlowServiceApi->update_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_patch:\n")
-        pprint(api_response)
-    except Exception as e:
-        print("Exception when calling AFNORPDPPAFlowServiceApi->update_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_patch: %s\n" % e)
-```
-
-
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **webhook_uid** | **str**| Webhook unique identifier (UUID) | 
-
-### Return type
-
-[**AFNORWebhook**](AFNORWebhook.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | OK - Webhook updated successfully |  -  |
-**400** | Bad request - Invalid input parameters |  -  |
-**401** | Authentication error - Missing or invalid token |  -  |
-**403** | Forbidden - Insufficient permissions |  -  |
-**404** | Resource not found |  -  |
 **422** | Unprocessable entity - Business rule validation failed |  -  |
 **429** | Too many requests - Rate limit exceeded |  -  |
 **500** | Internal server error |  -  |

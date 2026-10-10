@@ -37,7 +37,8 @@ class TestPaymentAmountByRate(unittest.TestCase):
         if include_optional:
             return PaymentAmountByRate(
                 rate = 20.00,
-                amount = 12000.00
+                amount = 12000.00,
+                amount_eur = None
             )
         else:
             return PaymentAmountByRate(

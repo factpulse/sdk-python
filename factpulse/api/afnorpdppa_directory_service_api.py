@@ -1523,7 +1523,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AFNORDirectoryLineSearchPost200Response",
-            '206': "AFNORDirectoryLineSearchPost200Response",
             '400': None,
             '401': None,
             '403': None,
@@ -1534,7 +1533,6 @@ class AFNORPDPPADirectoryServiceApi:
             '500': None,
             '501': None,
             '503': None,
-            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1598,7 +1596,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AFNORDirectoryLineSearchPost200Response",
-            '206': "AFNORDirectoryLineSearchPost200Response",
             '400': None,
             '401': None,
             '403': None,
@@ -1609,7 +1606,6 @@ class AFNORPDPPADirectoryServiceApi:
             '500': None,
             '501': None,
             '503': None,
-            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1673,7 +1669,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AFNORDirectoryLineSearchPost200Response",
-            '206': "AFNORDirectoryLineSearchPost200Response",
             '400': None,
             '401': None,
             '403': None,
@@ -1684,7 +1679,6 @@ class AFNORPDPPADirectoryServiceApi:
             '500': None,
             '501': None,
             '503': None,
-            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1804,7 +1798,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AFNORRoutingCodeSearchPost200Response",
-            '206': "AFNORRoutingCodeSearchPost200Response",
             '400': None,
             '401': None,
             '403': None,
@@ -1815,7 +1808,6 @@ class AFNORPDPPADirectoryServiceApi:
             '500': None,
             '501': None,
             '503': None,
-            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1879,7 +1871,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AFNORRoutingCodeSearchPost200Response",
-            '206': "AFNORRoutingCodeSearchPost200Response",
             '400': None,
             '401': None,
             '403': None,
@@ -1890,7 +1881,6 @@ class AFNORPDPPADirectoryServiceApi:
             '500': None,
             '501': None,
             '503': None,
-            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1954,7 +1944,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AFNORRoutingCodeSearchPost200Response",
-            '206': "AFNORRoutingCodeSearchPost200Response",
             '400': None,
             '401': None,
             '403': None,
@@ -1965,7 +1954,6 @@ class AFNORPDPPADirectoryServiceApi:
             '500': None,
             '501': None,
             '503': None,
-            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2085,7 +2073,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AFNORSirenSearchPost200Response",
-            '206': "AFNORSirenSearchPost200Response",
             '400': None,
             '401': None,
             '403': None,
@@ -2096,7 +2083,6 @@ class AFNORPDPPADirectoryServiceApi:
             '500': None,
             '501': None,
             '503': None,
-            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2160,7 +2146,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AFNORSirenSearchPost200Response",
-            '206': "AFNORSirenSearchPost200Response",
             '400': None,
             '401': None,
             '403': None,
@@ -2171,7 +2156,6 @@ class AFNORPDPPADirectoryServiceApi:
             '500': None,
             '501': None,
             '503': None,
-            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2235,7 +2219,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AFNORSirenSearchPost200Response",
-            '206': "AFNORSirenSearchPost200Response",
             '400': None,
             '401': None,
             '403': None,
@@ -2246,7 +2229,6 @@ class AFNORPDPPADirectoryServiceApi:
             '500': None,
             '501': None,
             '503': None,
-            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2366,7 +2348,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AFNORSiretSearchPost200Response",
-            '206': "AFNORSiretSearchPost200Response",
             '400': None,
             '401': None,
             '403': None,
@@ -2377,7 +2358,6 @@ class AFNORPDPPADirectoryServiceApi:
             '500': None,
             '501': None,
             '503': None,
-            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2441,7 +2421,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AFNORSiretSearchPost200Response",
-            '206': "AFNORSiretSearchPost200Response",
             '400': None,
             '401': None,
             '403': None,
@@ -2452,7 +2431,6 @@ class AFNORPDPPADirectoryServiceApi:
             '500': None,
             '501': None,
             '503': None,
-            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2516,7 +2494,6 @@ class AFNORPDPPADirectoryServiceApi:
 
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "AFNORSiretSearchPost200Response",
-            '206': "AFNORSiretSearchPost200Response",
             '400': None,
             '401': None,
             '403': None,
@@ -2527,7 +2504,6 @@ class AFNORPDPPADirectoryServiceApi:
             '500': None,
             '501': None,
             '503': None,
-            '204': None,
         }
         response_data = self.api_client.call_api(
             *_param,

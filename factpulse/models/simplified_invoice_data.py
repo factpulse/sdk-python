@@ -21,29 +21,31 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
-from factpulse.models.invoice_type_code import InvoiceTypeCode
+from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode
 from factpulse.models.invoicing_framework_code import InvoicingFrameworkCode
 from factpulse.models.operation_nature import OperationNature
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class SimplifiedInvoiceData(BaseModel):
     """
-    Simplified invoice data (minimal format for auto-enrichment).
+    Simplified invoice data (minimal format for auto-enrichment).  Any field of the complete `FacturXInvoice` model may be added on top of the fields declared below (`deliveryDate` BT-72, `deliveryParty` BG-15, `paymentReference` BT-83, `payee` BG-10, ...): extra keys are kept and merged by `FacturXInvoice.create_from_simplified_dict`. Whatever the simplified format computes itself (totals, lines, addresses) always wins.
     """ # noqa: E501
     number: StrictStr = Field(description="Unique invoice number")
-    supplier: Dict[str, Any] = Field(description="Supplier information (siret, iban, ...)")
-    recipient: Dict[str, Any] = Field(description="Recipient information (siret, ...)")
+    supplier: Dict[str, Any] = Field(description="Supplier information (siret, iban, bic, routingAddress, ...). For a seller without an intra-community VAT number (VAT franchise, article 293 B of the CGI), provide `taxRegistrationId` (BT-32, usually the SIREN): it satisfies BR-E-02 and prevents BT-31 from being auto-calculated.")
+    recipient: Dict[str, Any] = Field(description="Recipient information (siret, vatNumber for BT-48, ...)")
     lines: Annotated[List[Dict[str, Any]], Field(min_length=1)] = Field(description="Invoice lines")
     var_date: Optional[StrictStr] = Field(default=None, alias="date")
     due_days: Optional[Annotated[int, Field(le=365, strict=True, ge=0)]] = Field(default=30, description="Due date in days (default: 30)", alias="dueDays")
     comment: Optional[StrictStr] = None
     purchase_order_reference: Optional[StrictStr] = Field(default=None, alias="purchaseOrderReference")
     contract_reference: Optional[StrictStr] = Field(default=None, alias="contractReference")
-    invoice_type: Optional[InvoiceTypeCode] = Field(default=None, description="Document type (UNTDID 1001). Default: 380 (Invoice).", alias="invoiceType")
+    invoice_type: Optional[FactureElectroniqueModelsInvoiceTypeCode] = Field(default=None, description="Document type (UNTDID 1001). Default: 380 (Invoice).", alias="invoiceType")
     preceding_invoice_reference: Optional[StrictStr] = Field(default=None, alias="precedingInvoiceReference")
     operation_nature: Optional[OperationNature] = Field(default=None, alias="operationNature")
     invoicing_framework: Optional[InvoicingFrameworkCode] = Field(default=None, alias="invoicingFramework")
+    additional_properties: Dict[str, Any] = {}
     __properties: ClassVar[List[str]] = ["number", "supplier", "recipient", "lines", "date", "dueDays", "comment", "purchaseOrderReference", "contractReference", "invoiceType", "precedingInvoiceReference", "operationNature", "invoicingFramework"]
 
     model_config = ConfigDict(
@@ -60,8 +62,7 @@ class SimplifiedInvoiceData(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -77,8 +78,10 @@ class SimplifiedInvoiceData(BaseModel):
         * `None` is only added to the output dict for nullable fields that
           were set at model initialization. Other fields with value `None`
           are ignored.
+        * Fields in `self.additional_properties` are added to the output dict.
         """
         excluded_fields: Set[str] = set([
+            "additional_properties",
         ])
 
         _dict = self.model_dump(
@@ -86,6 +89,11 @@ class SimplifiedInvoiceData(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # puts key-value pairs in additional_properties in the top level
+        if self.additional_properties is not None:
+            for _key, _value in self.additional_properties.items():
+                _dict[_key] = _value
+
         # set to None if var_date (nullable) is None
         # and model_fields_set contains the field
         if self.var_date is None and "var_date" in self.model_fields_set:
@@ -147,6 +155,11 @@ class SimplifiedInvoiceData(BaseModel):
             "operationNature": obj.get("operationNature"),
             "invoicingFramework": obj.get("invoicingFramework")
         })
+        # store additional fields in additional_properties
+        for _key in obj.keys():
+            if _key not in cls.__properties:
+                _obj.additional_properties[_key] = obj.get(_key)
+
         return _obj
 
 

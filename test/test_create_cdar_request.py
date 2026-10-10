@@ -60,7 +60,8 @@ class TestCreateCDARRequest(unittest.TestCase):
                 reason_code = '',
                 reason_text = '',
                 action_code = '',
-                encaisse_amount = None
+                encaisse_amount = None,
+                encaisse_vat_rate = 1.337
             )
         else:
             return CreateCDARRequest(

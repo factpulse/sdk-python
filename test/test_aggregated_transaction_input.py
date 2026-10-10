@@ -45,7 +45,10 @@ class TestAggregatedTransactionInput(unittest.TestCase):
                     factpulse.models.tax_breakdown_input.TaxBreakdownInput(
                         rate = 20.00, 
                         taxable_amount = 10000.00, 
-                        tax_amount = 2000.00, )
+                        tax_amount = 2000.00, 
+                        tax_category_code = '', 
+                        exemption_reason_code = '', 
+                        exemption_reason = '', )
                     ],
                 transaction_count = 1.0,
                 tax_due_type = '5'
@@ -60,7 +63,10 @@ class TestAggregatedTransactionInput(unittest.TestCase):
                     factpulse.models.tax_breakdown_input.TaxBreakdownInput(
                         rate = 20.00, 
                         taxable_amount = 10000.00, 
-                        tax_amount = 2000.00, )
+                        tax_amount = 2000.00, 
+                        tax_category_code = '', 
+                        exemption_reason_code = '', 
+                        exemption_reason = '', )
                     ],
         )
         """

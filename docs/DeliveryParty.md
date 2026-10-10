@@ -7,9 +7,9 @@ Delivery location information (BG-15 Deliver to).  Represents the party or locat
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **str** |  | [optional] 
-**global_id** | [**ElectronicAddress**](ElectronicAddress.md) |  | [optional] 
+**global_id** | [**ElectronicAddressInput**](ElectronicAddressInput.md) |  | [optional] 
 **name** | **str** |  | [optional] 
-**postal_address** | [**PostalAddress**](PostalAddress.md) |  | [optional] 
+**postal_address** | [**PostalAddressInput**](PostalAddressInput.md) |  | [optional] 
 
 ## Example
 

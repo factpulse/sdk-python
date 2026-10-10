@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr
+from pydantic import Field, StrictBool, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
 from uuid import UUID
@@ -29,6 +29,9 @@ from factpulse.models.key_rotation_request import KeyRotationRequest
 from factpulse.models.key_rotation_response import KeyRotationResponse
 from factpulse.models.pdp_config_response import PDPConfigResponse
 from factpulse.models.pdp_config_update_request import PDPConfigUpdateRequest
+from factpulse.models.super_pdp_connect_url_response import SuperPDPConnectURLResponse
+from factpulse.models.super_pdp_disconnect_response import SuperPDPDisconnectResponse
+from factpulse.models.super_pdp_status_response import SuperPDPStatusResponse
 from factpulse.models.webhook_secret_delete_response import WebhookSecretDeleteResponse
 from factpulse.models.webhook_secret_generate_response import WebhookSecretGenerateResponse
 from factpulse.models.webhook_secret_status_response import WebhookSecretStatusResponse
@@ -1185,6 +1188,286 @@ class ClientManagementApi:
 
 
     @validate_call
+    def disconnect_superpdp_api_v1_clients_uid_superpdp_delete(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> SuperPDPDisconnectResponse:
+        """Disconnect SuperPDP
+
+        Disconnect SuperPDP for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  Revokes the stored refresh token with SuperPDP (RFC 7009) and deletes the stored tokens. The client can reconnect later via the connect-url endpoint.
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._disconnect_superpdp_api_v1_clients_uid_superpdp_delete_serialize(
+            uid=uid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPDisconnectResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def disconnect_superpdp_api_v1_clients_uid_superpdp_delete_with_http_info(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[SuperPDPDisconnectResponse]:
+        """Disconnect SuperPDP
+
+        Disconnect SuperPDP for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  Revokes the stored refresh token with SuperPDP (RFC 7009) and deletes the stored tokens. The client can reconnect later via the connect-url endpoint.
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._disconnect_superpdp_api_v1_clients_uid_superpdp_delete_serialize(
+            uid=uid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPDisconnectResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def disconnect_superpdp_api_v1_clients_uid_superpdp_delete_without_preload_content(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Disconnect SuperPDP
+
+        Disconnect SuperPDP for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  Revokes the stored refresh token with SuperPDP (RFC 7009) and deletes the stored tokens. The client can reconnect later via the connect-url endpoint.
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._disconnect_superpdp_api_v1_clients_uid_superpdp_delete_serialize(
+            uid=uid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPDisconnectResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _disconnect_superpdp_api_v1_clients_uid_superpdp_delete_serialize(
+        self,
+        uid,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if uid is not None:
+            _path_params['uid'] = uid
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'APIKeyHeader', 
+            'HTTPBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='DELETE',
+            resource_path='/api/v1/clients/{uid}/superpdp',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def generate_webhook_secret_api_v1_clients_uid_webhook_secret_generate_post(
         self,
         uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
@@ -2009,6 +2292,600 @@ class ClientManagementApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/api/v1/clients/{uid}/pdp-config',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        mode_sandbox: Annotated[Optional[StrictBool], Field(description="True for the SuperPDP sandbox app (default), False for production")] = None,
+        return_url: Annotated[Optional[StrictStr], Field(description="Absolute http(s) URL to redirect the end user to once the SuperPDP connection is done. Defaults to the FactPulse confirmation page.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> SuperPDPConnectURLResponse:
+        """Get SuperPDP connection URL
+
+        Generate the SuperPDP OAuth2 authorization URL for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  Redirect the end user to the returned `authorizeUrl` so they can connect their own SuperPDP account to FactPulse (OAuth2 Authorization Code).  **Query parameters**: - `modeSandbox` (default `true`): connect via the SuperPDP sandbox app   (fictitious data) or the production app. - `returnUrl` (optional): absolute http(s) URL of your own portal. Once the   SuperPDP authorization flow is over, the end user is redirected there with   `superpdp_connected=true|false` (and `superpdp_error=<code>` on failure)   appended to the query string. Without it, FactPulse displays its own   confirmation page. Returns `400 invalid_return_url` if the URL is not an   absolute http(s) URL.
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param mode_sandbox: True for the SuperPDP sandbox app (default), False for production
+        :type mode_sandbox: bool
+        :param return_url: Absolute http(s) URL to redirect the end user to once the SuperPDP connection is done. Defaults to the FactPulse confirmation page.
+        :type return_url: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post_serialize(
+            uid=uid,
+            mode_sandbox=mode_sandbox,
+            return_url=return_url,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPConnectURLResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post_with_http_info(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        mode_sandbox: Annotated[Optional[StrictBool], Field(description="True for the SuperPDP sandbox app (default), False for production")] = None,
+        return_url: Annotated[Optional[StrictStr], Field(description="Absolute http(s) URL to redirect the end user to once the SuperPDP connection is done. Defaults to the FactPulse confirmation page.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[SuperPDPConnectURLResponse]:
+        """Get SuperPDP connection URL
+
+        Generate the SuperPDP OAuth2 authorization URL for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  Redirect the end user to the returned `authorizeUrl` so they can connect their own SuperPDP account to FactPulse (OAuth2 Authorization Code).  **Query parameters**: - `modeSandbox` (default `true`): connect via the SuperPDP sandbox app   (fictitious data) or the production app. - `returnUrl` (optional): absolute http(s) URL of your own portal. Once the   SuperPDP authorization flow is over, the end user is redirected there with   `superpdp_connected=true|false` (and `superpdp_error=<code>` on failure)   appended to the query string. Without it, FactPulse displays its own   confirmation page. Returns `400 invalid_return_url` if the URL is not an   absolute http(s) URL.
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param mode_sandbox: True for the SuperPDP sandbox app (default), False for production
+        :type mode_sandbox: bool
+        :param return_url: Absolute http(s) URL to redirect the end user to once the SuperPDP connection is done. Defaults to the FactPulse confirmation page.
+        :type return_url: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post_serialize(
+            uid=uid,
+            mode_sandbox=mode_sandbox,
+            return_url=return_url,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPConnectURLResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post_without_preload_content(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        mode_sandbox: Annotated[Optional[StrictBool], Field(description="True for the SuperPDP sandbox app (default), False for production")] = None,
+        return_url: Annotated[Optional[StrictStr], Field(description="Absolute http(s) URL to redirect the end user to once the SuperPDP connection is done. Defaults to the FactPulse confirmation page.")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get SuperPDP connection URL
+
+        Generate the SuperPDP OAuth2 authorization URL for a client.  **Scope**: Client level (JWT with client_uid that must match {uid})  Redirect the end user to the returned `authorizeUrl` so they can connect their own SuperPDP account to FactPulse (OAuth2 Authorization Code).  **Query parameters**: - `modeSandbox` (default `true`): connect via the SuperPDP sandbox app   (fictitious data) or the production app. - `returnUrl` (optional): absolute http(s) URL of your own portal. Once the   SuperPDP authorization flow is over, the end user is redirected there with   `superpdp_connected=true|false` (and `superpdp_error=<code>` on failure)   appended to the query string. Without it, FactPulse displays its own   confirmation page. Returns `400 invalid_return_url` if the URL is not an   absolute http(s) URL.
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param mode_sandbox: True for the SuperPDP sandbox app (default), False for production
+        :type mode_sandbox: bool
+        :param return_url: Absolute http(s) URL to redirect the end user to once the SuperPDP connection is done. Defaults to the FactPulse confirmation page.
+        :type return_url: str
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post_serialize(
+            uid=uid,
+            mode_sandbox=mode_sandbox,
+            return_url=return_url,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPConnectURLResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post_serialize(
+        self,
+        uid,
+        mode_sandbox,
+        return_url,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if uid is not None:
+            _path_params['uid'] = uid
+        # process the query parameters
+        if mode_sandbox is not None:
+            
+            _query_params.append(('modeSandbox', mode_sandbox))
+            
+        if return_url is not None:
+            
+            _query_params.append(('returnUrl', return_url))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'APIKeyHeader', 
+            'HTTPBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/api/v1/clients/{uid}/superpdp/connect-url',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def get_superpdp_status_api_v1_clients_uid_superpdp_status_get(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> SuperPDPStatusResponse:
+        """Get SuperPDP connection status
+
+        Check whether a client has connected its SuperPDP account.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Response**: - `connected`: Whether the client has an active SuperPDP connection - `connectedAt`: When the connection was established (if any) - `expiresAt`: When the current access token expires (if any) - `modeSandbox`: True if connected via the sandbox app, False for production, null if not connected - `lastError`: Last token refresh error, if any
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_superpdp_status_api_v1_clients_uid_superpdp_status_get_serialize(
+            uid=uid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPStatusResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_superpdp_status_api_v1_clients_uid_superpdp_status_get_with_http_info(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[SuperPDPStatusResponse]:
+        """Get SuperPDP connection status
+
+        Check whether a client has connected its SuperPDP account.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Response**: - `connected`: Whether the client has an active SuperPDP connection - `connectedAt`: When the connection was established (if any) - `expiresAt`: When the current access token expires (if any) - `modeSandbox`: True if connected via the sandbox app, False for production, null if not connected - `lastError`: Last token refresh error, if any
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_superpdp_status_api_v1_clients_uid_superpdp_status_get_serialize(
+            uid=uid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPStatusResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_superpdp_status_api_v1_clients_uid_superpdp_status_get_without_preload_content(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get SuperPDP connection status
+
+        Check whether a client has connected its SuperPDP account.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Response**: - `connected`: Whether the client has an active SuperPDP connection - `connectedAt`: When the connection was established (if any) - `expiresAt`: When the current access token expires (if any) - `modeSandbox`: True if connected via the sandbox app, False for production, null if not connected - `lastError`: Last token refresh error, if any
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_superpdp_status_api_v1_clients_uid_superpdp_status_get_serialize(
+            uid=uid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPStatusResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_superpdp_status_api_v1_clients_uid_superpdp_status_get_serialize(
+        self,
+        uid,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if uid is not None:
+            _path_params['uid'] = uid
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'APIKeyHeader', 
+            'HTTPBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/clients/{uid}/superpdp/status',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

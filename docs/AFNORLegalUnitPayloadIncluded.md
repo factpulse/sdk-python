@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **business_name** | **str** | Business name | [optional] 
 **entity_type** | [**AFNOREntityType**](AFNOREntityType.md) |  | [optional] 
 **administrative_status** | [**AFNORLegalUnitAdministrativeStatus**](AFNORLegalUnitAdministrativeStatus.md) |  | [optional] 
+**instructions** | [**AFNORSirenInstructions**](AFNORSirenInstructions.md) |  | [optional] 
 
 ## Example
 

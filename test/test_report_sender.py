@@ -38,6 +38,7 @@ class TestReportSender(unittest.TestCase):
             return ReportSender(
                 siren = '123456789',
                 name = 'Ma Société SARL',
+                scheme_id = '',
                 vat_id = ''
             )
         else:

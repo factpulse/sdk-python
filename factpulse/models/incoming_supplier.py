@@ -20,10 +20,11 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.electronic_address import ElectronicAddress
-from factpulse.models.postal_address import PostalAddress
+from factpulse.models.electronic_address_output import ElectronicAddressOutput
+from factpulse.models.postal_address_output import PostalAddressOutput
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class IncomingSupplier(BaseModel):
     """
@@ -33,11 +34,12 @@ class IncomingSupplier(BaseModel):
     siren: Optional[StrictStr] = None
     siret: Optional[StrictStr] = None
     vat_number: Optional[StrictStr] = Field(default=None, alias="vatNumber")
-    postal_address: Optional[PostalAddress] = Field(default=None, alias="postalAddress")
-    electronic_address: Optional[ElectronicAddress] = Field(default=None, alias="electronicAddress")
+    tax_registration_id: Optional[StrictStr] = Field(default=None, alias="taxRegistrationId")
+    postal_address: Optional[PostalAddressOutput] = Field(default=None, alias="postalAddress")
+    electronic_address: Optional[ElectronicAddressOutput] = Field(default=None, alias="electronicAddress")
     email: Optional[StrictStr] = None
     phone: Optional[StrictStr] = None
-    __properties: ClassVar[List[str]] = ["name", "siren", "siret", "vatNumber", "postalAddress", "electronicAddress", "email", "phone"]
+    __properties: ClassVar[List[str]] = ["name", "siren", "siret", "vatNumber", "taxRegistrationId", "postalAddress", "electronicAddress", "email", "phone"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -53,8 +55,7 @@ class IncomingSupplier(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -100,6 +101,11 @@ class IncomingSupplier(BaseModel):
         if self.vat_number is None and "vat_number" in self.model_fields_set:
             _dict['vatNumber'] = None
 
+        # set to None if tax_registration_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.tax_registration_id is None and "tax_registration_id" in self.model_fields_set:
+            _dict['taxRegistrationId'] = None
+
         # set to None if postal_address (nullable) is None
         # and model_fields_set contains the field
         if self.postal_address is None and "postal_address" in self.model_fields_set:
@@ -136,8 +142,9 @@ class IncomingSupplier(BaseModel):
             "siren": obj.get("siren"),
             "siret": obj.get("siret"),
             "vatNumber": obj.get("vatNumber"),
-            "postalAddress": PostalAddress.from_dict(obj["postalAddress"]) if obj.get("postalAddress") is not None else None,
-            "electronicAddress": ElectronicAddress.from_dict(obj["electronicAddress"]) if obj.get("electronicAddress") is not None else None,
+            "taxRegistrationId": obj.get("taxRegistrationId"),
+            "postalAddress": PostalAddressOutput.from_dict(obj["postalAddress"]) if obj.get("postalAddress") is not None else None,
+            "electronicAddress": ElectronicAddressOutput.from_dict(obj["electronicAddress"]) if obj.get("electronicAddress") is not None else None,
             "email": obj.get("email"),
             "phone": obj.get("phone")
         })

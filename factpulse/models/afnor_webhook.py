@@ -18,22 +18,29 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List, Optional
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict, Field, StrictBytes, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from uuid import UUID
-from factpulse.models.afnor_callback_parameters import AFNORCallbackParameters
-from factpulse.models.afnor_webhook_metadata import AFNORWebhookMetadata
+from factpulse.models.afnor_flow_ack_status import AFNORFlowAckStatus
+from factpulse.models.afnor_flow_direction import AFNORFlowDirection
+from factpulse.models.afnor_flow_type import AFNORFlowType
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORWebhook(BaseModel):
     """
     AFNORWebhook
     """ # noqa: E501
     webhook_id: Optional[UUID] = Field(default=None, alias="webhookId")
-    callback: AFNORCallbackParameters
-    metadata: AFNORWebhookMetadata
-    __properties: ClassVar[List[str]] = ["webhookId", "callback", "metadata"]
+    signing_key: Optional[Union[StrictBytes, StrictStr]] = Field(default=None, alias="signingKey")
+    created_at: Optional[datetime] = Field(default=None, alias="createdAt")
+    callback_url: StrictStr = Field(alias="callbackUrl")
+    flow_types: Optional[List[AFNORFlowType]] = Field(default=None, alias="flowTypes")
+    flow_direction: Optional[AFNORFlowDirection] = Field(default=None, alias="flowDirection")
+    ack_status: Optional[AFNORFlowAckStatus] = Field(default=None, alias="ackStatus")
+    __properties: ClassVar[List[str]] = ["webhookId", "signingKey", "createdAt", "callbackUrl", "flowTypes", "flowDirection", "ackStatus"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -49,8 +56,7 @@ class AFNORWebhook(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -75,12 +81,6 @@ class AFNORWebhook(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of callback
-        if self.callback:
-            _dict['callback'] = self.callback.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of metadata
-        if self.metadata:
-            _dict['metadata'] = self.metadata.to_dict()
         return _dict
 
     @classmethod
@@ -94,8 +94,12 @@ class AFNORWebhook(BaseModel):
 
         _obj = cls.model_validate({
             "webhookId": obj.get("webhookId"),
-            "callback": AFNORCallbackParameters.from_dict(obj["callback"]) if obj.get("callback") is not None else None,
-            "metadata": AFNORWebhookMetadata.from_dict(obj["metadata"]) if obj.get("metadata") is not None else None
+            "signingKey": obj.get("signingKey"),
+            "createdAt": obj.get("createdAt"),
+            "callbackUrl": obj.get("callbackUrl"),
+            "flowTypes": obj.get("flowTypes"),
+            "flowDirection": obj.get("flowDirection"),
+            "ackStatus": obj.get("ackStatus")
         })
         return _obj
 

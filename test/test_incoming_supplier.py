@@ -40,6 +40,7 @@ class TestIncomingSupplier(unittest.TestCase):
                 siren = '',
                 siret = '',
                 vat_number = '',
+                tax_registration_id = '',
                 postal_address = factpulse.models.postal_address.PostalAddress(
                     postal_code = '', 
                     line_one = '', 

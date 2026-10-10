@@ -30,17 +30,18 @@ from factpulse.models.afnor_flow_type import AFNORFlowType
 from factpulse.models.afnor_processing_rule import AFNORProcessingRule
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORFlow(BaseModel):
     """
     The properties of a Flow resource
     """ # noqa: E501
-    tracking_id: Optional[Annotated[str, Field(strict=True, max_length=36)]] = Field(default=None, description="The tracking id is an external identifier and is used to track the flow by the sender", alias="trackingId")
+    tracking_id: Optional[Annotated[str, Field(strict=True, max_length=64)]] = Field(default=None, description="The tracking id is an external identifier and is used to track the flow by the sender", alias="trackingId")
     name: Annotated[str, Field(strict=True, max_length=255)] = Field(description="Name of the file")
-    processing_rule: Optional[AFNORProcessingRule] = Field(default=None, alias="processingRule")
+    processing_rule: AFNORProcessingRule = Field(alias="processingRule")
     flow_syntax: AFNORFlowSyntax = Field(alias="flowSyntax")
-    flow_profile: Optional[AFNORFlowProfile] = Field(default=None, alias="flowProfile")
-    flow_id: Annotated[str, Field(strict=True, max_length=36)] = Field(description="Unique identifier supporting UUID but not only, for flexibility purpose", alias="flowId")
+    flow_profile: AFNORFlowProfile = Field(alias="flowProfile")
+    flow_id: Annotated[str, Field(strict=True, max_length=64)] = Field(description="Unique identifier supporting UUID but not only, for flexibility purpose", alias="flowId")
     submitted_at: datetime = Field(description="The flow submission date and time (the date and time when the flow was created on the system) This property should be used by the API consumer as a time reference to avoid clock synchronization issues ", alias="submittedAt")
     updated_at: datetime = Field(description="The last update date and time of the flow. When the flow is submitted updatedAt is equal to submittedAt. When the flow acknowledgment status is changed updatedAt date and time is updated. ", alias="updatedAt")
     flow_type: AFNORFlowType = Field(alias="flowType")
@@ -70,8 +71,7 @@ class AFNORFlow(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

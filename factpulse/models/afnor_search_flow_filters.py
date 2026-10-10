@@ -28,6 +28,7 @@ from factpulse.models.afnor_flow_type import AFNORFlowType
 from factpulse.models.afnor_processing_rule import AFNORProcessingRule
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORSearchFlowFilters(BaseModel):
     """
@@ -38,7 +39,7 @@ class AFNORSearchFlowFilters(BaseModel):
     processing_rule: Optional[List[AFNORProcessingRule]] = Field(default=None, alias="processingRule")
     flow_type: Optional[List[AFNORFlowType]] = Field(default=None, alias="flowType")
     flow_direction: Optional[List[AFNORFlowDirection]] = Field(default=None, alias="flowDirection")
-    tracking_id: Optional[Annotated[str, Field(strict=True, max_length=36)]] = Field(default=None, description="Unique identifier supporting UUID but not only, for flexibility purpose", alias="trackingId")
+    tracking_id: Optional[Annotated[str, Field(strict=True, max_length=64)]] = Field(default=None, description="Unique identifier supporting UUID but not only, for flexibility purpose", alias="trackingId")
     ack_status: Optional[AFNORFlowAckStatus] = Field(default=None, alias="ackStatus")
     __properties: ClassVar[List[str]] = ["updatedAfter", "updatedBefore", "processingRule", "flowType", "flowDirection", "trackingId", "ackStatus"]
 
@@ -56,8 +57,7 @@ class AFNORSearchFlowFilters(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

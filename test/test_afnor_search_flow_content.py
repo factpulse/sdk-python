@@ -37,6 +37,7 @@ class TestAFNORSearchFlowContent(unittest.TestCase):
         if include_optional:
             return AFNORSearchFlowContent(
                 limit = 56,
+                next_cursor = 'eyJjcmVhdGVkX2F0IjoiMjAyNS0wNi0wOVQxMDowMDowMFoiLCJpZCI6MTIzNH0=',
                 filters = factpulse.models.afnor_search_flow_filters.AFNOR_SearchFlowFilters(
                     updated_after = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                     updated_before = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 

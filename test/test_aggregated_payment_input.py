@@ -41,7 +41,8 @@ class TestAggregatedPaymentInput(unittest.TestCase):
                 amounts_by_rate = [
                     factpulse.models.payment_amount_by_rate.PaymentAmountByRate(
                         rate = 20.00, 
-                        amount = 12000.00, )
+                        amount = 12000.00, 
+                        amount_eur = null, )
                     ]
             )
         else:
@@ -50,7 +51,8 @@ class TestAggregatedPaymentInput(unittest.TestCase):
                 amounts_by_rate = [
                     factpulse.models.payment_amount_by_rate.PaymentAmountByRate(
                         rate = 20.00, 
-                        amount = 12000.00, )
+                        amount = 12000.00, 
+                        amount_eur = null, )
                     ],
         )
         """

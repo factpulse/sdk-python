@@ -37,7 +37,7 @@ class TestAFNORSearchSirenSortingInner(unittest.TestCase):
         if include_optional:
             return AFNORSearchSirenSortingInner(
                 var_field = 'siren',
-                sorting_order = 'ascending'
+                order = 'ascending'
             )
         else:
             return AFNORSearchSirenSortingInner(

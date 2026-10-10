@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class FlowType(str, Enum):
     """
-    AFNOR XP Z12-013 FlowType enum.  Values from swagger specification v1.2.0: - Invoice flows (factures) - Lifecycle flows (cycle de vie) - E-reporting flows (transactions/paiements)
+    AFNOR XP Z12-013 FlowType enum.  Values from swagger specification v1.3.0: - Invoice flows (factures) - Lifecycle flows (cycle de vie) - E-reporting flows (transactions/paiements) - \"State*\" flows sent to DFH and Undefined (added in v1.3.0)
     """
 
     """
@@ -29,7 +29,8 @@ class FlowType(str, Enum):
     """
     CUSTOMERINVOICE = 'CustomerInvoice'
     SUPPLIERINVOICE = 'SupplierInvoice'
-    STATEINVOICE = 'StateInvoice'
+    STATECUSTOMERINVOICE = 'StateCustomerInvoice'
+    STATESUPPLIERINVOICE = 'StateSupplierInvoice'
     CUSTOMERINVOICELC = 'CustomerInvoiceLC'
     SUPPLIERINVOICELC = 'SupplierInvoiceLC'
     STATECUSTOMERINVOICELC = 'StateCustomerInvoiceLC'
@@ -39,7 +40,12 @@ class FlowType(str, Enum):
     UNITARYSUPPLIERTRANSACTIONREPORT = 'UnitarySupplierTransactionReport'
     UNITARYCUSTOMERPAYMENTREPORT = 'UnitaryCustomerPaymentReport'
     AGGREGATEDCUSTOMERPAYMENTREPORT = 'AggregatedCustomerPaymentReport'
+    STATETRANSACTIONREPORT = 'StateTransactionReport'
+    STATETRANSACTIONREPORTLC = 'StateTransactionReportLC'
+    STATEPAYMENTREPORT = 'StatePaymentReport'
+    STATEPAYMENTREPORTLC = 'StatePaymentReportLC'
     MULTIFLOWREPORT = 'MultiFlowReport'
+    UNDEFINED = 'Undefined'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

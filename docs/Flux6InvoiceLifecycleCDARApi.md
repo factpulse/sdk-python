@@ -186,7 +186,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_lifecycle_api_v1_cdar_lifecycle_get**
-> LifecycleResponse get_lifecycle_api_v1_cdar_lifecycle_get(days=days, invoice_id=invoice_id, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret)
+> LifecycleResponse get_lifecycle_api_v1_cdar_lifecycle_get(days=days, invoice_id=invoice_id, flow_direction=flow_direction, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret, organization_id=organization_id)
 
 [Simplified] Get lifecycle events for invoices
 
@@ -200,6 +200,8 @@ Returns lifecycle events (CDAR) grouped by invoice reference.
 **Parameters:**
 - `days`: Number of days to look back (default: 7)
 - `invoiceId`: Optional filter on a specific invoice reference
+- `flowDirection`: `All` (default), `In` (statuses received from the counterparty)
+  or `Out` (statuses issued by you or your PA, e.g. 202/203)
 
 **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
 
@@ -235,14 +237,16 @@ with factpulse.ApiClient(configuration) as api_client:
     api_instance = factpulse.Flux6InvoiceLifecycleCDARApi(api_client)
     days = 7 # int | Number of days to look back (optional) (default to 7)
     invoice_id = 'invoice_id_example' # str | Filter by invoice reference (optional)
+    flow_direction = All # str | All (default), In (received statuses) or Out (issued statuses) (optional) (default to All)
     pdp_flow_service_url = 'pdp_flow_service_url_example' # str | PDP Flow Service URL (optional)
     pdp_token_url = 'pdp_token_url_example' # str | PDP OAuth token URL (optional)
     pdp_client_id = 'pdp_client_id_example' # str | PDP Client ID (optional)
     pdp_client_secret = 'pdp_client_secret_example' # str | PDP Client Secret (optional)
+    organization_id = 'organization_id_example' # str | Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. (optional)
 
     try:
         # [Simplified] Get lifecycle events for invoices
-        api_response = api_instance.get_lifecycle_api_v1_cdar_lifecycle_get(days=days, invoice_id=invoice_id, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret)
+        api_response = api_instance.get_lifecycle_api_v1_cdar_lifecycle_get(days=days, invoice_id=invoice_id, flow_direction=flow_direction, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret, organization_id=organization_id)
         print("The response of Flux6InvoiceLifecycleCDARApi->get_lifecycle_api_v1_cdar_lifecycle_get:\n")
         pprint(api_response)
     except Exception as e:
@@ -258,10 +262,12 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **days** | **int**| Number of days to look back | [optional] [default to 7]
  **invoice_id** | **str**| Filter by invoice reference | [optional] 
+ **flow_direction** | **str**| All (default), In (received statuses) or Out (issued statuses) | [optional] [default to All]
  **pdp_flow_service_url** | **str**| PDP Flow Service URL | [optional] 
  **pdp_token_url** | **str**| PDP OAuth token URL | [optional] 
  **pdp_client_id** | **str**| PDP Client ID | [optional] 
  **pdp_client_secret** | **str**| PDP Client Secret | [optional] 
+ **organization_id** | **str**| Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. | [optional] 
 
 ### Return type
 
@@ -427,7 +433,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_cdar_api_v1_cdar_submit_post**
-> SubmitCDARResponse submit_cdar_api_v1_cdar_submit_post(submit_cdar_request)
+> SubmitCDARResponse submit_cdar_api_v1_cdar_submit_post(submit_cdar_request, organization_id=organization_id)
 
 Generate and submit a CDAR message
 
@@ -473,10 +479,11 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.Flux6InvoiceLifecycleCDARApi(api_client)
     submit_cdar_request = factpulse.SubmitCDARRequest() # SubmitCDARRequest | 
+    organization_id = 'organization_id_example' # str | Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. (optional)
 
     try:
         # Generate and submit a CDAR message
-        api_response = api_instance.submit_cdar_api_v1_cdar_submit_post(submit_cdar_request)
+        api_response = api_instance.submit_cdar_api_v1_cdar_submit_post(submit_cdar_request, organization_id=organization_id)
         print("The response of Flux6InvoiceLifecycleCDARApi->submit_cdar_api_v1_cdar_submit_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -491,6 +498,7 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **submit_cdar_request** | [**SubmitCDARRequest**](SubmitCDARRequest.md)|  | 
+ **organization_id** | **str**| Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. | [optional] 
 
 ### Return type
 
@@ -518,7 +526,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_cdar_xml_api_v1_cdar_submit_xml_post**
-> SubmitCDARResponse submit_cdar_xml_api_v1_cdar_submit_xml_post(submit_cdarxml_request)
+> SubmitCDARResponse submit_cdar_xml_api_v1_cdar_submit_xml_post(submit_cdarxml_request, organization_id=organization_id)
 
 Submit a pre-generated CDAR XML
 
@@ -566,10 +574,11 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.Flux6InvoiceLifecycleCDARApi(api_client)
     submit_cdarxml_request = factpulse.SubmitCDARXMLRequest() # SubmitCDARXMLRequest | 
+    organization_id = 'organization_id_example' # str | Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. (optional)
 
     try:
         # Submit a pre-generated CDAR XML
-        api_response = api_instance.submit_cdar_xml_api_v1_cdar_submit_xml_post(submit_cdarxml_request)
+        api_response = api_instance.submit_cdar_xml_api_v1_cdar_submit_xml_post(submit_cdarxml_request, organization_id=organization_id)
         print("The response of Flux6InvoiceLifecycleCDARApi->submit_cdar_xml_api_v1_cdar_submit_xml_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -584,6 +593,7 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **submit_cdarxml_request** | [**SubmitCDARXMLRequest**](SubmitCDARXMLRequest.md)|  | 
+ **organization_id** | **str**| Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. | [optional] 
 
 ### Return type
 
@@ -611,7 +621,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_encaissee_api_v1_cdar_encaissee_post**
-> SimplifiedCDARResponse submit_encaissee_api_v1_cdar_encaissee_post(encaissee_request)
+> SimplifiedCDARResponse submit_encaissee_api_v1_cdar_encaissee_post(encaissee_request, organization_id=organization_id)
 
 [Simplified] Submit PAID status (212) - Issued invoice
 
@@ -661,10 +671,11 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.Flux6InvoiceLifecycleCDARApi(api_client)
     encaissee_request = factpulse.EncaisseeRequest() # EncaisseeRequest | 
+    organization_id = 'organization_id_example' # str | Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. (optional)
 
     try:
         # [Simplified] Submit PAID status (212) - Issued invoice
-        api_response = api_instance.submit_encaissee_api_v1_cdar_encaissee_post(encaissee_request)
+        api_response = api_instance.submit_encaissee_api_v1_cdar_encaissee_post(encaissee_request, organization_id=organization_id)
         print("The response of Flux6InvoiceLifecycleCDARApi->submit_encaissee_api_v1_cdar_encaissee_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -679,6 +690,7 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **encaissee_request** | [**EncaisseeRequest**](EncaisseeRequest.md)|  | 
+ **organization_id** | **str**| Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. | [optional] 
 
 ### Return type
 
@@ -706,7 +718,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_refusee_api_v1_cdar_refusee_post**
-> SimplifiedCDARResponse submit_refusee_api_v1_cdar_refusee_post(refusee_request)
+> SimplifiedCDARResponse submit_refusee_api_v1_cdar_refusee_post(refusee_request, organization_id=organization_id)
 
 [Simplified] Submit REFUSED status (210) - Received invoice
 
@@ -771,10 +783,11 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.Flux6InvoiceLifecycleCDARApi(api_client)
     refusee_request = factpulse.RefuseeRequest() # RefuseeRequest | 
+    organization_id = 'organization_id_example' # str | Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. (optional)
 
     try:
         # [Simplified] Submit REFUSED status (210) - Received invoice
-        api_response = api_instance.submit_refusee_api_v1_cdar_refusee_post(refusee_request)
+        api_response = api_instance.submit_refusee_api_v1_cdar_refusee_post(refusee_request, organization_id=organization_id)
         print("The response of Flux6InvoiceLifecycleCDARApi->submit_refusee_api_v1_cdar_refusee_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -789,6 +802,7 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **refusee_request** | [**RefuseeRequest**](RefuseeRequest.md)|  | 
+ **organization_id** | **str**| Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. | [optional] 
 
 ### Return type
 

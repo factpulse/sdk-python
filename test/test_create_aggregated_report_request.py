@@ -42,6 +42,7 @@ class TestCreateAggregatedReportRequest(unittest.TestCase):
                 sender = factpulse.models.report_sender.ReportSender(
                     siren = '123456789', 
                     name = 'Ma Société SARL', 
+                    scheme_id = '', 
                     vat_id = '', ),
                 issuer = factpulse.models.report_issuer.ReportIssuer(
                     siren = '123456789', 
@@ -71,8 +72,13 @@ class TestCreateAggregatedReportRequest(unittest.TestCase):
                             factpulse.models.tax_breakdown_input.TaxBreakdownInput(
                                 rate = 20.00, 
                                 taxable_amount = 10000.00, 
-                                tax_amount = 2000.00, )
+                                tax_amount = 2000.00, 
+                                tax_category_code = '', 
+                                exemption_reason_code = '', 
+                                exemption_reason = '', )
                             ], 
+                        tax_amount_eur = null, 
+                        business_process_id = '', 
                         referenced_invoice_id = '', 
                         referenced_invoice_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(), )
                     ],
@@ -87,7 +93,10 @@ class TestCreateAggregatedReportRequest(unittest.TestCase):
                             factpulse.models.tax_breakdown_input.TaxBreakdownInput(
                                 rate = 20.00, 
                                 taxable_amount = 10000.00, 
-                                tax_amount = 2000.00, )
+                                tax_amount = 2000.00, 
+                                tax_category_code = '', 
+                                exemption_reason_code = '', 
+                                exemption_reason = '', )
                             ], 
                         transaction_count = 1.0, 
                         tax_due_type = null, )
@@ -101,7 +110,8 @@ class TestCreateAggregatedReportRequest(unittest.TestCase):
                         amounts_by_rate = [
                             factpulse.models.payment_amount_by_rate.PaymentAmountByRate(
                                 rate = 20.00, 
-                                amount = 12000.00, )
+                                amount = 12000.00, 
+                                amount_eur = null, )
                             ], )
                     ],
                 transaction_payments = [
@@ -111,7 +121,8 @@ class TestCreateAggregatedReportRequest(unittest.TestCase):
                         amounts_by_rate = [
                             factpulse.models.payment_amount_by_rate.PaymentAmountByRate(
                                 rate = 20.00, 
-                                amount = 12000.00, )
+                                amount = 12000.00, 
+                                amount_eur = null, )
                             ], )
                     ]
             )
@@ -121,6 +132,7 @@ class TestCreateAggregatedReportRequest(unittest.TestCase):
                 sender = factpulse.models.report_sender.ReportSender(
                     siren = '123456789', 
                     name = 'Ma Société SARL', 
+                    scheme_id = '', 
                     vat_id = '', ),
                 period = factpulse.models.report_period.ReportPeriod(
                     start_date = '2025-01-01', 

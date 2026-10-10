@@ -23,14 +23,15 @@ from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.scheme_id import SchemeID
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ElectronicAddress(BaseModel):
     """
     Represents an electronic invoicing address, composed of an identifier and its scheme (SchemeID) in accordance with EN16931. Example: { \"identifier\": \"123456789\", \"scheme_id\": \"0225\" }
     """ # noqa: E501
     identifier: StrictStr = Field(description="Electronic address identifier (e.g., SIREN, SIRET, routing code)")
-    scheme_id: Optional[SchemeID] = Field(default=None, description="Identification scheme (EAS code)", alias="schemeId")
-    __properties: ClassVar[List[str]] = ["identifier", "schemeId"]
+    scheme_id: Optional[SchemeID] = Field(default=None, description="Identification scheme (EAS code)")
+    __properties: ClassVar[List[str]] = ["identifier", "scheme_id"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -46,8 +47,7 @@ class ElectronicAddress(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -85,7 +85,7 @@ class ElectronicAddress(BaseModel):
 
         _obj = cls.model_validate({
             "identifier": obj.get("identifier"),
-            "schemeId": obj.get("schemeId")
+            "scheme_id": obj.get("scheme_id")
         })
         return _obj
 

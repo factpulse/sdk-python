@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **invoice_id** | **str** | Invoice identifier | 
 **issue_date** | **date** | Invoice issue date | 
-**type_code** | [**FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode**](FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode.md) | Invoice type code | [optional] 
+**type_code** | [**InvoiceTypeCode**](InvoiceTypeCode.md) | Invoice type code | [optional] 
 **currency** | [**Currency**](Currency.md) |  | [optional] 
 **due_date** | **date** |  | [optional] 
 **seller_id** | **str** |  | [optional] 
@@ -21,6 +21,8 @@ Name | Type | Description | Notes
 **tax_exclusive_amount** | [**Taxexclusiveamount1**](Taxexclusiveamount1.md) |  | 
 **tax_amount** | [**Taxamount1**](Taxamount1.md) |  | 
 **tax_breakdown** | [**List[TaxBreakdownInput]**](TaxBreakdownInput.md) | VAT breakdown | 
+**tax_amount_eur** | [**Taxamounteur**](Taxamounteur.md) |  | [optional] 
+**business_process_id** | **str** |  | [optional] 
 **referenced_invoice_id** | **str** |  | [optional] 
 **referenced_invoice_date** | **date** |  | [optional] 
 

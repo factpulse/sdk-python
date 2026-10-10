@@ -6,8 +6,12 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **webhook_id** | **UUID** |  | [optional] 
-**callback** | [**AFNORCallbackParameters**](AFNORCallbackParameters.md) |  | 
-**metadata** | [**AFNORWebhookMetadata**](AFNORWebhookMetadata.md) |  | 
+**signing_key** | **bytes** |  | [optional] 
+**created_at** | **datetime** |  | [optional] 
+**callback_url** | **str** |  | 
+**flow_types** | [**List[AFNORFlowType]**](AFNORFlowType.md) |  | [optional] 
+**flow_direction** | [**AFNORFlowDirection**](AFNORFlowDirection.md) |  | [optional] 
+**ack_status** | [**AFNORFlowAckStatus**](AFNORFlowAckStatus.md) |  | [optional] 
 
 ## Example
 

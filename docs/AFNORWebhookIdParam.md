@@ -6,6 +6,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **webhook_id** | **UUID** |  | [optional] 
+**signing_key** | **bytes** |  | [optional] 
+**created_at** | **datetime** |  | [optional] 
 
 ## Example
 

@@ -20,16 +20,17 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
+from factpulse.models.chorus_pro_credentials import ChorusProCredentials
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class ChorusProDestination(BaseModel):
     """
     Specific configuration for Chorus Pro destination.
     """ # noqa: E501
     type: Optional[StrictStr] = 'chorus_pro'
-    credentials: Optional[FactureElectroniqueRestApiSchemasProcessingChorusProCredentials] = None
+    credentials: Optional[ChorusProCredentials] = None
     __properties: ClassVar[List[str]] = ["type", "credentials"]
 
     @field_validator('type')
@@ -56,8 +57,7 @@ class ChorusProDestination(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -103,7 +103,7 @@ class ChorusProDestination(BaseModel):
 
         _obj = cls.model_validate({
             "type": obj.get("type") if obj.get("type") is not None else 'chorus_pro',
-            "credentials": FactureElectroniqueRestApiSchemasProcessingChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None
+            "credentials": ChorusProCredentials.from_dict(obj["credentials"]) if obj.get("credentials") is not None else None
         })
         return _obj
 

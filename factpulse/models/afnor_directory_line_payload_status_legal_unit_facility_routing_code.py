@@ -28,6 +28,7 @@ from factpulse.models.afnor_legal_unit_payload_included import AFNORLegalUnitPay
 from factpulse.models.afnor_recipient_platform_type import AFNORRecipientPlatformType
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode(BaseModel):
     """
@@ -38,11 +39,12 @@ class AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode(BaseModel):
     directory_line_status: Optional[AFNORDirectoryLineStatus] = Field(default=None, alias="directoryLineStatus")
     siren: Optional[Annotated[str, Field(strict=True, max_length=9)]] = Field(default=None, description="SIREN number")
     siret: Optional[Annotated[str, Field(strict=True, max_length=14)]] = Field(default=None, description="SIRET Number")
+    routing_identifier: Optional[Annotated[str, Field(strict=True, max_length=100)]] = Field(default=None, description="Routing identifier od a routing code.", alias="routingIdentifier")
     addressing_suffix: Optional[Annotated[str, Field(strict=True, max_length=100)]] = Field(default=None, description="suffix of the directory line which defines an address mesh not attached to a facility", alias="addressingSuffix")
     routing_code: Optional[AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCodeRoutingCode] = Field(default=None, alias="routingCode")
     legal_unit: Optional[AFNORLegalUnitPayloadIncluded] = Field(default=None, alias="legalUnit")
     facility: Optional[AFNORFacilityPayloadIncluded] = None
-    __properties: ClassVar[List[str]] = ["addressingIdentifier", "platformType", "directoryLineStatus", "siren", "siret", "addressingSuffix", "routingCode", "legalUnit", "facility"]
+    __properties: ClassVar[List[str]] = ["addressingIdentifier", "platformType", "directoryLineStatus", "siren", "siret", "routingIdentifier", "addressingSuffix", "routingCode", "legalUnit", "facility"]
 
     @field_validator('siren')
     def siren_validate_regular_expression(cls, value):
@@ -64,6 +66,16 @@ class AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode(BaseModel):
             raise ValueError(r"must validate the regular expression /^([0-9]{14})$/")
         return value
 
+    @field_validator('routing_identifier')
+    def routing_identifier_validate_regular_expression(cls, value):
+        """Validates the regular expression"""
+        if value is None:
+            return value
+
+        if not re.match(r"^(?!\s+$)[\-_\/a-zA-Z0-9]{1,100}$", value):
+            raise ValueError(r"must validate the regular expression /^(?!\s+$)[\-_\/a-zA-Z0-9]{1,100}$/")
+        return value
+
     model_config = ConfigDict(
         validate_by_name=True,
         validate_by_alias=True,
@@ -78,8 +90,7 @@ class AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -130,6 +141,7 @@ class AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode(BaseModel):
             "directoryLineStatus": obj.get("directoryLineStatus"),
             "siren": obj.get("siren"),
             "siret": obj.get("siret"),
+            "routingIdentifier": obj.get("routingIdentifier"),
             "addressingSuffix": obj.get("addressingSuffix"),
             "routingCode": AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCodeRoutingCode.from_dict(obj["routingCode"]) if obj.get("routingCode") is not None else None,
             "legalUnit": AFNORLegalUnitPayloadIncluded.from_dict(obj["legalUnit"]) if obj.get("legalUnit") is not None else None,

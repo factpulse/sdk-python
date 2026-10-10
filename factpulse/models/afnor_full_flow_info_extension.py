@@ -24,12 +24,13 @@ from typing import Any, ClassVar, Dict, List
 from typing_extensions import Annotated
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORFullFlowInfoExtension(BaseModel):
     """
-    Extension schema to build FFullFlowInfo, Flow schemas
+    Extension schema to build FullFlowInfo, Flow schemas
     """ # noqa: E501
-    flow_id: Annotated[str, Field(strict=True, max_length=36)] = Field(description="Unique identifier supporting UUID but not only, for flexibility purpose", alias="flowId")
+    flow_id: Annotated[str, Field(strict=True, max_length=64)] = Field(description="Unique identifier supporting UUID but not only, for flexibility purpose", alias="flowId")
     submitted_at: datetime = Field(description="The flow submission date and time (the date and time when the flow was created on the system) This property should be used by the API consumer as a time reference to avoid clock synchronization issues ", alias="submittedAt")
     __properties: ClassVar[List[str]] = ["flowId", "submittedAt"]
 
@@ -47,8 +48,7 @@ class AFNORFullFlowInfoExtension(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

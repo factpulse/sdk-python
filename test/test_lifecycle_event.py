@@ -40,6 +40,7 @@ class TestLifecycleEvent(unittest.TestCase):
                 status_code = '',
                 status_description = '',
                 ack_status = '',
+                flow_direction = '',
                 at = '',
                 document_id = '',
                 amount = ERROR_TO_EXAMPLE_VALUE,

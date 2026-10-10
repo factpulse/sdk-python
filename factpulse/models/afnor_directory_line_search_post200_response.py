@@ -24,13 +24,14 @@ from factpulse.models.afnor_directory_line_payload_status_legal_unit_facility_ro
 from factpulse.models.afnor_search_directory_line import AFNORSearchDirectoryLine
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORDirectoryLineSearchPost200Response(BaseModel):
     """
     AFNORDirectoryLineSearchPost200Response
     """ # noqa: E501
     search: Optional[AFNORSearchDirectoryLine] = None
-    total_number_of_results: Optional[StrictInt] = Field(default=None, description="The total number of results", alias="totalNumberOfResults")
+    total_number_of_results: Optional[StrictInt] = Field(default=-1, description="The total number of results, if -1 is returned then this value is not managed due to performance issue", alias="totalNumberOfResults")
     results: Optional[List[AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode]] = None
     __properties: ClassVar[List[str]] = ["search", "totalNumberOfResults", "results"]
 
@@ -48,8 +49,7 @@ class AFNORDirectoryLineSearchPost200Response(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -97,7 +97,7 @@ class AFNORDirectoryLineSearchPost200Response(BaseModel):
 
         _obj = cls.model_validate({
             "search": AFNORSearchDirectoryLine.from_dict(obj["search"]) if obj.get("search") is not None else None,
-            "totalNumberOfResults": obj.get("totalNumberOfResults"),
+            "totalNumberOfResults": obj.get("totalNumberOfResults") if obj.get("totalNumberOfResults") is not None else -1,
             "results": [AFNORDirectoryLinePayloadStatusLegalUnitFacilityRoutingCode.from_dict(_item) for _item in obj["results"]] if obj.get("results") is not None else None
         })
         return _obj

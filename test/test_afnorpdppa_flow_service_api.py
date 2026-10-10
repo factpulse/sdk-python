@@ -55,13 +55,6 @@ class TestAFNORPDPPAFlowServiceApi(unittest.TestCase):
         """
         pass
 
-    def test_get_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_get(self) -> None:
-        """Test case for get_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_get
-
-        Get a webhook
-        """
-        pass
-
     def test_list_webhooks_proxy_api_v1_afnor_flow_v1_webhooks_get(self) -> None:
         """Test case for list_webhooks_proxy_api_v1_afnor_flow_v1_webhooks_get
 
@@ -80,13 +73,6 @@ class TestAFNORPDPPAFlowServiceApi(unittest.TestCase):
         """Test case for submit_flow_proxy_api_v1_afnor_flow_v1_flows_post
 
         Submit an invoicing flow
-        """
-        pass
-
-    def test_update_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_patch(self) -> None:
-        """Test case for update_webhook_proxy_api_v1_afnor_flow_v1_webhooks_webhook_uid_patch
-
-        Update a webhook
         """
         pass
 

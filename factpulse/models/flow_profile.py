@@ -30,6 +30,7 @@ class FlowProfile(str, Enum):
     BASIC = 'Basic'
     CIUS = 'CIUS'
     EXTENDED_MINUS_CTC_MINUS_FR = 'Extended-CTC-FR'
+    UNDEFINED = 'Undefined'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

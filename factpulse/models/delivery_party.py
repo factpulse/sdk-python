@@ -20,19 +20,20 @@ import json
 
 from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.electronic_address import ElectronicAddress
-from factpulse.models.postal_address import PostalAddress
+from factpulse.models.electronic_address_input import ElectronicAddressInput
+from factpulse.models.postal_address_input import PostalAddressInput
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class DeliveryParty(BaseModel):
     """
     Delivery location information (BG-15 Deliver to).  Represents the party or location where goods/services are delivered.
     """ # noqa: E501
     id: Optional[StrictStr] = None
-    global_id: Optional[ElectronicAddress] = None
+    global_id: Optional[ElectronicAddressInput] = None
     name: Optional[StrictStr] = None
-    postal_address: Optional[PostalAddress] = None
+    postal_address: Optional[PostalAddressInput] = None
     __properties: ClassVar[List[str]] = ["id", "global_id", "name", "postal_address"]
 
     model_config = ConfigDict(
@@ -49,8 +50,7 @@ class DeliveryParty(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -114,9 +114,9 @@ class DeliveryParty(BaseModel):
 
         _obj = cls.model_validate({
             "id": obj.get("id"),
-            "global_id": ElectronicAddress.from_dict(obj["global_id"]) if obj.get("global_id") is not None else None,
+            "global_id": ElectronicAddressInput.from_dict(obj["global_id"]) if obj.get("global_id") is not None else None,
             "name": obj.get("name"),
-            "postal_address": PostalAddress.from_dict(obj["postal_address"]) if obj.get("postal_address") is not None else None
+            "postal_address": PostalAddressInput.from_dict(obj["postal_address"]) if obj.get("postal_address") is not None else None
         })
         return _obj
 

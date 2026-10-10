@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class AFNORProcessingRule(str, Enum):
     """
-    - B2B                 : e-invoicing - B2BInt              : International B2B e-reporting - B2C                 : B2C e-reporting - B2G                 : e-invoicing for B2G sales - B2GInt - OutOfScope          : Out of scope (not regulated flow) - B2GOutOfScope - ArchiveOnly         : Archive only, no transmission - NotApplicable       : Not Applicable 
+    - B2B                 : e-invoicing - B2BInt              : International B2B e-reporting - B2C                 : B2C e-reporting - B2G                 : e-invoicing for B2G sales - B2GInt - OutOfScope          : Out of scope (not regulated flow) - B2GOutOfScope - ArchiveOnly         : Archive only, no transmission - NotApplicable       : Not Applicable - Undefined           : Not yet defined when in Pending state or unable to define when in Error state 
     """
 
     """
@@ -36,6 +36,7 @@ class AFNORProcessingRule(str, Enum):
     B2GOUTOFSCOPE = 'B2GOutOfScope'
     ARCHIVEONLY = 'ArchiveOnly'
     NOTAPPLICABLE = 'NotApplicable'
+    UNDEFINED = 'Undefined'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

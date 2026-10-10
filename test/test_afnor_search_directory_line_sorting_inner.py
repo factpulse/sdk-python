@@ -37,7 +37,7 @@ class TestAFNORSearchDirectoryLineSortingInner(unittest.TestCase):
         if include_optional:
             return AFNORSearchDirectoryLineSortingInner(
                 var_field = 'siren',
-                sorting_order = 'ascending'
+                order = 'ascending'
             )
         else:
             return AFNORSearchDirectoryLineSortingInner(

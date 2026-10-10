@@ -245,7 +245,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_complete_invoice_api_v1_processing_invoices_submit_complete_post**
-> SubmitCompleteInvoiceResponse submit_complete_invoice_api_v1_processing_invoices_submit_complete_post(submit_complete_invoice_request)
+> SubmitCompleteInvoiceResponse submit_complete_invoice_api_v1_processing_invoices_submit_complete_post(submit_complete_invoice_request, organization_id=organization_id)
 
 Submit a complete invoice (generation + signature + submission)
 
@@ -257,6 +257,19 @@ Unified endpoint to submit a complete invoice to different destinations.
     2. **Factur-X PDF generation**: creates a PDF/A-3 with embedded XML
     3. **Electronic signature** (optional): signs the PDF with a certificate
     4. **Submission**: sends to the chosen destination (Chorus Pro or AFNOR PDP)
+
+    **Two accepted `invoiceData` formats, detected automatically** (same rule as
+    `/generate-invoice`):
+    - **Simplified format** (`number` + `lines`): totals, VAT and dates are computed.
+      Any field of the complete model may be added on top (`deliveryDate` BT-72,
+      `deliveryParty` BG-15, `paymentReference` BT-83, `supplier.bic` BT-86, ...).
+    - **Complete format** (`invoiceLines` present): full `FacturXInvoice` structure,
+      used as provided.
+
+    A non-compliant invoice is **not submitted**: the Schematron errors are returned
+    as a 400 `SCHEMATRON_VALIDATION_FAILED`, rather than a 200 followed by an
+    asynchronous rejection by the PA. This includes the empty-element rule
+    (PEPPOL-EN16931-R008), which the PAs apply as blocking.
 
     **Supported destinations:**
     - **Chorus Pro**: French B2G platform (invoices to public sector)
@@ -332,10 +345,11 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.InvoiceGenerationApi(api_client)
     submit_complete_invoice_request = factpulse.SubmitCompleteInvoiceRequest() # SubmitCompleteInvoiceRequest | 
+    organization_id = 'organization_id_example' # str | Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. (optional)
 
     try:
         # Submit a complete invoice (generation + signature + submission)
-        api_response = api_instance.submit_complete_invoice_api_v1_processing_invoices_submit_complete_post(submit_complete_invoice_request)
+        api_response = api_instance.submit_complete_invoice_api_v1_processing_invoices_submit_complete_post(submit_complete_invoice_request, organization_id=organization_id)
         print("The response of InvoiceGenerationApi->submit_complete_invoice_api_v1_processing_invoices_submit_complete_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -350,6 +364,7 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **submit_complete_invoice_request** | [**SubmitCompleteInvoiceRequest**](SubmitCompleteInvoiceRequest.md)|  | 
+ **organization_id** | **str**| Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. | [optional] 
 
 ### Return type
 
@@ -375,7 +390,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post**
-> TaskResponse submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post(submit_complete_invoice_request, callback_url=callback_url, webhook_mode=webhook_mode)
+> TaskResponse submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post(submit_complete_invoice_request, callback_url=callback_url, webhook_mode=webhook_mode, organization_id=organization_id)
 
 Submit a complete invoice (asynchronous with Celery)
 
@@ -454,10 +469,11 @@ with factpulse.ApiClient(configuration) as api_client:
     submit_complete_invoice_request = factpulse.SubmitCompleteInvoiceRequest() # SubmitCompleteInvoiceRequest | 
     callback_url = 'callback_url_example' # str | Webhook URL for async notification when submission completes. (optional)
     webhook_mode = 'inline' # str | Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL) (optional) (default to 'inline')
+    organization_id = 'organization_id_example' # str | Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. (optional)
 
     try:
         # Submit a complete invoice (asynchronous with Celery)
-        api_response = api_instance.submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post(submit_complete_invoice_request, callback_url=callback_url, webhook_mode=webhook_mode)
+        api_response = api_instance.submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post(submit_complete_invoice_request, callback_url=callback_url, webhook_mode=webhook_mode, organization_id=organization_id)
         print("The response of InvoiceGenerationApi->submit_complete_invoice_async_api_v1_processing_invoices_submit_complete_async_post:\n")
         pprint(api_response)
     except Exception as e:
@@ -474,6 +490,7 @@ Name | Type | Description  | Notes
  **submit_complete_invoice_request** | [**SubmitCompleteInvoiceRequest**](SubmitCompleteInvoiceRequest.md)|  | 
  **callback_url** | **str**| Webhook URL for async notification when submission completes. | [optional] 
  **webhook_mode** | **str**| Webhook content delivery: &#39;inline&#39; (base64 in payload) or &#39;download_url&#39; (temporary URL, 1h TTL) | [optional] [default to &#39;inline&#39;]
+ **organization_id** | **str**| Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. | [optional] 
 
 ### Return type
 

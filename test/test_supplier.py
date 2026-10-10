@@ -49,6 +49,7 @@ class TestSupplier(unittest.TestCase):
                 siren = '',
                 siret = '',
                 vat_number = '',
+                tax_registration_id = '',
                 iban = '',
                 bic = '',
                 bank_account_name = '',

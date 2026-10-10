@@ -36,22 +36,7 @@ class TestSubmitCompleteInvoiceRequest(unittest.TestCase):
         model = SubmitCompleteInvoiceRequest()
         if include_optional:
             return SubmitCompleteInvoiceRequest(
-                invoice_data = factpulse.models.simplified_invoice_data.SimplifiedInvoiceData(
-                    number = '', 
-                    supplier = { }, 
-                    recipient = { }, 
-                    lines = [
-                        { }
-                        ], 
-                    date = '', 
-                    due_days = 0.0, 
-                    comment = '', 
-                    purchase_order_reference = '', 
-                    contract_reference = '', 
-                    invoice_type = null, 
-                    preceding_invoice_reference = '', 
-                    operation_nature = null, 
-                    invoicing_framework = null, ),
+                invoice_data = None,
                 source_pdf = '',
                 destination = None,
                 signature = factpulse.models.signature_parameters.SignatureParameters(
@@ -68,22 +53,7 @@ class TestSubmitCompleteInvoiceRequest(unittest.TestCase):
             )
         else:
             return SubmitCompleteInvoiceRequest(
-                invoice_data = factpulse.models.simplified_invoice_data.SimplifiedInvoiceData(
-                    number = '', 
-                    supplier = { }, 
-                    recipient = { }, 
-                    lines = [
-                        { }
-                        ], 
-                    date = '', 
-                    due_days = 0.0, 
-                    comment = '', 
-                    purchase_order_reference = '', 
-                    contract_reference = '', 
-                    invoice_type = null, 
-                    preceding_invoice_reference = '', 
-                    operation_nature = null, 
-                    invoicing_framework = null, ),
+                invoice_data = None,
                 source_pdf = '',
                 destination = None,
         )

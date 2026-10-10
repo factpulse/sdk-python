@@ -7,7 +7,7 @@ A sorting criteria composed of a field and an order (ascending or descending).
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **var_field** | [**AFNORSiretField**](AFNORSiretField.md) |  | [optional] 
-**sorting_order** | [**AFNORSortingOrder**](AFNORSortingOrder.md) |  | [optional] 
+**order** | [**AFNORSortingOrder**](AFNORSortingOrder.md) |  | [optional] 
 
 ## Example
 

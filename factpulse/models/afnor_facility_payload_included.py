@@ -25,8 +25,10 @@ from factpulse.models.afnor_address_read import AFNORAddressRead
 from factpulse.models.afnor_facility_administrative_status import AFNORFacilityAdministrativeStatus
 from factpulse.models.afnor_facility_payload_history_ule_b2g_additional_data import AFNORFacilityPayloadHistoryUleB2gAdditionalData
 from factpulse.models.afnor_facility_type import AFNORFacilityType
+from factpulse.models.afnor_siret_instructions import AFNORSiretInstructions
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORFacilityPayloadIncluded(BaseModel):
     """
@@ -37,9 +39,10 @@ class AFNORFacilityPayloadIncluded(BaseModel):
     name: Optional[Annotated[str, Field(strict=True, max_length=100)]] = Field(default=None, description="business name")
     facility_type: Optional[AFNORFacilityType] = Field(default=None, alias="facilityType")
     administrative_status: Optional[AFNORFacilityAdministrativeStatus] = Field(default=None, alias="administrativeStatus")
+    instructions: Optional[AFNORSiretInstructions] = None
     address: Optional[AFNORAddressRead] = None
     b2g_additional_data: Optional[AFNORFacilityPayloadHistoryUleB2gAdditionalData] = Field(default=None, alias="b2gAdditionalData")
-    __properties: ClassVar[List[str]] = ["siret", "siren", "name", "facilityType", "administrativeStatus", "address", "b2gAdditionalData"]
+    __properties: ClassVar[List[str]] = ["siret", "siren", "name", "facilityType", "administrativeStatus", "instructions", "address", "b2gAdditionalData"]
 
     @field_validator('siret')
     def siret_validate_regular_expression(cls, value):
@@ -75,8 +78,7 @@ class AFNORFacilityPayloadIncluded(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -101,6 +103,9 @@ class AFNORFacilityPayloadIncluded(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of instructions
+        if self.instructions:
+            _dict['instructions'] = self.instructions.to_dict()
         # override the default output from pydantic by calling `to_dict()` of address
         if self.address:
             _dict['address'] = self.address.to_dict()
@@ -124,6 +129,7 @@ class AFNORFacilityPayloadIncluded(BaseModel):
             "name": obj.get("name"),
             "facilityType": obj.get("facilityType"),
             "administrativeStatus": obj.get("administrativeStatus"),
+            "instructions": AFNORSiretInstructions.from_dict(obj["instructions"]) if obj.get("instructions") is not None else None,
             "address": AFNORAddressRead.from_dict(obj["address"]) if obj.get("address") is not None else None,
             "b2gAdditionalData": AFNORFacilityPayloadHistoryUleB2gAdditionalData.from_dict(obj["b2gAdditionalData"]) if obj.get("b2gAdditionalData") is not None else None
         })

@@ -61,6 +61,7 @@ class TestSubmitCDARRequest(unittest.TestCase):
                 reason_text = '',
                 action_code = '',
                 encaisse_amount = None,
+                encaisse_vat_rate = 1.337,
                 flow_type = 'CustomerInvoiceLC',
                 pdp_flow_service_url = '',
                 pdp_token_url = '',

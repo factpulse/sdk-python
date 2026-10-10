@@ -6,7 +6,7 @@ Information about the supplier / seller (BG-4).
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**electronic_address** | [**ElectronicAddress**](ElectronicAddress.md) |  | [optional] 
+**electronic_address** | [**ElectronicAddressInput**](ElectronicAddressInput.md) |  | [optional] 
 **supplier_id** | **int** | Chorus Pro supplier structure ID (idFournisseur). Only required for B2G. | [optional] [default to 0]
 **private_id** | **str** |  | [optional] 
 **supplier_bank_account_code** | **int** |  | [optional] 
@@ -17,13 +17,14 @@ Name | Type | Description | Notes
 **siren** | **str** |  | [optional] 
 **siret** | **str** |  | [optional] 
 **vat_number** | **str** |  | [optional] 
+**tax_registration_id** | **str** |  | [optional] 
 **iban** | **str** |  | [optional] 
 **bic** | **str** |  | [optional] 
 **bank_account_name** | **str** |  | [optional] 
 **proprietary_id** | **str** |  | [optional] 
-**postal_address** | [**PostalAddress**](PostalAddress.md) |  | [optional] 
+**postal_address** | [**PostalAddressInput**](PostalAddressInput.md) |  | [optional] 
 **contact** | [**Contact**](Contact.md) |  | [optional] 
-**global_ids** | [**List[ElectronicAddress]**](ElectronicAddress.md) |  | [optional] 
+**global_ids** | [**List[ElectronicAddressInput]**](ElectronicAddressInput.md) |  | [optional] 
 
 ## Example
 

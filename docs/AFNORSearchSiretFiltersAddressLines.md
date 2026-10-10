@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**op** | [**AFNORContainsOperator**](AFNORContainsOperator.md) |  | [optional] 
+**op** | [**AFNORContainsOrStartWithOperator**](AFNORContainsOrStartWithOperator.md) |  | [optional] 
 **value** | **str** | address lines of the recipient structure having defined the directory line(s). | [optional] 
 
 ## Example

@@ -18,13 +18,14 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.afnor_directory_line_field import AFNORDirectoryLineField
 from factpulse.models.afnor_search_directory_line_filters import AFNORSearchDirectoryLineFilters
 from factpulse.models.afnor_search_directory_line_sorting_inner import AFNORSearchDirectoryLineSortingInner
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORSearchDirectoryLine(BaseModel):
     """
@@ -33,9 +34,21 @@ class AFNORSearchDirectoryLine(BaseModel):
     filters: Optional[AFNORSearchDirectoryLineFilters] = None
     sorting: Optional[List[AFNORSearchDirectoryLineSortingInner]] = Field(default=None, description="Sorting criteria on a field and an order (ascending or descending).")
     fields: Optional[List[AFNORDirectoryLineField]] = Field(default=None, description="Allows you to filter the desired fields in the response.")
+    include: Optional[List[StrictStr]] = None
     limit: Optional[StrictInt] = Field(default=None, description="Maximum number of results")
     ignore: Optional[StrictInt] = Field(default=None, description="Number of results to skip")
-    __properties: ClassVar[List[str]] = ["filters", "sorting", "fields", "limit", "ignore"]
+    __properties: ClassVar[List[str]] = ["filters", "sorting", "fields", "include", "limit", "ignore"]
+
+    @field_validator('include')
+    def include_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        for i in value:
+            if i not in set(['siren', 'siret', 'routingCode']):
+                raise ValueError("each list item must be one of ('siren', 'siret', 'routingCode')")
+        return value
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -51,8 +64,7 @@ class AFNORSearchDirectoryLine(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -102,6 +114,7 @@ class AFNORSearchDirectoryLine(BaseModel):
             "filters": AFNORSearchDirectoryLineFilters.from_dict(obj["filters"]) if obj.get("filters") is not None else None,
             "sorting": [AFNORSearchDirectoryLineSortingInner.from_dict(_item) for _item in obj["sorting"]] if obj.get("sorting") is not None else None,
             "fields": obj.get("fields"),
+            "include": obj.get("include"),
             "limit": obj.get("limit"),
             "ignore": obj.get("ignore")
         })

@@ -41,6 +41,7 @@ class TestEncaisseeRequest(unittest.TestCase):
                 invoice_buyer_siren = '',
                 invoice_buyer_electronic_address = '',
                 amount = None,
+                vat_rate = 1.337,
                 currency = 'EUR',
                 sender_siren = '',
                 flow_type = 'CustomerInvoiceLC',

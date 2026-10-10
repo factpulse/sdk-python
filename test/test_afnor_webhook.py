@@ -37,43 +37,18 @@ class TestAFNORWebhook(unittest.TestCase):
         if include_optional:
             return AFNORWebhook(
                 webhook_id = '',
-                callback = factpulse.models.afnor_callback_parameters.AFNOR_CallbackParameters(
-                    url = '', 
-                    headers = [
-                        factpulse.models.afnor_callback_header.AFNOR_CallbackHeader(
-                            header_name = '', 
-                            header_value = '', )
-                        ], 
-                    authentication = factpulse.models.afnor_callback_authentication.AFNOR_CallbackAuthentication(
-                        auth_type = 'BASIC', ), 
-                    signature = factpulse.models.afnor_callback_signature.AFNOR_CallbackSignature(
-                        algo = 'RS256', 
-                        key = 'YQ==', ), ),
-                metadata = factpulse.models.afnor_webhook_metadata.AFNOR_WebhookMetadata(
-                    processing_rule = 'B2B', 
-                    flow_type = 'SupplierInvoice', 
-                    flow_direction = 'Out', 
-                    ack_status = 'Pending', )
+                signing_key = 'YQ==',
+                created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
+                callback_url = '',
+                flow_types = [
+                    'SupplierInvoice'
+                    ],
+                flow_direction = 'Out',
+                ack_status = 'Pending'
             )
         else:
             return AFNORWebhook(
-                callback = factpulse.models.afnor_callback_parameters.AFNOR_CallbackParameters(
-                    url = '', 
-                    headers = [
-                        factpulse.models.afnor_callback_header.AFNOR_CallbackHeader(
-                            header_name = '', 
-                            header_value = '', )
-                        ], 
-                    authentication = factpulse.models.afnor_callback_authentication.AFNOR_CallbackAuthentication(
-                        auth_type = 'BASIC', ), 
-                    signature = factpulse.models.afnor_callback_signature.AFNOR_CallbackSignature(
-                        algo = 'RS256', 
-                        key = 'YQ==', ), ),
-                metadata = factpulse.models.afnor_webhook_metadata.AFNOR_WebhookMetadata(
-                    processing_rule = 'B2B', 
-                    flow_type = 'SupplierInvoice', 
-                    flow_direction = 'Out', 
-                    ack_status = 'Pending', ),
+                callback_url = '',
         )
         """
 

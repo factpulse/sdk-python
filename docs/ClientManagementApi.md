@@ -8,9 +8,12 @@ Method | HTTP request | Description
 [**create_client_api_v1_clients_post**](ClientManagementApi.md#create_client_api_v1_clients_post) | **POST** /api/v1/clients | Create a client
 [**deactivate_client_api_v1_clients_uid_desactiver_post**](ClientManagementApi.md#deactivate_client_api_v1_clients_uid_desactiver_post) | **POST** /api/v1/clients/{uid}/desactiver | Deactivate a client
 [**delete_webhook_secret_api_v1_clients_uid_webhook_secret_delete**](ClientManagementApi.md#delete_webhook_secret_api_v1_clients_uid_webhook_secret_delete) | **DELETE** /api/v1/clients/{uid}/webhook-secret | Delete webhook secret
+[**disconnect_superpdp_api_v1_clients_uid_superpdp_delete**](ClientManagementApi.md#disconnect_superpdp_api_v1_clients_uid_superpdp_delete) | **DELETE** /api/v1/clients/{uid}/superpdp | Disconnect SuperPDP
 [**generate_webhook_secret_api_v1_clients_uid_webhook_secret_generate_post**](ClientManagementApi.md#generate_webhook_secret_api_v1_clients_uid_webhook_secret_generate_post) | **POST** /api/v1/clients/{uid}/webhook-secret/generate | Generate webhook secret
 [**get_client_api_v1_clients_uid_get**](ClientManagementApi.md#get_client_api_v1_clients_uid_get) | **GET** /api/v1/clients/{uid} | Get client details
 [**get_pdp_config_api_v1_clients_uid_pdp_config_get**](ClientManagementApi.md#get_pdp_config_api_v1_clients_uid_pdp_config_get) | **GET** /api/v1/clients/{uid}/pdp-config | Get client PDP configuration
+[**get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post**](ClientManagementApi.md#get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post) | **POST** /api/v1/clients/{uid}/superpdp/connect-url | Get SuperPDP connection URL
+[**get_superpdp_status_api_v1_clients_uid_superpdp_status_get**](ClientManagementApi.md#get_superpdp_status_api_v1_clients_uid_superpdp_status_get) | **GET** /api/v1/clients/{uid}/superpdp/status | Get SuperPDP connection status
 [**get_webhook_secret_status_api_v1_clients_uid_webhook_secret_status_get**](ClientManagementApi.md#get_webhook_secret_status_api_v1_clients_uid_webhook_secret_status_get) | **GET** /api/v1/clients/{uid}/webhook-secret/status | Get webhook secret status
 [**list_clients_api_v1_clients_get**](ClientManagementApi.md#list_clients_api_v1_clients_get) | **GET** /api/v1/clients | List clients
 [**rotate_encryption_key_api_v1_clients_uid_rotate_encryption_key_post**](ClientManagementApi.md#rotate_encryption_key_api_v1_clients_uid_rotate_encryption_key_post) | **POST** /api/v1/clients/{uid}/rotate-encryption-key | Rotate client encryption key
@@ -402,6 +405,102 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **disconnect_superpdp_api_v1_clients_uid_superpdp_delete**
+> SuperPDPDisconnectResponse disconnect_superpdp_api_v1_clients_uid_superpdp_delete(uid)
+
+Disconnect SuperPDP
+
+Disconnect SuperPDP for a client.
+
+**Scope**: Client level (JWT with client_uid that must match {uid})
+
+Revokes the stored refresh token with SuperPDP (RFC 7009) and deletes the
+stored tokens. The client can reconnect later via the connect-url endpoint.
+
+### Example
+
+* Api Key Authentication (APIKeyHeader):
+* Bearer Authentication (HTTPBearer):
+
+```python
+import factpulse
+from factpulse.models.super_pdp_disconnect_response import SuperPDPDisconnectResponse
+from factpulse.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://factpulse.fr
+# See configuration.py for a list of all supported configuration parameters.
+configuration = factpulse.Configuration(
+    host = "https://factpulse.fr"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with factpulse.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = factpulse.ClientManagementApi(api_client)
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
+
+    try:
+        # Disconnect SuperPDP
+        api_response = api_instance.disconnect_superpdp_api_v1_clients_uid_superpdp_delete(uid)
+        print("The response of ClientManagementApi->disconnect_superpdp_api_v1_clients_uid_superpdp_delete:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ClientManagementApi->disconnect_superpdp_api_v1_clients_uid_superpdp_delete: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uid** | **UUID**| Client unique identifier (UUID) | 
+
+### Return type
+
+[**SuperPDPDisconnectResponse**](SuperPDPDisconnectResponse.md)
+
+### Authorization
+
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**400** | Invalid request |  -  |
+**401** | Missing or invalid JWT token |  -  |
+**403** | Access denied |  -  |
+**404** | Client not found |  -  |
+**500** | Server error |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **generate_webhook_secret_api_v1_clients_uid_webhook_secret_generate_post**
 > WebhookSecretGenerateResponse generate_webhook_secret_api_v1_clients_uid_webhook_secret_generate_post(uid)
 
@@ -672,6 +771,216 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PDPConfigResponse**](PDPConfigResponse.md)
+
+### Authorization
+
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**400** | Invalid request |  -  |
+**401** | Missing or invalid JWT token |  -  |
+**403** | Access denied |  -  |
+**404** | Client not found |  -  |
+**500** | Server error |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post**
+> SuperPDPConnectURLResponse get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post(uid, mode_sandbox=mode_sandbox, return_url=return_url)
+
+Get SuperPDP connection URL
+
+Generate the SuperPDP OAuth2 authorization URL for a client.
+
+**Scope**: Client level (JWT with client_uid that must match {uid})
+
+Redirect the end user to the returned `authorizeUrl` so they can connect
+their own SuperPDP account to FactPulse (OAuth2 Authorization Code).
+
+**Query parameters**:
+- `modeSandbox` (default `true`): connect via the SuperPDP sandbox app
+  (fictitious data) or the production app.
+- `returnUrl` (optional): absolute http(s) URL of your own portal. Once the
+  SuperPDP authorization flow is over, the end user is redirected there with
+  `superpdp_connected=true|false` (and `superpdp_error=<code>` on failure)
+  appended to the query string. Without it, FactPulse displays its own
+  confirmation page. Returns `400 invalid_return_url` if the URL is not an
+  absolute http(s) URL.
+
+### Example
+
+* Api Key Authentication (APIKeyHeader):
+* Bearer Authentication (HTTPBearer):
+
+```python
+import factpulse
+from factpulse.models.super_pdp_connect_url_response import SuperPDPConnectURLResponse
+from factpulse.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://factpulse.fr
+# See configuration.py for a list of all supported configuration parameters.
+configuration = factpulse.Configuration(
+    host = "https://factpulse.fr"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with factpulse.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = factpulse.ClientManagementApi(api_client)
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
+    mode_sandbox = True # bool | True for the SuperPDP sandbox app (default), False for production (optional) (default to True)
+    return_url = 'return_url_example' # str | Absolute http(s) URL to redirect the end user to once the SuperPDP connection is done. Defaults to the FactPulse confirmation page. (optional)
+
+    try:
+        # Get SuperPDP connection URL
+        api_response = api_instance.get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post(uid, mode_sandbox=mode_sandbox, return_url=return_url)
+        print("The response of ClientManagementApi->get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ClientManagementApi->get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uid** | **UUID**| Client unique identifier (UUID) | 
+ **mode_sandbox** | **bool**| True for the SuperPDP sandbox app (default), False for production | [optional] [default to True]
+ **return_url** | **str**| Absolute http(s) URL to redirect the end user to once the SuperPDP connection is done. Defaults to the FactPulse confirmation page. | [optional] 
+
+### Return type
+
+[**SuperPDPConnectURLResponse**](SuperPDPConnectURLResponse.md)
+
+### Authorization
+
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**400** | Invalid request |  -  |
+**401** | Missing or invalid JWT token |  -  |
+**403** | Access denied |  -  |
+**404** | Client not found |  -  |
+**500** | Server error |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **get_superpdp_status_api_v1_clients_uid_superpdp_status_get**
+> SuperPDPStatusResponse get_superpdp_status_api_v1_clients_uid_superpdp_status_get(uid)
+
+Get SuperPDP connection status
+
+Check whether a client has connected its SuperPDP account.
+
+**Scope**: Client level (JWT with client_uid that must match {uid})
+
+**Response**:
+- `connected`: Whether the client has an active SuperPDP connection
+- `connectedAt`: When the connection was established (if any)
+- `expiresAt`: When the current access token expires (if any)
+- `modeSandbox`: True if connected via the sandbox app, False for production, null if not connected
+- `lastError`: Last token refresh error, if any
+
+### Example
+
+* Api Key Authentication (APIKeyHeader):
+* Bearer Authentication (HTTPBearer):
+
+```python
+import factpulse
+from factpulse.models.super_pdp_status_response import SuperPDPStatusResponse
+from factpulse.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://factpulse.fr
+# See configuration.py for a list of all supported configuration parameters.
+configuration = factpulse.Configuration(
+    host = "https://factpulse.fr"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with factpulse.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = factpulse.ClientManagementApi(api_client)
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
+
+    try:
+        # Get SuperPDP connection status
+        api_response = api_instance.get_superpdp_status_api_v1_clients_uid_superpdp_status_get(uid)
+        print("The response of ClientManagementApi->get_superpdp_status_api_v1_clients_uid_superpdp_status_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ClientManagementApi->get_superpdp_status_api_v1_clients_uid_superpdp_status_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uid** | **UUID**| Client unique identifier (UUID) | 
+
+### Return type
+
+[**SuperPDPStatusResponse**](SuperPDPStatusResponse.md)
 
 ### Authorization
 

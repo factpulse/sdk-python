@@ -1437,6 +1437,7 @@ class Flux10EReportingApi:
     def submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post(
         self,
         submit_aggregated_report_request: SubmitAggregatedReportRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1456,6 +1457,8 @@ class Flux10EReportingApi:
 
         :param submit_aggregated_report_request: (required)
         :type submit_aggregated_report_request: SubmitAggregatedReportRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1480,6 +1483,7 @@ class Flux10EReportingApi:
 
         _param = self._submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post_serialize(
             submit_aggregated_report_request=submit_aggregated_report_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1508,6 +1512,7 @@ class Flux10EReportingApi:
     def submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post_with_http_info(
         self,
         submit_aggregated_report_request: SubmitAggregatedReportRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1527,6 +1532,8 @@ class Flux10EReportingApi:
 
         :param submit_aggregated_report_request: (required)
         :type submit_aggregated_report_request: SubmitAggregatedReportRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1551,6 +1558,7 @@ class Flux10EReportingApi:
 
         _param = self._submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post_serialize(
             submit_aggregated_report_request=submit_aggregated_report_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1579,6 +1587,7 @@ class Flux10EReportingApi:
     def submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post_without_preload_content(
         self,
         submit_aggregated_report_request: SubmitAggregatedReportRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1598,6 +1607,8 @@ class Flux10EReportingApi:
 
         :param submit_aggregated_report_request: (required)
         :type submit_aggregated_report_request: SubmitAggregatedReportRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1622,6 +1633,7 @@ class Flux10EReportingApi:
 
         _param = self._submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post_serialize(
             submit_aggregated_report_request=submit_aggregated_report_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1645,6 +1657,7 @@ class Flux10EReportingApi:
     def _submit_aggregated_ereporting_api_v1_ereporting_submit_aggregated_post_serialize(
         self,
         submit_aggregated_report_request,
+        organization_id,
         _request_auth,
         _content_type,
         _headers,
@@ -1668,6 +1681,8 @@ class Flux10EReportingApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
+        if organization_id is not None:
+            _header_params['Organization-Id'] = organization_id
         # process the form parameters
         # process the body parameter
         if submit_aggregated_report_request is not None:
@@ -1723,6 +1738,7 @@ class Flux10EReportingApi:
     def submit_ereporting_api_v1_ereporting_submit_post(
         self,
         submit_e_reporting_request: SubmitEReportingRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1742,6 +1758,8 @@ class Flux10EReportingApi:
 
         :param submit_e_reporting_request: (required)
         :type submit_e_reporting_request: SubmitEReportingRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1766,6 +1784,7 @@ class Flux10EReportingApi:
 
         _param = self._submit_ereporting_api_v1_ereporting_submit_post_serialize(
             submit_e_reporting_request=submit_e_reporting_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1794,6 +1813,7 @@ class Flux10EReportingApi:
     def submit_ereporting_api_v1_ereporting_submit_post_with_http_info(
         self,
         submit_e_reporting_request: SubmitEReportingRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1813,6 +1833,8 @@ class Flux10EReportingApi:
 
         :param submit_e_reporting_request: (required)
         :type submit_e_reporting_request: SubmitEReportingRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1837,6 +1859,7 @@ class Flux10EReportingApi:
 
         _param = self._submit_ereporting_api_v1_ereporting_submit_post_serialize(
             submit_e_reporting_request=submit_e_reporting_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1865,6 +1888,7 @@ class Flux10EReportingApi:
     def submit_ereporting_api_v1_ereporting_submit_post_without_preload_content(
         self,
         submit_e_reporting_request: SubmitEReportingRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1884,6 +1908,8 @@ class Flux10EReportingApi:
 
         :param submit_e_reporting_request: (required)
         :type submit_e_reporting_request: SubmitEReportingRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1908,6 +1934,7 @@ class Flux10EReportingApi:
 
         _param = self._submit_ereporting_api_v1_ereporting_submit_post_serialize(
             submit_e_reporting_request=submit_e_reporting_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1931,6 +1958,7 @@ class Flux10EReportingApi:
     def _submit_ereporting_api_v1_ereporting_submit_post_serialize(
         self,
         submit_e_reporting_request,
+        organization_id,
         _request_auth,
         _content_type,
         _headers,
@@ -1954,6 +1982,8 @@ class Flux10EReportingApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
+        if organization_id is not None:
+            _header_params['Organization-Id'] = organization_id
         # process the form parameters
         # process the body parameter
         if submit_e_reporting_request is not None:
@@ -2009,6 +2039,7 @@ class Flux10EReportingApi:
     def submit_xml_ereporting_api_v1_ereporting_submit_xml_post(
         self,
         xml_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="E-reporting XML file")],
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         tracking_id: Optional[StrictStr] = None,
         skip_validation: Annotated[Optional[StrictBool], Field(description="Skip XSD validation")] = None,
         pdp_flow_service_url: Optional[StrictStr] = None,
@@ -2034,6 +2065,8 @@ class Flux10EReportingApi:
 
         :param xml_file: E-reporting XML file (required)
         :type xml_file: bytes
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param tracking_id:
         :type tracking_id: str
         :param skip_validation: Skip XSD validation
@@ -2070,6 +2103,7 @@ class Flux10EReportingApi:
 
         _param = self._submit_xml_ereporting_api_v1_ereporting_submit_xml_post_serialize(
             xml_file=xml_file,
+            organization_id=organization_id,
             tracking_id=tracking_id,
             skip_validation=skip_validation,
             pdp_flow_service_url=pdp_flow_service_url,
@@ -2104,6 +2138,7 @@ class Flux10EReportingApi:
     def submit_xml_ereporting_api_v1_ereporting_submit_xml_post_with_http_info(
         self,
         xml_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="E-reporting XML file")],
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         tracking_id: Optional[StrictStr] = None,
         skip_validation: Annotated[Optional[StrictBool], Field(description="Skip XSD validation")] = None,
         pdp_flow_service_url: Optional[StrictStr] = None,
@@ -2129,6 +2164,8 @@ class Flux10EReportingApi:
 
         :param xml_file: E-reporting XML file (required)
         :type xml_file: bytes
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param tracking_id:
         :type tracking_id: str
         :param skip_validation: Skip XSD validation
@@ -2165,6 +2202,7 @@ class Flux10EReportingApi:
 
         _param = self._submit_xml_ereporting_api_v1_ereporting_submit_xml_post_serialize(
             xml_file=xml_file,
+            organization_id=organization_id,
             tracking_id=tracking_id,
             skip_validation=skip_validation,
             pdp_flow_service_url=pdp_flow_service_url,
@@ -2199,6 +2237,7 @@ class Flux10EReportingApi:
     def submit_xml_ereporting_api_v1_ereporting_submit_xml_post_without_preload_content(
         self,
         xml_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="E-reporting XML file")],
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         tracking_id: Optional[StrictStr] = None,
         skip_validation: Annotated[Optional[StrictBool], Field(description="Skip XSD validation")] = None,
         pdp_flow_service_url: Optional[StrictStr] = None,
@@ -2224,6 +2263,8 @@ class Flux10EReportingApi:
 
         :param xml_file: E-reporting XML file (required)
         :type xml_file: bytes
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param tracking_id:
         :type tracking_id: str
         :param skip_validation: Skip XSD validation
@@ -2260,6 +2301,7 @@ class Flux10EReportingApi:
 
         _param = self._submit_xml_ereporting_api_v1_ereporting_submit_xml_post_serialize(
             xml_file=xml_file,
+            organization_id=organization_id,
             tracking_id=tracking_id,
             skip_validation=skip_validation,
             pdp_flow_service_url=pdp_flow_service_url,
@@ -2289,6 +2331,7 @@ class Flux10EReportingApi:
     def _submit_xml_ereporting_api_v1_ereporting_submit_xml_post_serialize(
         self,
         xml_file,
+        organization_id,
         tracking_id,
         skip_validation,
         pdp_flow_service_url,
@@ -2318,6 +2361,8 @@ class Flux10EReportingApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
+        if organization_id is not None:
+            _header_params['Organization-Id'] = organization_id
         # process the form parameters
         if xml_file is not None:
             _files['xml_file'] = xml_file

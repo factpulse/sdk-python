@@ -9,6 +9,9 @@ Name | Type | Description | Notes
 **rate** | [**Rate1**](Rate1.md) |  | 
 **taxable_amount** | [**Taxableamount**](Taxableamount.md) |  | 
 **tax_amount** | [**Taxamount2**](Taxamount2.md) |  | 
+**tax_category_code** | **str** |  | [optional] 
+**exemption_reason_code** | **str** |  | [optional] 
+**exemption_reason** | **str** |  | [optional] 
 
 ## Example
 

@@ -10,8 +10,9 @@ Name | Type | Description | Notes
 **siren** | **str** |  | [optional] 
 **siret** | **str** |  | [optional] 
 **vat_number** | **str** |  | [optional] 
-**postal_address** | [**PostalAddress**](PostalAddress.md) |  | [optional] 
-**electronic_address** | [**ElectronicAddress**](ElectronicAddress.md) |  | [optional] 
+**tax_registration_id** | **str** |  | [optional] 
+**postal_address** | [**PostalAddressOutput**](PostalAddressOutput.md) |  | [optional] 
+**electronic_address** | [**ElectronicAddressOutput**](ElectronicAddressOutput.md) |  | [optional] 
 **email** | **str** |  | [optional] 
 **phone** | **str** |  | [optional] 
 

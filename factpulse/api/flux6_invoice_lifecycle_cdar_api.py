@@ -16,7 +16,7 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictBytes, StrictStr
+from pydantic import Field, StrictBytes, StrictStr, field_validator
 from typing import Any, Dict, Optional, Tuple, Union
 from typing_extensions import Annotated
 from factpulse.models.action_codes_response import ActionCodesResponse
@@ -598,10 +598,12 @@ class Flux6InvoiceLifecycleCDARApi:
         self,
         days: Annotated[Optional[Annotated[int, Field(le=365, strict=True, ge=1)]], Field(description="Number of days to look back")] = None,
         invoice_id: Annotated[Optional[StrictStr], Field(description="Filter by invoice reference")] = None,
+        flow_direction: Annotated[Optional[StrictStr], Field(description="All (default), In (received statuses) or Out (issued statuses)")] = None,
         pdp_flow_service_url: Annotated[Optional[StrictStr], Field(description="PDP Flow Service URL")] = None,
         pdp_token_url: Annotated[Optional[StrictStr], Field(description="PDP OAuth token URL")] = None,
         pdp_client_id: Annotated[Optional[StrictStr], Field(description="PDP Client ID")] = None,
         pdp_client_secret: Annotated[Optional[StrictStr], Field(description="PDP Client Secret")] = None,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -617,12 +619,14 @@ class Flux6InvoiceLifecycleCDARApi:
     ) -> LifecycleResponse:
         """[Simplified] Get lifecycle events for invoices
 
-        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7) - `invoiceId`: Optional filter on a specific invoice reference  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
+        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7) - `invoiceId`: Optional filter on a specific invoice reference - `flowDirection`: `All` (default), `In` (statuses received from the counterparty)   or `Out` (statuses issued by you or your PA, e.g. 202/203)  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
 
         :param days: Number of days to look back
         :type days: int
         :param invoice_id: Filter by invoice reference
         :type invoice_id: str
+        :param flow_direction: All (default), In (received statuses) or Out (issued statuses)
+        :type flow_direction: str
         :param pdp_flow_service_url: PDP Flow Service URL
         :type pdp_flow_service_url: str
         :param pdp_token_url: PDP OAuth token URL
@@ -631,6 +635,8 @@ class Flux6InvoiceLifecycleCDARApi:
         :type pdp_client_id: str
         :param pdp_client_secret: PDP Client Secret
         :type pdp_client_secret: str
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -656,10 +662,12 @@ class Flux6InvoiceLifecycleCDARApi:
         _param = self._get_lifecycle_api_v1_cdar_lifecycle_get_serialize(
             days=days,
             invoice_id=invoice_id,
+            flow_direction=flow_direction,
             pdp_flow_service_url=pdp_flow_service_url,
             pdp_token_url=pdp_token_url,
             pdp_client_id=pdp_client_id,
             pdp_client_secret=pdp_client_secret,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -689,10 +697,12 @@ class Flux6InvoiceLifecycleCDARApi:
         self,
         days: Annotated[Optional[Annotated[int, Field(le=365, strict=True, ge=1)]], Field(description="Number of days to look back")] = None,
         invoice_id: Annotated[Optional[StrictStr], Field(description="Filter by invoice reference")] = None,
+        flow_direction: Annotated[Optional[StrictStr], Field(description="All (default), In (received statuses) or Out (issued statuses)")] = None,
         pdp_flow_service_url: Annotated[Optional[StrictStr], Field(description="PDP Flow Service URL")] = None,
         pdp_token_url: Annotated[Optional[StrictStr], Field(description="PDP OAuth token URL")] = None,
         pdp_client_id: Annotated[Optional[StrictStr], Field(description="PDP Client ID")] = None,
         pdp_client_secret: Annotated[Optional[StrictStr], Field(description="PDP Client Secret")] = None,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -708,12 +718,14 @@ class Flux6InvoiceLifecycleCDARApi:
     ) -> ApiResponse[LifecycleResponse]:
         """[Simplified] Get lifecycle events for invoices
 
-        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7) - `invoiceId`: Optional filter on a specific invoice reference  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
+        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7) - `invoiceId`: Optional filter on a specific invoice reference - `flowDirection`: `All` (default), `In` (statuses received from the counterparty)   or `Out` (statuses issued by you or your PA, e.g. 202/203)  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
 
         :param days: Number of days to look back
         :type days: int
         :param invoice_id: Filter by invoice reference
         :type invoice_id: str
+        :param flow_direction: All (default), In (received statuses) or Out (issued statuses)
+        :type flow_direction: str
         :param pdp_flow_service_url: PDP Flow Service URL
         :type pdp_flow_service_url: str
         :param pdp_token_url: PDP OAuth token URL
@@ -722,6 +734,8 @@ class Flux6InvoiceLifecycleCDARApi:
         :type pdp_client_id: str
         :param pdp_client_secret: PDP Client Secret
         :type pdp_client_secret: str
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -747,10 +761,12 @@ class Flux6InvoiceLifecycleCDARApi:
         _param = self._get_lifecycle_api_v1_cdar_lifecycle_get_serialize(
             days=days,
             invoice_id=invoice_id,
+            flow_direction=flow_direction,
             pdp_flow_service_url=pdp_flow_service_url,
             pdp_token_url=pdp_token_url,
             pdp_client_id=pdp_client_id,
             pdp_client_secret=pdp_client_secret,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -780,10 +796,12 @@ class Flux6InvoiceLifecycleCDARApi:
         self,
         days: Annotated[Optional[Annotated[int, Field(le=365, strict=True, ge=1)]], Field(description="Number of days to look back")] = None,
         invoice_id: Annotated[Optional[StrictStr], Field(description="Filter by invoice reference")] = None,
+        flow_direction: Annotated[Optional[StrictStr], Field(description="All (default), In (received statuses) or Out (issued statuses)")] = None,
         pdp_flow_service_url: Annotated[Optional[StrictStr], Field(description="PDP Flow Service URL")] = None,
         pdp_token_url: Annotated[Optional[StrictStr], Field(description="PDP OAuth token URL")] = None,
         pdp_client_id: Annotated[Optional[StrictStr], Field(description="PDP Client ID")] = None,
         pdp_client_secret: Annotated[Optional[StrictStr], Field(description="PDP Client Secret")] = None,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -799,12 +817,14 @@ class Flux6InvoiceLifecycleCDARApi:
     ) -> RESTResponseType:
         """[Simplified] Get lifecycle events for invoices
 
-        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7) - `invoiceId`: Optional filter on a specific invoice reference  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
+        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7) - `invoiceId`: Optional filter on a specific invoice reference - `flowDirection`: `All` (default), `In` (statuses received from the counterparty)   or `Out` (statuses issued by you or your PA, e.g. 202/203)  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
 
         :param days: Number of days to look back
         :type days: int
         :param invoice_id: Filter by invoice reference
         :type invoice_id: str
+        :param flow_direction: All (default), In (received statuses) or Out (issued statuses)
+        :type flow_direction: str
         :param pdp_flow_service_url: PDP Flow Service URL
         :type pdp_flow_service_url: str
         :param pdp_token_url: PDP OAuth token URL
@@ -813,6 +833,8 @@ class Flux6InvoiceLifecycleCDARApi:
         :type pdp_client_id: str
         :param pdp_client_secret: PDP Client Secret
         :type pdp_client_secret: str
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -838,10 +860,12 @@ class Flux6InvoiceLifecycleCDARApi:
         _param = self._get_lifecycle_api_v1_cdar_lifecycle_get_serialize(
             days=days,
             invoice_id=invoice_id,
+            flow_direction=flow_direction,
             pdp_flow_service_url=pdp_flow_service_url,
             pdp_token_url=pdp_token_url,
             pdp_client_id=pdp_client_id,
             pdp_client_secret=pdp_client_secret,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -866,10 +890,12 @@ class Flux6InvoiceLifecycleCDARApi:
         self,
         days,
         invoice_id,
+        flow_direction,
         pdp_flow_service_url,
         pdp_token_url,
         pdp_client_id,
         pdp_client_secret,
+        organization_id,
         _request_auth,
         _content_type,
         _headers,
@@ -900,6 +926,10 @@ class Flux6InvoiceLifecycleCDARApi:
             
             _query_params.append(('invoiceId', invoice_id))
             
+        if flow_direction is not None:
+            
+            _query_params.append(('flowDirection', flow_direction))
+            
         if pdp_flow_service_url is not None:
             
             _query_params.append(('pdpFlowServiceUrl', pdp_flow_service_url))
@@ -917,6 +947,8 @@ class Flux6InvoiceLifecycleCDARApi:
             _query_params.append(('pdpClientSecret', pdp_client_secret))
             
         # process the header parameters
+        if organization_id is not None:
+            _header_params['Organization-Id'] = organization_id
         # process the form parameters
         # process the body parameter
 
@@ -1465,6 +1497,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def submit_cdar_api_v1_cdar_submit_post(
         self,
         submit_cdar_request: SubmitCDARRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1484,6 +1517,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         :param submit_cdar_request: (required)
         :type submit_cdar_request: SubmitCDARRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1508,6 +1543,7 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._submit_cdar_api_v1_cdar_submit_post_serialize(
             submit_cdar_request=submit_cdar_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1536,6 +1572,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def submit_cdar_api_v1_cdar_submit_post_with_http_info(
         self,
         submit_cdar_request: SubmitCDARRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1555,6 +1592,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         :param submit_cdar_request: (required)
         :type submit_cdar_request: SubmitCDARRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1579,6 +1618,7 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._submit_cdar_api_v1_cdar_submit_post_serialize(
             submit_cdar_request=submit_cdar_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1607,6 +1647,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def submit_cdar_api_v1_cdar_submit_post_without_preload_content(
         self,
         submit_cdar_request: SubmitCDARRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1626,6 +1667,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         :param submit_cdar_request: (required)
         :type submit_cdar_request: SubmitCDARRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1650,6 +1693,7 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._submit_cdar_api_v1_cdar_submit_post_serialize(
             submit_cdar_request=submit_cdar_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1673,6 +1717,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def _submit_cdar_api_v1_cdar_submit_post_serialize(
         self,
         submit_cdar_request,
+        organization_id,
         _request_auth,
         _content_type,
         _headers,
@@ -1696,6 +1741,8 @@ class Flux6InvoiceLifecycleCDARApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
+        if organization_id is not None:
+            _header_params['Organization-Id'] = organization_id
         # process the form parameters
         # process the body parameter
         if submit_cdar_request is not None:
@@ -1751,6 +1798,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def submit_cdar_xml_api_v1_cdar_submit_xml_post(
         self,
         submit_cdarxml_request: SubmitCDARXMLRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1770,6 +1818,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         :param submit_cdarxml_request: (required)
         :type submit_cdarxml_request: SubmitCDARXMLRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1794,6 +1844,7 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._submit_cdar_xml_api_v1_cdar_submit_xml_post_serialize(
             submit_cdarxml_request=submit_cdarxml_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1822,6 +1873,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def submit_cdar_xml_api_v1_cdar_submit_xml_post_with_http_info(
         self,
         submit_cdarxml_request: SubmitCDARXMLRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1841,6 +1893,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         :param submit_cdarxml_request: (required)
         :type submit_cdarxml_request: SubmitCDARXMLRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1865,6 +1919,7 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._submit_cdar_xml_api_v1_cdar_submit_xml_post_serialize(
             submit_cdarxml_request=submit_cdarxml_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1893,6 +1948,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def submit_cdar_xml_api_v1_cdar_submit_xml_post_without_preload_content(
         self,
         submit_cdarxml_request: SubmitCDARXMLRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1912,6 +1968,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         :param submit_cdarxml_request: (required)
         :type submit_cdarxml_request: SubmitCDARXMLRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1936,6 +1994,7 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._submit_cdar_xml_api_v1_cdar_submit_xml_post_serialize(
             submit_cdarxml_request=submit_cdarxml_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1959,6 +2018,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def _submit_cdar_xml_api_v1_cdar_submit_xml_post_serialize(
         self,
         submit_cdarxml_request,
+        organization_id,
         _request_auth,
         _content_type,
         _headers,
@@ -1982,6 +2042,8 @@ class Flux6InvoiceLifecycleCDARApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
+        if organization_id is not None:
+            _header_params['Organization-Id'] = organization_id
         # process the form parameters
         # process the body parameter
         if submit_cdarxml_request is not None:
@@ -2037,6 +2099,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def submit_encaissee_api_v1_cdar_encaissee_post(
         self,
         encaissee_request: EncaisseeRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2056,6 +2119,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         :param encaissee_request: (required)
         :type encaissee_request: EncaisseeRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2080,6 +2145,7 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._submit_encaissee_api_v1_cdar_encaissee_post_serialize(
             encaissee_request=encaissee_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2108,6 +2174,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def submit_encaissee_api_v1_cdar_encaissee_post_with_http_info(
         self,
         encaissee_request: EncaisseeRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2127,6 +2194,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         :param encaissee_request: (required)
         :type encaissee_request: EncaisseeRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2151,6 +2220,7 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._submit_encaissee_api_v1_cdar_encaissee_post_serialize(
             encaissee_request=encaissee_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2179,6 +2249,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def submit_encaissee_api_v1_cdar_encaissee_post_without_preload_content(
         self,
         encaissee_request: EncaisseeRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2198,6 +2269,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         :param encaissee_request: (required)
         :type encaissee_request: EncaisseeRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2222,6 +2295,7 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._submit_encaissee_api_v1_cdar_encaissee_post_serialize(
             encaissee_request=encaissee_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2245,6 +2319,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def _submit_encaissee_api_v1_cdar_encaissee_post_serialize(
         self,
         encaissee_request,
+        organization_id,
         _request_auth,
         _content_type,
         _headers,
@@ -2268,6 +2343,8 @@ class Flux6InvoiceLifecycleCDARApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
+        if organization_id is not None:
+            _header_params['Organization-Id'] = organization_id
         # process the form parameters
         # process the body parameter
         if encaissee_request is not None:
@@ -2323,6 +2400,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def submit_refusee_api_v1_cdar_refusee_post(
         self,
         refusee_request: RefuseeRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2342,6 +2420,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         :param refusee_request: (required)
         :type refusee_request: RefuseeRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2366,6 +2446,7 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._submit_refusee_api_v1_cdar_refusee_post_serialize(
             refusee_request=refusee_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2394,6 +2475,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def submit_refusee_api_v1_cdar_refusee_post_with_http_info(
         self,
         refusee_request: RefuseeRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2413,6 +2495,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         :param refusee_request: (required)
         :type refusee_request: RefuseeRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2437,6 +2521,7 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._submit_refusee_api_v1_cdar_refusee_post_serialize(
             refusee_request=refusee_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2465,6 +2550,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def submit_refusee_api_v1_cdar_refusee_post_without_preload_content(
         self,
         refusee_request: RefuseeRequest,
+        organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2484,6 +2570,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         :param refusee_request: (required)
         :type refusee_request: RefuseeRequest
+        :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
+        :type organization_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2508,6 +2596,7 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._submit_refusee_api_v1_cdar_refusee_post_serialize(
             refusee_request=refusee_request,
+            organization_id=organization_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2531,6 +2620,7 @@ class Flux6InvoiceLifecycleCDARApi:
     def _submit_refusee_api_v1_cdar_refusee_post_serialize(
         self,
         refusee_request,
+        organization_id,
         _request_auth,
         _content_type,
         _headers,
@@ -2554,6 +2644,8 @@ class Flux6InvoiceLifecycleCDARApi:
         # process the path parameters
         # process the query parameters
         # process the header parameters
+        if organization_id is not None:
+            _header_params['Organization-Id'] = organization_id
         # process the form parameters
         # process the body parameter
         if refusee_request is not None:

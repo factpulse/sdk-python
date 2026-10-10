@@ -21,16 +21,17 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.contact import Contact
-from factpulse.models.electronic_address import ElectronicAddress
-from factpulse.models.postal_address import PostalAddress
+from factpulse.models.electronic_address_input import ElectronicAddressInput
+from factpulse.models.postal_address_input import PostalAddressInput
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class Supplier(BaseModel):
     """
     Information about the supplier / seller (BG-4).
     """ # noqa: E501
-    electronic_address: Optional[ElectronicAddress] = None
+    electronic_address: Optional[ElectronicAddressInput] = None
     supplier_id: Optional[StrictInt] = Field(default=0, description="Chorus Pro supplier structure ID (idFournisseur). Only required for B2G.")
     private_id: Optional[StrictStr] = None
     supplier_bank_account_code: Optional[StrictInt] = None
@@ -41,14 +42,15 @@ class Supplier(BaseModel):
     siren: Optional[StrictStr] = None
     siret: Optional[StrictStr] = None
     vat_number: Optional[StrictStr] = None
+    tax_registration_id: Optional[StrictStr] = None
     iban: Optional[StrictStr] = None
     bic: Optional[StrictStr] = None
     bank_account_name: Optional[StrictStr] = None
     proprietary_id: Optional[StrictStr] = Field(default=None, alias="proprietaryId")
-    postal_address: Optional[PostalAddress] = None
+    postal_address: Optional[PostalAddressInput] = None
     contact: Optional[Contact] = None
-    global_ids: Optional[List[ElectronicAddress]] = None
-    __properties: ClassVar[List[str]] = ["electronic_address", "supplier_id", "private_id", "supplier_bank_account_code", "supplier_service_id", "name", "trading_business_name", "legal_description", "siren", "siret", "vat_number", "iban", "bic", "bank_account_name", "proprietaryId", "postal_address", "contact", "global_ids"]
+    global_ids: Optional[List[ElectronicAddressInput]] = None
+    __properties: ClassVar[List[str]] = ["electronic_address", "supplier_id", "private_id", "supplier_bank_account_code", "supplier_service_id", "name", "trading_business_name", "legal_description", "siren", "siret", "vat_number", "tax_registration_id", "iban", "bic", "bank_account_name", "proprietaryId", "postal_address", "contact", "global_ids"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -64,8 +66,7 @@ class Supplier(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -156,6 +157,11 @@ class Supplier(BaseModel):
         if self.vat_number is None and "vat_number" in self.model_fields_set:
             _dict['vat_number'] = None
 
+        # set to None if tax_registration_id (nullable) is None
+        # and model_fields_set contains the field
+        if self.tax_registration_id is None and "tax_registration_id" in self.model_fields_set:
+            _dict['tax_registration_id'] = None
+
         # set to None if iban (nullable) is None
         # and model_fields_set contains the field
         if self.iban is None and "iban" in self.model_fields_set:
@@ -203,7 +209,7 @@ class Supplier(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "electronic_address": ElectronicAddress.from_dict(obj["electronic_address"]) if obj.get("electronic_address") is not None else None,
+            "electronic_address": ElectronicAddressInput.from_dict(obj["electronic_address"]) if obj.get("electronic_address") is not None else None,
             "supplier_id": obj.get("supplier_id") if obj.get("supplier_id") is not None else 0,
             "private_id": obj.get("private_id"),
             "supplier_bank_account_code": obj.get("supplier_bank_account_code"),
@@ -214,13 +220,14 @@ class Supplier(BaseModel):
             "siren": obj.get("siren"),
             "siret": obj.get("siret"),
             "vat_number": obj.get("vat_number"),
+            "tax_registration_id": obj.get("tax_registration_id"),
             "iban": obj.get("iban"),
             "bic": obj.get("bic"),
             "bank_account_name": obj.get("bank_account_name"),
             "proprietaryId": obj.get("proprietaryId"),
-            "postal_address": PostalAddress.from_dict(obj["postal_address"]) if obj.get("postal_address") is not None else None,
+            "postal_address": PostalAddressInput.from_dict(obj["postal_address"]) if obj.get("postal_address") is not None else None,
             "contact": Contact.from_dict(obj["contact"]) if obj.get("contact") is not None else None,
-            "global_ids": [ElectronicAddress.from_dict(_item) for _item in obj["global_ids"]] if obj.get("global_ids") is not None else None
+            "global_ids": [ElectronicAddressInput.from_dict(_item) for _item in obj["global_ids"]] if obj.get("global_ids") is not None else None
         })
         return _obj
 

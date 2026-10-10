@@ -6,15 +6,15 @@ Information about the invoice recipient / buyer (BG-7).
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**electronic_address** | [**ElectronicAddress**](ElectronicAddress.md) |  | [optional] 
+**electronic_address** | [**ElectronicAddressInput**](ElectronicAddressInput.md) |  | [optional] 
 **executing_service_code** | **str** |  | [optional] 
 **name** | **str** |  | [optional] 
 **siren** | **str** |  | [optional] 
 **siret** | **str** |  | [optional] 
 **vat_number** | **str** |  | [optional] 
-**postal_address** | [**PostalAddress**](PostalAddress.md) |  | [optional] 
+**postal_address** | [**PostalAddressInput**](PostalAddressInput.md) |  | [optional] 
 **contact** | [**Contact**](Contact.md) |  | [optional] 
-**global_ids** | [**List[ElectronicAddress]**](ElectronicAddress.md) |  | [optional] 
+**global_ids** | [**List[ElectronicAddressInput]**](ElectronicAddressInput.md) |  | [optional] 
 
 ## Example
 

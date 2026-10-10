@@ -18,20 +18,22 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing_extensions import Annotated
 from factpulse.models.afnor_search_flow_filters import AFNORSearchFlowFilters
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORSearchFlowParams(BaseModel):
     """
     AFNORSearchFlowParams
     """ # noqa: E501
-    limit: Optional[Annotated[int, Field(le=100, strict=True)]] = Field(default=25, description="Maximum number of results that may be returned")
+    limit: Optional[Annotated[int, Field(le=100, strict=True)]] = Field(default=25, description="Pagination, Maximum number of results that may be returned")
+    cursor: Optional[StrictStr] = Field(default=None, description="If cursor is provided, then start search starting from that cursor")
     where: AFNORSearchFlowFilters
-    __properties: ClassVar[List[str]] = ["limit", "where"]
+    __properties: ClassVar[List[str]] = ["limit", "cursor", "where"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -47,8 +49,7 @@ class AFNORSearchFlowParams(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -89,6 +90,7 @@ class AFNORSearchFlowParams(BaseModel):
 
         _obj = cls.model_validate({
             "limit": obj.get("limit") if obj.get("limit") is not None else 25,
+            "cursor": obj.get("cursor"),
             "where": AFNORSearchFlowFilters.from_dict(obj["where"]) if obj.get("where") is not None else None
         })
         return _obj

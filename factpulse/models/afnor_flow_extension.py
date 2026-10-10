@@ -26,6 +26,7 @@ from factpulse.models.afnor_flow_direction import AFNORFlowDirection
 from factpulse.models.afnor_flow_type import AFNORFlowType
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class AFNORFlowExtension(BaseModel):
     """
@@ -59,8 +60,7 @@ class AFNORFlowExtension(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:

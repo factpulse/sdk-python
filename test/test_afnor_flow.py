@@ -60,7 +60,9 @@ class TestAFNORFlow(unittest.TestCase):
         else:
             return AFNORFlow(
                 name = '',
+                processing_rule = 'B2B',
                 flow_syntax = 'CII',
+                flow_profile = 'Basic',
                 flow_id = '',
                 submitted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),
                 updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'),

@@ -19,11 +19,12 @@ import re  # noqa: F401
 import json
 
 from datetime import date
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.amount import Amount
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from factpulse.models.amount1 import Amount1
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class EncaisseeRequest(BaseModel):
     """
@@ -33,7 +34,8 @@ class EncaisseeRequest(BaseModel):
     invoice_issue_date: date = Field(description="Date d'émission de la facture (YYYY-MM-DD)", alias="invoiceIssueDate")
     invoice_buyer_siren: StrictStr = Field(description="SIREN de l'acheteur (destinataire du statut)", alias="invoiceBuyerSiren")
     invoice_buyer_electronic_address: StrictStr = Field(description="Adresse électronique de l'acheteur (MDT-73)", alias="invoiceBuyerElectronicAddress")
-    amount: Amount
+    amount: Amount1
+    vat_rate: Optional[Union[StrictFloat, StrictInt]] = Field(default=20, description="Taux de TVA du montant encaissé en % (MDT-224, requis par BR-FR-CDV-14 ; défaut 20)", alias="vatRate")
     currency: Optional[StrictStr] = Field(default='EUR', description="Code devise ISO 4217")
     sender_siren: Optional[StrictStr] = Field(default=None, alias="senderSiren")
     flow_type: Optional[StrictStr] = Field(default='CustomerInvoiceLC', description="Type de flux (CustomerInvoiceLC pour facture émise)", alias="flowType")
@@ -41,7 +43,7 @@ class EncaisseeRequest(BaseModel):
     pdp_token_url: Optional[StrictStr] = Field(default=None, alias="pdpTokenUrl")
     pdp_client_id: Optional[StrictStr] = Field(default=None, alias="pdpClientId")
     pdp_client_secret: Optional[StrictStr] = Field(default=None, alias="pdpClientSecret")
-    __properties: ClassVar[List[str]] = ["invoiceId", "invoiceIssueDate", "invoiceBuyerSiren", "invoiceBuyerElectronicAddress", "amount", "currency", "senderSiren", "flowType", "pdpFlowServiceUrl", "pdpTokenUrl", "pdpClientId", "pdpClientSecret"]
+    __properties: ClassVar[List[str]] = ["invoiceId", "invoiceIssueDate", "invoiceBuyerSiren", "invoiceBuyerElectronicAddress", "amount", "vatRate", "currency", "senderSiren", "flowType", "pdpFlowServiceUrl", "pdpTokenUrl", "pdpClientId", "pdpClientSecret"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -57,8 +59,7 @@ class EncaisseeRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -127,7 +128,8 @@ class EncaisseeRequest(BaseModel):
             "invoiceIssueDate": obj.get("invoiceIssueDate"),
             "invoiceBuyerSiren": obj.get("invoiceBuyerSiren"),
             "invoiceBuyerElectronicAddress": obj.get("invoiceBuyerElectronicAddress"),
-            "amount": Amount.from_dict(obj["amount"]) if obj.get("amount") is not None else None,
+            "amount": Amount1.from_dict(obj["amount"]) if obj.get("amount") is not None else None,
+            "vatRate": obj.get("vatRate") if obj.get("vatRate") is not None else 20,
             "currency": obj.get("currency") if obj.get("currency") is not None else 'EUR',
             "senderSiren": obj.get("senderSiren"),
             "flowType": obj.get("flowType") if obj.get("flowType") is not None else 'CustomerInvoiceLC',

@@ -38,7 +38,10 @@ class TestTaxBreakdownInput(unittest.TestCase):
             return TaxBreakdownInput(
                 rate = 20.00,
                 taxable_amount = 10000.00,
-                tax_amount = 2000.00
+                tax_amount = 2000.00,
+                tax_category_code = '',
+                exemption_reason_code = '',
+                exemption_reason = ''
             )
         else:
             return TaxBreakdownInput(

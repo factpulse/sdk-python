@@ -10,10 +10,10 @@ Name | Type | Description | Notes
 **payee_id** | **str** |  | [optional] 
 **siret** | **str** |  | [optional] 
 **siren** | **str** |  | [optional] 
-**electronic_address** | [**ElectronicAddress**](ElectronicAddress.md) |  | [optional] 
+**electronic_address** | [**ElectronicAddressInput**](ElectronicAddressInput.md) |  | [optional] 
 **iban** | **str** |  | [optional] 
 **bic** | **str** |  | [optional] 
-**global_ids** | [**List[ElectronicAddress]**](ElectronicAddress.md) |  | [optional] 
+**global_ids** | [**List[ElectronicAddressInput]**](ElectronicAddressInput.md) |  | [optional] 
 
 ## Example
 

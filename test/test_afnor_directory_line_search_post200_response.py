@@ -46,9 +46,10 @@ class TestAFNORDirectoryLineSearchPost200Response(unittest.TestCase):
                         routing_identifier = factpulse.models.afnor_routing_code_search_filters_routing_identifier.AFNOR_routingCodeSearchFiltersRoutingIdentifier(), 
                         addressing_suffix = factpulse.models.afnor_search_directory_line_filters_addressing_suffix.AFNOR_searchDirectoryLineFiltersAddressingSuffix(), ), 
                     sorting = [{field=addressingIdentifier, order=ascending}], 
-                    fields = [addressingIdentifier, siren, siret, addressingSuffix], 
+                    fields = [addressingIdentifier, siren, siret, addressingSuffix, routingIdentifier], 
+                    include = [siren, siret, routingCode], 
                     limit = 50, 
-                    ignore = 20, ),
+                    ignore = 0, ),
                 total_number_of_results = 1500,
                 results = [
                     factpulse.models.directory_line_payload_history_legal_unit_facility_routing_code.directoryLinePayloadHistoryLegalUnitFacilityRoutingCode(
@@ -57,6 +58,7 @@ class TestAFNORDirectoryLineSearchPost200Response(unittest.TestCase):
                         directory_line_status = 'Enabled', 
                         siren = '702042755', 
                         siret = '70204275500240', 
+                        routing_identifier = 'dcsc456sdcsdcs556', 
                         addressing_suffix = 'dcsc456sdcsdcs556', 
                         routing_code = factpulse.models.afnor_directory_line_payload_history_legal_unit_facility_routing_code_routing_code.AFNOR_directoryLinePayloadHistoryLegalUnitFacilityRoutingCodeRoutingCode(
                             routing_identifier = 'dcsc456sdcsdcs556', 
@@ -76,7 +78,9 @@ class TestAFNORDirectoryLineSearchPost200Response(unittest.TestCase):
                         legal_unit = factpulse.models.legal_unit_payload_included.legalUnitPayloadIncluded(
                             siren = '702042755', 
                             business_name = 'Boulangerie Pascale', 
-                            entity_type = 'Public', ), 
+                            entity_type = 'Public', 
+                            instructions = factpulse.models.afnor_siren_instructions.AFNOR_sirenInstructions(
+                                is_sales_prospecting_forbidden = False, ), ), 
                         facility = factpulse.models.facility_payload_included.facilityPayloadIncluded(
                             siret = '70204275500240', 
                             siren = '702042755', 

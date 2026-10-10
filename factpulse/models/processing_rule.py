@@ -21,7 +21,7 @@ from typing_extensions import Self
 
 class ProcessingRule(str, Enum):
     """
-    AFNOR XP Z12-013 ProcessingRule (Annexe A v1.2.0).  Valeurs EXACTES de la spec (case-sensitive).
+    AFNOR XP Z12-013 ProcessingRule (Annexe A v1.3.0).  Valeurs EXACTES de la spec (case-sensitive).
     """
 
     """
@@ -36,6 +36,7 @@ class ProcessingRule(str, Enum):
     B2GOUTOFSCOPE = 'B2GOutOfScope'
     ARCHIVEONLY = 'ArchiveOnly'
     NOTAPPLICABLE = 'NotApplicable'
+    UNDEFINED = 'Undefined'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

@@ -52,7 +52,7 @@ class TestAFNORSearchSiret(unittest.TestCase):
                 fields = [siret, siren, name, facilityType, administrativeStatus, siretInstructions, address, pmStatus, pmOnly, managesPaymentStatus, managesLegalCommitment, managesLegalCommitmentOrService, serviceCodeStatus],
                 include = [siren],
                 limit = 50,
-                ignore = 20
+                ignore = 0
             )
         else:
             return AFNORSearchSiret(

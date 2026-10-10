@@ -18,13 +18,14 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.rate1 import Rate1
 from factpulse.models.taxableamount import Taxableamount
 from factpulse.models.taxamount2 import Taxamount2
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class TaxBreakdownInput(BaseModel):
     """
@@ -33,7 +34,10 @@ class TaxBreakdownInput(BaseModel):
     rate: Rate1
     taxable_amount: Taxableamount = Field(alias="taxableAmount")
     tax_amount: Taxamount2 = Field(alias="taxAmount")
-    __properties: ClassVar[List[str]] = ["rate", "taxableAmount", "taxAmount"]
+    tax_category_code: Optional[StrictStr] = Field(default=None, alias="taxCategoryCode")
+    exemption_reason_code: Optional[StrictStr] = Field(default=None, alias="exemptionReasonCode")
+    exemption_reason: Optional[StrictStr] = Field(default=None, alias="exemptionReason")
+    __properties: ClassVar[List[str]] = ["rate", "taxableAmount", "taxAmount", "taxCategoryCode", "exemptionReasonCode", "exemptionReason"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -49,8 +53,7 @@ class TaxBreakdownInput(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -84,6 +87,21 @@ class TaxBreakdownInput(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of tax_amount
         if self.tax_amount:
             _dict['taxAmount'] = self.tax_amount.to_dict()
+        # set to None if tax_category_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.tax_category_code is None and "tax_category_code" in self.model_fields_set:
+            _dict['taxCategoryCode'] = None
+
+        # set to None if exemption_reason_code (nullable) is None
+        # and model_fields_set contains the field
+        if self.exemption_reason_code is None and "exemption_reason_code" in self.model_fields_set:
+            _dict['exemptionReasonCode'] = None
+
+        # set to None if exemption_reason (nullable) is None
+        # and model_fields_set contains the field
+        if self.exemption_reason is None and "exemption_reason" in self.model_fields_set:
+            _dict['exemptionReason'] = None
+
         return _dict
 
     @classmethod
@@ -98,7 +116,10 @@ class TaxBreakdownInput(BaseModel):
         _obj = cls.model_validate({
             "rate": Rate1.from_dict(obj["rate"]) if obj.get("rate") is not None else None,
             "taxableAmount": Taxableamount.from_dict(obj["taxableAmount"]) if obj.get("taxableAmount") is not None else None,
-            "taxAmount": Taxamount2.from_dict(obj["taxAmount"]) if obj.get("taxAmount") is not None else None
+            "taxAmount": Taxamount2.from_dict(obj["taxAmount"]) if obj.get("taxAmount") is not None else None,
+            "taxCategoryCode": obj.get("taxCategoryCode"),
+            "exemptionReasonCode": obj.get("exemptionReasonCode"),
+            "exemptionReason": obj.get("exemptionReason")
         })
         return _obj
 

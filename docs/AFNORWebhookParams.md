@@ -5,8 +5,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**callback** | [**AFNORCallbackParameters**](AFNORCallbackParameters.md) |  | 
-**metadata** | [**AFNORWebhookMetadata**](AFNORWebhookMetadata.md) |  | 
+**callback_url** | **str** |  | 
+**flow_types** | [**List[AFNORFlowType]**](AFNORFlowType.md) |  | [optional] 
+**flow_direction** | [**AFNORFlowDirection**](AFNORFlowDirection.md) |  | [optional] 
+**ack_status** | [**AFNORFlowAckStatus**](AFNORFlowAckStatus.md) |  | [optional] 
 
 ## Example
 

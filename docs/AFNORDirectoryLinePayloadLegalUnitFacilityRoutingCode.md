@@ -7,8 +7,10 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **addressing_identifier** | **str** | Addressing identifier of the directory line. | [optional] 
 **platform_type** | [**AFNORRecipientPlatformType**](AFNORRecipientPlatformType.md) |  | [optional] 
+**directory_line_status** | [**AFNORUniqueDirectoryLineStatus**](AFNORUniqueDirectoryLineStatus.md) |  | [optional] 
 **siren** | **str** | SIREN number | [optional] 
 **siret** | **str** | SIRET Number | [optional] 
+**routing_identifier** | **str** | Routing identifier od a routing code. | [optional] 
 **addressing_suffix** | **str** | suffix of the directory line which defines an address mesh not attached to a facility | [optional] 
 **routing_code** | [**AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCodeRoutingCode**](AFNORDirectoryLinePayloadHistoryLegalUnitFacilityRoutingCodeRoutingCode.md) |  | [optional] 
 **legal_unit** | [**AFNORLegalUnitPayloadIncluded**](AFNORLegalUnitPayloadIncluded.md) |  | [optional] 

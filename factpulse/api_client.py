@@ -69,6 +69,7 @@ class ApiClient:
         'date': datetime.date,
         'datetime': datetime.datetime,
         'decimal': decimal.Decimal,
+        'UUID': uuid.UUID,
         'object': object,
     }
     _pool = None
@@ -91,7 +92,7 @@ class ApiClient:
             self.default_headers[header_name] = header_value
         self.cookie = cookie
         # Set default User-Agent.
-        self.user_agent = 'OpenAPI-Generator/4.3.0/python'
+        self.user_agent = 'OpenAPI-Generator/4.4.0/python'
         self.client_side_validation = configuration.client_side_validation
 
     def __enter__(self):
@@ -468,6 +469,8 @@ class ApiClient:
             return self.__deserialize_datetime(data)
         elif klass is decimal.Decimal:
             return decimal.Decimal(data)
+        elif klass is uuid.UUID:
+            return uuid.UUID(data)
         elif issubclass(klass, Enum):
             return self.__deserialize_enum(data, klass)
         else:

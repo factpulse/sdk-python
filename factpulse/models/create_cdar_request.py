@@ -19,12 +19,13 @@ import re  # noqa: F401
 import json
 
 from datetime import date
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from factpulse.models.encaisseamount import Encaisseamount
 from factpulse.models.recipient_input import RecipientInput
 from typing import Optional, Set
 from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
 class CreateCDARRequest(BaseModel):
     """
@@ -48,7 +49,8 @@ class CreateCDARRequest(BaseModel):
     reason_text: Optional[StrictStr] = Field(default=None, alias="reasonText")
     action_code: Optional[StrictStr] = Field(default=None, alias="actionCode")
     encaisse_amount: Optional[Encaisseamount] = Field(default=None, alias="encaisseAmount")
-    __properties: ClassVar[List[str]] = ["documentId", "businessProcess", "typeCode", "senderSiren", "senderRole", "senderName", "senderEmail", "recipients", "invoiceId", "invoiceIssueDate", "invoiceTypeCode", "invoiceSellerSiren", "invoiceBuyerSiren", "status", "reasonCode", "reasonText", "actionCode", "encaisseAmount"]
+    encaisse_vat_rate: Optional[Union[StrictFloat, StrictInt]] = Field(default=20, description="Taux de TVA du montant encaissé en % (MDT-224, requis par BR-FR-CDV-14 pour le statut 212 ; défaut 20)", alias="encaisseVatRate")
+    __properties: ClassVar[List[str]] = ["documentId", "businessProcess", "typeCode", "senderSiren", "senderRole", "senderName", "senderEmail", "recipients", "invoiceId", "invoiceIssueDate", "invoiceTypeCode", "invoiceSellerSiren", "invoiceBuyerSiren", "status", "reasonCode", "reasonText", "actionCode", "encaisseAmount", "encaisseVatRate"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -64,8 +66,7 @@ class CreateCDARRequest(BaseModel):
 
     def to_json(self) -> str:
         """Returns the JSON representation of the model using alias"""
-        # TODO: pydantic v2: use .model_dump_json(by_alias=True, exclude_unset=True) instead
-        return json.dumps(self.to_dict())
+        return json.dumps(to_jsonable_python(self.to_dict()))
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
@@ -169,7 +170,8 @@ class CreateCDARRequest(BaseModel):
             "reasonCode": obj.get("reasonCode"),
             "reasonText": obj.get("reasonText"),
             "actionCode": obj.get("actionCode"),
-            "encaisseAmount": Encaisseamount.from_dict(obj["encaisseAmount"]) if obj.get("encaisseAmount") is not None else None
+            "encaisseAmount": Encaisseamount.from_dict(obj["encaisseAmount"]) if obj.get("encaisseAmount") is not None else None,
+            "encaisseVatRate": obj.get("encaisseVatRate") if obj.get("encaisseVatRate") is not None else 20
         })
         return _obj
 
