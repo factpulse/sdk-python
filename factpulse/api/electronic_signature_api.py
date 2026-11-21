@@ -16,8 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictBool, StrictBytes, StrictStr
-from typing import Any, Optional, Tuple, Union
+from pydantic import Field, StrictBool, StrictStr
+from typing import Any, Optional
 from typing_extensions import Annotated
 from factpulse.models.generate_certificate_request import GenerateCertificateRequest
 from factpulse.models.generate_certificate_response import GenerateCertificateResponse
@@ -330,7 +330,7 @@ class ElectronicSignatureApi:
     @validate_call
     def sign_pdf_api_v1_processing_sign_pdf_post(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="PDF file to sign (will be processed and returned signed in base64)")],
+        pdf_file: Annotated[StrictStr, Field(description="PDF file to sign (will be processed and returned signed in base64)")],
         reason: Optional[StrictStr] = None,
         location: Optional[StrictStr] = None,
         contact: Optional[StrictStr] = None,
@@ -355,7 +355,7 @@ class ElectronicSignatureApi:
         Signs an uploaded PDF with the electronic certificate configured for the client (via client_uid from JWT).      **Supported standards**: PAdES-B-B, PAdES-B-T (timestamping), PAdES-B-LT (long-term archiving).      **eIDAS levels**: SES (self-signed), AdES (commercial CA), QES (PSCO - out of scope).      **Security**: Double authentication X-Internal-Secret + JWT Bearer to retrieve the certificate.      **⚠️ Legal disclaimer**: Generated signatures are electronic seals as defined by     the eIDAS regulation. The level of legal validity depends on the certificate used (SES/AdES/QES).     FactPulse does not provide QES qualified certificates - you must obtain a certificate from     a PSCO (qualified Trust Service Provider) for maximum legal validity.
 
         :param pdf_file: PDF file to sign (will be processed and returned signed in base64) (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param reason:
         :type reason: str
         :param location:
@@ -426,7 +426,7 @@ class ElectronicSignatureApi:
     @validate_call
     def sign_pdf_api_v1_processing_sign_pdf_post_with_http_info(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="PDF file to sign (will be processed and returned signed in base64)")],
+        pdf_file: Annotated[StrictStr, Field(description="PDF file to sign (will be processed and returned signed in base64)")],
         reason: Optional[StrictStr] = None,
         location: Optional[StrictStr] = None,
         contact: Optional[StrictStr] = None,
@@ -451,7 +451,7 @@ class ElectronicSignatureApi:
         Signs an uploaded PDF with the electronic certificate configured for the client (via client_uid from JWT).      **Supported standards**: PAdES-B-B, PAdES-B-T (timestamping), PAdES-B-LT (long-term archiving).      **eIDAS levels**: SES (self-signed), AdES (commercial CA), QES (PSCO - out of scope).      **Security**: Double authentication X-Internal-Secret + JWT Bearer to retrieve the certificate.      **⚠️ Legal disclaimer**: Generated signatures are electronic seals as defined by     the eIDAS regulation. The level of legal validity depends on the certificate used (SES/AdES/QES).     FactPulse does not provide QES qualified certificates - you must obtain a certificate from     a PSCO (qualified Trust Service Provider) for maximum legal validity.
 
         :param pdf_file: PDF file to sign (will be processed and returned signed in base64) (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param reason:
         :type reason: str
         :param location:
@@ -522,7 +522,7 @@ class ElectronicSignatureApi:
     @validate_call
     def sign_pdf_api_v1_processing_sign_pdf_post_without_preload_content(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="PDF file to sign (will be processed and returned signed in base64)")],
+        pdf_file: Annotated[StrictStr, Field(description="PDF file to sign (will be processed and returned signed in base64)")],
         reason: Optional[StrictStr] = None,
         location: Optional[StrictStr] = None,
         contact: Optional[StrictStr] = None,
@@ -547,7 +547,7 @@ class ElectronicSignatureApi:
         Signs an uploaded PDF with the electronic certificate configured for the client (via client_uid from JWT).      **Supported standards**: PAdES-B-B, PAdES-B-T (timestamping), PAdES-B-LT (long-term archiving).      **eIDAS levels**: SES (self-signed), AdES (commercial CA), QES (PSCO - out of scope).      **Security**: Double authentication X-Internal-Secret + JWT Bearer to retrieve the certificate.      **⚠️ Legal disclaimer**: Generated signatures are electronic seals as defined by     the eIDAS regulation. The level of legal validity depends on the certificate used (SES/AdES/QES).     FactPulse does not provide QES qualified certificates - you must obtain a certificate from     a PSCO (qualified Trust Service Provider) for maximum legal validity.
 
         :param pdf_file: PDF file to sign (will be processed and returned signed in base64) (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param reason:
         :type reason: str
         :param location:
@@ -645,7 +645,7 @@ class ElectronicSignatureApi:
         # process the header parameters
         # process the form parameters
         if pdf_file is not None:
-            _files['pdf_file'] = pdf_file
+            _form_params.append(('pdf_file', pdf_file))
         if reason is not None:
             _form_params.append(('reason', reason))
         if location is not None:
@@ -710,7 +710,7 @@ class ElectronicSignatureApi:
     @validate_call
     def sign_pdf_async_api_v1_processing_sign_pdf_async_post(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="PDF file to sign (processed asynchronously)")],
+        pdf_file: Annotated[StrictStr, Field(description="PDF file to sign (processed asynchronously)")],
         callback_url: Optional[StrictStr] = None,
         webhook_mode: Annotated[Optional[StrictStr], Field(description="Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)")] = None,
         reason: Optional[StrictStr] = None,
@@ -737,7 +737,7 @@ class ElectronicSignatureApi:
         Signs an uploaded PDF asynchronously via a Celery task.      **Difference with /sign-pdf**:     - `/sign-pdf`: Synchronous signature (blocking until completion)     - `/sign-pdf-async`: Asynchronous signature (returns immediately with task_id)      **Async advantages**:     - No timeout for large files     - No blocking of FastAPI worker     - Progress tracking via task_id     - Ideal for batch processing      **Supported standards**: PAdES-B-B, PAdES-B-T (timestamping), PAdES-B-LT (long-term archiving).      **⚠️ Legal disclaimer**: Same as /sign-pdf (see that endpoint's documentation).
 
         :param pdf_file: PDF file to sign (processed asynchronously) (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param callback_url:
         :type callback_url: str
         :param webhook_mode: Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)
@@ -813,7 +813,7 @@ class ElectronicSignatureApi:
     @validate_call
     def sign_pdf_async_api_v1_processing_sign_pdf_async_post_with_http_info(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="PDF file to sign (processed asynchronously)")],
+        pdf_file: Annotated[StrictStr, Field(description="PDF file to sign (processed asynchronously)")],
         callback_url: Optional[StrictStr] = None,
         webhook_mode: Annotated[Optional[StrictStr], Field(description="Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)")] = None,
         reason: Optional[StrictStr] = None,
@@ -840,7 +840,7 @@ class ElectronicSignatureApi:
         Signs an uploaded PDF asynchronously via a Celery task.      **Difference with /sign-pdf**:     - `/sign-pdf`: Synchronous signature (blocking until completion)     - `/sign-pdf-async`: Asynchronous signature (returns immediately with task_id)      **Async advantages**:     - No timeout for large files     - No blocking of FastAPI worker     - Progress tracking via task_id     - Ideal for batch processing      **Supported standards**: PAdES-B-B, PAdES-B-T (timestamping), PAdES-B-LT (long-term archiving).      **⚠️ Legal disclaimer**: Same as /sign-pdf (see that endpoint's documentation).
 
         :param pdf_file: PDF file to sign (processed asynchronously) (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param callback_url:
         :type callback_url: str
         :param webhook_mode: Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)
@@ -916,7 +916,7 @@ class ElectronicSignatureApi:
     @validate_call
     def sign_pdf_async_api_v1_processing_sign_pdf_async_post_without_preload_content(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="PDF file to sign (processed asynchronously)")],
+        pdf_file: Annotated[StrictStr, Field(description="PDF file to sign (processed asynchronously)")],
         callback_url: Optional[StrictStr] = None,
         webhook_mode: Annotated[Optional[StrictStr], Field(description="Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)")] = None,
         reason: Optional[StrictStr] = None,
@@ -943,7 +943,7 @@ class ElectronicSignatureApi:
         Signs an uploaded PDF asynchronously via a Celery task.      **Difference with /sign-pdf**:     - `/sign-pdf`: Synchronous signature (blocking until completion)     - `/sign-pdf-async`: Asynchronous signature (returns immediately with task_id)      **Async advantages**:     - No timeout for large files     - No blocking of FastAPI worker     - Progress tracking via task_id     - Ideal for batch processing      **Supported standards**: PAdES-B-B, PAdES-B-T (timestamping), PAdES-B-LT (long-term archiving).      **⚠️ Legal disclaimer**: Same as /sign-pdf (see that endpoint's documentation).
 
         :param pdf_file: PDF file to sign (processed asynchronously) (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param callback_url:
         :type callback_url: str
         :param webhook_mode: Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)
@@ -1048,7 +1048,7 @@ class ElectronicSignatureApi:
         # process the header parameters
         # process the form parameters
         if pdf_file is not None:
-            _files['pdf_file'] = pdf_file
+            _form_params.append(('pdf_file', pdf_file))
         if callback_url is not None:
             _form_params.append(('callback_url', callback_url))
         if webhook_mode is not None:
@@ -1117,7 +1117,7 @@ class ElectronicSignatureApi:
     @validate_call
     def validate_pdf_signature_endpoint_api_v1_processing_validate_pdf_signature_post(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="PDF file to validate (will be analyzed to detect and validate signatures)")],
+        pdf_file: Annotated[StrictStr, Field(description="PDF file to validate (will be analyzed to detect and validate signatures)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1136,7 +1136,7 @@ class ElectronicSignatureApi:
         Validates electronic signatures present in an uploaded PDF.      **Verifications performed**:     - Presence of signatures     - Document integrity (not modified since signing)     - Certificate validity     - Chain of trust (if available)     - Presence of timestamp (PAdES-B-T)     - Validation data (PAdES-B-LT)      **Supported standards**: PAdES-B-B, PAdES-B-T, PAdES-B-LT, ISO 32000-2.      **⚠️ Note**: This validation is technical (cryptographic integrity). Legal validity     depends on the eIDAS level of the certificate (SES/AdES/QES) and the context of use.
 
         :param pdf_file: PDF file to validate (will be analyzed to detect and validate signatures) (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1187,7 +1187,7 @@ class ElectronicSignatureApi:
     @validate_call
     def validate_pdf_signature_endpoint_api_v1_processing_validate_pdf_signature_post_with_http_info(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="PDF file to validate (will be analyzed to detect and validate signatures)")],
+        pdf_file: Annotated[StrictStr, Field(description="PDF file to validate (will be analyzed to detect and validate signatures)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1206,7 +1206,7 @@ class ElectronicSignatureApi:
         Validates electronic signatures present in an uploaded PDF.      **Verifications performed**:     - Presence of signatures     - Document integrity (not modified since signing)     - Certificate validity     - Chain of trust (if available)     - Presence of timestamp (PAdES-B-T)     - Validation data (PAdES-B-LT)      **Supported standards**: PAdES-B-B, PAdES-B-T, PAdES-B-LT, ISO 32000-2.      **⚠️ Note**: This validation is technical (cryptographic integrity). Legal validity     depends on the eIDAS level of the certificate (SES/AdES/QES) and the context of use.
 
         :param pdf_file: PDF file to validate (will be analyzed to detect and validate signatures) (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1257,7 +1257,7 @@ class ElectronicSignatureApi:
     @validate_call
     def validate_pdf_signature_endpoint_api_v1_processing_validate_pdf_signature_post_without_preload_content(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="PDF file to validate (will be analyzed to detect and validate signatures)")],
+        pdf_file: Annotated[StrictStr, Field(description="PDF file to validate (will be analyzed to detect and validate signatures)")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1276,7 +1276,7 @@ class ElectronicSignatureApi:
         Validates electronic signatures present in an uploaded PDF.      **Verifications performed**:     - Presence of signatures     - Document integrity (not modified since signing)     - Certificate validity     - Chain of trust (if available)     - Presence of timestamp (PAdES-B-T)     - Validation data (PAdES-B-LT)      **Supported standards**: PAdES-B-B, PAdES-B-T, PAdES-B-LT, ISO 32000-2.      **⚠️ Note**: This validation is technical (cryptographic integrity). Legal validity     depends on the eIDAS level of the certificate (SES/AdES/QES) and the context of use.
 
         :param pdf_file: PDF file to validate (will be analyzed to detect and validate signatures) (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1348,7 +1348,7 @@ class ElectronicSignatureApi:
         # process the header parameters
         # process the form parameters
         if pdf_file is not None:
-            _files['pdf_file'] = pdf_file
+            _form_params.append(('pdf_file', pdf_file))
         # process the body parameter
 
 

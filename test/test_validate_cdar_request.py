@@ -43,7 +43,12 @@ class TestValidateCDARRequest(unittest.TestCase):
                 invoice_issue_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
                 status = '',
                 reason_code = '',
-                encaisse_amount = None
+                encaisse_amount = None,
+                encaisse_amounts_by_rate = [
+                    factpulse.models.encaisse_amount_by_rate.EncaisseAmountByRate(
+                        rate = 20, 
+                        amount = 720.00, )
+                    ]
             )
         else:
             return ValidateCDARRequest(

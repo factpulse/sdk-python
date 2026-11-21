@@ -16,8 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictBool, StrictBytes, StrictStr
-from typing import Optional, Tuple, Union
+from pydantic import Field, StrictBool, StrictStr
+from typing import Optional
 from typing_extensions import Annotated
 from factpulse.models.async_task_status import AsyncTaskStatus
 from factpulse.models.task_response import TaskResponse
@@ -581,7 +581,7 @@ class FacturXPDFXMLVerificationApi:
     @validate_call
     def verify_pdf_async_api_v1_verification_verify_async_post(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Factur-X PDF file to verify")],
+        pdf_file: Annotated[StrictStr, Field(description="Factur-X PDF file to verify")],
         force_ocr: Annotated[Optional[StrictBool], Field(description="Force OCR usage even if PDF contains native text")] = None,
         callback_url: Optional[StrictStr] = None,
         webhook_mode: Annotated[Optional[StrictStr], Field(description="Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)")] = None,
@@ -603,7 +603,7 @@ class FacturXPDFXMLVerificationApi:
         Verifies PDF/XML Factur-X compliance asynchronously.  **IMPORTANT**: Only Factur-X PDFs (with embedded XML) are accepted. PDFs without Factur-X XML will return a `NOT_FACTURX` error in the result.  This version uses a Celery task and can call the OCR service if the PDF is an image or if `force_ocr=true`.  **Returns immediately** a task ID. Use `/verify-async/{task_id}/status` to retrieve the result.  **Verification principle (Factur-X 1.08):** - Principle #2: XML can only contain info present in the PDF - Principle #4: All XML info must be present and compliant in the PDF  **Verified fields:** - Identification: BT-1 (invoice #), BT-2 (date), BT-3 (type), BT-5 (currency), BT-23 (framework) - Seller: BT-27 (name), BT-29 (SIRET), BT-30 (SIREN), BT-31 (VAT) - Buyer: BT-44 (name), BT-46 (SIRET), BT-47 (SIREN), BT-48 (VAT) - Amounts: BT-109 (excl. tax), BT-110 (VAT), BT-112 (incl. tax), BT-115 (amount due) - VAT breakdown: BT-116, BT-117, BT-118, BT-119 - Invoice lines: BT-153, BT-129, BT-146, BT-131 - Mandatory notes: PMT, PMD, AAB - Rule BR-FR-09: SIRET/SIREN consistency  **Advantages over synchronous version:** - OCR support for image PDFs (via DocTR service) - Longer timeout for large documents - Doesn't block the server  ## Webhook notification (recommended)  Instead of polling, you can receive a webhook notification when verification completes:  ``` callback_url=https://your-server.com/webhook ```  The webhook will POST a JSON payload with: - `event_type`: `verification.completed` or `verification.failed` - `data.is_compliant`: Whether the PDF/XML are consistent - `data.compliance_score`: Compliance score (0-1) - `X-Webhook-Signature` header for HMAC verification
 
         :param pdf_file: Factur-X PDF file to verify (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param force_ocr: Force OCR usage even if PDF contains native text
         :type force_ocr: bool
         :param callback_url:
@@ -662,7 +662,7 @@ class FacturXPDFXMLVerificationApi:
     @validate_call
     def verify_pdf_async_api_v1_verification_verify_async_post_with_http_info(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Factur-X PDF file to verify")],
+        pdf_file: Annotated[StrictStr, Field(description="Factur-X PDF file to verify")],
         force_ocr: Annotated[Optional[StrictBool], Field(description="Force OCR usage even if PDF contains native text")] = None,
         callback_url: Optional[StrictStr] = None,
         webhook_mode: Annotated[Optional[StrictStr], Field(description="Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)")] = None,
@@ -684,7 +684,7 @@ class FacturXPDFXMLVerificationApi:
         Verifies PDF/XML Factur-X compliance asynchronously.  **IMPORTANT**: Only Factur-X PDFs (with embedded XML) are accepted. PDFs without Factur-X XML will return a `NOT_FACTURX` error in the result.  This version uses a Celery task and can call the OCR service if the PDF is an image or if `force_ocr=true`.  **Returns immediately** a task ID. Use `/verify-async/{task_id}/status` to retrieve the result.  **Verification principle (Factur-X 1.08):** - Principle #2: XML can only contain info present in the PDF - Principle #4: All XML info must be present and compliant in the PDF  **Verified fields:** - Identification: BT-1 (invoice #), BT-2 (date), BT-3 (type), BT-5 (currency), BT-23 (framework) - Seller: BT-27 (name), BT-29 (SIRET), BT-30 (SIREN), BT-31 (VAT) - Buyer: BT-44 (name), BT-46 (SIRET), BT-47 (SIREN), BT-48 (VAT) - Amounts: BT-109 (excl. tax), BT-110 (VAT), BT-112 (incl. tax), BT-115 (amount due) - VAT breakdown: BT-116, BT-117, BT-118, BT-119 - Invoice lines: BT-153, BT-129, BT-146, BT-131 - Mandatory notes: PMT, PMD, AAB - Rule BR-FR-09: SIRET/SIREN consistency  **Advantages over synchronous version:** - OCR support for image PDFs (via DocTR service) - Longer timeout for large documents - Doesn't block the server  ## Webhook notification (recommended)  Instead of polling, you can receive a webhook notification when verification completes:  ``` callback_url=https://your-server.com/webhook ```  The webhook will POST a JSON payload with: - `event_type`: `verification.completed` or `verification.failed` - `data.is_compliant`: Whether the PDF/XML are consistent - `data.compliance_score`: Compliance score (0-1) - `X-Webhook-Signature` header for HMAC verification
 
         :param pdf_file: Factur-X PDF file to verify (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param force_ocr: Force OCR usage even if PDF contains native text
         :type force_ocr: bool
         :param callback_url:
@@ -743,7 +743,7 @@ class FacturXPDFXMLVerificationApi:
     @validate_call
     def verify_pdf_async_api_v1_verification_verify_async_post_without_preload_content(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Factur-X PDF file to verify")],
+        pdf_file: Annotated[StrictStr, Field(description="Factur-X PDF file to verify")],
         force_ocr: Annotated[Optional[StrictBool], Field(description="Force OCR usage even if PDF contains native text")] = None,
         callback_url: Optional[StrictStr] = None,
         webhook_mode: Annotated[Optional[StrictStr], Field(description="Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)")] = None,
@@ -765,7 +765,7 @@ class FacturXPDFXMLVerificationApi:
         Verifies PDF/XML Factur-X compliance asynchronously.  **IMPORTANT**: Only Factur-X PDFs (with embedded XML) are accepted. PDFs without Factur-X XML will return a `NOT_FACTURX` error in the result.  This version uses a Celery task and can call the OCR service if the PDF is an image or if `force_ocr=true`.  **Returns immediately** a task ID. Use `/verify-async/{task_id}/status` to retrieve the result.  **Verification principle (Factur-X 1.08):** - Principle #2: XML can only contain info present in the PDF - Principle #4: All XML info must be present and compliant in the PDF  **Verified fields:** - Identification: BT-1 (invoice #), BT-2 (date), BT-3 (type), BT-5 (currency), BT-23 (framework) - Seller: BT-27 (name), BT-29 (SIRET), BT-30 (SIREN), BT-31 (VAT) - Buyer: BT-44 (name), BT-46 (SIRET), BT-47 (SIREN), BT-48 (VAT) - Amounts: BT-109 (excl. tax), BT-110 (VAT), BT-112 (incl. tax), BT-115 (amount due) - VAT breakdown: BT-116, BT-117, BT-118, BT-119 - Invoice lines: BT-153, BT-129, BT-146, BT-131 - Mandatory notes: PMT, PMD, AAB - Rule BR-FR-09: SIRET/SIREN consistency  **Advantages over synchronous version:** - OCR support for image PDFs (via DocTR service) - Longer timeout for large documents - Doesn't block the server  ## Webhook notification (recommended)  Instead of polling, you can receive a webhook notification when verification completes:  ``` callback_url=https://your-server.com/webhook ```  The webhook will POST a JSON payload with: - `event_type`: `verification.completed` or `verification.failed` - `data.is_compliant`: Whether the PDF/XML are consistent - `data.compliance_score`: Compliance score (0-1) - `X-Webhook-Signature` header for HMAC verification
 
         :param pdf_file: Factur-X PDF file to verify (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param force_ocr: Force OCR usage even if PDF contains native text
         :type force_ocr: bool
         :param callback_url:
@@ -848,7 +848,7 @@ class FacturXPDFXMLVerificationApi:
         # process the header parameters
         # process the form parameters
         if pdf_file is not None:
-            _files['pdf_file'] = pdf_file
+            _form_params.append(('pdf_file', pdf_file))
         if force_ocr is not None:
             _form_params.append(('force_ocr', force_ocr))
         if callback_url is not None:
@@ -907,7 +907,7 @@ class FacturXPDFXMLVerificationApi:
     @validate_call
     def verify_pdf_sync_api_v1_verification_verify_post(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Factur-X PDF file to verify")],
+        pdf_file: Annotated[StrictStr, Field(description="Factur-X PDF file to verify")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -926,7 +926,7 @@ class FacturXPDFXMLVerificationApi:
         Verifies compliance between the PDF and its embedded Factur-X XML.  **IMPORTANT**: Only Factur-X PDFs (with embedded XML) are accepted. PDFs without Factur-X XML will be rejected with a 400 error.  This synchronous version uses only native PDF extraction (pdfplumber). For image PDFs requiring OCR, use the `/verify-async` endpoint.  **Verification principle (Factur-X 1.08):** - Principle #2: XML can only contain info present in the PDF - Principle #4: All XML info must be present and compliant in the PDF  **Verified fields:** - Identification: BT-1 (invoice #), BT-2 (date), BT-3 (type), BT-5 (currency), BT-23 (framework) - Seller: BT-27 (name), BT-29 (SIRET), BT-30 (SIREN), BT-31 (VAT) - Buyer: BT-44 (name), BT-46 (SIRET), BT-47 (SIREN), BT-48 (VAT) - Amounts: BT-109 (excl. tax), BT-110 (VAT), BT-112 (incl. tax), BT-115 (amount due) - VAT breakdown: BT-116, BT-117, BT-118, BT-119 - Invoice lines: BT-153, BT-129, BT-146, BT-131 - Mandatory notes: PMT, PMD, AAB - Rule BR-FR-09: SIRET/SIREN consistency
 
         :param pdf_file: Factur-X PDF file to verify (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -978,7 +978,7 @@ class FacturXPDFXMLVerificationApi:
     @validate_call
     def verify_pdf_sync_api_v1_verification_verify_post_with_http_info(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Factur-X PDF file to verify")],
+        pdf_file: Annotated[StrictStr, Field(description="Factur-X PDF file to verify")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -997,7 +997,7 @@ class FacturXPDFXMLVerificationApi:
         Verifies compliance between the PDF and its embedded Factur-X XML.  **IMPORTANT**: Only Factur-X PDFs (with embedded XML) are accepted. PDFs without Factur-X XML will be rejected with a 400 error.  This synchronous version uses only native PDF extraction (pdfplumber). For image PDFs requiring OCR, use the `/verify-async` endpoint.  **Verification principle (Factur-X 1.08):** - Principle #2: XML can only contain info present in the PDF - Principle #4: All XML info must be present and compliant in the PDF  **Verified fields:** - Identification: BT-1 (invoice #), BT-2 (date), BT-3 (type), BT-5 (currency), BT-23 (framework) - Seller: BT-27 (name), BT-29 (SIRET), BT-30 (SIREN), BT-31 (VAT) - Buyer: BT-44 (name), BT-46 (SIRET), BT-47 (SIREN), BT-48 (VAT) - Amounts: BT-109 (excl. tax), BT-110 (VAT), BT-112 (incl. tax), BT-115 (amount due) - VAT breakdown: BT-116, BT-117, BT-118, BT-119 - Invoice lines: BT-153, BT-129, BT-146, BT-131 - Mandatory notes: PMT, PMD, AAB - Rule BR-FR-09: SIRET/SIREN consistency
 
         :param pdf_file: Factur-X PDF file to verify (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1049,7 +1049,7 @@ class FacturXPDFXMLVerificationApi:
     @validate_call
     def verify_pdf_sync_api_v1_verification_verify_post_without_preload_content(
         self,
-        pdf_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Factur-X PDF file to verify")],
+        pdf_file: Annotated[StrictStr, Field(description="Factur-X PDF file to verify")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1068,7 +1068,7 @@ class FacturXPDFXMLVerificationApi:
         Verifies compliance between the PDF and its embedded Factur-X XML.  **IMPORTANT**: Only Factur-X PDFs (with embedded XML) are accepted. PDFs without Factur-X XML will be rejected with a 400 error.  This synchronous version uses only native PDF extraction (pdfplumber). For image PDFs requiring OCR, use the `/verify-async` endpoint.  **Verification principle (Factur-X 1.08):** - Principle #2: XML can only contain info present in the PDF - Principle #4: All XML info must be present and compliant in the PDF  **Verified fields:** - Identification: BT-1 (invoice #), BT-2 (date), BT-3 (type), BT-5 (currency), BT-23 (framework) - Seller: BT-27 (name), BT-29 (SIRET), BT-30 (SIREN), BT-31 (VAT) - Buyer: BT-44 (name), BT-46 (SIRET), BT-47 (SIREN), BT-48 (VAT) - Amounts: BT-109 (excl. tax), BT-110 (VAT), BT-112 (incl. tax), BT-115 (amount due) - VAT breakdown: BT-116, BT-117, BT-118, BT-119 - Invoice lines: BT-153, BT-129, BT-146, BT-131 - Mandatory notes: PMT, PMD, AAB - Rule BR-FR-09: SIRET/SIREN consistency
 
         :param pdf_file: Factur-X PDF file to verify (required)
-        :type pdf_file: bytes
+        :type pdf_file: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1141,7 +1141,7 @@ class FacturXPDFXMLVerificationApi:
         # process the header parameters
         # process the form parameters
         if pdf_file is not None:
-            _files['pdf_file'] = pdf_file
+            _form_params.append(('pdf_file', pdf_file))
         # process the body parameter
 
 

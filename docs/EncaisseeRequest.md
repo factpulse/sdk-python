@@ -9,9 +9,11 @@ Name | Type | Description | Notes
 **invoice_id** | **str** | Identifiant de la facture (BT-1) | 
 **invoice_issue_date** | **date** | Date d&#39;émission de la facture (YYYY-MM-DD) | 
 **invoice_buyer_siren** | **str** | SIREN de l&#39;acheteur (destinataire du statut) | 
-**invoice_buyer_electronic_address** | **str** | Adresse électronique de l&#39;acheteur (MDT-73) | 
-**amount** | [**Amount1**](Amount1.md) |  | 
-**vat_rate** | **float** | Taux de TVA du montant encaissé en % (MDT-224, requis par BR-FR-CDV-14 ; défaut 20) | [optional] [default to 20]
+**invoice_buyer_electronic_address** | **str** |  | [optional] 
+**amount** | [**Amount2**](Amount2.md) |  | [optional] 
+**vat_rate** | **float** | Taux de TVA du montant encaissé en % (MDT-224, requis par BR-FR-CDV-14 ; défaut 20). Ignoré avec amountsByRate | [optional] [default to 20]
+**amounts_by_rate** | [**List[EncaisseAmountByRate]**](EncaisseAmountByRate.md) |  | [optional] 
+**comment** | **str** |  | [optional] 
 **currency** | **str** | Code devise ISO 4217 | [optional] [default to 'EUR']
 **sender_siren** | **str** |  | [optional] 
 **flow_type** | **str** | Type de flux (CustomerInvoiceLC pour facture émise) | [optional] [default to 'CustomerInvoiceLC']

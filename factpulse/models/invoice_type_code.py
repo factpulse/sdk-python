@@ -21,17 +21,28 @@ from typing_extensions import Self
 
 class InvoiceTypeCode(str, Enum):
     """
-    Invoice type codes (UNTDID 1001).
+    Invoice type code (BT-3). UNTDID 1001.
     """
 
     """
     allowed enum values
     """
-    ENUM_380 = '380'
-    ENUM_381 = '381'
-    ENUM_384 = '384'
-    ENUM_389 = '389'
-    ENUM_386 = '386'
+    INVOICE = '380'
+    SELF_BILLED_INVOICE = '389'
+    FACTORED_INVOICE = '393'
+    SELF_BILLED_FACTORED_INVOICE = '501'
+    PREPAYMENT_INVOICE = '386'
+    SELF_BILLED_PREPAYMENT_INVOICE = '500'
+    CORRECTIVE_INVOICE = '384'
+    SELF_BILLED_CORRECTIVE_INVOICE = '471'
+    FACTORED_CORRECTIVE_INVOICE = '472'
+    SELF_BILLED_FACTORED_CORRECTIVE_INVOICE = '473'
+    CREDIT_NOTE = '381'
+    SELF_BILLED_CREDIT_NOTE = '261'
+    GLOBAL_ALLOWANCE_CREDIT_NOTE = '262'
+    FACTORED_CREDIT_NOTE = '396'
+    SELF_BILLED_FACTORED_CREDIT_NOTE = '502'
+    PREPAYMENT_CREDIT_NOTE = '503'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

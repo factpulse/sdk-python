@@ -97,6 +97,13 @@ class TestClientManagementApi(unittest.TestCase):
         """
         pass
 
+    def test_get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get(self) -> None:
+        """Test case for get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get
+
+        Get the SuperPDP VAT regime
+        """
+        pass
+
     def test_get_webhook_secret_status_api_v1_clients_uid_webhook_secret_status_get(self) -> None:
         """Test case for get_webhook_secret_status_api_v1_clients_uid_webhook_secret_status_get
 
@@ -129,6 +136,13 @@ class TestClientManagementApi(unittest.TestCase):
         """Test case for update_pdp_config_api_v1_clients_uid_pdp_config_put
 
         Configure client PDP
+        """
+        pass
+
+    def test_update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch(self) -> None:
+        """Test case for update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch
+
+        Set the SuperPDP VAT regime
         """
         pass
 

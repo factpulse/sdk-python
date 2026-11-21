@@ -114,6 +114,7 @@ docs/AllowanceTotalAmount.md
 docs/Amount.md
 docs/Amount1.md
 docs/Amount2.md
+docs/Amount3.md
 docs/AmountDue.md
 docs/Amounteur.md
 docs/AsyncTaskStatus.md
@@ -125,7 +126,6 @@ docs/CeleryStatus.md
 docs/CertificateInfoResponse.md
 docs/ChargeTotalAmount.md
 docs/ChorusProApi.md
-docs/ChorusProCredentials.md
 docs/ChorusProDestination.md
 docs/ChorusProResult.md
 docs/ClientActivateResponse.md
@@ -163,6 +163,7 @@ docs/ElectronicAddress.md
 docs/ElectronicAddressInput.md
 docs/ElectronicAddressOutput.md
 docs/ElectronicSignatureApi.md
+docs/EncaisseAmountByRate.md
 docs/Encaisseamount.md
 docs/Encaisseamount1.md
 docs/EncaisseeRequest.md
@@ -178,6 +179,9 @@ docs/FacturXValidationApi.md
 docs/FactureElectroniqueModelsInvoiceTypeCode.md
 docs/FactureElectroniqueRestApiSchemasCdarValidationErrorResponse.md
 docs/FactureElectroniqueRestApiSchemasChorusProChorusProCredentials.md
+docs/FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode.md
+docs/FactureElectroniqueRestApiSchemasProcessingChorusProCredentials.md
+docs/FactureElectroniqueRestApiSchemasValidationValidationErrorResponse.md
 docs/FieldStatus.md
 docs/FileInfo.md
 docs/FilesInfo.md
@@ -315,6 +319,8 @@ docs/SubmitVatAmount.md
 docs/SuperPDPConnectURLResponse.md
 docs/SuperPDPDisconnectResponse.md
 docs/SuperPDPStatusResponse.md
+docs/SuperPDPVatRegimeResponse.md
+docs/SuperPDPVatRegimeUpdateRequest.md
 docs/SupplementaryAttachment.md
 docs/Supplier.md
 docs/TaskErrorResult.md
@@ -351,7 +357,6 @@ docs/ValidateEReportingResponse.md
 docs/ValidationApi.md
 docs/ValidationError.md
 docs/ValidationErrorDetail.md
-docs/ValidationErrorResponse.md
 docs/ValidationInfo.md
 docs/ValidationSuccessResponse.md
 docs/ValidationSuccessTaskResult.md
@@ -496,6 +501,7 @@ factpulse/models/allowance_total_amount.py
 factpulse/models/amount.py
 factpulse/models/amount1.py
 factpulse/models/amount2.py
+factpulse/models/amount3.py
 factpulse/models/amount_due.py
 factpulse/models/amounteur.py
 factpulse/models/api_error.py
@@ -507,7 +513,6 @@ factpulse/models/buyercountry.py
 factpulse/models/celery_status.py
 factpulse/models/certificate_info_response.py
 factpulse/models/charge_total_amount.py
-factpulse/models/chorus_pro_credentials.py
 factpulse/models/chorus_pro_destination.py
 factpulse/models/chorus_pro_result.py
 factpulse/models/client_activate_response.py
@@ -542,6 +547,7 @@ factpulse/models/e_reporting_validation_error.py
 factpulse/models/electronic_address.py
 factpulse/models/electronic_address_input.py
 factpulse/models/electronic_address_output.py
+factpulse/models/encaisse_amount_by_rate.py
 factpulse/models/encaisseamount.py
 factpulse/models/encaisseamount1.py
 factpulse/models/encaissee_request.py
@@ -554,6 +560,9 @@ factpulse/models/factur_xpdf_info.py
 factpulse/models/facture_electronique_models_invoice_type_code.py
 factpulse/models/facture_electronique_rest_api_schemas_cdar_validation_error_response.py
 factpulse/models/facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials.py
+factpulse/models/facture_electronique_rest_api_schemas_ereporting_invoice_type_code.py
+factpulse/models/facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
+factpulse/models/facture_electronique_rest_api_schemas_validation_validation_error_response.py
 factpulse/models/field_status.py
 factpulse/models/file_info.py
 factpulse/models/files_info.py
@@ -685,6 +694,8 @@ factpulse/models/submit_vat_amount.py
 factpulse/models/super_pdp_connect_url_response.py
 factpulse/models/super_pdp_disconnect_response.py
 factpulse/models/super_pdp_status_response.py
+factpulse/models/super_pdp_vat_regime_response.py
+factpulse/models/super_pdp_vat_regime_update_request.py
 factpulse/models/supplementary_attachment.py
 factpulse/models/supplier.py
 factpulse/models/task_error_result.py
@@ -713,7 +724,6 @@ factpulse/models/validate_e_reporting_request.py
 factpulse/models/validate_e_reporting_response.py
 factpulse/models/validation_error.py
 factpulse/models/validation_error_detail.py
-factpulse/models/validation_error_response.py
 factpulse/models/validation_info.py
 factpulse/models/validation_success_response.py
 factpulse/models/validation_success_task_result.py
@@ -852,6 +862,7 @@ test/test_allowance_total_amount.py
 test/test_amount.py
 test/test_amount1.py
 test/test_amount2.py
+test/test_amount3.py
 test/test_amount_due.py
 test/test_amounteur.py
 test/test_api_error.py
@@ -865,7 +876,6 @@ test/test_celery_status.py
 test/test_certificate_info_response.py
 test/test_charge_total_amount.py
 test/test_chorus_pro_api.py
-test/test_chorus_pro_credentials.py
 test/test_chorus_pro_destination.py
 test/test_chorus_pro_result.py
 test/test_client_activate_response.py
@@ -903,6 +913,7 @@ test/test_electronic_address.py
 test/test_electronic_address_input.py
 test/test_electronic_address_output.py
 test/test_electronic_signature_api.py
+test/test_encaisse_amount_by_rate.py
 test/test_encaisseamount.py
 test/test_encaisseamount1.py
 test/test_encaissee_request.py
@@ -918,6 +929,9 @@ test/test_factur_xpdfxml_verification_api.py
 test/test_facture_electronique_models_invoice_type_code.py
 test/test_facture_electronique_rest_api_schemas_cdar_validation_error_response.py
 test/test_facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials.py
+test/test_facture_electronique_rest_api_schemas_ereporting_invoice_type_code.py
+test/test_facture_electronique_rest_api_schemas_processing_chorus_pro_credentials.py
+test/test_facture_electronique_rest_api_schemas_validation_validation_error_response.py
 test/test_field_status.py
 test/test_file_info.py
 test/test_files_info.py
@@ -1055,6 +1069,8 @@ test/test_submit_vat_amount.py
 test/test_super_pdp_connect_url_response.py
 test/test_super_pdp_disconnect_response.py
 test/test_super_pdp_status_response.py
+test/test_super_pdp_vat_regime_response.py
+test/test_super_pdp_vat_regime_update_request.py
 test/test_supplementary_attachment.py
 test/test_supplier.py
 test/test_task_error_result.py
@@ -1084,7 +1100,6 @@ test/test_validate_e_reporting_response.py
 test/test_validation_api.py
 test/test_validation_error.py
 test/test_validation_error_detail.py
-test/test_validation_error_response.py
 test/test_validation_info.py
 test/test_validation_success_response.py
 test/test_validation_success_task_result.py

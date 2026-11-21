@@ -186,20 +186,29 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_lifecycle_api_v1_cdar_lifecycle_get**
-> LifecycleResponse get_lifecycle_api_v1_cdar_lifecycle_get(days=days, invoice_id=invoice_id, flow_direction=flow_direction, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret, organization_id=organization_id)
+> LifecycleResponse get_lifecycle_api_v1_cdar_lifecycle_get(days=days, date_from=date_from, date_to=date_to, invoice_id=invoice_id, flow_direction=flow_direction, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret, organization_id=organization_id)
 
 [Simplified] Get lifecycle events for invoices
 
 Returns lifecycle events (CDAR) grouped by invoice reference.
 
 **How it works (AFNOR XP Z12-013 compliant):**
-1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range
+1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range,
+   following the cursor pagination (all pages are read)
 2. Downloads and parses each CDAR XML to extract the invoice reference
 3. Groups events by invoice, sorted chronologically
 
 **Parameters:**
-- `days`: Number of days to look back (default: 7)
-- `invoiceId`: Optional filter on a specific invoice reference
+- `days`: Number of days to look back (default: 7). Ignored when `dateFrom` is set.
+- `dateFrom` / `dateTo`: Explicit time window (ISO 8601, UTC if no offset).
+  `dateTo` defaults to now.
+- `invoiceId`: Optional filter on a specific invoice reference. The filter is applied
+  after reading the window: prefer one call per synchronisation over one call per invoice.
+
+**Limits:** at most 1000 status flows are read per call. When the limit is reached,
+`truncated` is `true` and the response is incomplete: split the window with
+`dateFrom` / `dateTo`. For incremental synchronisation, request the period since
+your last successful sync (plus a small margin).
 - `flowDirection`: `All` (default), `In` (statuses received from the counterparty)
   or `Out` (statuses issued by you or your PA, e.g. 202/203)
 
@@ -236,6 +245,8 @@ with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.Flux6InvoiceLifecycleCDARApi(api_client)
     days = 7 # int | Number of days to look back (optional) (default to 7)
+    date_from = '2013-10-20T19:20:30+01:00' # datetime | Window start (ISO 8601, UTC if no offset). Overrides days. (optional)
+    date_to = '2013-10-20T19:20:30+01:00' # datetime | Window end (ISO 8601, UTC if no offset). Default: now (optional)
     invoice_id = 'invoice_id_example' # str | Filter by invoice reference (optional)
     flow_direction = All # str | All (default), In (received statuses) or Out (issued statuses) (optional) (default to All)
     pdp_flow_service_url = 'pdp_flow_service_url_example' # str | PDP Flow Service URL (optional)
@@ -246,7 +257,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
     try:
         # [Simplified] Get lifecycle events for invoices
-        api_response = api_instance.get_lifecycle_api_v1_cdar_lifecycle_get(days=days, invoice_id=invoice_id, flow_direction=flow_direction, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret, organization_id=organization_id)
+        api_response = api_instance.get_lifecycle_api_v1_cdar_lifecycle_get(days=days, date_from=date_from, date_to=date_to, invoice_id=invoice_id, flow_direction=flow_direction, pdp_flow_service_url=pdp_flow_service_url, pdp_token_url=pdp_token_url, pdp_client_id=pdp_client_id, pdp_client_secret=pdp_client_secret, organization_id=organization_id)
         print("The response of Flux6InvoiceLifecycleCDARApi->get_lifecycle_api_v1_cdar_lifecycle_get:\n")
         pprint(api_response)
     except Exception as e:
@@ -261,6 +272,8 @@ with factpulse.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **days** | **int**| Number of days to look back | [optional] [default to 7]
+ **date_from** | **datetime**| Window start (ISO 8601, UTC if no offset). Overrides days. | [optional] 
+ **date_to** | **datetime**| Window end (ISO 8601, UTC if no offset). Default: now | [optional] 
  **invoice_id** | **str**| Filter by invoice reference | [optional] 
  **flow_direction** | **str**| All (default), In (received statuses) or Out (issued statuses) | [optional] [default to All]
  **pdp_flow_service_url** | **str**| PDP Flow Service URL | [optional] 
@@ -977,7 +990,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.Flux6InvoiceLifecycleCDARApi(api_client)
-    xml_file = None # bytes | CDAR XML file to validate
+    xml_file = 'xml_file_example' # str | CDAR XML file to validate
 
     try:
         # Validate CDAR XML against XSD and Schematron BR-FR-CDV
@@ -995,7 +1008,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xml_file** | **bytes**| CDAR XML file to validate | 
+ **xml_file** | **str**| CDAR XML file to validate | 
 
 ### Return type
 

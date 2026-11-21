@@ -40,7 +40,9 @@ class TestValidationError(unittest.TestCase):
                     null
                     ],
                 msg = '',
-                type = ''
+                type = '',
+                input = None,
+                ctx = factpulse.models.context.Context()
             )
         else:
             return ValidationError(

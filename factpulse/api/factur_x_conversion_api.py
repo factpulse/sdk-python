@@ -16,8 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictBytes, StrictStr
-from typing import Any, Dict, Optional, Tuple, Union
+from pydantic import Field, StrictStr
+from typing import Any, Dict, Optional
 from typing_extensions import Annotated
 from factpulse.models.conversion_task_status import ConversionTaskStatus
 from factpulse.models.convert_resume_request import ConvertResumeRequest
@@ -44,7 +44,7 @@ class FacturXConversionApi:
     @validate_call
     def convert_document_async_api_v1_convert_async_post(
         self,
-        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Document to convert (PDF, DOCX, XLSX, JPG, PNG)")],
+        file: Annotated[StrictStr, Field(description="Document to convert (PDF, DOCX, XLSX, JPG, PNG)")],
         output: Annotated[Optional[StrictStr], Field(description="Output format: pdf, xml, both")] = None,
         callback_url: Optional[StrictStr] = None,
         webhook_mode: Annotated[Optional[StrictStr], Field(description="Content delivery mode: 'inline' (base64 in webhook) or 'download_url' (temporary URL, 1h TTL)")] = None,
@@ -66,7 +66,7 @@ class FacturXConversionApi:
         Launch an asynchronous conversion via Celery.  ## Workflow  1. **Upload**: Document is sent as multipart/form-data 2. **Celery Task**: Task is queued for processing 3. **Callback**: Webhook notification on completion  ## Possible responses  - **202**: Task accepted, processing - **400**: Invalid file
 
         :param file: Document to convert (PDF, DOCX, XLSX, JPG, PNG) (required)
-        :type file: bytes
+        :type file: str
         :param output: Output format: pdf, xml, both
         :type output: str
         :param callback_url:
@@ -127,7 +127,7 @@ class FacturXConversionApi:
     @validate_call
     def convert_document_async_api_v1_convert_async_post_with_http_info(
         self,
-        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Document to convert (PDF, DOCX, XLSX, JPG, PNG)")],
+        file: Annotated[StrictStr, Field(description="Document to convert (PDF, DOCX, XLSX, JPG, PNG)")],
         output: Annotated[Optional[StrictStr], Field(description="Output format: pdf, xml, both")] = None,
         callback_url: Optional[StrictStr] = None,
         webhook_mode: Annotated[Optional[StrictStr], Field(description="Content delivery mode: 'inline' (base64 in webhook) or 'download_url' (temporary URL, 1h TTL)")] = None,
@@ -149,7 +149,7 @@ class FacturXConversionApi:
         Launch an asynchronous conversion via Celery.  ## Workflow  1. **Upload**: Document is sent as multipart/form-data 2. **Celery Task**: Task is queued for processing 3. **Callback**: Webhook notification on completion  ## Possible responses  - **202**: Task accepted, processing - **400**: Invalid file
 
         :param file: Document to convert (PDF, DOCX, XLSX, JPG, PNG) (required)
-        :type file: bytes
+        :type file: str
         :param output: Output format: pdf, xml, both
         :type output: str
         :param callback_url:
@@ -210,7 +210,7 @@ class FacturXConversionApi:
     @validate_call
     def convert_document_async_api_v1_convert_async_post_without_preload_content(
         self,
-        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Document to convert (PDF, DOCX, XLSX, JPG, PNG)")],
+        file: Annotated[StrictStr, Field(description="Document to convert (PDF, DOCX, XLSX, JPG, PNG)")],
         output: Annotated[Optional[StrictStr], Field(description="Output format: pdf, xml, both")] = None,
         callback_url: Optional[StrictStr] = None,
         webhook_mode: Annotated[Optional[StrictStr], Field(description="Content delivery mode: 'inline' (base64 in webhook) or 'download_url' (temporary URL, 1h TTL)")] = None,
@@ -232,7 +232,7 @@ class FacturXConversionApi:
         Launch an asynchronous conversion via Celery.  ## Workflow  1. **Upload**: Document is sent as multipart/form-data 2. **Celery Task**: Task is queued for processing 3. **Callback**: Webhook notification on completion  ## Possible responses  - **202**: Task accepted, processing - **400**: Invalid file
 
         :param file: Document to convert (PDF, DOCX, XLSX, JPG, PNG) (required)
-        :type file: bytes
+        :type file: str
         :param output: Output format: pdf, xml, both
         :type output: str
         :param callback_url:
@@ -317,7 +317,7 @@ class FacturXConversionApi:
         # process the header parameters
         # process the form parameters
         if file is not None:
-            _files['file'] = file
+            _form_params.append(('file', file))
         if output is not None:
             _form_params.append(('output', output))
         if callback_url is not None:

@@ -25,6 +25,8 @@ Name | Type | Description | Notes
 **action_code** | **str** |  | [optional] 
 **encaisse_amount** | [**Encaisseamount**](Encaisseamount.md) |  | [optional] 
 **encaisse_vat_rate** | **float** | Taux de TVA du montant encaissé en % (MDT-224, requis par BR-FR-CDV-14 pour le statut 212 ; défaut 20) | [optional] [default to 20]
+**encaisse_amounts_by_rate** | [**List[EncaisseAmountByRate]**](EncaisseAmountByRate.md) |  | [optional] 
+**comment** | **str** |  | [optional] 
 
 ## Example
 

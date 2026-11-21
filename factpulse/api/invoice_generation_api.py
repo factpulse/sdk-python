@@ -16,8 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictBool, StrictBytes, StrictStr
-from typing import Any, Optional, Tuple, Union
+from pydantic import Field, StrictBool, StrictStr
+from typing import Any, Optional
 from typing_extensions import Annotated
 from factpulse.models.submit_complete_invoice_request import SubmitCompleteInvoiceRequest
 from factpulse.models.submit_complete_invoice_response import SubmitCompleteInvoiceResponse
@@ -48,7 +48,7 @@ class InvoiceGenerationApi:
         profile: Annotated[Optional[Any], Field(description="Factur-X/CII profile: MINIMUM, BASIC, EN16931 or EXTENDED. Ignored when output_format='ubl' (always EN16931).")] = None,
         output_format: Annotated[Optional[Any], Field(description="Output format: 'xml' or 'cii' (CII/Factur-X XML), 'ubl' (UBL 2.1 XML), 'pdf' (Factur-X PDF/A-3).")] = None,
         auto_enrich: Annotated[Optional[StrictBool], Field(description="🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only)")] = None,
-        source_pdf: Optional[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]] = None,
+        source_pdf: Optional[StrictStr] = None,
         callback_url: Optional[StrictStr] = None,
         webhook_mode: Annotated[Optional[StrictStr], Field(description="Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)")] = None,
         skip_br_fr: Optional[StrictBool] = None,
@@ -78,7 +78,7 @@ class InvoiceGenerationApi:
         :param auto_enrich: 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only)
         :type auto_enrich: bool
         :param source_pdf:
-        :type source_pdf: bytes
+        :type source_pdf: str
         :param callback_url:
         :type callback_url: str
         :param webhook_mode: Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)
@@ -146,7 +146,7 @@ class InvoiceGenerationApi:
         profile: Annotated[Optional[Any], Field(description="Factur-X/CII profile: MINIMUM, BASIC, EN16931 or EXTENDED. Ignored when output_format='ubl' (always EN16931).")] = None,
         output_format: Annotated[Optional[Any], Field(description="Output format: 'xml' or 'cii' (CII/Factur-X XML), 'ubl' (UBL 2.1 XML), 'pdf' (Factur-X PDF/A-3).")] = None,
         auto_enrich: Annotated[Optional[StrictBool], Field(description="🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only)")] = None,
-        source_pdf: Optional[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]] = None,
+        source_pdf: Optional[StrictStr] = None,
         callback_url: Optional[StrictStr] = None,
         webhook_mode: Annotated[Optional[StrictStr], Field(description="Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)")] = None,
         skip_br_fr: Optional[StrictBool] = None,
@@ -176,7 +176,7 @@ class InvoiceGenerationApi:
         :param auto_enrich: 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only)
         :type auto_enrich: bool
         :param source_pdf:
-        :type source_pdf: bytes
+        :type source_pdf: str
         :param callback_url:
         :type callback_url: str
         :param webhook_mode: Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)
@@ -244,7 +244,7 @@ class InvoiceGenerationApi:
         profile: Annotated[Optional[Any], Field(description="Factur-X/CII profile: MINIMUM, BASIC, EN16931 or EXTENDED. Ignored when output_format='ubl' (always EN16931).")] = None,
         output_format: Annotated[Optional[Any], Field(description="Output format: 'xml' or 'cii' (CII/Factur-X XML), 'ubl' (UBL 2.1 XML), 'pdf' (Factur-X PDF/A-3).")] = None,
         auto_enrich: Annotated[Optional[StrictBool], Field(description="🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only)")] = None,
-        source_pdf: Optional[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]]] = None,
+        source_pdf: Optional[StrictStr] = None,
         callback_url: Optional[StrictStr] = None,
         webhook_mode: Annotated[Optional[StrictStr], Field(description="Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)")] = None,
         skip_br_fr: Optional[StrictBool] = None,
@@ -274,7 +274,7 @@ class InvoiceGenerationApi:
         :param auto_enrich: 🆕 Enable auto-enrichment from SIRET/SIREN (simplified format only)
         :type auto_enrich: bool
         :param source_pdf:
-        :type source_pdf: bytes
+        :type source_pdf: str
         :param callback_url:
         :type callback_url: str
         :param webhook_mode: Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL)
@@ -374,7 +374,7 @@ class InvoiceGenerationApi:
         if auto_enrich is not None:
             _form_params.append(('auto_enrich', auto_enrich))
         if source_pdf is not None:
-            _files['source_pdf'] = source_pdf
+            _form_params.append(('source_pdf', source_pdf))
         if callback_url is not None:
             _form_params.append(('callback_url', callback_url))
         if webhook_mode is not None:

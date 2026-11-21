@@ -90,7 +90,7 @@ Examples:
 
 1. **XSLT loading**: Schematron file converted to XSLT (Saxon-HE)
 2. **Transformation**: Rules applied to XML
-3. **Results analysis**: Extraction of errors (`failed-assert`) and warnings (`successful-report`)
+3. **Results analysis**: Extraction of `failed-assert` and `successful-report`; an unflagged rule is fatal, flagged `warning`/`info` rules are non-blocking
 4. **Report**: Structured list of non-conformities
 
 ## Responses
@@ -163,7 +163,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ValidationApi(api_client)
-    xml_file = None # bytes | CII (Factur-X) or UBL XML file to validate (.xml format). Format is auto-detected.
+    xml_file = 'xml_file_example' # str | CII (Factur-X) or UBL XML file to validate (.xml format). Format is auto-detected.
     profile = factpulse.APIProfile() # APIProfile | Validation profile (MINIMUM, BASIC, EN16931, EXTENDED). Used for CII only; ignored for UBL (always EN16931). (optional)
     skip_br_fr = True # bool |  (optional)
 
@@ -183,7 +183,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xml_file** | **bytes**| CII (Factur-X) or UBL XML file to validate (.xml format). Format is auto-detected. | 
+ **xml_file** | **str**| CII (Factur-X) or UBL XML file to validate (.xml format). Format is auto-detected. | 
  **profile** | [**APIProfile**](APIProfile.md)| Validation profile (MINIMUM, BASIC, EN16931, EXTENDED). Used for CII only; ignored for UBL (always EN16931). | [optional] 
  **skip_br_fr** | **bool**|  | [optional] 
 

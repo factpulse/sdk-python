@@ -13,44 +13,94 @@
 """  # noqa: E501
 
 
-import unittest
+from __future__ import annotations
+import pprint
+import re  # noqa: F401
+import json
 
-from factpulse.models.chorus_pro_credentials import ChorusProCredentials
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List, Optional
+from typing import Optional, Set
+from typing_extensions import Self
+from pydantic_core import to_jsonable_python
 
-class TestChorusProCredentials(unittest.TestCase):
-    """ChorusProCredentials unit test stubs"""
+class SuperPDPVatRegimeResponse(BaseModel):
+    """
+    VAT regime of the client's company at SuperPDP.
+    """ # noqa: E501
+    vat_regime: Optional[StrictStr] = Field(default=None, alias="vatRegime")
+    has_vat_on_debits: Optional[StrictBool] = Field(default=False, description="Whether VAT on debits is opted for", alias="hasVatOnDebits")
+    __properties: ClassVar[List[str]] = ["vatRegime", "hasVatOnDebits"]
 
-    def setUp(self):
-        pass
+    @field_validator('vat_regime')
+    def vat_regime_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
 
-    def tearDown(self):
-        pass
+        if value not in set(['monthly', 'quarterly', 'simplified', 'vat_exemption']):
+            raise ValueError("must be one of enum values ('monthly', 'quarterly', 'simplified', 'vat_exemption')")
+        return value
 
-    def make_instance(self, include_optional) -> ChorusProCredentials:
-        """Test ChorusProCredentials
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
-        # uncomment below to create an instance of `ChorusProCredentials`
+    model_config = ConfigDict(
+        validate_by_name=True,
+        validate_by_alias=True,
+        validate_assignment=True,
+        protected_namespaces=(),
+    )
+
+
+    def to_str(self) -> str:
+        """Returns the string representation of the model using alias"""
+        return pprint.pformat(self.model_dump(by_alias=True))
+
+    def to_json(self) -> str:
+        """Returns the JSON representation of the model using alias"""
+        return json.dumps(to_jsonable_python(self.to_dict()))
+
+    @classmethod
+    def from_json(cls, json_str: str) -> Optional[Self]:
+        """Create an instance of SuperPDPVatRegimeResponse from a JSON string"""
+        return cls.from_dict(json.loads(json_str))
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Return the dictionary representation of the model using alias.
+
+        This has the following differences from calling pydantic's
+        `self.model_dump(by_alias=True)`:
+
+        * `None` is only added to the output dict for nullable fields that
+          were set at model initialization. Other fields with value `None`
+          are ignored.
         """
-        model = ChorusProCredentials()
-        if include_optional:
-            return ChorusProCredentials(
-                piste_client_id = '',
-                piste_client_secret = '',
-                chorus_login = '',
-                chorus_password = '',
-                sandbox_mode = True
-            )
-        else:
-            return ChorusProCredentials(
+        excluded_fields: Set[str] = set([
+        ])
+
+        _dict = self.model_dump(
+            by_alias=True,
+            exclude=excluded_fields,
+            exclude_none=True,
         )
-        """
+        # set to None if vat_regime (nullable) is None
+        # and model_fields_set contains the field
+        if self.vat_regime is None and "vat_regime" in self.model_fields_set:
+            _dict['vatRegime'] = None
 
-    def testChorusProCredentials(self):
-        """Test ChorusProCredentials"""
-        # inst_req_only = self.make_instance(include_optional=False)
-        # inst_req_and_optional = self.make_instance(include_optional=True)
+        return _dict
 
-if __name__ == '__main__':
-    unittest.main()
+    @classmethod
+    def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
+        """Create an instance of SuperPDPVatRegimeResponse from a dict"""
+        if obj is None:
+            return None
+
+        if not isinstance(obj, dict):
+            return cls.model_validate(obj)
+
+        _obj = cls.model_validate({
+            "vatRegime": obj.get("vatRegime"),
+            "hasVatOnDebits": obj.get("hasVatOnDebits") if obj.get("hasVatOnDebits") is not None else False
+        })
+        return _obj
+
+

@@ -283,7 +283,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.FacturXPDFXMLVerificationApi(api_client)
-    pdf_file = None # bytes | Factur-X PDF file to verify
+    pdf_file = 'pdf_file_example' # str | Factur-X PDF file to verify
     force_ocr = False # bool | Force OCR usage even if PDF contains native text (optional) (default to False)
     callback_url = 'callback_url_example' # str |  (optional)
     webhook_mode = 'inline' # str | Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL) (optional) (default to 'inline')
@@ -304,7 +304,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pdf_file** | **bytes**| Factur-X PDF file to verify | 
+ **pdf_file** | **str**| Factur-X PDF file to verify | 
  **force_ocr** | **bool**| Force OCR usage even if PDF contains native text | [optional] [default to False]
  **callback_url** | **str**|  | [optional] 
  **webhook_mode** | **str**| Webhook content delivery: &#39;inline&#39; (base64 in payload) or &#39;download_url&#39; (temporary URL, 1h TTL) | [optional] [default to &#39;inline&#39;]
@@ -396,7 +396,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.FacturXPDFXMLVerificationApi(api_client)
-    pdf_file = None # bytes | Factur-X PDF file to verify
+    pdf_file = 'pdf_file_example' # str | Factur-X PDF file to verify
 
     try:
         # Verify PDF/XML Factur-X compliance (synchronous)
@@ -414,7 +414,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pdf_file** | **bytes**| Factur-X PDF file to verify | 
+ **pdf_file** | **str**| Factur-X PDF file to verify | 
 
 ### Return type
 

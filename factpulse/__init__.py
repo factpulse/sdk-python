@@ -15,7 +15,7 @@
 """  # noqa: E501
 
 
-__version__ = "4.4.0"
+__version__ = "4.5.0"
 
 # Define package exports
 __all__ = [
@@ -153,6 +153,7 @@ __all__ = [
     "Amount",
     "Amount1",
     "Amount2",
+    "Amount3",
     "AmountDue",
     "Amounteur",
     "AsyncTaskStatus",
@@ -162,7 +163,6 @@ __all__ = [
     "CeleryStatus",
     "CertificateInfoResponse",
     "ChargeTotalAmount",
-    "ChorusProCredentials",
     "ChorusProDestination",
     "ChorusProResult",
     "ClientActivateResponse",
@@ -197,6 +197,7 @@ __all__ = [
     "ElectronicAddress",
     "ElectronicAddressInput",
     "ElectronicAddressOutput",
+    "EncaisseAmountByRate",
     "Encaisseamount",
     "Encaisseamount1",
     "EncaisseeRequest",
@@ -209,6 +210,9 @@ __all__ = [
     "FactureElectroniqueModelsInvoiceTypeCode",
     "FactureElectroniqueRestApiSchemasCdarValidationErrorResponse",
     "FactureElectroniqueRestApiSchemasChorusProChorusProCredentials",
+    "FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode",
+    "FactureElectroniqueRestApiSchemasProcessingChorusProCredentials",
+    "FactureElectroniqueRestApiSchemasValidationValidationErrorResponse",
     "FieldStatus",
     "FileInfo",
     "FilesInfo",
@@ -340,6 +344,8 @@ __all__ = [
     "SuperPDPConnectURLResponse",
     "SuperPDPDisconnectResponse",
     "SuperPDPStatusResponse",
+    "SuperPDPVatRegimeResponse",
+    "SuperPDPVatRegimeUpdateRequest",
     "SupplementaryAttachment",
     "Supplier",
     "TaskErrorResult",
@@ -375,7 +381,6 @@ __all__ = [
     "ValidateEReportingResponse",
     "ValidationError",
     "ValidationErrorDetail",
-    "ValidationErrorResponse",
     "ValidationInfo",
     "ValidationSuccessResponse",
     "ValidationSuccessTaskResult",
@@ -531,6 +536,7 @@ from factpulse.models.allowance_total_amount import AllowanceTotalAmount as Allo
 from factpulse.models.amount import Amount as Amount
 from factpulse.models.amount1 import Amount1 as Amount1
 from factpulse.models.amount2 import Amount2 as Amount2
+from factpulse.models.amount3 import Amount3 as Amount3
 from factpulse.models.amount_due import AmountDue as AmountDue
 from factpulse.models.amounteur import Amounteur as Amounteur
 from factpulse.models.async_task_status import AsyncTaskStatus as AsyncTaskStatus
@@ -540,7 +546,6 @@ from factpulse.models.buyercountry import Buyercountry as Buyercountry
 from factpulse.models.celery_status import CeleryStatus as CeleryStatus
 from factpulse.models.certificate_info_response import CertificateInfoResponse as CertificateInfoResponse
 from factpulse.models.charge_total_amount import ChargeTotalAmount as ChargeTotalAmount
-from factpulse.models.chorus_pro_credentials import ChorusProCredentials as ChorusProCredentials
 from factpulse.models.chorus_pro_destination import ChorusProDestination as ChorusProDestination
 from factpulse.models.chorus_pro_result import ChorusProResult as ChorusProResult
 from factpulse.models.client_activate_response import ClientActivateResponse as ClientActivateResponse
@@ -575,6 +580,7 @@ from factpulse.models.e_reporting_validation_error import EReportingValidationEr
 from factpulse.models.electronic_address import ElectronicAddress as ElectronicAddress
 from factpulse.models.electronic_address_input import ElectronicAddressInput as ElectronicAddressInput
 from factpulse.models.electronic_address_output import ElectronicAddressOutput as ElectronicAddressOutput
+from factpulse.models.encaisse_amount_by_rate import EncaisseAmountByRate as EncaisseAmountByRate
 from factpulse.models.encaisseamount import Encaisseamount as Encaisseamount
 from factpulse.models.encaisseamount1 import Encaisseamount1 as Encaisseamount1
 from factpulse.models.encaissee_request import EncaisseeRequest as EncaisseeRequest
@@ -587,6 +593,9 @@ from factpulse.models.factur_xpdf_info import FacturXPDFInfo as FacturXPDFInfo
 from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode as FactureElectroniqueModelsInvoiceTypeCode
 from factpulse.models.facture_electronique_rest_api_schemas_cdar_validation_error_response import FactureElectroniqueRestApiSchemasCdarValidationErrorResponse as FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
 from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials as FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode as FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
+from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials as FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
+from factpulse.models.facture_electronique_rest_api_schemas_validation_validation_error_response import FactureElectroniqueRestApiSchemasValidationValidationErrorResponse as FactureElectroniqueRestApiSchemasValidationValidationErrorResponse
 from factpulse.models.field_status import FieldStatus as FieldStatus
 from factpulse.models.file_info import FileInfo as FileInfo
 from factpulse.models.files_info import FilesInfo as FilesInfo
@@ -718,6 +727,8 @@ from factpulse.models.submit_vat_amount import SubmitVatAmount as SubmitVatAmoun
 from factpulse.models.super_pdp_connect_url_response import SuperPDPConnectURLResponse as SuperPDPConnectURLResponse
 from factpulse.models.super_pdp_disconnect_response import SuperPDPDisconnectResponse as SuperPDPDisconnectResponse
 from factpulse.models.super_pdp_status_response import SuperPDPStatusResponse as SuperPDPStatusResponse
+from factpulse.models.super_pdp_vat_regime_response import SuperPDPVatRegimeResponse as SuperPDPVatRegimeResponse
+from factpulse.models.super_pdp_vat_regime_update_request import SuperPDPVatRegimeUpdateRequest as SuperPDPVatRegimeUpdateRequest
 from factpulse.models.supplementary_attachment import SupplementaryAttachment as SupplementaryAttachment
 from factpulse.models.supplier import Supplier as Supplier
 from factpulse.models.task_error_result import TaskErrorResult as TaskErrorResult
@@ -753,7 +764,6 @@ from factpulse.models.validate_e_reporting_request import ValidateEReportingRequ
 from factpulse.models.validate_e_reporting_response import ValidateEReportingResponse as ValidateEReportingResponse
 from factpulse.models.validation_error import ValidationError as ValidationError
 from factpulse.models.validation_error_detail import ValidationErrorDetail as ValidationErrorDetail
-from factpulse.models.validation_error_response import ValidationErrorResponse as ValidationErrorResponse
 from factpulse.models.validation_info import ValidationInfo as ValidationInfo
 from factpulse.models.validation_success_response import ValidationSuccessResponse as ValidationSuccessResponse
 from factpulse.models.validation_success_task_result import ValidationSuccessTaskResult as ValidationSuccessTaskResult

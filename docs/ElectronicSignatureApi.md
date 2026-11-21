@@ -214,7 +214,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ElectronicSignatureApi(api_client)
-    pdf_file = None # bytes | PDF file to sign (will be processed and returned signed in base64)
+    pdf_file = 'pdf_file_example' # str | PDF file to sign (will be processed and returned signed in base64)
     reason = 'reason_example' # str |  (optional)
     location = 'location_example' # str |  (optional)
     contact = 'contact_example' # str |  (optional)
@@ -238,7 +238,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pdf_file** | **bytes**| PDF file to sign (will be processed and returned signed in base64) | 
+ **pdf_file** | **str**| PDF file to sign (will be processed and returned signed in base64) | 
  **reason** | **str**|  | [optional] 
  **location** | **str**|  | [optional] 
  **contact** | **str**|  | [optional] 
@@ -329,7 +329,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ElectronicSignatureApi(api_client)
-    pdf_file = None # bytes | PDF file to sign (processed asynchronously)
+    pdf_file = 'pdf_file_example' # str | PDF file to sign (processed asynchronously)
     callback_url = 'callback_url_example' # str |  (optional)
     webhook_mode = 'inline' # str | Webhook content delivery: 'inline' (base64 in payload) or 'download_url' (temporary URL, 1h TTL) (optional) (default to 'inline')
     reason = 'reason_example' # str |  (optional)
@@ -355,7 +355,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pdf_file** | **bytes**| PDF file to sign (processed asynchronously) | 
+ **pdf_file** | **str**| PDF file to sign (processed asynchronously) | 
  **callback_url** | **str**|  | [optional] 
  **webhook_mode** | **str**| Webhook content delivery: &#39;inline&#39; (base64 in payload) or &#39;download_url&#39; (temporary URL, 1h TTL) | [optional] [default to &#39;inline&#39;]
  **reason** | **str**|  | [optional] 
@@ -446,7 +446,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.ElectronicSignatureApi(api_client)
-    pdf_file = None # bytes | PDF file to validate (will be analyzed to detect and validate signatures)
+    pdf_file = 'pdf_file_example' # str | PDF file to validate (will be analyzed to detect and validate signatures)
 
     try:
         # Validate electronic signatures of a PDF
@@ -464,7 +464,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pdf_file** | **bytes**| PDF file to validate (will be analyzed to detect and validate signatures) | 
+ **pdf_file** | **str**| PDF file to validate (will be analyzed to detect and validate signatures) | 
 
 ### Return type
 

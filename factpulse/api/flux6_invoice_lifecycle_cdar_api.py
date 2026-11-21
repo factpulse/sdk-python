@@ -16,8 +16,9 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictBytes, StrictStr, field_validator
-from typing import Any, Dict, Optional, Tuple, Union
+from datetime import datetime
+from pydantic import Field, StrictStr, field_validator
+from typing import Any, Dict, Optional
 from typing_extensions import Annotated
 from factpulse.models.action_codes_response import ActionCodesResponse
 from factpulse.models.create_cdar_request import CreateCDARRequest
@@ -597,6 +598,8 @@ class Flux6InvoiceLifecycleCDARApi:
     def get_lifecycle_api_v1_cdar_lifecycle_get(
         self,
         days: Annotated[Optional[Annotated[int, Field(le=365, strict=True, ge=1)]], Field(description="Number of days to look back")] = None,
+        date_from: Annotated[Optional[datetime], Field(description="Window start (ISO 8601, UTC if no offset). Overrides days.")] = None,
+        date_to: Annotated[Optional[datetime], Field(description="Window end (ISO 8601, UTC if no offset). Default: now")] = None,
         invoice_id: Annotated[Optional[StrictStr], Field(description="Filter by invoice reference")] = None,
         flow_direction: Annotated[Optional[StrictStr], Field(description="All (default), In (received statuses) or Out (issued statuses)")] = None,
         pdp_flow_service_url: Annotated[Optional[StrictStr], Field(description="PDP Flow Service URL")] = None,
@@ -619,10 +622,14 @@ class Flux6InvoiceLifecycleCDARApi:
     ) -> LifecycleResponse:
         """[Simplified] Get lifecycle events for invoices
 
-        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7) - `invoiceId`: Optional filter on a specific invoice reference - `flowDirection`: `All` (default), `In` (statuses received from the counterparty)   or `Out` (statuses issued by you or your PA, e.g. 202/203)  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
+        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range,    following the cursor pagination (all pages are read) 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7). Ignored when `dateFrom` is set. - `dateFrom` / `dateTo`: Explicit time window (ISO 8601, UTC if no offset).   `dateTo` defaults to now. - `invoiceId`: Optional filter on a specific invoice reference. The filter is applied   after reading the window: prefer one call per synchronisation over one call per invoice.  **Limits:** at most 1000 status flows are read per call. When the limit is reached, `truncated` is `true` and the response is incomplete: split the window with `dateFrom` / `dateTo`. For incremental synchronisation, request the period since your last successful sync (plus a small margin). - `flowDirection`: `All` (default), `In` (statuses received from the counterparty)   or `Out` (statuses issued by you or your PA, e.g. 202/203)  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
 
         :param days: Number of days to look back
         :type days: int
+        :param date_from: Window start (ISO 8601, UTC if no offset). Overrides days.
+        :type date_from: datetime
+        :param date_to: Window end (ISO 8601, UTC if no offset). Default: now
+        :type date_to: datetime
         :param invoice_id: Filter by invoice reference
         :type invoice_id: str
         :param flow_direction: All (default), In (received statuses) or Out (issued statuses)
@@ -661,6 +668,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._get_lifecycle_api_v1_cdar_lifecycle_get_serialize(
             days=days,
+            date_from=date_from,
+            date_to=date_to,
             invoice_id=invoice_id,
             flow_direction=flow_direction,
             pdp_flow_service_url=pdp_flow_service_url,
@@ -696,6 +705,8 @@ class Flux6InvoiceLifecycleCDARApi:
     def get_lifecycle_api_v1_cdar_lifecycle_get_with_http_info(
         self,
         days: Annotated[Optional[Annotated[int, Field(le=365, strict=True, ge=1)]], Field(description="Number of days to look back")] = None,
+        date_from: Annotated[Optional[datetime], Field(description="Window start (ISO 8601, UTC if no offset). Overrides days.")] = None,
+        date_to: Annotated[Optional[datetime], Field(description="Window end (ISO 8601, UTC if no offset). Default: now")] = None,
         invoice_id: Annotated[Optional[StrictStr], Field(description="Filter by invoice reference")] = None,
         flow_direction: Annotated[Optional[StrictStr], Field(description="All (default), In (received statuses) or Out (issued statuses)")] = None,
         pdp_flow_service_url: Annotated[Optional[StrictStr], Field(description="PDP Flow Service URL")] = None,
@@ -718,10 +729,14 @@ class Flux6InvoiceLifecycleCDARApi:
     ) -> ApiResponse[LifecycleResponse]:
         """[Simplified] Get lifecycle events for invoices
 
-        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7) - `invoiceId`: Optional filter on a specific invoice reference - `flowDirection`: `All` (default), `In` (statuses received from the counterparty)   or `Out` (statuses issued by you or your PA, e.g. 202/203)  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
+        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range,    following the cursor pagination (all pages are read) 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7). Ignored when `dateFrom` is set. - `dateFrom` / `dateTo`: Explicit time window (ISO 8601, UTC if no offset).   `dateTo` defaults to now. - `invoiceId`: Optional filter on a specific invoice reference. The filter is applied   after reading the window: prefer one call per synchronisation over one call per invoice.  **Limits:** at most 1000 status flows are read per call. When the limit is reached, `truncated` is `true` and the response is incomplete: split the window with `dateFrom` / `dateTo`. For incremental synchronisation, request the period since your last successful sync (plus a small margin). - `flowDirection`: `All` (default), `In` (statuses received from the counterparty)   or `Out` (statuses issued by you or your PA, e.g. 202/203)  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
 
         :param days: Number of days to look back
         :type days: int
+        :param date_from: Window start (ISO 8601, UTC if no offset). Overrides days.
+        :type date_from: datetime
+        :param date_to: Window end (ISO 8601, UTC if no offset). Default: now
+        :type date_to: datetime
         :param invoice_id: Filter by invoice reference
         :type invoice_id: str
         :param flow_direction: All (default), In (received statuses) or Out (issued statuses)
@@ -760,6 +775,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._get_lifecycle_api_v1_cdar_lifecycle_get_serialize(
             days=days,
+            date_from=date_from,
+            date_to=date_to,
             invoice_id=invoice_id,
             flow_direction=flow_direction,
             pdp_flow_service_url=pdp_flow_service_url,
@@ -795,6 +812,8 @@ class Flux6InvoiceLifecycleCDARApi:
     def get_lifecycle_api_v1_cdar_lifecycle_get_without_preload_content(
         self,
         days: Annotated[Optional[Annotated[int, Field(le=365, strict=True, ge=1)]], Field(description="Number of days to look back")] = None,
+        date_from: Annotated[Optional[datetime], Field(description="Window start (ISO 8601, UTC if no offset). Overrides days.")] = None,
+        date_to: Annotated[Optional[datetime], Field(description="Window end (ISO 8601, UTC if no offset). Default: now")] = None,
         invoice_id: Annotated[Optional[StrictStr], Field(description="Filter by invoice reference")] = None,
         flow_direction: Annotated[Optional[StrictStr], Field(description="All (default), In (received statuses) or Out (issued statuses)")] = None,
         pdp_flow_service_url: Annotated[Optional[StrictStr], Field(description="PDP Flow Service URL")] = None,
@@ -817,10 +836,14 @@ class Flux6InvoiceLifecycleCDARApi:
     ) -> RESTResponseType:
         """[Simplified] Get lifecycle events for invoices
 
-        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7) - `invoiceId`: Optional filter on a specific invoice reference - `flowDirection`: `All` (default), `In` (statuses received from the counterparty)   or `Out` (statuses issued by you or your PA, e.g. 202/203)  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
+        Returns lifecycle events (CDAR) grouped by invoice reference.  **How it works (AFNOR XP Z12-013 compliant):** 1. Searches lifecycle flows on the PDP by flowType + flowDirection + date range,    following the cursor pagination (all pages are read) 2. Downloads and parses each CDAR XML to extract the invoice reference 3. Groups events by invoice, sorted chronologically  **Parameters:** - `days`: Number of days to look back (default: 7). Ignored when `dateFrom` is set. - `dateFrom` / `dateTo`: Explicit time window (ISO 8601, UTC if no offset).   `dateTo` defaults to now. - `invoiceId`: Optional filter on a specific invoice reference. The filter is applied   after reading the window: prefer one call per synchronisation over one call per invoice.  **Limits:** at most 1000 status flows are read per call. When the limit is reached, `truncated` is `true` and the response is incomplete: split the window with `dateFrom` / `dateTo`. For incremental synchronisation, request the period since your last successful sync (plus a small margin). - `flowDirection`: `All` (default), `In` (statuses received from the counterparty)   or `Out` (statuses issued by you or your PA, e.g. 202/203)  **Authentication:** JWT Bearer (recommended) or PDP credentials as query parameters.
 
         :param days: Number of days to look back
         :type days: int
+        :param date_from: Window start (ISO 8601, UTC if no offset). Overrides days.
+        :type date_from: datetime
+        :param date_to: Window end (ISO 8601, UTC if no offset). Default: now
+        :type date_to: datetime
         :param invoice_id: Filter by invoice reference
         :type invoice_id: str
         :param flow_direction: All (default), In (received statuses) or Out (issued statuses)
@@ -859,6 +882,8 @@ class Flux6InvoiceLifecycleCDARApi:
 
         _param = self._get_lifecycle_api_v1_cdar_lifecycle_get_serialize(
             days=days,
+            date_from=date_from,
+            date_to=date_to,
             invoice_id=invoice_id,
             flow_direction=flow_direction,
             pdp_flow_service_url=pdp_flow_service_url,
@@ -889,6 +914,8 @@ class Flux6InvoiceLifecycleCDARApi:
     def _get_lifecycle_api_v1_cdar_lifecycle_get_serialize(
         self,
         days,
+        date_from,
+        date_to,
         invoice_id,
         flow_direction,
         pdp_flow_service_url,
@@ -921,6 +948,32 @@ class Flux6InvoiceLifecycleCDARApi:
         if days is not None:
             
             _query_params.append(('days', days))
+            
+        if date_from is not None:
+            if isinstance(date_from, datetime):
+                _query_params.append(
+                    (
+                        'dateFrom',
+                        date_from.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('dateFrom', date_from))
+            
+        if date_to is not None:
+            if isinstance(date_to, datetime):
+                _query_params.append(
+                    (
+                        'dateTo',
+                        date_to.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('dateTo', date_to))
             
         if invoice_id is not None:
             
@@ -2987,7 +3040,7 @@ class Flux6InvoiceLifecycleCDARApi:
     @validate_call
     def validate_xml_cdar_api_v1_cdar_validate_xml_post(
         self,
-        xml_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="CDAR XML file to validate")],
+        xml_file: Annotated[StrictStr, Field(description="CDAR XML file to validate")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3006,7 +3059,7 @@ class Flux6InvoiceLifecycleCDARApi:
         Validates a CDAR XML file against:  1. **XSD schema**: UN/CEFACT D22B CrossDomainAcknowledgementAndResponse 2. **Schematron BR-FR-CDV**: French business rules for invoice lifecycle  Returns validation status and detailed error messages if invalid.  **Note:** Use `/validate` to validate structured data fields (JSON).
 
         :param xml_file: CDAR XML file to validate (required)
-        :type xml_file: bytes
+        :type xml_file: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3058,7 +3111,7 @@ class Flux6InvoiceLifecycleCDARApi:
     @validate_call
     def validate_xml_cdar_api_v1_cdar_validate_xml_post_with_http_info(
         self,
-        xml_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="CDAR XML file to validate")],
+        xml_file: Annotated[StrictStr, Field(description="CDAR XML file to validate")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3077,7 +3130,7 @@ class Flux6InvoiceLifecycleCDARApi:
         Validates a CDAR XML file against:  1. **XSD schema**: UN/CEFACT D22B CrossDomainAcknowledgementAndResponse 2. **Schematron BR-FR-CDV**: French business rules for invoice lifecycle  Returns validation status and detailed error messages if invalid.  **Note:** Use `/validate` to validate structured data fields (JSON).
 
         :param xml_file: CDAR XML file to validate (required)
-        :type xml_file: bytes
+        :type xml_file: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3129,7 +3182,7 @@ class Flux6InvoiceLifecycleCDARApi:
     @validate_call
     def validate_xml_cdar_api_v1_cdar_validate_xml_post_without_preload_content(
         self,
-        xml_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="CDAR XML file to validate")],
+        xml_file: Annotated[StrictStr, Field(description="CDAR XML file to validate")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3148,7 +3201,7 @@ class Flux6InvoiceLifecycleCDARApi:
         Validates a CDAR XML file against:  1. **XSD schema**: UN/CEFACT D22B CrossDomainAcknowledgementAndResponse 2. **Schematron BR-FR-CDV**: French business rules for invoice lifecycle  Returns validation status and detailed error messages if invalid.  **Note:** Use `/validate` to validate structured data fields (JSON).
 
         :param xml_file: CDAR XML file to validate (required)
-        :type xml_file: bytes
+        :type xml_file: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3221,7 +3274,7 @@ class Flux6InvoiceLifecycleCDARApi:
         # process the header parameters
         # process the form parameters
         if xml_file is not None:
-            _files['xml_file'] = xml_file
+            _form_params.append(('xml_file', xml_file))
         # process the body parameter
 
 

@@ -16,8 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictBool, StrictBytes, StrictStr
-from typing import Any, Dict, Optional, Tuple, Union
+from pydantic import Field, StrictBool, StrictStr
+from typing import Any, Dict, Optional
 from typing_extensions import Annotated
 from factpulse.models.create_aggregated_report_request import CreateAggregatedReportRequest
 from factpulse.models.create_e_reporting_request import CreateEReportingRequest
@@ -2038,7 +2038,7 @@ class Flux10EReportingApi:
     @validate_call
     def submit_xml_ereporting_api_v1_ereporting_submit_xml_post(
         self,
-        xml_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="E-reporting XML file")],
+        xml_file: Annotated[StrictStr, Field(description="E-reporting XML file")],
         organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         tracking_id: Optional[StrictStr] = None,
         skip_validation: Annotated[Optional[StrictBool], Field(description="Skip XSD validation")] = None,
@@ -2064,7 +2064,7 @@ class Flux10EReportingApi:
         Submit a pre-generated e-reporting XML file directly to a PA/PDP.  This endpoint is designed for clients who generate their own PPF-compliant XML and only need FactPulse for the PDP submission.  **Process:** 1. Validates the XML against PPF XSD schemas 2. Determines the appropriate AFNOR FlowType 3. Submits to the configured PDP/PA 4. Returns the flowId for tracking  **Authentication:** Same strategies as /submit endpoint (JWT or zero-storage credentials).
 
         :param xml_file: E-reporting XML file (required)
-        :type xml_file: bytes
+        :type xml_file: str
         :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
         :type organization_id: str
         :param tracking_id:
@@ -2137,7 +2137,7 @@ class Flux10EReportingApi:
     @validate_call
     def submit_xml_ereporting_api_v1_ereporting_submit_xml_post_with_http_info(
         self,
-        xml_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="E-reporting XML file")],
+        xml_file: Annotated[StrictStr, Field(description="E-reporting XML file")],
         organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         tracking_id: Optional[StrictStr] = None,
         skip_validation: Annotated[Optional[StrictBool], Field(description="Skip XSD validation")] = None,
@@ -2163,7 +2163,7 @@ class Flux10EReportingApi:
         Submit a pre-generated e-reporting XML file directly to a PA/PDP.  This endpoint is designed for clients who generate their own PPF-compliant XML and only need FactPulse for the PDP submission.  **Process:** 1. Validates the XML against PPF XSD schemas 2. Determines the appropriate AFNOR FlowType 3. Submits to the configured PDP/PA 4. Returns the flowId for tracking  **Authentication:** Same strategies as /submit endpoint (JWT or zero-storage credentials).
 
         :param xml_file: E-reporting XML file (required)
-        :type xml_file: bytes
+        :type xml_file: str
         :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
         :type organization_id: str
         :param tracking_id:
@@ -2236,7 +2236,7 @@ class Flux10EReportingApi:
     @validate_call
     def submit_xml_ereporting_api_v1_ereporting_submit_xml_post_without_preload_content(
         self,
-        xml_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="E-reporting XML file")],
+        xml_file: Annotated[StrictStr, Field(description="E-reporting XML file")],
         organization_id: Annotated[Optional[StrictStr], Field(description="Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.")] = None,
         tracking_id: Optional[StrictStr] = None,
         skip_validation: Annotated[Optional[StrictBool], Field(description="Skip XSD validation")] = None,
@@ -2262,7 +2262,7 @@ class Flux10EReportingApi:
         Submit a pre-generated e-reporting XML file directly to a PA/PDP.  This endpoint is designed for clients who generate their own PPF-compliant XML and only need FactPulse for the PDP submission.  **Process:** 1. Validates the XML against PPF XSD schemas 2. Determines the appropriate AFNOR FlowType 3. Submits to the configured PDP/PA 4. Returns the flowId for tracking  **Authentication:** Same strategies as /submit endpoint (JWT or zero-storage credentials).
 
         :param xml_file: E-reporting XML file (required)
-        :type xml_file: bytes
+        :type xml_file: str
         :param organization_id: Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space.
         :type organization_id: str
         :param tracking_id:
@@ -2365,7 +2365,7 @@ class Flux10EReportingApi:
             _header_params['Organization-Id'] = organization_id
         # process the form parameters
         if xml_file is not None:
-            _files['xml_file'] = xml_file
+            _form_params.append(('xml_file', xml_file))
         if tracking_id is not None:
             _form_params.append(('tracking_id', tracking_id))
         if skip_validation is not None:
@@ -3003,7 +3003,7 @@ class Flux10EReportingApi:
     @validate_call
     def validate_xml_ereporting_api_v1_ereporting_validate_xml_post(
         self,
-        xml_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="E-reporting XML file to validate")],
+        xml_file: Annotated[StrictStr, Field(description="E-reporting XML file to validate")],
         validate_coherence: Annotated[Optional[StrictBool], Field(description="Validate data coherence (REJ_COH)")] = None,
         validate_period: Annotated[Optional[StrictBool], Field(description="Validate period coherence (REJ_PER)")] = None,
         _request_timeout: Union[
@@ -3024,7 +3024,7 @@ class Flux10EReportingApi:
         Validates an e-reporting XML file against PPF specifications (Annexe 6 v1.9):  **Validation levels:** 1. **XSD (REJ_SEMAN)**: Structure, types, cardinality 2. **Semantic (REJ_SEMAN)**: Authorized values from codelists 3. **Coherence (REJ_COH)**: Data consistency (totals = sum of breakdowns) 4. **Period (REJ_PER)**: Transaction dates within declared period  **Validated codes:** - SchemeID (ISO 6523): 0002=SIREN, 0009=SIRET, 0224=RoutingCode, etc. - RoleCode (UNCL 3035): SE=Seller, BY=Buyer, WK=Working party - CategoryCode (TT-81): TLB1, TPS1, TNT1, TMA1 - TaxCategoryCode (UNTDID 5305): S, Z, E, AE, K, G, O - Currency (ISO 4217), Country (ISO 3166-1)  Returns structured validation errors with PPF rejection codes.
 
         :param xml_file: E-reporting XML file to validate (required)
-        :type xml_file: bytes
+        :type xml_file: str
         :param validate_coherence: Validate data coherence (REJ_COH)
         :type validate_coherence: bool
         :param validate_period: Validate period coherence (REJ_PER)
@@ -3082,7 +3082,7 @@ class Flux10EReportingApi:
     @validate_call
     def validate_xml_ereporting_api_v1_ereporting_validate_xml_post_with_http_info(
         self,
-        xml_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="E-reporting XML file to validate")],
+        xml_file: Annotated[StrictStr, Field(description="E-reporting XML file to validate")],
         validate_coherence: Annotated[Optional[StrictBool], Field(description="Validate data coherence (REJ_COH)")] = None,
         validate_period: Annotated[Optional[StrictBool], Field(description="Validate period coherence (REJ_PER)")] = None,
         _request_timeout: Union[
@@ -3103,7 +3103,7 @@ class Flux10EReportingApi:
         Validates an e-reporting XML file against PPF specifications (Annexe 6 v1.9):  **Validation levels:** 1. **XSD (REJ_SEMAN)**: Structure, types, cardinality 2. **Semantic (REJ_SEMAN)**: Authorized values from codelists 3. **Coherence (REJ_COH)**: Data consistency (totals = sum of breakdowns) 4. **Period (REJ_PER)**: Transaction dates within declared period  **Validated codes:** - SchemeID (ISO 6523): 0002=SIREN, 0009=SIRET, 0224=RoutingCode, etc. - RoleCode (UNCL 3035): SE=Seller, BY=Buyer, WK=Working party - CategoryCode (TT-81): TLB1, TPS1, TNT1, TMA1 - TaxCategoryCode (UNTDID 5305): S, Z, E, AE, K, G, O - Currency (ISO 4217), Country (ISO 3166-1)  Returns structured validation errors with PPF rejection codes.
 
         :param xml_file: E-reporting XML file to validate (required)
-        :type xml_file: bytes
+        :type xml_file: str
         :param validate_coherence: Validate data coherence (REJ_COH)
         :type validate_coherence: bool
         :param validate_period: Validate period coherence (REJ_PER)
@@ -3161,7 +3161,7 @@ class Flux10EReportingApi:
     @validate_call
     def validate_xml_ereporting_api_v1_ereporting_validate_xml_post_without_preload_content(
         self,
-        xml_file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="E-reporting XML file to validate")],
+        xml_file: Annotated[StrictStr, Field(description="E-reporting XML file to validate")],
         validate_coherence: Annotated[Optional[StrictBool], Field(description="Validate data coherence (REJ_COH)")] = None,
         validate_period: Annotated[Optional[StrictBool], Field(description="Validate period coherence (REJ_PER)")] = None,
         _request_timeout: Union[
@@ -3182,7 +3182,7 @@ class Flux10EReportingApi:
         Validates an e-reporting XML file against PPF specifications (Annexe 6 v1.9):  **Validation levels:** 1. **XSD (REJ_SEMAN)**: Structure, types, cardinality 2. **Semantic (REJ_SEMAN)**: Authorized values from codelists 3. **Coherence (REJ_COH)**: Data consistency (totals = sum of breakdowns) 4. **Period (REJ_PER)**: Transaction dates within declared period  **Validated codes:** - SchemeID (ISO 6523): 0002=SIREN, 0009=SIRET, 0224=RoutingCode, etc. - RoleCode (UNCL 3035): SE=Seller, BY=Buyer, WK=Working party - CategoryCode (TT-81): TLB1, TPS1, TNT1, TMA1 - TaxCategoryCode (UNTDID 5305): S, Z, E, AE, K, G, O - Currency (ISO 4217), Country (ISO 3166-1)  Returns structured validation errors with PPF rejection codes.
 
         :param xml_file: E-reporting XML file to validate (required)
-        :type xml_file: bytes
+        :type xml_file: str
         :param validate_coherence: Validate data coherence (REJ_COH)
         :type validate_coherence: bool
         :param validate_period: Validate period coherence (REJ_PER)
@@ -3271,7 +3271,7 @@ class Flux10EReportingApi:
         # process the header parameters
         # process the form parameters
         if xml_file is not None:
-            _files['xml_file'] = xml_file
+            _form_params.append(('xml_file', xml_file))
         # process the body parameter
 
 

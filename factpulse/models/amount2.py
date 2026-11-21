@@ -29,7 +29,7 @@ AMOUNT2_ANY_OF_SCHEMAS = ["float", "str"]
 
 class Amount2(BaseModel):
     """
-    Payment amount
+    Montant TTC encaissé en EUR, à un seul taux (vatRate). Négatif pour un décaissement (remboursement). Pour plusieurs taux, utiliser amountsByRate. Requis si amountsByRate est absent (BR-FR-CDV-14)
     """
 
     # data type: float
@@ -59,6 +59,9 @@ class Amount2(BaseModel):
 
     @field_validator('actual_instance')
     def actual_instance_must_validate_anyof(cls, v):
+        if v is None:
+            return v
+
         instance = Amount2.model_construct()
         error_messages = []
         # validate data type: float
@@ -87,6 +90,9 @@ class Amount2(BaseModel):
     def from_json(cls, json_str: str) -> Self:
         """Returns the object represented by the json string"""
         instance = cls.model_construct()
+        if json_str is None:
+            return instance
+
         error_messages = []
         # deserialize data into float
         try:

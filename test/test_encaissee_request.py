@@ -42,6 +42,12 @@ class TestEncaisseeRequest(unittest.TestCase):
                 invoice_buyer_electronic_address = '',
                 amount = None,
                 vat_rate = 1.337,
+                amounts_by_rate = [
+                    factpulse.models.encaisse_amount_by_rate.EncaisseAmountByRate(
+                        rate = 20, 
+                        amount = 720.00, )
+                    ],
+                comment = '',
                 currency = 'EUR',
                 sender_siren = '',
                 flow_type = 'CustomerInvoiceLC',
@@ -55,8 +61,6 @@ class TestEncaisseeRequest(unittest.TestCase):
                 invoice_id = '',
                 invoice_issue_date = datetime.datetime.strptime('1975-12-30', '%Y-%m-%d').date(),
                 invoice_buyer_siren = '',
-                invoice_buyer_electronic_address = '',
-                amount = None,
         )
         """
 

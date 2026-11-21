@@ -14,11 +14,13 @@ Method | HTTP request | Description
 [**get_pdp_config_api_v1_clients_uid_pdp_config_get**](ClientManagementApi.md#get_pdp_config_api_v1_clients_uid_pdp_config_get) | **GET** /api/v1/clients/{uid}/pdp-config | Get client PDP configuration
 [**get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post**](ClientManagementApi.md#get_superpdp_connect_url_api_v1_clients_uid_superpdp_connect_url_post) | **POST** /api/v1/clients/{uid}/superpdp/connect-url | Get SuperPDP connection URL
 [**get_superpdp_status_api_v1_clients_uid_superpdp_status_get**](ClientManagementApi.md#get_superpdp_status_api_v1_clients_uid_superpdp_status_get) | **GET** /api/v1/clients/{uid}/superpdp/status | Get SuperPDP connection status
+[**get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get**](ClientManagementApi.md#get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get) | **GET** /api/v1/clients/{uid}/superpdp/vat-regime | Get the SuperPDP VAT regime
 [**get_webhook_secret_status_api_v1_clients_uid_webhook_secret_status_get**](ClientManagementApi.md#get_webhook_secret_status_api_v1_clients_uid_webhook_secret_status_get) | **GET** /api/v1/clients/{uid}/webhook-secret/status | Get webhook secret status
 [**list_clients_api_v1_clients_get**](ClientManagementApi.md#list_clients_api_v1_clients_get) | **GET** /api/v1/clients | List clients
 [**rotate_encryption_key_api_v1_clients_uid_rotate_encryption_key_post**](ClientManagementApi.md#rotate_encryption_key_api_v1_clients_uid_rotate_encryption_key_post) | **POST** /api/v1/clients/{uid}/rotate-encryption-key | Rotate client encryption key
 [**update_client_api_v1_clients_uid_patch**](ClientManagementApi.md#update_client_api_v1_clients_uid_patch) | **PATCH** /api/v1/clients/{uid} | Update a client
 [**update_pdp_config_api_v1_clients_uid_pdp_config_put**](ClientManagementApi.md#update_pdp_config_api_v1_clients_uid_pdp_config_put) | **PUT** /api/v1/clients/{uid}/pdp-config | Configure client PDP
+[**update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch**](ClientManagementApi.md#update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch) | **PATCH** /api/v1/clients/{uid}/superpdp/vat-regime | Set the SuperPDP VAT regime
 
 
 # **activate_client_api_v1_clients_uid_activer_post**
@@ -1005,6 +1007,110 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
+# **get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get**
+> SuperPDPVatRegimeResponse get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get(uid)
+
+Get the SuperPDP VAT regime
+
+Read the VAT regime of the client's company at SuperPDP (`vatRegime` is null when not set).
+
+SuperPDP refuses e-reporting ("The VAT regime needs to be setup at the company
+level") until the VAT regime of the company is set: it defines the e-reporting
+transmission periods, and the Flux 10 file does not carry it. This setting is
+not part of the AFNOR API; FactPulse sets it with the client's SuperPDP
+connection.
+
+**Scope**: Client level (JWT with client_uid that must match {uid})
+
+**Errors**:
+- `404 not_connected`: the client has not connected its SuperPDP account
+- `400 superpdp_error`: SuperPDP refused the request (`superpdp_status`, `message`)
+- `502`: SuperPDP unreachable, or the SuperPDP connection must be redone
+
+### Example
+
+* Api Key Authentication (APIKeyHeader):
+* Bearer Authentication (HTTPBearer):
+
+```python
+import factpulse
+from factpulse.models.super_pdp_vat_regime_response import SuperPDPVatRegimeResponse
+from factpulse.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://factpulse.fr
+# See configuration.py for a list of all supported configuration parameters.
+configuration = factpulse.Configuration(
+    host = "https://factpulse.fr"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with factpulse.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = factpulse.ClientManagementApi(api_client)
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
+
+    try:
+        # Get the SuperPDP VAT regime
+        api_response = api_instance.get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get(uid)
+        print("The response of ClientManagementApi->get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ClientManagementApi->get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uid** | **UUID**| Client unique identifier (UUID) | 
+
+### Return type
+
+[**SuperPDPVatRegimeResponse**](SuperPDPVatRegimeResponse.md)
+
+### Authorization
+
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**400** | Invalid request |  -  |
+**401** | Missing or invalid JWT token |  -  |
+**403** | Access denied |  -  |
+**404** | Client not found |  -  |
+**500** | Server error |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
 # **get_webhook_secret_status_api_v1_clients_uid_webhook_secret_status_get**
 > WebhookSecretStatusResponse get_webhook_secret_status_api_v1_clients_uid_webhook_secret_status_get(uid)
 
@@ -1515,6 +1621,113 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PDPConfigResponse**](PDPConfigResponse.md)
+
+### Authorization
+
+[APIKeyHeader](../README.md#APIKeyHeader), [HTTPBearer](../README.md#HTTPBearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**400** | Invalid request |  -  |
+**401** | Missing or invalid JWT token |  -  |
+**403** | Access denied |  -  |
+**404** | Client not found |  -  |
+**500** | Server error |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch**
+> SuperPDPVatRegimeResponse update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch(uid, super_pdp_vat_regime_update_request)
+
+Set the SuperPDP VAT regime
+
+Set the VAT regime of the client's company at SuperPDP. When `hasVatOnDebits` is omitted, its current value is kept.
+
+SuperPDP refuses e-reporting ("The VAT regime needs to be setup at the company
+level") until the VAT regime of the company is set: it defines the e-reporting
+transmission periods, and the Flux 10 file does not carry it. This setting is
+not part of the AFNOR API; FactPulse sets it with the client's SuperPDP
+connection.
+
+**Scope**: Client level (JWT with client_uid that must match {uid})
+
+**Errors**:
+- `404 not_connected`: the client has not connected its SuperPDP account
+- `400 superpdp_error`: SuperPDP refused the request (`superpdp_status`, `message`)
+- `502`: SuperPDP unreachable, or the SuperPDP connection must be redone
+
+### Example
+
+* Api Key Authentication (APIKeyHeader):
+* Bearer Authentication (HTTPBearer):
+
+```python
+import factpulse
+from factpulse.models.super_pdp_vat_regime_response import SuperPDPVatRegimeResponse
+from factpulse.models.super_pdp_vat_regime_update_request import SuperPDPVatRegimeUpdateRequest
+from factpulse.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://factpulse.fr
+# See configuration.py for a list of all supported configuration parameters.
+configuration = factpulse.Configuration(
+    host = "https://factpulse.fr"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: APIKeyHeader
+configuration.api_key['APIKeyHeader'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['APIKeyHeader'] = 'Bearer'
+
+# Configure Bearer authorization: HTTPBearer
+configuration = factpulse.Configuration(
+    access_token = os.environ["BEARER_TOKEN"]
+)
+
+# Enter a context with an instance of the API client
+with factpulse.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = factpulse.ClientManagementApi(api_client)
+    uid = UUID('38400000-8cf0-11bd-b23e-10b96e4ef00d') # UUID | Client unique identifier (UUID)
+    super_pdp_vat_regime_update_request = factpulse.SuperPDPVatRegimeUpdateRequest() # SuperPDPVatRegimeUpdateRequest | 
+
+    try:
+        # Set the SuperPDP VAT regime
+        api_response = api_instance.update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch(uid, super_pdp_vat_regime_update_request)
+        print("The response of ClientManagementApi->update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ClientManagementApi->update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **uid** | **UUID**| Client unique identifier (UUID) | 
+ **super_pdp_vat_regime_update_request** | [**SuperPDPVatRegimeUpdateRequest**](SuperPDPVatRegimeUpdateRequest.md)|  | 
+
+### Return type
+
+[**SuperPDPVatRegimeResponse**](SuperPDPVatRegimeResponse.md)
 
 ### Authorization
 

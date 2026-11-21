@@ -671,7 +671,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.Flux10EReportingApi(api_client)
-    xml_file = None # bytes | E-reporting XML file
+    xml_file = 'xml_file_example' # str | E-reporting XML file
     organization_id = 'organization_id_example' # str | Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. (optional)
     tracking_id = 'tracking_id_example' # str |  (optional)
     skip_validation = False # bool | Skip XSD validation (optional) (default to False)
@@ -696,7 +696,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xml_file** | **bytes**| E-reporting XML file | 
+ **xml_file** | **str**| E-reporting XML file | 
  **organization_id** | **str**| Organization ID relayed to the PDP (AFNOR XP Z12-013 delegation / multi-tenancy). Required by some PDPs to select the client space. | [optional] 
  **tracking_id** | **str**|  | [optional] 
  **skip_validation** | **bool**| Skip XSD validation | [optional] [default to False]
@@ -974,7 +974,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.Flux10EReportingApi(api_client)
-    xml_file = None # bytes | E-reporting XML file to validate
+    xml_file = 'xml_file_example' # str | E-reporting XML file to validate
     validate_coherence = True # bool | Validate data coherence (REJ_COH) (optional) (default to True)
     validate_period = True # bool | Validate period coherence (REJ_PER) (optional) (default to True)
 
@@ -994,7 +994,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **xml_file** | **bytes**| E-reporting XML file to validate | 
+ **xml_file** | **str**| E-reporting XML file to validate | 
  **validate_coherence** | **bool**| Validate data coherence (REJ_COH) | [optional] [default to True]
  **validate_period** | **bool**| Validate period coherence (REJ_PER) | [optional] [default to True]
 

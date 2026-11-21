@@ -24,7 +24,7 @@ from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class ChorusProCredentials(BaseModel):
+class FactureElectroniqueRestApiSchemasProcessingChorusProCredentials(BaseModel):
     """
     Optional Chorus Pro credentials.  **MODE 1 - JWT retrieval (recommended):** Do not provide this `credentials` field in the payload. Credentials will be automatically retrieved via client_uid from JWT (0-trust).  **MODE 2 - Credentials in payload:** Provide all required fields below. Useful for tests or third-party integrations.
     """ # noqa: E501
@@ -53,7 +53,7 @@ class ChorusProCredentials(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ChorusProCredentials from a JSON string"""
+        """Create an instance of FactureElectroniqueRestApiSchemasProcessingChorusProCredentials from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -98,7 +98,7 @@ class ChorusProCredentials(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ChorusProCredentials from a dict"""
+        """Create an instance of FactureElectroniqueRestApiSchemasProcessingChorusProCredentials from a dict"""
         if obj is None:
             return None
 

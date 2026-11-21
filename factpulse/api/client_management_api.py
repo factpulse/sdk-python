@@ -32,6 +32,8 @@ from factpulse.models.pdp_config_update_request import PDPConfigUpdateRequest
 from factpulse.models.super_pdp_connect_url_response import SuperPDPConnectURLResponse
 from factpulse.models.super_pdp_disconnect_response import SuperPDPDisconnectResponse
 from factpulse.models.super_pdp_status_response import SuperPDPStatusResponse
+from factpulse.models.super_pdp_vat_regime_response import SuperPDPVatRegimeResponse
+from factpulse.models.super_pdp_vat_regime_update_request import SuperPDPVatRegimeUpdateRequest
 from factpulse.models.webhook_secret_delete_response import WebhookSecretDeleteResponse
 from factpulse.models.webhook_secret_generate_response import WebhookSecretGenerateResponse
 from factpulse.models.webhook_secret_status_response import WebhookSecretStatusResponse
@@ -2902,6 +2904,286 @@ class ClientManagementApi:
 
 
     @validate_call
+    def get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> SuperPDPVatRegimeResponse:
+        """Get the SuperPDP VAT regime
+
+        Read the VAT regime of the client's company at SuperPDP (`vatRegime` is null when not set).  SuperPDP refuses e-reporting (\"The VAT regime needs to be setup at the company level\") until the VAT regime of the company is set: it defines the e-reporting transmission periods, and the Flux 10 file does not carry it. This setting is not part of the AFNOR API; FactPulse sets it with the client's SuperPDP connection.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Errors**: - `404 not_connected`: the client has not connected its SuperPDP account - `400 superpdp_error`: SuperPDP refused the request (`superpdp_status`, `message`) - `502`: SuperPDP unreachable, or the SuperPDP connection must be redone
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get_serialize(
+            uid=uid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPVatRegimeResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get_with_http_info(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[SuperPDPVatRegimeResponse]:
+        """Get the SuperPDP VAT regime
+
+        Read the VAT regime of the client's company at SuperPDP (`vatRegime` is null when not set).  SuperPDP refuses e-reporting (\"The VAT regime needs to be setup at the company level\") until the VAT regime of the company is set: it defines the e-reporting transmission periods, and the Flux 10 file does not carry it. This setting is not part of the AFNOR API; FactPulse sets it with the client's SuperPDP connection.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Errors**: - `404 not_connected`: the client has not connected its SuperPDP account - `400 superpdp_error`: SuperPDP refused the request (`superpdp_status`, `message`) - `502`: SuperPDP unreachable, or the SuperPDP connection must be redone
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get_serialize(
+            uid=uid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPVatRegimeResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get_without_preload_content(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Get the SuperPDP VAT regime
+
+        Read the VAT regime of the client's company at SuperPDP (`vatRegime` is null when not set).  SuperPDP refuses e-reporting (\"The VAT regime needs to be setup at the company level\") until the VAT regime of the company is set: it defines the e-reporting transmission periods, and the Flux 10 file does not carry it. This setting is not part of the AFNOR API; FactPulse sets it with the client's SuperPDP connection.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Errors**: - `404 not_connected`: the client has not connected its SuperPDP account - `400 superpdp_error`: SuperPDP refused the request (`superpdp_status`, `message`) - `502`: SuperPDP unreachable, or the SuperPDP connection must be redone
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get_serialize(
+            uid=uid,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPVatRegimeResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _get_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_get_serialize(
+        self,
+        uid,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if uid is not None:
+            _path_params['uid'] = uid
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'APIKeyHeader', 
+            'HTTPBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/api/v1/clients/{uid}/superpdp/vat-regime',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def get_webhook_secret_status_api_v1_clients_uid_webhook_secret_status_get(
         self,
         uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
@@ -4404,6 +4686,314 @@ class ClientManagementApi:
         return self.api_client.param_serialize(
             method='PUT',
             resource_path='/api/v1/clients/{uid}/pdp-config',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        super_pdp_vat_regime_update_request: SuperPDPVatRegimeUpdateRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> SuperPDPVatRegimeResponse:
+        """Set the SuperPDP VAT regime
+
+        Set the VAT regime of the client's company at SuperPDP. When `hasVatOnDebits` is omitted, its current value is kept.  SuperPDP refuses e-reporting (\"The VAT regime needs to be setup at the company level\") until the VAT regime of the company is set: it defines the e-reporting transmission periods, and the Flux 10 file does not carry it. This setting is not part of the AFNOR API; FactPulse sets it with the client's SuperPDP connection.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Errors**: - `404 not_connected`: the client has not connected its SuperPDP account - `400 superpdp_error`: SuperPDP refused the request (`superpdp_status`, `message`) - `502`: SuperPDP unreachable, or the SuperPDP connection must be redone
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param super_pdp_vat_regime_update_request: (required)
+        :type super_pdp_vat_regime_update_request: SuperPDPVatRegimeUpdateRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch_serialize(
+            uid=uid,
+            super_pdp_vat_regime_update_request=super_pdp_vat_regime_update_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPVatRegimeResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch_with_http_info(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        super_pdp_vat_regime_update_request: SuperPDPVatRegimeUpdateRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[SuperPDPVatRegimeResponse]:
+        """Set the SuperPDP VAT regime
+
+        Set the VAT regime of the client's company at SuperPDP. When `hasVatOnDebits` is omitted, its current value is kept.  SuperPDP refuses e-reporting (\"The VAT regime needs to be setup at the company level\") until the VAT regime of the company is set: it defines the e-reporting transmission periods, and the Flux 10 file does not carry it. This setting is not part of the AFNOR API; FactPulse sets it with the client's SuperPDP connection.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Errors**: - `404 not_connected`: the client has not connected its SuperPDP account - `400 superpdp_error`: SuperPDP refused the request (`superpdp_status`, `message`) - `502`: SuperPDP unreachable, or the SuperPDP connection must be redone
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param super_pdp_vat_regime_update_request: (required)
+        :type super_pdp_vat_regime_update_request: SuperPDPVatRegimeUpdateRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch_serialize(
+            uid=uid,
+            super_pdp_vat_regime_update_request=super_pdp_vat_regime_update_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPVatRegimeResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch_without_preload_content(
+        self,
+        uid: Annotated[UUID, Field(description="Client unique identifier (UUID)")],
+        super_pdp_vat_regime_update_request: SuperPDPVatRegimeUpdateRequest,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Set the SuperPDP VAT regime
+
+        Set the VAT regime of the client's company at SuperPDP. When `hasVatOnDebits` is omitted, its current value is kept.  SuperPDP refuses e-reporting (\"The VAT regime needs to be setup at the company level\") until the VAT regime of the company is set: it defines the e-reporting transmission periods, and the Flux 10 file does not carry it. This setting is not part of the AFNOR API; FactPulse sets it with the client's SuperPDP connection.  **Scope**: Client level (JWT with client_uid that must match {uid})  **Errors**: - `404 not_connected`: the client has not connected its SuperPDP account - `400 superpdp_error`: SuperPDP refused the request (`superpdp_status`, `message`) - `502`: SuperPDP unreachable, or the SuperPDP connection must be redone
+
+        :param uid: Client unique identifier (UUID) (required)
+        :type uid: UUID
+        :param super_pdp_vat_regime_update_request: (required)
+        :type super_pdp_vat_regime_update_request: SuperPDPVatRegimeUpdateRequest
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch_serialize(
+            uid=uid,
+            super_pdp_vat_regime_update_request=super_pdp_vat_regime_update_request,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "SuperPDPVatRegimeResponse",
+            '400': None,
+            '401': None,
+            '403': None,
+            '404': None,
+            '500': None,
+            '422': "HTTPValidationError",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _update_superpdp_vat_regime_api_v1_clients_uid_superpdp_vat_regime_patch_serialize(
+        self,
+        uid,
+        super_pdp_vat_regime_update_request,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if uid is not None:
+            _path_params['uid'] = uid
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if super_pdp_vat_regime_update_request is not None:
+            _body_params = super_pdp_vat_regime_update_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'APIKeyHeader', 
+            'HTTPBearer'
+        ]
+
+        return self.api_client.param_serialize(
+            method='PATCH',
+            resource_path='/api/v1/clients/{uid}/superpdp/vat-regime',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

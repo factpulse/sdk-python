@@ -21,7 +21,9 @@ import json
 from datetime import date
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from factpulse.models.amount1 import Amount1
+from typing_extensions import Annotated
+from factpulse.models.amount2 import Amount2
+from factpulse.models.encaisse_amount_by_rate import EncaisseAmountByRate
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -33,9 +35,11 @@ class EncaisseeRequest(BaseModel):
     invoice_id: StrictStr = Field(description="Identifiant de la facture (BT-1)", alias="invoiceId")
     invoice_issue_date: date = Field(description="Date d'émission de la facture (YYYY-MM-DD)", alias="invoiceIssueDate")
     invoice_buyer_siren: StrictStr = Field(description="SIREN de l'acheteur (destinataire du statut)", alias="invoiceBuyerSiren")
-    invoice_buyer_electronic_address: StrictStr = Field(description="Adresse électronique de l'acheteur (MDT-73)", alias="invoiceBuyerElectronicAddress")
-    amount: Amount1
-    vat_rate: Optional[Union[StrictFloat, StrictInt]] = Field(default=20, description="Taux de TVA du montant encaissé en % (MDT-224, requis par BR-FR-CDV-14 ; défaut 20)", alias="vatRate")
+    invoice_buyer_electronic_address: Optional[StrictStr] = Field(default=None, alias="invoiceBuyerElectronicAddress")
+    amount: Optional[Amount2] = None
+    vat_rate: Optional[Union[StrictFloat, StrictInt]] = Field(default=20, description="Taux de TVA du montant encaissé en % (MDT-224, requis par BR-FR-CDV-14 ; défaut 20). Ignoré avec amountsByRate", alias="vatRate")
+    amounts_by_rate: Optional[Annotated[List[EncaisseAmountByRate], Field(min_length=1)]] = Field(default=None, alias="amountsByRate")
+    comment: Optional[Annotated[str, Field(strict=True, max_length=2000)]] = None
     currency: Optional[StrictStr] = Field(default='EUR', description="Code devise ISO 4217")
     sender_siren: Optional[StrictStr] = Field(default=None, alias="senderSiren")
     flow_type: Optional[StrictStr] = Field(default='CustomerInvoiceLC', description="Type de flux (CustomerInvoiceLC pour facture émise)", alias="flowType")
@@ -43,7 +47,7 @@ class EncaisseeRequest(BaseModel):
     pdp_token_url: Optional[StrictStr] = Field(default=None, alias="pdpTokenUrl")
     pdp_client_id: Optional[StrictStr] = Field(default=None, alias="pdpClientId")
     pdp_client_secret: Optional[StrictStr] = Field(default=None, alias="pdpClientSecret")
-    __properties: ClassVar[List[str]] = ["invoiceId", "invoiceIssueDate", "invoiceBuyerSiren", "invoiceBuyerElectronicAddress", "amount", "vatRate", "currency", "senderSiren", "flowType", "pdpFlowServiceUrl", "pdpTokenUrl", "pdpClientId", "pdpClientSecret"]
+    __properties: ClassVar[List[str]] = ["invoiceId", "invoiceIssueDate", "invoiceBuyerSiren", "invoiceBuyerElectronicAddress", "amount", "vatRate", "amountsByRate", "comment", "currency", "senderSiren", "flowType", "pdpFlowServiceUrl", "pdpTokenUrl", "pdpClientId", "pdpClientSecret"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -87,6 +91,33 @@ class EncaisseeRequest(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of amount
         if self.amount:
             _dict['amount'] = self.amount.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in amounts_by_rate (list)
+        _items = []
+        if self.amounts_by_rate:
+            for _item_amounts_by_rate in self.amounts_by_rate:
+                if _item_amounts_by_rate:
+                    _items.append(_item_amounts_by_rate.to_dict())
+            _dict['amountsByRate'] = _items
+        # set to None if invoice_buyer_electronic_address (nullable) is None
+        # and model_fields_set contains the field
+        if self.invoice_buyer_electronic_address is None and "invoice_buyer_electronic_address" in self.model_fields_set:
+            _dict['invoiceBuyerElectronicAddress'] = None
+
+        # set to None if amount (nullable) is None
+        # and model_fields_set contains the field
+        if self.amount is None and "amount" in self.model_fields_set:
+            _dict['amount'] = None
+
+        # set to None if amounts_by_rate (nullable) is None
+        # and model_fields_set contains the field
+        if self.amounts_by_rate is None and "amounts_by_rate" in self.model_fields_set:
+            _dict['amountsByRate'] = None
+
+        # set to None if comment (nullable) is None
+        # and model_fields_set contains the field
+        if self.comment is None and "comment" in self.model_fields_set:
+            _dict['comment'] = None
+
         # set to None if sender_siren (nullable) is None
         # and model_fields_set contains the field
         if self.sender_siren is None and "sender_siren" in self.model_fields_set:
@@ -128,8 +159,10 @@ class EncaisseeRequest(BaseModel):
             "invoiceIssueDate": obj.get("invoiceIssueDate"),
             "invoiceBuyerSiren": obj.get("invoiceBuyerSiren"),
             "invoiceBuyerElectronicAddress": obj.get("invoiceBuyerElectronicAddress"),
-            "amount": Amount1.from_dict(obj["amount"]) if obj.get("amount") is not None else None,
+            "amount": Amount2.from_dict(obj["amount"]) if obj.get("amount") is not None else None,
             "vatRate": obj.get("vatRate") if obj.get("vatRate") is not None else 20,
+            "amountsByRate": [EncaisseAmountByRate.from_dict(_item) for _item in obj["amountsByRate"]] if obj.get("amountsByRate") is not None else None,
+            "comment": obj.get("comment"),
             "currency": obj.get("currency") if obj.get("currency") is not None else 'EUR',
             "senderSiren": obj.get("senderSiren"),
             "flowType": obj.get("flowType") if obj.get("flowType") is not None else 'CustomerInvoiceLC',

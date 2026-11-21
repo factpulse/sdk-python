@@ -185,7 +185,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.FacturXValidationApi(api_client)
-    pdf_file = None # bytes | Factur-X PDF file to validate (.pdf format).
+    pdf_file = 'pdf_file_example' # str | Factur-X PDF file to validate (.pdf format).
     profile = factpulse.APIProfile() # APIProfile |  (optional)
     use_verapdf = False # bool | Enable strict PDF/A validation with VeraPDF (recommended for production). If False, uses basic metadata validation. (optional) (default to False)
     skip_br_fr = True # bool |  (optional)
@@ -206,7 +206,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pdf_file** | **bytes**| Factur-X PDF file to validate (.pdf format). | 
+ **pdf_file** | **str**| Factur-X PDF file to validate (.pdf format). | 
  **profile** | [**APIProfile**](APIProfile.md)|  | [optional] 
  **use_verapdf** | **bool**| Enable strict PDF/A validation with VeraPDF (recommended for production). If False, uses basic metadata validation. | [optional] [default to False]
  **skip_br_fr** | **bool**|  | [optional] 
@@ -382,7 +382,7 @@ configuration = factpulse.Configuration(
 with factpulse.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = factpulse.FacturXValidationApi(api_client)
-    pdf_file = None # bytes | Factur-X PDF file to validate (.pdf format).
+    pdf_file = 'pdf_file_example' # str | Factur-X PDF file to validate (.pdf format).
     profile = factpulse.APIProfile() # APIProfile |  (optional)
     use_verapdf = False # bool | Enable strict PDF/A validation with VeraPDF (recommended for production). May take several seconds. (optional) (default to False)
     callback_url = 'callback_url_example' # str |  (optional)
@@ -404,7 +404,7 @@ with factpulse.ApiClient(configuration) as api_client:
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **pdf_file** | **bytes**| Factur-X PDF file to validate (.pdf format). | 
+ **pdf_file** | **str**| Factur-X PDF file to validate (.pdf format). | 
  **profile** | [**APIProfile**](APIProfile.md)|  | [optional] 
  **use_verapdf** | **bool**| Enable strict PDF/A validation with VeraPDF (recommended for production). May take several seconds. | [optional] [default to False]
  **callback_url** | **str**|  | [optional] 

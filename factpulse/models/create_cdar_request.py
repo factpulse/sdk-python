@@ -21,6 +21,8 @@ import json
 from datetime import date
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
+from typing_extensions import Annotated
+from factpulse.models.encaisse_amount_by_rate import EncaisseAmountByRate
 from factpulse.models.encaisseamount import Encaisseamount
 from factpulse.models.recipient_input import RecipientInput
 from typing import Optional, Set
@@ -50,7 +52,9 @@ class CreateCDARRequest(BaseModel):
     action_code: Optional[StrictStr] = Field(default=None, alias="actionCode")
     encaisse_amount: Optional[Encaisseamount] = Field(default=None, alias="encaisseAmount")
     encaisse_vat_rate: Optional[Union[StrictFloat, StrictInt]] = Field(default=20, description="Taux de TVA du montant encaissé en % (MDT-224, requis par BR-FR-CDV-14 pour le statut 212 ; défaut 20)", alias="encaisseVatRate")
-    __properties: ClassVar[List[str]] = ["documentId", "businessProcess", "typeCode", "senderSiren", "senderRole", "senderName", "senderEmail", "recipients", "invoiceId", "invoiceIssueDate", "invoiceTypeCode", "invoiceSellerSiren", "invoiceBuyerSiren", "status", "reasonCode", "reasonText", "actionCode", "encaisseAmount", "encaisseVatRate"]
+    encaisse_amounts_by_rate: Optional[Annotated[List[EncaisseAmountByRate], Field(min_length=1)]] = Field(default=None, alias="encaisseAmountsByRate")
+    comment: Optional[Annotated[str, Field(strict=True, max_length=2000)]] = None
+    __properties: ClassVar[List[str]] = ["documentId", "businessProcess", "typeCode", "senderSiren", "senderRole", "senderName", "senderEmail", "recipients", "invoiceId", "invoiceIssueDate", "invoiceTypeCode", "invoiceSellerSiren", "invoiceBuyerSiren", "status", "reasonCode", "reasonText", "actionCode", "encaisseAmount", "encaisseVatRate", "encaisseAmountsByRate", "comment"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -101,6 +105,13 @@ class CreateCDARRequest(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of encaisse_amount
         if self.encaisse_amount:
             _dict['encaisseAmount'] = self.encaisse_amount.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in encaisse_amounts_by_rate (list)
+        _items = []
+        if self.encaisse_amounts_by_rate:
+            for _item_encaisse_amounts_by_rate in self.encaisse_amounts_by_rate:
+                if _item_encaisse_amounts_by_rate:
+                    _items.append(_item_encaisse_amounts_by_rate.to_dict())
+            _dict['encaisseAmountsByRate'] = _items
         # set to None if sender_name (nullable) is None
         # and model_fields_set contains the field
         if self.sender_name is None and "sender_name" in self.model_fields_set:
@@ -141,6 +152,16 @@ class CreateCDARRequest(BaseModel):
         if self.encaisse_amount is None and "encaisse_amount" in self.model_fields_set:
             _dict['encaisseAmount'] = None
 
+        # set to None if encaisse_amounts_by_rate (nullable) is None
+        # and model_fields_set contains the field
+        if self.encaisse_amounts_by_rate is None and "encaisse_amounts_by_rate" in self.model_fields_set:
+            _dict['encaisseAmountsByRate'] = None
+
+        # set to None if comment (nullable) is None
+        # and model_fields_set contains the field
+        if self.comment is None and "comment" in self.model_fields_set:
+            _dict['comment'] = None
+
         return _dict
 
     @classmethod
@@ -171,7 +192,9 @@ class CreateCDARRequest(BaseModel):
             "reasonText": obj.get("reasonText"),
             "actionCode": obj.get("actionCode"),
             "encaisseAmount": Encaisseamount.from_dict(obj["encaisseAmount"]) if obj.get("encaisseAmount") is not None else None,
-            "encaisseVatRate": obj.get("encaisseVatRate") if obj.get("encaisseVatRate") is not None else 20
+            "encaisseVatRate": obj.get("encaisseVatRate") if obj.get("encaisseVatRate") is not None else 20,
+            "encaisseAmountsByRate": [EncaisseAmountByRate.from_dict(_item) for _item in obj["encaisseAmountsByRate"]] if obj.get("encaisseAmountsByRate") is not None else None,
+            "comment": obj.get("comment")
         })
         return _obj
 

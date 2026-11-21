@@ -42,7 +42,9 @@ class TestHTTPValidationError(unittest.TestCase):
                             null
                             ], 
                         msg = '', 
-                        type = '', )
+                        type = '', 
+                        input = null, 
+                        ctx = factpulse.models.context.Context(), )
                     ]
             )
         else:

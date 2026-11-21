@@ -61,7 +61,13 @@ class TestCreateCDARRequest(unittest.TestCase):
                 reason_text = '',
                 action_code = '',
                 encaisse_amount = None,
-                encaisse_vat_rate = 1.337
+                encaisse_vat_rate = 1.337,
+                encaisse_amounts_by_rate = [
+                    factpulse.models.encaisse_amount_by_rate.EncaisseAmountByRate(
+                        rate = 20, 
+                        amount = 720.00, )
+                    ],
+                comment = ''
             )
         else:
             return CreateCDARRequest(

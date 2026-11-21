@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List, Optional
-from factpulse.models.amount2 import Amount2
+from factpulse.models.amount3 import Amount3
 from factpulse.models.amounteur import Amounteur
 from factpulse.models.rate import Rate
 from typing import Optional, Set
@@ -32,7 +32,7 @@ class PaymentAmountByRate(BaseModel):
     Payment amount for a specific VAT rate.
     """ # noqa: E501
     rate: Rate
-    amount: Amount2
+    amount: Amount3
     amount_eur: Optional[Amounteur] = Field(default=None, alias="amountEur")
     __properties: ClassVar[List[str]] = ["rate", "amount", "amountEur"]
 
@@ -102,7 +102,7 @@ class PaymentAmountByRate(BaseModel):
 
         _obj = cls.model_validate({
             "rate": Rate.from_dict(obj["rate"]) if obj.get("rate") is not None else None,
-            "amount": Amount2.from_dict(obj["amount"]) if obj.get("amount") is not None else None,
+            "amount": Amount3.from_dict(obj["amount"]) if obj.get("amount") is not None else None,
             "amountEur": Amounteur.from_dict(obj["amountEur"]) if obj.get("amountEur") is not None else None
         })
         return _obj

@@ -38,7 +38,11 @@ class TestLifecycleResponse(unittest.TestCase):
             return LifecycleResponse(
                 invoices = ERROR_TO_EXAMPLE_VALUE,
                 total_invoices = 56,
-                cutoff_days = 56
+                cutoff_days = 56,
+                total_flows = 56,
+                truncated = True,
+                date_from = '',
+                date_to = ''
             )
         else:
             return LifecycleResponse(

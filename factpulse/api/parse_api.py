@@ -16,8 +16,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictBytes, StrictStr
-from typing import Optional, Tuple, Union
+from pydantic import Field, StrictStr
+from typing import Optional
 from typing_extensions import Annotated
 from factpulse.models.parse_factur_x_response import ParseFacturXResponse
 from factpulse.models.task_response import TaskResponse
@@ -43,7 +43,7 @@ class ParseApi:
     @validate_call
     def parse_facturx_async_api_v1_processing_parse_facturx_async_post(
         self,
-        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Factur-X PDF or XML file to parse")],
+        file: Annotated[StrictStr, Field(description="Factur-X PDF or XML file to parse")],
         callback_url: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -63,7 +63,7 @@ class ParseApi:
         Parse a Factur-X file asynchronously using a Celery task.  **Use case:** For large files or when you want non-blocking processing.  **Workflow:** 1. Submit file with this endpoint -> receive `task_id` 2. Poll `/tasks/{task_id}/status` for result 3. Result contains `invoice` and `detected_profile`  **Optional:** Provide `callback_url` to receive a webhook when parsing completes.
 
         :param file: Factur-X PDF or XML file to parse (required)
-        :type file: bytes
+        :type file: str
         :param callback_url:
         :type callback_url: str
         :param _request_timeout: timeout setting for this request. If one
@@ -116,7 +116,7 @@ class ParseApi:
     @validate_call
     def parse_facturx_async_api_v1_processing_parse_facturx_async_post_with_http_info(
         self,
-        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Factur-X PDF or XML file to parse")],
+        file: Annotated[StrictStr, Field(description="Factur-X PDF or XML file to parse")],
         callback_url: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -136,7 +136,7 @@ class ParseApi:
         Parse a Factur-X file asynchronously using a Celery task.  **Use case:** For large files or when you want non-blocking processing.  **Workflow:** 1. Submit file with this endpoint -> receive `task_id` 2. Poll `/tasks/{task_id}/status` for result 3. Result contains `invoice` and `detected_profile`  **Optional:** Provide `callback_url` to receive a webhook when parsing completes.
 
         :param file: Factur-X PDF or XML file to parse (required)
-        :type file: bytes
+        :type file: str
         :param callback_url:
         :type callback_url: str
         :param _request_timeout: timeout setting for this request. If one
@@ -189,7 +189,7 @@ class ParseApi:
     @validate_call
     def parse_facturx_async_api_v1_processing_parse_facturx_async_post_without_preload_content(
         self,
-        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Factur-X PDF or XML file to parse")],
+        file: Annotated[StrictStr, Field(description="Factur-X PDF or XML file to parse")],
         callback_url: Optional[StrictStr] = None,
         _request_timeout: Union[
             None,
@@ -209,7 +209,7 @@ class ParseApi:
         Parse a Factur-X file asynchronously using a Celery task.  **Use case:** For large files or when you want non-blocking processing.  **Workflow:** 1. Submit file with this endpoint -> receive `task_id` 2. Poll `/tasks/{task_id}/status` for result 3. Result contains `invoice` and `detected_profile`  **Optional:** Provide `callback_url` to receive a webhook when parsing completes.
 
         :param file: Factur-X PDF or XML file to parse (required)
-        :type file: bytes
+        :type file: str
         :param callback_url:
         :type callback_url: str
         :param _request_timeout: timeout setting for this request. If one
@@ -284,7 +284,7 @@ class ParseApi:
         # process the header parameters
         # process the form parameters
         if file is not None:
-            _files['file'] = file
+            _form_params.append(('file', file))
         if callback_url is not None:
             _form_params.append(('callbackUrl', callback_url))
         # process the body parameter
@@ -339,7 +339,7 @@ class ParseApi:
     @validate_call
     def parse_facturx_sync_api_v1_processing_parse_facturx_post(
         self,
-        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Factur-X PDF or XML file to parse")],
+        file: Annotated[StrictStr, Field(description="Factur-X PDF or XML file to parse")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -358,7 +358,7 @@ class ParseApi:
         Parse a CII XML, UBL XML, or Factur-X PDF and extract the invoice data as a FacturXInvoice model.  **Use cases:** - Extract invoice data from received invoices (any format) - Round-trip: parse an existing invoice, modify it, and regenerate in another format - Convert between CII and UBL via the FacturXInvoice pivot model  **Supported formats:** - Factur-X PDF (PDF/A-3 with embedded CII XML) - CII XML (UN/CEFACT Cross-Industry Invoice) - UBL 2.1 XML (OASIS Invoice or CreditNote)  **Returns:** - `invoice`: Complete FacturXInvoice data (can be used with /generate-invoice) - `detected_profile`: Factur-X profile (MINIMUM, BASIC, EN16931, EXTENDED)
 
         :param file: Factur-X PDF or XML file to parse (required)
-        :type file: bytes
+        :type file: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -409,7 +409,7 @@ class ParseApi:
     @validate_call
     def parse_facturx_sync_api_v1_processing_parse_facturx_post_with_http_info(
         self,
-        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Factur-X PDF or XML file to parse")],
+        file: Annotated[StrictStr, Field(description="Factur-X PDF or XML file to parse")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -428,7 +428,7 @@ class ParseApi:
         Parse a CII XML, UBL XML, or Factur-X PDF and extract the invoice data as a FacturXInvoice model.  **Use cases:** - Extract invoice data from received invoices (any format) - Round-trip: parse an existing invoice, modify it, and regenerate in another format - Convert between CII and UBL via the FacturXInvoice pivot model  **Supported formats:** - Factur-X PDF (PDF/A-3 with embedded CII XML) - CII XML (UN/CEFACT Cross-Industry Invoice) - UBL 2.1 XML (OASIS Invoice or CreditNote)  **Returns:** - `invoice`: Complete FacturXInvoice data (can be used with /generate-invoice) - `detected_profile`: Factur-X profile (MINIMUM, BASIC, EN16931, EXTENDED)
 
         :param file: Factur-X PDF or XML file to parse (required)
-        :type file: bytes
+        :type file: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -479,7 +479,7 @@ class ParseApi:
     @validate_call
     def parse_facturx_sync_api_v1_processing_parse_facturx_post_without_preload_content(
         self,
-        file: Annotated[Union[StrictBytes, StrictStr, Tuple[StrictStr, StrictBytes]], Field(description="Factur-X PDF or XML file to parse")],
+        file: Annotated[StrictStr, Field(description="Factur-X PDF or XML file to parse")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -498,7 +498,7 @@ class ParseApi:
         Parse a CII XML, UBL XML, or Factur-X PDF and extract the invoice data as a FacturXInvoice model.  **Use cases:** - Extract invoice data from received invoices (any format) - Round-trip: parse an existing invoice, modify it, and regenerate in another format - Convert between CII and UBL via the FacturXInvoice pivot model  **Supported formats:** - Factur-X PDF (PDF/A-3 with embedded CII XML) - CII XML (UN/CEFACT Cross-Industry Invoice) - UBL 2.1 XML (OASIS Invoice or CreditNote)  **Returns:** - `invoice`: Complete FacturXInvoice data (can be used with /generate-invoice) - `detected_profile`: Factur-X profile (MINIMUM, BASIC, EN16931, EXTENDED)
 
         :param file: Factur-X PDF or XML file to parse (required)
-        :type file: bytes
+        :type file: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -570,7 +570,7 @@ class ParseApi:
         # process the header parameters
         # process the form parameters
         if file is not None:
-            _files['file'] = file
+            _form_params.append(('file', file))
         # process the body parameter
 
 

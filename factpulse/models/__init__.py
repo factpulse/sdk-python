@@ -121,6 +121,7 @@ from factpulse.models.allowance_total_amount import AllowanceTotalAmount
 from factpulse.models.amount import Amount
 from factpulse.models.amount1 import Amount1
 from factpulse.models.amount2 import Amount2
+from factpulse.models.amount3 import Amount3
 from factpulse.models.amount_due import AmountDue
 from factpulse.models.amounteur import Amounteur
 from factpulse.models.async_task_status import AsyncTaskStatus
@@ -130,7 +131,6 @@ from factpulse.models.buyercountry import Buyercountry
 from factpulse.models.celery_status import CeleryStatus
 from factpulse.models.certificate_info_response import CertificateInfoResponse
 from factpulse.models.charge_total_amount import ChargeTotalAmount
-from factpulse.models.chorus_pro_credentials import ChorusProCredentials
 from factpulse.models.chorus_pro_destination import ChorusProDestination
 from factpulse.models.chorus_pro_result import ChorusProResult
 from factpulse.models.client_activate_response import ClientActivateResponse
@@ -165,6 +165,7 @@ from factpulse.models.e_reporting_validation_error import EReportingValidationEr
 from factpulse.models.electronic_address import ElectronicAddress
 from factpulse.models.electronic_address_input import ElectronicAddressInput
 from factpulse.models.electronic_address_output import ElectronicAddressOutput
+from factpulse.models.encaisse_amount_by_rate import EncaisseAmountByRate
 from factpulse.models.encaisseamount import Encaisseamount
 from factpulse.models.encaisseamount1 import Encaisseamount1
 from factpulse.models.encaissee_request import EncaisseeRequest
@@ -177,6 +178,9 @@ from factpulse.models.factur_xpdf_info import FacturXPDFInfo
 from factpulse.models.facture_electronique_models_invoice_type_code import FactureElectroniqueModelsInvoiceTypeCode
 from factpulse.models.facture_electronique_rest_api_schemas_cdar_validation_error_response import FactureElectroniqueRestApiSchemasCdarValidationErrorResponse
 from factpulse.models.facture_electronique_rest_api_schemas_chorus_pro_chorus_pro_credentials import FactureElectroniqueRestApiSchemasChorusProChorusProCredentials
+from factpulse.models.facture_electronique_rest_api_schemas_ereporting_invoice_type_code import FactureElectroniqueRestApiSchemasEreportingInvoiceTypeCode
+from factpulse.models.facture_electronique_rest_api_schemas_processing_chorus_pro_credentials import FactureElectroniqueRestApiSchemasProcessingChorusProCredentials
+from factpulse.models.facture_electronique_rest_api_schemas_validation_validation_error_response import FactureElectroniqueRestApiSchemasValidationValidationErrorResponse
 from factpulse.models.field_status import FieldStatus
 from factpulse.models.file_info import FileInfo
 from factpulse.models.files_info import FilesInfo
@@ -308,6 +312,8 @@ from factpulse.models.submit_vat_amount import SubmitVatAmount
 from factpulse.models.super_pdp_connect_url_response import SuperPDPConnectURLResponse
 from factpulse.models.super_pdp_disconnect_response import SuperPDPDisconnectResponse
 from factpulse.models.super_pdp_status_response import SuperPDPStatusResponse
+from factpulse.models.super_pdp_vat_regime_response import SuperPDPVatRegimeResponse
+from factpulse.models.super_pdp_vat_regime_update_request import SuperPDPVatRegimeUpdateRequest
 from factpulse.models.supplementary_attachment import SupplementaryAttachment
 from factpulse.models.supplier import Supplier
 from factpulse.models.task_error_result import TaskErrorResult
@@ -343,7 +349,6 @@ from factpulse.models.validate_e_reporting_request import ValidateEReportingRequ
 from factpulse.models.validate_e_reporting_response import ValidateEReportingResponse
 from factpulse.models.validation_error import ValidationError
 from factpulse.models.validation_error_detail import ValidationErrorDetail
-from factpulse.models.validation_error_response import ValidationErrorResponse
 from factpulse.models.validation_info import ValidationInfo
 from factpulse.models.validation_success_response import ValidationSuccessResponse
 from factpulse.models.validation_success_task_result import ValidationSuccessTaskResult

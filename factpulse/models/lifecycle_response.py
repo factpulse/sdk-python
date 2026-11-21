@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from factpulse.models.invoice_lifecycle import InvoiceLifecycle
 from typing import Optional, Set
@@ -32,7 +32,11 @@ class LifecycleResponse(BaseModel):
     invoices: Optional[List[InvoiceLifecycle]] = Field(default=None, description="Cycles de vie par facture")
     total_invoices: StrictInt = Field(description="Nombre de factures", alias="totalInvoices")
     cutoff_days: StrictInt = Field(description="Nombre de jours de la fenetre de recherche", alias="cutoffDays")
-    __properties: ClassVar[List[str]] = ["invoices", "totalInvoices", "cutoffDays"]
+    total_flows: Optional[StrictInt] = Field(default=0, description="Nombre de flux de statut (CDAR) lus sur la PA", alias="totalFlows")
+    truncated: Optional[StrictBool] = Field(default=False, description="True si la limite de flux lus par appel a ete atteinte : la reponse est incomplete, reduire la fenetre (dateFrom/dateTo ou days)")
+    date_from: Optional[StrictStr] = Field(default=None, alias="dateFrom")
+    date_to: Optional[StrictStr] = Field(default=None, alias="dateTo")
+    __properties: ClassVar[List[str]] = ["invoices", "totalInvoices", "cutoffDays", "totalFlows", "truncated", "dateFrom", "dateTo"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -80,6 +84,16 @@ class LifecycleResponse(BaseModel):
                 if _item_invoices:
                     _items.append(_item_invoices.to_dict())
             _dict['invoices'] = _items
+        # set to None if date_from (nullable) is None
+        # and model_fields_set contains the field
+        if self.date_from is None and "date_from" in self.model_fields_set:
+            _dict['dateFrom'] = None
+
+        # set to None if date_to (nullable) is None
+        # and model_fields_set contains the field
+        if self.date_to is None and "date_to" in self.model_fields_set:
+            _dict['dateTo'] = None
+
         return _dict
 
     @classmethod
@@ -94,7 +108,11 @@ class LifecycleResponse(BaseModel):
         _obj = cls.model_validate({
             "invoices": [InvoiceLifecycle.from_dict(_item) for _item in obj["invoices"]] if obj.get("invoices") is not None else None,
             "totalInvoices": obj.get("totalInvoices"),
-            "cutoffDays": obj.get("cutoffDays")
+            "cutoffDays": obj.get("cutoffDays"),
+            "totalFlows": obj.get("totalFlows") if obj.get("totalFlows") is not None else 0,
+            "truncated": obj.get("truncated") if obj.get("truncated") is not None else False,
+            "dateFrom": obj.get("dateFrom"),
+            "dateTo": obj.get("dateTo")
         })
         return _obj
 

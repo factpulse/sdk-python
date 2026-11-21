@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **status** | **str** |  | [optional] 
 **reason_code** | **str** |  | [optional] 
 **encaisse_amount** | [**Encaisseamount1**](Encaisseamount1.md) |  | [optional] 
+**encaisse_amounts_by_rate** | [**List[EncaisseAmountByRate]**](EncaisseAmountByRate.md) |  | [optional] 
 
 ## Example
 

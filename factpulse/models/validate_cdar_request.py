@@ -21,6 +21,7 @@ import json
 from datetime import date
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
+from factpulse.models.encaisse_amount_by_rate import EncaisseAmountByRate
 from factpulse.models.encaisseamount1 import Encaisseamount1
 from typing import Optional, Set
 from typing_extensions import Self
@@ -38,7 +39,8 @@ class ValidateCDARRequest(BaseModel):
     status: Optional[StrictStr] = None
     reason_code: Optional[StrictStr] = Field(default=None, alias="reasonCode")
     encaisse_amount: Optional[Encaisseamount1] = Field(default=None, alias="encaisseAmount")
-    __properties: ClassVar[List[str]] = ["documentId", "senderSiren", "senderRole", "invoiceId", "invoiceIssueDate", "status", "reasonCode", "encaisseAmount"]
+    encaisse_amounts_by_rate: Optional[List[EncaisseAmountByRate]] = Field(default=None, alias="encaisseAmountsByRate")
+    __properties: ClassVar[List[str]] = ["documentId", "senderSiren", "senderRole", "invoiceId", "invoiceIssueDate", "status", "reasonCode", "encaisseAmount", "encaisseAmountsByRate"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -82,6 +84,13 @@ class ValidateCDARRequest(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of encaisse_amount
         if self.encaisse_amount:
             _dict['encaisseAmount'] = self.encaisse_amount.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in encaisse_amounts_by_rate (list)
+        _items = []
+        if self.encaisse_amounts_by_rate:
+            for _item_encaisse_amounts_by_rate in self.encaisse_amounts_by_rate:
+                if _item_encaisse_amounts_by_rate:
+                    _items.append(_item_encaisse_amounts_by_rate.to_dict())
+            _dict['encaisseAmountsByRate'] = _items
         # set to None if document_id (nullable) is None
         # and model_fields_set contains the field
         if self.document_id is None and "document_id" in self.model_fields_set:
@@ -122,6 +131,11 @@ class ValidateCDARRequest(BaseModel):
         if self.encaisse_amount is None and "encaisse_amount" in self.model_fields_set:
             _dict['encaisseAmount'] = None
 
+        # set to None if encaisse_amounts_by_rate (nullable) is None
+        # and model_fields_set contains the field
+        if self.encaisse_amounts_by_rate is None and "encaisse_amounts_by_rate" in self.model_fields_set:
+            _dict['encaisseAmountsByRate'] = None
+
         return _dict
 
     @classmethod
@@ -141,7 +155,8 @@ class ValidateCDARRequest(BaseModel):
             "invoiceIssueDate": obj.get("invoiceIssueDate"),
             "status": obj.get("status"),
             "reasonCode": obj.get("reasonCode"),
-            "encaisseAmount": Encaisseamount1.from_dict(obj["encaisseAmount"]) if obj.get("encaisseAmount") is not None else None
+            "encaisseAmount": Encaisseamount1.from_dict(obj["encaisseAmount"]) if obj.get("encaisseAmount") is not None else None,
+            "encaisseAmountsByRate": [EncaisseAmountByRate.from_dict(_item) for _item in obj["encaisseAmountsByRate"]] if obj.get("encaisseAmountsByRate") is not None else None
         })
         return _obj
 
